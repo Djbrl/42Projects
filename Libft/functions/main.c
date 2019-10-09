@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 11:48:58 by dsy               #+#    #+#             */
-/*   Updated: 2019/10/09 15:04:04 by dsy              ###   ########.fr       */
+/*   Updated: 2019/10/09 17:16:21 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,7 @@ int		main(int ac, char **av)
 	printf("m %s\n", memcpy(strf, str4, 3));
 	printf("%s\n", ft_memcpy(stru, str7, 0));
 	printf("m %s\n", memcpy(strj, str7, 0));
-*/	
 	
-
 	printf("%s\n", ft_memccpy(stra, str2, 'o', 0));
 	printf("m %s\n", memccpy(str, str2, 'o', 0));
 	printf("%s\n", ft_memccpy(strs, str2, 'o', 2));
@@ -97,5 +95,8 @@ int		main(int ac, char **av)
 	printf("results : memstr %s ftstra %s\n", strq, strs);
 	printf("results : memstr %s ftstra %s\n", strw, strd);
 	printf("results : memstr %s ftstra %s\n", stre, strf);
+	*/
+
+
 	return (0);
 }
