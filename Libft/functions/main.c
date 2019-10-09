@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 11:48:58 by dsy               #+#    #+#             */
-/*   Updated: 2019/10/09 17:16:21 by dsy              ###   ########.fr       */
+/*   Updated: 2019/10/09 17:26:15 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,17 @@ char	*ft_strchr(char *, int);
 void	*ft_memset(void *, int, size_t);
 void	*ft_memcpy(void *, void *, size_t n);
 void	*ft_memccpy(void *, void *, int, size_t n);
+
+//ALL TESTS ARE ARBITRARY AND BASED ON WHAT I WANT TO RESEARCH ON
+//do your own!
+
 int		main(int ac, char **av)
 {
+	//uncast to use args
 	(void)av;
 	(void)ac;
+
+	//decoy char strings to test on
 	char	str[] = "titi";
 	char	stra[] = "titi";
 	char	strs[] = "titi";
@@ -49,6 +56,9 @@ int		main(int ac, char **av)
 	char	*str3 = NULL;
 	int		n = 0;
 
+	//uncomment to test
+	//check which strings are being used, you might have to uncomment some
+
 	printf("%i\n", ft_strlen(str));
 	printf("%i\n", ft_strlen(str1));
 	printf("%i\n", ft_strlen(str2));
@@ -63,10 +73,10 @@ int		main(int ac, char **av)
 	printf("%s\n", ft_strchr(str, 123));
 	printf("%s\n", strchr(str, 123));
 
-	printf("%s\n", ft_memset(str2, 'X', 10));
-	printf("%s\n", memset(str2, 'X', 10));
-	printf("%s\n", ft_memset(str3, 'X', 0));
-	printf("%s\n", memset(str3, 'X', 0));
+	printf("%s\n", ft_memset(str2, 'X', 3));
+	printf("%s\n", memset(str2, 'X', 3));
+	printf("%s\n", ft_memset(str3, 'X', 2));
+	printf("%s\n", memset(str3, 'X', 2));
 	printf("%s\n", ft_memset(str4, 'X', 1000));
 	printf("%s\n", memset(str4, 'X', 1000));
 	printf("%s\n", ft_memset(str5, 'X', -5));

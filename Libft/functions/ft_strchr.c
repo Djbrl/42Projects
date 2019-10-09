@@ -6,11 +6,9 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 12:11:57 by dsy               #+#    #+#             */
-/*   Updated: 2019/10/07 13:39:25 by dsy              ###   ########.fr       */
+/*   Updated: 2019/10/09 17:32:53 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include <stdlib.h>
 
 char	*ft_strchr(char *str, int n)
 {
@@ -25,5 +23,5 @@ char	*ft_strchr(char *str, int n)
 			return (&str[i]);
 		i++;
 	}
-	return ((char*)NULL);
+	return (0);
 }
