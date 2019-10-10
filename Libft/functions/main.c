@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 11:48:58 by dsy               #+#    #+#             */
-/*   Updated: 2019/10/09 17:26:15 by dsy              ###   ########.fr       */
+/*   Updated: 2019/10/10 18:14:38 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int		ft_strlen(char *);
 char	*ft_strchr(char *, int);
 void	*ft_memset(void *, int, size_t);
 void	*ft_memcpy(void *, void *, size_t n);
+void	*ft_memmove(void *, void *, size_t n);
 void	*ft_memccpy(void *, void *, int, size_t n);
 
 //ALL TESTS ARE ARBITRARY AND BASED ON WHAT I WANT TO RESEARCH ON
@@ -30,16 +31,16 @@ int		main(int ac, char **av)
 	(void)ac;
 
 	//decoy char strings to test on
-	char	str[] = "titi";
+	char	str[] = "chacal";
 	char	stra[] = "titi";
 	char	strs[] = "titi";
 	char	strd[] = "titi";
 	char	strf[] = "titi";
 	char	strg[] = "titi";
 	char	strh[] = "titi";
-	char	strj[] = "titi";
-	char	strq[] = "titi";
-	char	strw[] = "titi";
+	char	strj[] = "whatgffhfhfhy";
+	char	strq[] = "t0t";
+	char	strw[] = "here";
 	char	stre[] = "titi";
 	char	strr[] = "titi";
 	char	strt[] = "titi";
@@ -105,8 +106,15 @@ int		main(int ac, char **av)
 	printf("results : memstr %s ftstra %s\n", strq, strs);
 	printf("results : memstr %s ftstra %s\n", strw, strd);
 	printf("results : memstr %s ftstra %s\n", stre, strf);
+	
+	printf("m %s\n", memmove(stra, "XXXXX", 5));
+	printf("m %s\n", memmove(strw, "XX", 4));
+	printf("m %s\n", memmove(stre, "XXX", 4));
+	printf("m %s\n", memmove(strr, "X", 2));
+	printf("m %s\n", memmove(stra, "", 1));
+	printf("m %s\n", memmove(strs, "", 1));
+	printf("m %s\n", memmove(strd, "", 0));
 	*/
-
 
 	return (0);
 }
