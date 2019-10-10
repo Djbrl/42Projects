@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 11:48:58 by dsy               #+#    #+#             */
-/*   Updated: 2019/10/10 18:14:38 by dsy              ###   ########.fr       */
+/*   Updated: 2019/10/10 19:36:46 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,10 @@
 #include <string.h>
 
 int		ft_strlen(char *);
+void	ft_bzero(void *, size_t);
 char	*ft_strchr(char *, int);
 void	*ft_memset(void *, int, size_t);
+void	*ft_memchr(void *, int, size_t);
 void	*ft_memcpy(void *, void *, size_t n);
 void	*ft_memmove(void *, void *, size_t n);
 void	*ft_memccpy(void *, void *, int, size_t n);
@@ -30,6 +32,7 @@ int		main(int ac, char **av)
 	(void)av;
 	(void)ac;
 
+	int i = 259;
 	//decoy char strings to test on
 	char	str[] = "chacal";
 	char	stra[] = "titi";
@@ -114,7 +117,23 @@ int		main(int ac, char **av)
 	printf("m %s\n", memmove(stra, "", 1));
 	printf("m %s\n", memmove(strs, "", 1));
 	printf("m %s\n", memmove(strd, "", 0));
+
+	//ft_bzero(str, 2);
+	//ft_bzero(strq, 4);
+	//ft_bzero(strw, 1);
+	//ft_bzero(strw, 5);
+	//printf("%s", str);
+	//printf("%s", str+2);
+	//printf("%s", strq);
+	//printf("%s", strw);
+	//printf("%s", stre);
+	
+	printf("%s\n", ft_memchr(str, 'c', 456));
+	printf("%s\n", ft_memchr(str, 'a', 456));
+	printf("%s\n", ft_memchr(str, 'l', 456));
+	printf("%s\n", ft_memchr(str, 'w', 456));
 	*/
+	
 
 	return (0);
 }
