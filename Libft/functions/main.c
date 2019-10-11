@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 11:48:58 by dsy               #+#    #+#             */
-/*   Updated: 2019/10/10 19:36:46 by dsy              ###   ########.fr       */
+/*   Updated: 2019/10/11 14:32:23 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <string.h>
 
 int		ft_strlen(char *);
+int		ft_memcmp(const void*, const void*, size_t);
 void	ft_bzero(void *, size_t);
 char	*ft_strchr(char *, int);
 void	*ft_memset(void *, int, size_t);
@@ -134,6 +135,30 @@ int		main(int ac, char **av)
 	printf("%s\n", ft_memchr(str, 'w', 456));
 	*/
 	
+	printf("%i\n", ft_memcmp("ghjlk","salut",1));
+	printf("%i\n", memcmp("ghjlk","salut",1));
+	printf("%i\n", ft_memcmp("ghjldeefqk","salut",1));
+	printf("%i\n", memcmp("ghjldeefqk","salut",1));
+	printf("%i\n", ft_memcmp("ghjlk","sfwealut",1));
+	printf("%i\n", memcmp("ghjlk","sfwealut",1));
+	printf("%i\n", ft_memcmp("ghjlk","saefqafdlut",1));
+	printf("%i\n", memcmp("ghjlk","saefqafdlut",1));
+	printf("%i\n", ft_memcmp("ghjlkqwf","sfewalut",1));
+	printf("%i\n", memcmp("ghjlkqwf","sfewalut",1));
+	printf("%i\n", ft_memcmp("ghjlkqf","salut",1));
+	printf("%i\n", memcmp("ghjlkqf","salut",1));
+	printf("%i\n", ft_memcmp("","salufqwfqt",1));
+	printf("%i\n", memcmp("","salufqwfqt",1));
+	printf("%i\n", ft_memcmp("ghjlk","",1));
+	printf("%i\n", memcmp("ghjlk","",1));
+	printf("%i\n", ft_memcmp("gh","salut",10));
+	printf("%i\n", memcmp("gh","salut",10));
+	printf("%i\n", ft_memcmp("ghjlk","salut",12132));
+	printf("%i\n", memcmp("ghjlk","salut",12132));
+	printf("%i\n", ft_memcmp("ghjlk","salut",112));
+	printf("%i\n", memcmp("ghjlk","salut",112));
+	printf("%i\n", ft_memcmp("ghjlk","salut",0));
+	printf("%i\n", memcmp("ghjlk","salut",0));
 
 	return (0);
 }
