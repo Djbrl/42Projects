@@ -1,0 +1,169 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/10/07 11:48:58 by dsy               #+#    #+#             */
+/*   Updated: 2019/10/11 17:31:24 by dsy              ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+
+int		ft_strlen(char *);
+int		ft_memcmp(const void*, const void*, size_t);
+void	ft_bzero(void *, size_t);
+char	*ft_strchr(char *, int);
+void	*ft_memset(void *, int, size_t);
+void	*ft_memchr(void *, int, size_t);
+void	*ft_memcpy(void *, void *, size_t n);
+void	*ft_memmove(void *, void *, size_t n);
+void	*ft_memccpy(void *, void *, int, size_t n);
+
+//ALL TESTS ARE ARBITRARY AND BASED ON WHAT I WANT TO RESEARCH ON
+//do your own!
+
+int		main(int ac, char **av)
+{
+	//uncast to use args
+	(void)av;
+	(void)ac;
+
+	/*int i = 259;
+	//decoy char strings to test on
+	char	str[] = "chacal";
+	char	stra[] = "titi";
+	char	strs[] = "titi";
+	char	strd[] = "titi";
+	char	strf[] = "titi";
+	char	strg[] = "titi";
+	char	strh[] = "titi";
+	char	strj[] = "whatgffhfhfhy";
+	char	strq[] = "t0t";
+	char	strw[] = "here";
+	char	stre[] = "titi";
+	char	strr[] = "titi";
+	char	strt[] = "titi";
+	char	stry[] = "titi";
+	char	stru[] = "titi";
+	char	str2[] = "toto";
+	char	str3[] = "tutu";
+	char	str4[] = "tototutu";
+	char	str5[] = "";
+	char	str6[] = "1234";
+	char	*str7 = NULL;
+//	char	*str1 = " ";
+//	char	*str2 = "/n";
+//	char	*str3 = NULL;
+	int		n = 0;
+
+	//uncomment to test
+	//check which strings are being used, you might have to uncomment some
+
+	printf("%i\n", ft_strlen(str));
+	printf("%i\n", ft_strlen(str1));
+	printf("%i\n", ft_strlen(str2));
+	printf("%i\n", ft_strlen(str3));
+
+	printf("%s\n", ft_strchr(str, 0));
+	printf("%s\n", strchr(str, 0));
+	printf("%s\n", ft_strchr(str, -9));
+	printf("%s\n", strchr(str, -9));
+	printf("%s\n", ft_strchr(str, 53));
+	printf("%s\n", strchr(str, 53));
+	printf("%s\n", ft_strchr(str, 123));
+	printf("%s\n", strchr(str, 123));
+
+	printf("%s\n", ft_memset(str2, 'X', 3));
+	printf("%s\n", memset(str2, 'X', 3));
+	printf("%s\n", ft_memset(str3, 'X', 2));
+	printf("%s\n", memset(str3, 'X', 2));
+	printf("%s\n", ft_memset(str4, 'X', 1000));
+	printf("%s\n", memset(str4, 'X', 1000));
+	printf("%s\n", ft_memset(str5, 'X', -5));
+	printf("%s\n", memset(str5, 'X', -5));
+*/
+	printf("%s\n", memcpy(NULL, "toto", 3));
+	printf("m %s\n", memcpy("toto", NULL, 3));
+	printf("%s\n", memcpy(NULL, NULL, 0));
+	printf("%s\n", memcpy(NULL, NULL, 1));
+	printf("%s\n", memcpy(NULL, NULL, 2));
+/*	printf("m %s\n", memcpy(strs, str2, 0));
+	printf("%s\n", ft_memcpy(stre, str2, 5));
+	printf("m %s\n", memcpy(strd, str2, 5));
+	printf("%s\n", ft_memcpy(strr, str4, 3));
+	printf("m %s\n", memcpy(strf, str4, 3));
+	printf("%s\n", ft_memcpy(stru, str7, 0));
+	printf("m %s\n", memcpy(strj, str7, 0));
+	
+	printf("%s\n", ft_memccpy(stra, str2, 'o', 0));
+	printf("m %s\n", memccpy(str, str2, 'o', 0));
+	printf("%s\n", ft_memccpy(strs, str2, 'o', 2));
+	printf("m %s\n", memccpy(strq, str2, 'o', 2));
+	printf("%s\n", ft_memccpy(strd, str2, 'o', 3));
+	printf("m %s\n", memccpy(strw, str2, 'o', 3));
+	printf("%s\n", ft_memccpy(strf, str2, 'o', 4));
+	printf("m %s\n", memccpy(stre, str2, 'o', 4));
+	printf("results : memstr %s ftstra %s\n", str, stra);
+	printf("results : memstr %s ftstra %s\n", strq, strs);
+	printf("results : memstr %s ftstra %s\n", strw, strd);
+	printf("results : memstr %s ftstra %s\n", stre, strf);
+	
+	printf("m %s\n", memmove(stra, "XXXXX", 5));
+	printf("m %s\n", memmove(strw, "XX", 4));
+	printf("m %s\n", memmove(stre, "XXX", 4));
+	printf("m %s\n", memmove(strr, "X", 2));
+	printf("m %s\n", memmove(stra, "", 1));
+	printf("m %s\n", memmove(strs, "", 1));
+	printf("m %s\n", memmove(strd, "", 0));
+
+	//ft_bzero(str, 2);
+	//ft_bzero(strq, 4);
+	//ft_bzero(strw, 1);
+	//ft_bzero(strw, 5);
+	//printf("%s", str);
+	//printf("%s", str+2);
+	//printf("%s", strq);
+	//printf("%s", strw);
+	//printf("%s", stre);
+	
+	printf("%s\n", ft_memchr(str, 'c', 456));
+	printf("%s\n", ft_memchr(str, 'a', 456));
+	printf("%s\n", ft_memchr(str, 'l', 456));
+	printf("%s\n", ft_memchr(str, 'w', 456));
+		
+	printf("%i\n", ft_memcmp("ghjlk","salut",1));
+	printf("%i\n", memcmp("ghjlk","salut",1));
+	printf("%i\n", ft_memcmp("ghjldeefqk","salut",1));
+	printf("%i\n", memcmp("ghjldeefqk","salut",1));
+	printf("%i\n", ft_memcmp("ghjlk","sfwealut",1));
+	printf("%i\n", memcmp("ghjlk","sfwealut",1));
+	printf("%i\n", ft_memcmp("ghjlk","saefqafdlut",1));
+	printf("%i\n", memcmp("ghjlk","saefqafdlut",1));
+	printf("%i\n", ft_memcmp("ghjlkqwf","sfewalut",1));
+	printf("%i\n", memcmp("ghjlkqwf","sfewalut",1));
+	printf("%i\n", ft_memcmp("ghjlkqf","salut",1));
+	printf("%i\n", memcmp("ghjlkqf","salut",1));
+	printf("%i\n", ft_memcmp("","salufqwfqt",1));
+	printf("%i\n", memcmp("","salufqwfqt",1));
+	printf("%i\n", ft_memcmp("ghjlk","",1));
+	printf("%i\n", memcmp("ghjlk","",1));
+	printf("%i\n", ft_memcmp("gh","salut",10));
+	printf("%i\n", memcmp("gh","salut",10));
+	printf("%i\n", ft_memcmp("ghjlk","salut",12132));
+	printf("%i\n", memcmp("ghjlk","salut",12132));
+	printf("%i\n", ft_memcmp("ghjlk","salut",112));
+	printf("%i\n", memcmp("ghjlk","salut",112));
+	printf("%i\n", ft_memcmp("ghjlk","salut",0));
+	printf("%i\n", memcmp("ghjlk","salut",0));
+	*/
+
+	printf("%s\n", memcpy(NULL, NULL, 1));
+	printf("%s\n", memcpy(NULL, NULL, 0));
+	printf("%s\n", memcpy(NULL, NULL, 2));
+	return (0);
+}
