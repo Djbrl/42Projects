@@ -6,17 +6,17 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 11:45:23 by dsy               #+#    #+#             */
-/*   Updated: 2019/10/09 17:19:03 by dsy              ###   ########.fr       */
+/*   Updated: 2019/10/12 18:14:22 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int		ft_strlen(char *str)
+#include "libft.h"
+
+size_t	ft_strlen(char *str)
 {
 	int i;
 
 	i = 0;
-	if (!str)
-		return (0);
 	while (str[i])
 		i++;
 	return (i);

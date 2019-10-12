@@ -6,11 +6,11 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 14:04:46 by dsy               #+#    #+#             */
-/*   Updated: 2019/10/11 14:33:25 by dsy              ###   ########.fr       */
+/*   Updated: 2019/10/12 18:12:51 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
+#include "libft.h"
 
 int	ft_memcmp(const void *s, const void *s2, size_t n)
 {

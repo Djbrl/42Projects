@@ -6,11 +6,11 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/10 19:11:52 by dsy               #+#    #+#             */
-/*   Updated: 2019/10/11 15:20:10 by dsy              ###   ########.fr       */
+/*   Updated: 2019/10/12 18:12:38 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
+#include "libft.h"
 
 void	*ft_memchr(const void *s, int c, size_t n)
 {

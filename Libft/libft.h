@@ -6,13 +6,14 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/12 17:14:11 by dsy               #+#    #+#             */
-/*   Updated: 2019/10/12 17:22:05 by dsy              ###   ########.fr       */
+/*   Updated: 2019/10/12 18:42:12 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
+# include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>

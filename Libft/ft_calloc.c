@@ -6,22 +6,22 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 14:37:21 by dsy               #+#    #+#             */
-/*   Updated: 2019/10/11 15:01:44 by dsy              ###   ########.fr       */
+/*   Updated: 2019/10/12 18:15:17 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include "libft.h"
 
-void	*ft_calloc(size_t elementCount, size_t elementSize)
+void	*ft_calloc(size_t elementcount, size_t elementsize)
 {
-	size_t i;
-	char *p;
+	size_t	i;
+	char	*p;
 
 	i = 0;
-	p = (char*)malloc(elementCount * sizeof(elementSize));
+	p = (char*)malloc(elementcount * sizeof(elementsize));
 	if (!p)
 		return (NULL);
-	while (i < elementCount)
+	while (i < elementcount)
 	{
 		p[i] = 0;
 		i++;
