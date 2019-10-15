@@ -1,23 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/07 11:45:23 by dsy               #+#    #+#             */
-/*   Updated: 2019/10/15 16:58:24 by dsy              ###   ########.fr       */
+/*   Created: 2019/10/15 17:28:56 by dsy               #+#    #+#             */
+/*   Updated: 2019/10/15 19:44:41 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlen(const char *str)
+char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 {
-	int i;
+	size_t	n;
 
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
+	if (*needle == '\0')
+		return ((char *)haystack);
+	n = ft_strlen(needle);
+	while (*haystack != '\0' && n <= len--)
+	{
+		if (*haystack == *needle && ft_strncmp(haystack, needle, n) == 0)
+			return ((char *)haystack);
+		else
+			haystack++;
+	}
+	return (NULL);
 }
