@@ -1,32 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memcpy.c                                        :+:      :+:    :+:   */
+/*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/07 17:17:35 by dsy               #+#    #+#             */
-/*   Updated: 2019/10/17 13:15:43 by dsy              ###   ########.fr       */
+/*   Created: 2019/10/17 15:32:43 by dsy               #+#    #+#             */
+/*   Updated: 2019/10/17 18:23:03 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memcpy(void *str1, const void *str2, size_t n)
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	size_t				i;
-	unsigned char		*dest;
-	unsigned const char	*src;
+	size_t i;
+	char *newstr;
 
 	i = 0;
-	dest = (unsigned char*)str1;
-	src = (unsigned const char*)str2;
-	if (dest == NULL && src == NULL)
+	if (!(newstr = (char*)malloc(sizeof(char) * len + 1)))
 		return (NULL);
-	while (i < n)
+	if (start > ft_strlen(s))
+		return (0);
+	while (i < len && s[start])
 	{
-		dest[i] = src[i];
+		newstr[i] = s[start++];
 		i++;
 	}
-	return (dest);
+	newstr[i] = '\0';
+	return (newstr);
 }

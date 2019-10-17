@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/12 17:14:11 by dsy               #+#    #+#             */
-/*   Updated: 2019/10/16 13:12:10 by dsy              ###   ########.fr       */
+/*   Updated: 2019/10/17 18:41:29 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,12 @@
 # include <string.h>
 # include <unistd.h>
 
+typedef struct s_list
+{
+	void *content;
+	struct s_list *next;
+} t_list;
+t_list *ft_lstnew(void *content);
 void			*ft_memset(void *str, int c, size_t n);
 void			ft_bzero(void *s, size_t n);
 void			*ft_memcpy(void *str1, const void *str2, size_t n);
@@ -37,12 +43,17 @@ int				ft_toupper(int c);
 int				ft_tolower(int c);
 char			*ft_strchr(const char *str, int c);
 char			*ft_strrchr(const char *str, int c);
+char			*ft_substr(char const *s, unsigned int start, size_t len);
+char			*ft_strjoin(char const *s1, char const *s2);
 int				ft_strncmp(const char *str1, const char *str2, size_t n);
 size_t			ft_strlcpy(char *dest, const char *src, size_t dstsize);
 size_t			ft_strlcat(char *dest, const char *src, size_t size);
 char			*ft_strnstr(char const *haystack, const char *needle, size_t len);
 int				ft_atoi(const char *str);
 void			*ft_calloc(size_t nitems, size_t size);
+void			ft_putchar_fd(char c, int fd);
+void			ft_putstr_fd(char *str, int fd);
+void			ft_putendl_fd(char *s, int fd);
 char			*ft_strdup(const char *str);
 char			*ft_substr(char const *s, unsigned int start, size_t len);
 char			*ft_strjoin(char const *s1, char const *s2);

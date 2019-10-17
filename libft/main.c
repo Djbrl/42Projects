@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 11:48:58 by dsy               #+#    #+#             */
-/*   Updated: 2019/10/16 16:22:29 by dsy              ###   ########.fr       */
+/*   Updated: 2019/10/17 19:19:37 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,23 @@
 
 int		main()
 {
-
-	char str[50] = "test du strlcpy!";
-	char str1[50] = "test du strlcpy!";
-	char str2[50] = "test du strlcpy!";
-	char str3[50] = "test du strlcpy!";
-	char str4[50] = "test du strlcpy!";
-	char str5[50] = "test du strlcpy!";
-
-	printf("%i\n%i\n", (int)strlcat(str, "XXXXX", 16), (int)ft_strlcat(str1, "XXXXX", 16));
-	printf("results : \nst %s\nft %s\n", str, str1);
-	printf("%i\n%i\n", (int)strlcat(str2, "XXXXX", 3), (int)ft_strlcat(str3, "XXXXX", 3));
-	printf("results : \nst %s\nft %s\n", str2, str3);
-	printf("%i\n%i\n", (int)strlcat(str4, "XXXXX", 0), (int)ft_strlcat(str5, "XXXXX", 0));
-	printf("results : \nst %s\nft %s\n", str4, str5);
+/*
+	char str[] = "test du strlcpy!";
+	char str1[] = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX";
+	char str2[] = "test du strlcpy!";
+	char str3[] = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX";
+	char str4[] = "test du strlcpy!";
+	char str5[] = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX";
+	char str6[] = "test du strlcpy!";
+	char str7[] = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX";
+*/
+	char *s1 = "where is my ";
+char *s2 = "malloc ???";
+char *res = ft_strjoin (s1, s2);
+printf("%s\n", res);
 	/*
+	printf("%s\n%s\n", memmove(str, str1, 16), ft_memmove(str2, str3, 16));
+	printf("%s\n%s\n", memmove(str5, str4, 16), ft_memmove(str7, str6, 16));
 	   char str1[] = "test";
 	   char str2[] = "test";
 	//char str3[] = "test basic du memccpy";
