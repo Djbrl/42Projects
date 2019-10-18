@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/12 17:14:11 by dsy               #+#    #+#             */
-/*   Updated: 2019/10/17 18:41:29 by dsy              ###   ########.fr       */
+/*   Updated: 2019/10/18 18:40:19 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,9 @@ size_t			ft_strlcat(char *dest, const char *src, size_t size);
 char			*ft_strnstr(char const *haystack, const char *needle, size_t len);
 int				ft_atoi(const char *str);
 void			*ft_calloc(size_t nitems, size_t size);
+void			ft_putchar(char c);
+void			ft_putnbr(int c);
+void			ft_putnbr_fd(int c, int fd);
 void			ft_putchar_fd(char c, int fd);
 void			ft_putstr_fd(char *str, int fd);
 void			ft_putendl_fd(char *s, int fd);
@@ -58,4 +61,5 @@ char			*ft_strdup(const char *str);
 char			*ft_substr(char const *s, unsigned int start, size_t len);
 char			*ft_strjoin(char const *s1, char const *s2);
 char			*ft_strtrim(char const *s1, char const *set);
+char			**ft_split(char const *s, char c);
 #endif

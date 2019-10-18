@@ -1,35 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_substr.c                                        :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/17 15:32:43 by dsy               #+#    #+#             */
-/*   Updated: 2019/10/18 16:10:53 by dsy              ###   ########.fr       */
+/*   Created: 2019/10/18 15:49:45 by dsy               #+#    #+#             */
+/*   Updated: 2019/10/18 15:56:41 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+int	ft_atoi(const char *str)
 {
-	size_t i;
-	char *newstr;
+	int i;
+	int neg;
+	int res;
 
 	i = 0;
-	if (!(newstr = (char*)malloc(sizeof(char) * len + 1)))
-		return (NULL);
-	if (start > ft_strlen(s))
+	res = 0;
+	neg = 1;
+	while (str[i] == 32 || str[i] == 10 || str[i] == 9 || str[i] == 12 || 
+			str[i] == 13 || str[i] == 11)
+		i++;
+	if (str[i] == '-' || str[i] == '+')
 	{
-		newstr[0] = '\0';
-		return (newstr);
-	}
-	while (i < len && s[start])
-	{
-		newstr[i] = s[start++];
+		if (str[i] == '-')
+			neg *= -1;
 		i++;
 	}
-	newstr[i] = '\0';
-	return (newstr);
+	while (str[i])
+	{
+		if (str[i] < 48 || str[i] > 57)
+			return (res * neg);
+		else
+			res = (res * 10) + (long)(str[i] - '0');
+		i++;
+	}
+	return (res * neg);
 }
