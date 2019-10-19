@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/18 16:27:17 by dsy               #+#    #+#             */
-/*   Updated: 2019/10/18 18:16:08 by dsy              ###   ########.fr       */
+/*   Updated: 2019/10/19 11:20:41 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,20 @@ size_t	findstart(char const *s1, char const *set)
 		return (i);
 }
 
+size_t fullblank(char const *s1, char const *set)
+{
+	size_t i;
+
+	i = 0;
+	while (s1[i])
+	{
+		if (!isinset(s1[i], set))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 char	*ft_strtrim(char const *s1, char const *set)
 {
 	size_t i;
@@ -64,9 +78,14 @@ char	*ft_strtrim(char const *s1, char const *set)
 	start = findstart(s1, set);
 	if (!(newstr = (char*)malloc(sizeof(char) * (end - start  + 1) + 1)))
 		return (NULL);
+	if(fullblank(s1, set))
+	{
+		newstr[i] = '\0';
+			return (newstr);
+	}
 	if (s1 == set || (end == 0 && start == 0))
 	{
-		*newstr = '\0';
+		newstr[i] = '\0';
 		return (newstr);
 	}
 	while (start <= end)

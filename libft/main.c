@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 11:48:58 by dsy               #+#    #+#             */
-/*   Updated: 2019/10/18 19:03:05 by dsy              ###   ########.fr       */
+/*   Updated: 2019/10/19 13:38:19 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,25 @@
 
 int		main()
 {
-/*
+
+	/*ft_split("", '\0');
+	ft_split("          ", ' ');
+	ft_split(" ", ' ');
+	*/
+	char **str = ft_split("chaine de test", ' ');
+	int i = 0;
+	while (str[i] != 0)
+	{
+		printf("%s\n", str[i]);
+		i++;
+	}
+/*	printf("%s\n", ft_strtrim("abacbcabacbacbacbacbacbabc", "abc"));
+	printf("%s\n", ft_strtrim("aaaaaaaaaaaaaaaaaaaaaaa", "a"));
+	printf("%s\n", ft_strtrim("bbbbbbbbbbbbbbbbbbbbbbbbbbb", "abc"));
+	printf("%s\n", ft_strtrim("", ""));
+	printf("%s\n", ft_strtrim("          ", "   "));
+*/
+	/*
 	char str[] = "test du strlcpy!";
 	char str1[] = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX";
 	char str2[] = "test du strlcpy!";
