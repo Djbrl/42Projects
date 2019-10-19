@@ -6,25 +6,23 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 14:37:21 by dsy               #+#    #+#             */
-/*   Updated: 2019/10/12 18:15:17 by dsy              ###   ########.fr       */
+/*   Updated: 2019/10/19 17:41:57 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_calloc(size_t elementcount, size_t elementsize)
+void    *ft_calloc(size_t count, size_t size)
 {
-	size_t	i;
-	char	*p;
-
-	i = 0;
-	p = (char*)malloc(elementcount * sizeof(elementsize));
-	if (!p)
-		return (NULL);
-	while (i < elementcount)
-	{
-		p[i] = 0;
-		i++;
-	}
-	return (p);
+    char    *stock;
+    int        i;
+    i = 0;
+    if (!(stock = (char*)malloc(count * size)))
+        return (NULL);
+    while (stock[i])
+    {
+        stock[i] = 0;
+        i++;
+    }
+    return (stock);
 }

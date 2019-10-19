@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_itoa.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/10/19 16:48:32 by dsy               #+#    #+#             */
+/*   Updated: 2019/10/19 17:47:32 by dsy              ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdlib.h>
 
-static int		get_nb_size(unsigned int nb)
+int		get_nb_size(int nb)
 {
-	unsigned int	size;
+	int	size;
 
 	size = 0;
 	while (nb >= 10)
@@ -13,18 +25,18 @@ static int		get_nb_size(unsigned int nb)
 	return (size + 1);
 }
 
-char			*ft_itoa(int nbr)
+char	*ft_itoa(int nbr)
 {
 	char			*str;
-	unsigned int	nb;
-	unsigned int	index;
-	unsigned int	size;
+	int	nb;
+	int	index;
+	int	size;
 
 	if (nbr < 0)
-		nb = (unsigned int)(nbr * -1);
+		nb = (nbr * -1);
 	else
-		nb = (unsigned int)nbr;
-	size = (unsigned int)get_nb_size(nb);
+		nb = nbr;
+	size = get_nb_size(nb);
 	index = 0;
 	if (!(str = (char*)malloc(sizeof(char) * (size + 1 + (nbr < 0 ? 1 : 0)))))
 		return (0);

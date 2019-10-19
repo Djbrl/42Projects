@@ -18,7 +18,7 @@ Test code:
 
 Diffs:
      memmove: |this is a good nyancat !
-�|
+|
   ft_memmove: ||
 
 [fail]: your memmove does not work with \0 and others unsigned char codes
@@ -73,7 +73,7 @@ Test code:
 
 Diffs:
      memmove: |thithiß ßޭ��triñg will be øvérlapéd !
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAY|
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAG|
   ft_memmove: |thi�hiß ßޭ��triñg will be øvérlapéd !
 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAthithiß ßޭ��triñg will be øvérlapéd !
 AAAAAAAAAAAAAA|
@@ -97,7 +97,7 @@ Test code:
 
 Diffs:
      memmove: |ß ßޭ��triñg will be øvérlapéd !
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAY|
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAG|
   ft_memmove: |t� ßޭ��triñg will be øvérlapéd !
 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAß ßޭ��triñg will be øvérlapéd !
 AAAAAAAAAAAAAAAAAAAA|
@@ -180,57 +180,28 @@ Diffs:
         atoi: |0|
      ft_atoi: |469762049|
 
-ft_calloc:     [OK] [OK] [FAILED] [OK] [KO] [FAILED] 
-[fail]: your calloc don't work with empty string
-Test code:
-	int size = 8539;
-
-	void * d1 = ft_calloc(size, sizeof(int));
-	void * d2 = calloc(size, sizeof(int));
-	if (memcmp(d1, d2, size * sizeof(int)))
-		exit(TEST_FAILED);
-	free(d1);
-	free(d2);
-	exit(TEST_SUCCESS);
-
-Diffs:
-
-
-[KO]: your calloc did not allocate the good size
-Test code:
-	int size;
-	int count = 42 * 3;
-
-	ft_calloc(count, sizeof(char));
-	size = get_last_malloc_size();
-	if (size == count * sizeof(char))
-		exit(TEST_SUCCESS);
-	exit(TEST_KO);
-
-Diffs:
-      calloc: |126|
-   ft_calloc: |1008|
-
-[fail]: your calloc does not work with too large numbers
-Test code:
-	void *d1 = ft_calloc((9223372036854775807L *2UL+1UL), sizeof(char));
-
-	void *d2 = ft_calloc(2, 1073741829);
-	void *d3 = ft_calloc(1, (9223372036854775807L *2UL+1UL));
-	if (d1 || d3 || !d2)
-		exit(TEST_FAILED);
-	exit(TEST_SUCCESS);
-
-Diffs:
-
-
+ft_calloc:     [OK] [OK] [OK] [OK] [OK] [OK] 
 ft_strdup:     [OK] [OK] [OK] [OK] [OK] [OK] [OK] 
 ft_substr:     [OK] [OK] [OK] [OK] [OK] [OK] [OK] [OK] {not protected}
 ft_strjoin:    [OK] [OK] [OK] [OK] [OK] {not protected}
 ft_strtrim:    [OK] [OK] [OK] [OK] [OK] [OK] [OK] [OK] [OK] {not protected}
 ft_split:      [OK] [OK] [OK] [OK] [OK] [OK] [OK] [OK] [OK] {not protected}
-ft_itoa:       [MISSING]
-ft_strmapi:    [MISSING]
+ft_itoa:       [OK] [OK] [OK] [FAILED] [OK] [OK] [OK] [OK] [OK] 
+[fail]: your itoa does not work with min int
+Test code:
+	char *i1 = ft_itoa((-2147483647 -1));
+
+	if (atoi(i1) != (-2147483647 -1))
+	{
+		exit(TEST_FAILED);
+	}
+	exit(TEST_SUCCESS);
+
+Diffs:
+        itoa: |-(|
+     ft_itoa: |0|
+
+ft_strmapi:    [OK] [OK] [OK] [OK] [OK] {protected}
 ft_putchar_fd: [OK] [OK] [KO] 
 [KO]: your putchar_fd does not work with unicode
 Test code:
@@ -379,7 +350,7 @@ Test code:
 
 Diffs:
      strncpy: |\x6c\x65\x6e\x00\x00\x00\x00\x42\x42\x42\x42\x42\x42\x42\x42\x42\x42\x42\x42\x42|
-  ft_strncpy: |\x6c\x65\x6e\x00\x42\x42\x42\x42\x42\x42\x42\x42\x42\x42\x42\x42\x42\x42\x42\x42|AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAY|
+  ft_strncpy: |\x6c\x65\x6e\x00\x42\x42\x42\x42\x42\x42\x42\x42\x42\x42\x42\x42\x42\x42\x42\x42|AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAG|
   ft_memmove: |t� ßޭ��triñg will be øvérlapéd !
 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAß ßޭ��triñg will be øvérlapéd !
 AAAAAAAAAAAAAAAAAAAA|
@@ -404,7 +375,7 @@ Test code:
 
 Diffs:
      strncpy: |\x41\x41\x42\x42\x42\x42\x42\x42\x42\x42\x42\x42\x42\x42\x42\x42\x42\x42\x42\x42|
-  ft_strncpy: |\x41\x41\x00\x42\x42\x42\x42\x42\x42\x42\x42\x42\x42\x42\x42\x42\x42\x42\x42\x42|AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAY|
+  ft_strncpy: |\x41\x41\x00\x42\x42\x42\x42\x42\x42\x42\x42\x42\x42\x42\x42\x42\x42\x42\x42\x42|AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAG|
   ft_memmove: |t� ßޭ��triñg will be øvérlapéd !
 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAß ßޭ��triñg will be øvérlapéd !
 AAAAAAAAAAAAAAAAAAAA|

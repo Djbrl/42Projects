@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 11:48:58 by dsy               #+#    #+#             */
-/*   Updated: 2019/10/19 13:38:19 by dsy              ###   ########.fr       */
+/*   Updated: 2019/10/19 17:47:56 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,30 @@
 
 int		main()
 {
-
-	/*ft_split("", '\0');
+	
+//	char *str = calloc(1, 0);
+//	char *str1 = calloc(SIZE_MAX - 1, SIZE_MAX - 1);
+//	char *str2 = calloc(0, SIZE_MAX);
+//	char *str3 = ft_calloc(1, 0);
+//	char *str4 = ft_calloc(SIZE_MAX - 1, SIZE_MAX - 1);
+/*	char *str5 = ft_calloc(0, SIZE_MAX);
+	printf("%s\n", str);
+	printf("%s\n", str1);
+	printf("%s\n", str2);
+	printf("%s\n", str3);
+	printf("%s\n", str4);
+	printf("%s\n", str5);
+	*//*ft_split("", '\0');
 	ft_split("          ", ' ');
 	ft_split(" ", ' ');
 	*/
-	char **str = ft_split("chaine de test", ' ');
+/*	char **str = ft_split("chaine de test", ' ');
 	int i = 0;
 	while (str[i] != 0)
 	{
 		printf("%s\n", str[i]);
 		i++;
-	}
+	}*/
 /*	printf("%s\n", ft_strtrim("abacbcabacbacbacbacbacbabc", "abc"));
 	printf("%s\n", ft_strtrim("aaaaaaaaaaaaaaaaaaaaaaa", "a"));
 	printf("%s\n", ft_strtrim("bbbbbbbbbbbbbbbbbbbbbbbbbbb", "abc"));
