@@ -6,17 +6,17 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 18:29:18 by dsy               #+#    #+#             */
-/*   Updated: 2019/10/17 19:23:01 by dsy              ###   ########.fr       */
+/*   Updated: 2019/10/20 16:18:03 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char    *ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	char *newstr;
-	size_t i;
-	size_t j;
+	char	*newstr;
+	size_t	i;
+	size_t	j;
 
 	i = 0;
 	j = 0;

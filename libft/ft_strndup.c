@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 13:23:11 by dsy               #+#    #+#             */
-/*   Updated: 2019/10/19 13:24:31 by dsy              ###   ########.fr       */
+/*   Updated: 2019/10/20 16:18:22 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 char	*ft_strndup(const char *str, size_t n)
 {
-	size_t i;
-	char *newstr;
+	size_t	i;
+	char	*newstr;
 
 	i = 0;
 	if (n > ft_strlen(str))

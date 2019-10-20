@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/12 17:14:11 by dsy               #+#    #+#             */
-/*   Updated: 2019/10/20 15:06:32 by dsy              ###   ########.fr       */
+/*   Updated: 2019/10/20 16:27:35 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,6 @@
 # include <string.h>
 # include <unistd.h>
 
-typedef struct s_list
-{
-	void *content;
-	struct s_list *next;
-} t_list;
-t_list *ft_lstnew(void *content);
 void			*ft_memset(void *str, int c, size_t n);
 void			ft_bzero(void *s, size_t n);
 void			*ft_memcpy(void *str1, const void *str2, size_t n);
@@ -48,7 +42,8 @@ char			*ft_strjoin(char const *s1, char const *s2);
 int				ft_strncmp(const char *str1, const char *str2, size_t n);
 size_t			ft_strlcpy(char *dest, const char *src, size_t dstsize);
 size_t			ft_strlcat(char *dest, const char *src, size_t size);
-char			*ft_strnstr(char const *haystack, const char *needle, size_t len);
+char			*ft_strnstr(char const *haystack,
+				const char *needle, size_t len);
 int				ft_atoi(const char *str);
 char			*ft_itoa(int n);
 void			*ft_calloc(size_t nitems, size_t size);

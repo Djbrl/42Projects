@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 16:52:14 by dsy               #+#    #+#             */
-/*   Updated: 2019/10/19 17:45:47 by dsy              ###   ########.fr       */
+/*   Updated: 2019/10/20 16:16:35 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 	map = NULL;
 	if (s && f)
 	{
-		if(!(map = (char *)malloc(sizeof(char) * ft_strlen((char *)s) + 1)))
+		if (!(map = (char *)malloc(sizeof(char) * ft_strlen((char *)s) + 1)))
 			return (NULL);
 		while (i < ft_strlen((char *)s))
 		{

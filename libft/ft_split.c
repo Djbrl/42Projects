@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 14:48:49 by dsy               #+#    #+#             */
-/*   Updated: 2019/10/19 15:15:15 by dsy              ###   ########.fr       */
+/*   Updated: 2019/10/20 16:17:06 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,74 +89,3 @@ char	**ft_split(char *str, char charset)
 	tab[j] = 0;
 	return (tab);
 }
-/*
-   size_t	count_words(char const *s, char c)
-   {
-   size_t i;
-   size_t j;
-   size_t flag;
-
-   i = 0;
-   j = 0;
-   flag = 0;
-   while (s[i])
-   {
-   if (s[i] != c && flag == 0)
-   {
-   flag = 1;
-   j++;
-   }
-   if (s[i] == c)
-   flag = 0;
-   i++;
-   }
-   return (j);
-   }
-
-   int find_next_c(char const *s, char c, int n)
-   {
-   int i;
-
-   i = n + 1;
-   while (s[i])
-   {
-   if (s[i] == c)
-   return (i);
-   i++;
-   }
-   return (i);
-   }
-
-   char	**ft_split(char const *s, char c)
-   {
-   char **str;
-   size_t words;
-   size_t i;
-   size_t j;
-
-   i = 0;
-   j = 0;
-   words = count_words(s, c);
-   if (!words)
-   {
-   if (!(str = malloc(sizeof(char*))))
-   return (NULL);
-   str[0] = 0;
-   return (str);
-   }
-   if (!(str = malloc(sizeof(char*) * words + 1)))
-   return (NULL);
-   while (i < words)
-   {
-   while (s[j])
-   {
-   if (s[j] == c && i > 0)
-   str[i] = ft_strndup(s + j, find_next_c(s, c, j));
-   str[i] = ft_strndup(s, find_next_c(s, c, -1));
-   j++;
-   }
-   i++;
-   }
-   str[i] = 0;
-   return (str);
-   }*/

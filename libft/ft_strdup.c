@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 15:10:02 by dsy               #+#    #+#             */
-/*   Updated: 2019/10/17 15:18:21 by dsy              ###   ########.fr       */
+/*   Updated: 2019/10/20 16:16:24 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 char	*ft_strdup(const char *str)
 {
-	size_t i;
-	char *newstr;
+	size_t	i;
+	char	*newstr;
 
 	i = 0;
 	if (!(newstr = (char *)malloc(sizeof(char) * ft_strlen(str) + 1)))
