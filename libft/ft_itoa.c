@@ -6,49 +6,44 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 16:48:32 by dsy               #+#    #+#             */
-/*   Updated: 2019/10/19 17:47:32 by dsy              ###   ########.fr       */
+/*   Updated: 2019/10/20 15:38:12 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include "libft.h"
 
-int		get_nb_size(int nb)
+char	*intmin(void)
 {
-	int	size;
+	char *str;
 
-	size = 0;
-	while (nb >= 10)
-	{
-		nb /= 10;
-		++size;
-	}
-	return (size + 1);
+	str = ft_strdup("-2147483648");
+	return (str);
 }
 
-char	*ft_itoa(int nbr)
+char	*ft_itoa(int n)
 {
-	char			*str;
-	int	nb;
-	int	index;
-	int	size;
+	char	buff[22];
+	char	*str;
+	int		i;
+	int		ntmp;
 
-	if (nbr < 0)
-		nb = (nbr * -1);
-	else
-		nb = nbr;
-	size = get_nb_size(nb);
-	index = 0;
-	if (!(str = (char*)malloc(sizeof(char) * (size + 1 + (nbr < 0 ? 1 : 0)))))
-		return (0);
-	if (nbr < 0 && (str[index] = '-'))
-		size++;
-	index = size - 1;
-	while (nb >= 10)
+	i = 0;
+	ntmp = n;
+	if (n < 0)
+		ntmp = -n;
+	while (ntmp > 0)
 	{
-		str[index--] = (char)(nb % 10 + 48);
-		nb /= 10;
+		buff[i++] = (ntmp % 10) + 48;
+		ntmp = ntmp / 10;
 	}
-	str[index] = (char)(nb % 10 + 48);
-	str[size] = '\0';
+	if (n < 0)
+		buff[i++] = '-';
+	str = ft_memalloc((size_t)i + 1);
+	if (n == -2147483648)
+		return (intmin());
+	else if (n == 0 && str)
+		str[0] = '0';
+	while (--i >= 0 && str)
+		str[ntmp++] = buff[i];
 	return (str);
 }

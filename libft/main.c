@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 11:48:58 by dsy               #+#    #+#             */
-/*   Updated: 2019/10/19 17:47:56 by dsy              ###   ########.fr       */
+/*   Updated: 2019/10/20 14:56:54 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,12 @@
 
 int		main()
 {
-	
+	printf("%s\n", ft_itoa(-623));	
+	printf("%s\n", ft_itoa(-0));	
+	printf("%s\n", ft_itoa(-2147483648));	
+	printf("%s\n", ft_itoa(6545));	
+	printf("%s\n", ft_itoa(-623));	
+	printf("%s\n", ft_itoa(-623));	
 //	char *str = calloc(1, 0);
 //	char *str1 = calloc(SIZE_MAX - 1, SIZE_MAX - 1);
 //	char *str2 = calloc(0, SIZE_MAX);

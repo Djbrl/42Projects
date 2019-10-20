@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/12 17:14:11 by dsy               #+#    #+#             */
-/*   Updated: 2019/10/19 15:14:48 by dsy              ###   ########.fr       */
+/*   Updated: 2019/10/20 15:06:32 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ size_t			ft_strlcpy(char *dest, const char *src, size_t dstsize);
 size_t			ft_strlcat(char *dest, const char *src, size_t size);
 char			*ft_strnstr(char const *haystack, const char *needle, size_t len);
 int				ft_atoi(const char *str);
+char			*ft_itoa(int n);
 void			*ft_calloc(size_t nitems, size_t size);
 void			ft_putchar(char c);
 void			ft_putnbr(int c);
@@ -62,5 +63,6 @@ char			*ft_strndup(const char *str, size_t n);
 char			*ft_substr(char const *s, unsigned int start, size_t len);
 char			*ft_strjoin(char const *s1, char const *s2);
 char			*ft_strtrim(char const *s1, char const *set);
+char			*ft_memalloc(size_t n);
 char			**ft_split(char *s, char c);
 #endif
