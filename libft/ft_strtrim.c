@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/18 16:27:17 by dsy               #+#    #+#             */
-/*   Updated: 2019/10/20 16:35:29 by dsy              ###   ########.fr       */
+/*   Updated: 2019/10/23 18:51:46 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,12 +81,12 @@ char		*ft_strtrim(char const *s1, char const *set)
 		return (NULL);
 	if (fullblank(s1, set))
 	{
-		newstr[i] = '\0';
+		newstr[0] = '\0';
 		return (newstr);
 	}
 	if (s1 == set || (end == 0 && start == 0))
 	{
-		newstr[i] = '\0';
+		newstr[0] = '\0';
 		return (newstr);
 	}
 	while (start <= end)

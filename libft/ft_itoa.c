@@ -6,44 +6,35 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 16:48:32 by dsy               #+#    #+#             */
-/*   Updated: 2019/10/20 15:38:12 by dsy              ###   ########.fr       */
+/*   Updated: 2019/10/23 17:36:26 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*intmin(void)
+char		*ft_itoa(int n)
 {
-	char *str;
-
-	str = ft_strdup("-2147483648");
-	return (str);
-}
-
-char	*ft_itoa(int n)
-{
-	char	buff[22];
+	size_t	i;
+	size_t	n_size;
 	char	*str;
-	int		i;
-	int		ntmp;
 
 	i = 0;
-	ntmp = n;
-	if (n < 0)
-		ntmp = -n;
-	while (ntmp > 0)
-	{
-		buff[i++] = (ntmp % 10) + 48;
-		ntmp = ntmp / 10;
-	}
-	if (n < 0)
-		buff[i++] = '-';
-	str = ft_memalloc((size_t)i + 1);
 	if (n == -2147483648)
-		return (intmin());
-	else if (n == 0 && str)
-		str[0] = '0';
-	while (--i >= 0 && str)
-		str[ntmp++] = buff[i];
+		return (ft_strdup("-2147483648"));
+	n_size = ft_nbrlen(n);
+	if (!(str = (char *)malloc(sizeof(char) * (n_size + 1))))
+		return (NULL);
+	str[n_size] = 0;
+	if (n < 0)
+	{
+		str[0] = '-';
+		n *= -1;
+		i += 1;
+	}
+	while (i < n_size--)
+	{
+		str[n_size] = (n % 10) + '0';
+		n /= 10;
+	}
 	return (str);
 }
