@@ -5,92 +5,78 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/18 16:27:17 by dsy               #+#    #+#             */
-/*   Updated: 2019/10/23 18:51:46 by dsy              ###   ########.fr       */
+/*   Created: 2019/10/24 14:59:40 by dsy               #+#    #+#             */
+/*   Updated: 2019/10/24 15:28:59 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t		isinset(char c, char const *set)
+int		isinset(char const str, char const *charset)
 {
-	size_t i;
+	int i;
 
 	i = 0;
-	while (set[i])
+	while (charset[i])
 	{
-		if (c == set[i])
+		if (str == charset[i])
 			return (1);
 		i++;
 	}
 	return (0);
 }
 
-size_t		findend(char const *s1, char const *set)
+int		findsubstr(char const *s1, char const *set)
 {
-	size_t i;
+	int i;
+	int y;
 
-	i = ft_strlen(s1) - 1;
-	while (isinset(s1[i], set) && i >= 0)
+	i = ft_strlen(s1);
+	y = 0;
+	i--;
+	while (i && isinset(s1[i], set))
+	{
 		i--;
-	if (i == 0)
-		return (0);
-	else
-		return (i);
+		y++;
+	}
+	return (y);
 }
 
-size_t		findstart(char const *s1, char const *set)
+char	*copysubstr(int d, int x, char *str, char const *s1)
 {
-	size_t i;
+	int i;
 
 	i = 0;
-	while (isinset(s1[i], set))
-		i++;
-	if (s1[i] == '\0')
-		return (0);
-	else
-		return (i);
-}
-
-size_t		fullblank(char const *s1, char const *set)
-{
-	size_t i;
-
-	i = 0;
-	while (s1[i])
+	while (d--)
 	{
-		if (!isinset(s1[i], set))
-			return (0);
+		str[i] = s1[i + x];
 		i++;
 	}
-	return (1);
+	str[i] = '\0';
+	return (str);
 }
 
-char		*ft_strtrim(char const *s1, char const *set)
+char	*ft_strtrim(char const *s1, char const *set)
 {
-	size_t	i;
-	size_t	start;
-	size_t	end;
-	char	*newstr;
+	char	*str;
+	size_t	x;
+	int		d;
 
-	i = 0;
-	end = findend(s1, set);
-	start = findstart(s1, set);
-	if (!(newstr = (char*)malloc(sizeof(char) *
-					(end - start + 1) + 1)))
+	x = 0;
+	if (!s1 || !set)
 		return (NULL);
-	if (fullblank(s1, set))
+	while (s1[x] && isinset(s1[x], set))
+		x++;
+	if (x == ft_strlen(s1))
 	{
-		newstr[0] = '\0';
-		return (newstr);
+		if ((str = malloc(sizeof(char) * 1)) == NULL)
+			return (0);
+		str[0] = '\0';
+		return (str);
 	}
-	if (s1 == set || (end == 0 && start == 0))
-	{
-		newstr[0] = '\0';
-		return (newstr);
-	}
-	while (start <= end)
-		newstr[i++] = s1[start++];
-	newstr[i] = '\0';
-	return (newstr);
+	d = ft_strlen(s1) - findsubstr(s1, set) - x;
+	if ((str = malloc(sizeof(char) * d + 1)) == NULL)
+		return (0);
+	str = copysubstr(d, x, str, s1);
+	return (str);
 }

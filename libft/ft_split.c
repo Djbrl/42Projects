@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 14:48:49 by dsy               #+#    #+#             */
-/*   Updated: 2019/10/23 18:49:24 by dsy              ###   ########.fr       */
+/*   Updated: 2019/10/24 14:20:00 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,8 @@ char		**ft_split(char const *str, char c)
 	char	**tab;
 
 	i = 0;
-	if ((tab = (char**)malloc(sizeof(char*) * (get_words((char *)str, c) + 1)))
+	if (!str || (tab = (char**)malloc(sizeof(char*) *
+					(get_words((char *)str, c) + 1)))
 			== NULL)
 		return (NULL);
 	while (i < get_words((char *)str, c))

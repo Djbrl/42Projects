@@ -2,139 +2,7 @@ ft_memset:     [OK] [OK] [OK] [OK] [OK] [OK] [OK]
 ft_bzero:      [OK] [OK] [OK] [OK] 
 ft_memcpy:     [OK] [OK] [OK] [OK] [OK] [OK] [OK] [OK] [OK] [OK] [OK] 
 ft_memccpy:    [OK] [OK] [OK] [OK] [OK] [OK] [OK] [OK] [OK] [OK] [OK] [OK] 
-ft_memmove:    [FAILED] [OK] [FAILED] [FAILED] [FAILED] [FAILED] [OK] [CRASH] [CRASH] [OK] [OK] [OK] [CRASH] [OK] 
-[fail]: your memmove does not work with basic input
-Test code:
-	char *src = "this is a good nyancat !\r\n";
-	char dst1[0xF0];
-	char dst2[0xF0];
-	int size = strlen(src);
-
-	__builtin___memmove_chk (dst1, src, size, __builtin_object_size (dst1, 0));
-	ft_memmove(dst2, src, size);
-	if (!memcmp(dst1, dst2, size))
-		exit(TEST_SUCCESS);
-	exit(TEST_FAILED);
-
-Diffs:
-     memmove: |this is a good nyancat !
-|
-  ft_memmove: ||
-
-[fail]: your memmove does not work with \0 and others unsigned char codes
-Test code:
-	char *src = "thi\xffs i\xfas \0a g\xde\xadood \0nyan\0cat\0 !\r\n";
-	int size = 33;
-	char dst1[0xF0];
-	char dst2[0xF0];
-
-	__builtin___memmove_chk (dst1, src, size, __builtin_object_size (dst1, 0));
-	ft_memmove(dst2, src, size);
-	if (!memcmp(dst1, dst2, size))
-		exit(TEST_SUCCESS);
-	exit(TEST_FAILED);
-
-Diffs:
-     memmove: |thi�s i�s |
-  ft_memmove: |�hi�s i�s |
-
-[fail]: your memmove does not work with integers copy
-Test code:
-	unsigned long src = 0xdeadbeef;
-	int size = sizeof(src);
-
-	unsigned long dst1;
-	unsigned long dst2;
-	__builtin___memmove_chk (&dst1, &src, size, __builtin_object_size (&dst1, 0));
-	ft_memmove(&dst2, &src, size);
-	if (!memcmp(&dst1, &dst2, size))
-		exit(TEST_SUCCESS);
-	exit(TEST_FAILED);
-
-Diffs:
-
-
-[fail]: your memmove does not support the overlap (test 1)
-Test code:
-	char dst1[0xF0];
-	char dst2[0xF0];
-	char *data = "thiß ß\xde\xad\xbe\xeftriñg will be øvérlapéd !\r\n";
-	int size = 0xF0 - 0xF;
-
-	__builtin___memset_chk (dst1, 'A', sizeof(dst1), __builtin_object_size (dst1, 0));
-	__builtin___memset_chk (dst2, 'A', sizeof(dst2), __builtin_object_size (dst2, 0));
-	__builtin___memcpy_chk (dst1, data, strlen(data), __builtin_object_size (dst1, 0));
-	__builtin___memcpy_chk (dst2, data, strlen(data), __builtin_object_size (dst2, 0));
-	__builtin___memmove_chk (dst1 + 3, dst1, size, __builtin_object_size (dst1 + 3, 0));
-	ft_memmove(dst2 + 3, dst2, size);
-	if (!memcmp(dst1, dst2, size))
-		exit(TEST_SUCCESS);
-	exit(TEST_FAILED);
-
-Diffs:
-     memmove: |thithiß ßޭ��triñg will be øvérlapéd !
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAG|
-  ft_memmove: |thi�hiß ßޭ��triñg will be øvérlapéd !
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAthithiß ßޭ��triñg will be øvérlapéd !
-AAAAAAAAAAAAAA|
-
-[fail]: your memmove does not support the overlap (test 2)
-Test code:
-	char dst1[0xF0];
-	char dst2[0xF0];
-	char *data = "thiß ß\xde\xad\xbe\xeftriñg will be øvérlapéd !\r\n";
-	int size = 0xF0 - 0xF;
-
-	__builtin___memset_chk (dst1, 'A', sizeof(dst1), __builtin_object_size (dst1, 0));
-	__builtin___memset_chk (dst2, 'A', sizeof(dst2), __builtin_object_size (dst2, 0));
-	__builtin___memcpy_chk (dst1, data, strlen(data), __builtin_object_size (dst1, 0));
-	__builtin___memcpy_chk (dst2, data, strlen(data), __builtin_object_size (dst2, 0));
-	__builtin___memmove_chk (dst1, dst1 + 3, size, __builtin_object_size (dst1, 0));
-	ft_memmove(dst2, dst2 + 3, size);
-	if (!memcmp(dst1, dst2, size))
-		exit(TEST_SUCCESS);
-	exit(TEST_FAILED);
-
-Diffs:
-     memmove: |ß ßޭ��triñg will be øvérlapéd !
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAG|
-  ft_memmove: |t� ßޭ��triñg will be øvérlapéd !
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAß ßޭ��triñg will be øvérlapéd !
-AAAAAAAAAAAAAAAAAAAA|
-
-[crash]: your memmove does not work with a 128Mo data input !
-Test code:
-	int size = 128 * 1024 * 1024;
-	char *dst = (char *)malloc(sizeof(char) * size);
-	char *data = (char *)malloc(sizeof(char) * size);
-
-	__builtin___memset_chk (data, 'A', size, __builtin_object_size (data, 0));
-	if (!dst)
-		exit(TEST_INVISIBLE);
-	ft_memmove(dst, data, size);
-	exit(TEST_SUCCESS);
-
-
-[crash]: your memmove crash because it read too many bytes or attempt to read on dst !
-Test code:
-	int size = 10;
-	char *dst = electric_alloc(size);
-	char *data = electric_alloc(size);
-
-	__builtin___memset_chk (data, 'A', size, __builtin_object_size (data, 0));
-	ft_memmove(dst, data, size);
-	dst = electric_alloc_rev(size);
-	data = electric_alloc_rev(size);
-	__builtin___memset_chk (data, 'A', size, __builtin_object_size (data, 0));
-	ft_memmove(dst, data, size);
-	exit(TEST_SUCCESS);
-
-
-[crash]: your memmove does not well with NULL as both parameters and size
-Test code:
-	ft_memmove(((void *)0), ((void *)0), 5);
-
-
+ft_memmove:    [OK] [OK] [OK] [OK] [OK] [OK] [OK] [OK] [OK] [OK] [OK] [OK] [OK] [OK] 
 ft_memchr:     [OK] [OK] [OK] [OK] [OK] [OK] [OK] [OK] 
 ft_memcmp:     [OK] [OK] [OK] [OK] [OK] [OK] [OK] [OK] [OK] [OK] 
 ft_strlen:     [OK] [OK] [OK] [OK] [OK] [OK] [OK] [OK] [OK] 
@@ -148,7 +16,7 @@ ft_tolower:    [OK]
 ft_strchr:     [OK] [OK] [OK] [OK] [OK] [OK] [OK] [OK] [OK] [OK] 
 ft_strrchr:    [OK] [OK] [OK] [OK] [OK] [OK] [OK] [OK] 
 ft_strncmp:    [OK] [OK] [OK] [OK] [OK] [OK] [OK] [OK] [OK] [OK] [OK] [OK] [OK] 
-ft_strlcpy:    [OK] [OK] [OK] [OK] [OK] {not protected}
+ft_strlcpy:    [OK] [OK] [OK] [OK] [OK] {protected}
 ft_strlcat:    [OK] [OK] [OK] [OK] [OK] [OK] [OK] [OK] [OK] [OK] [OK] [OK] 
 ft_strnstr:    [OK] [OK] [OK] [OK] [OK] [OK] [OK] [OK] [OK] [OK] [OK] [OK] [OK] [OK] 
 ft_atoi:       [OK] [OK] [OK] [OK] [OK] [OK] [OK] [OK] [OK] [OK] [OK] [KO] [KO] [OK] 
@@ -180,27 +48,28 @@ Diffs:
         atoi: |0|
      ft_atoi: |469762049|
 
-ft_calloc:     [OK] [OK] [OK] [OK] [OK] [OK] 
-ft_strdup:     [OK] [OK] [OK] [OK] [OK] [OK] [OK] 
-ft_substr:     [OK] [OK] [OK] [OK] [OK] [OK] [OK] [OK] {not protected}
-ft_strjoin:    [OK] [OK] [OK] [OK] [OK] {not protected}
-ft_strtrim:    [OK] [OK] [OK] [OK] [OK] [OK] [OK] [OK] [OK] {not protected}
-ft_split:      [OK] [OK] [OK] [OK] [OK] [OK] [OK] [OK] [OK] {not protected}
-ft_itoa:       [OK] [OK] [OK] [FAILED] [OK] [OK] [OK] [OK] [OK] 
-[fail]: your itoa does not work with min int
+ft_calloc:     [OK] [OK] [FAILED] [OK] [OK] [OK] 
+[fail]: your calloc don't work with empty string
 Test code:
-	char *i1 = ft_itoa((-2147483647 -1));
+	int size = 8539;
 
-	if (atoi(i1) != (-2147483647 -1))
-	{
+	void * d1 = ft_calloc(size, sizeof(int));
+	void * d2 = calloc(size, sizeof(int));
+	if (memcmp(d1, d2, size * sizeof(int)))
 		exit(TEST_FAILED);
-	}
+	free(d1);
+	free(d2);
 	exit(TEST_SUCCESS);
 
 Diffs:
-        itoa: |-(|
-     ft_itoa: |0|
 
+
+ft_strdup:     [OK] [OK] [OK] [OK] [OK] [OK] [OK] 
+ft_substr:     [OK] [OK] [OK] [OK] [OK] [OK] [OK] [OK] {protected}
+ft_strjoin:    [OK] [OK] [OK] [OK] [OK] {protected}
+ft_strtrim:    [OK] [OK] [OK] [OK] [OK] [OK] [OK] [OK] [OK] {protected}
+ft_split:      [OK] [OK] [OK] [OK] [OK] [OK] [OK] [OK] [OK] {protected}
+ft_itoa:       [OK] [OK] [OK] [OK] [OK] [OK] [OK] [OK] [OK] 
 ft_strmapi:    [OK] [OK] [OK] [OK] [OK] {protected}
 ft_putchar_fd: [OK] [OK] [KO] 
 [KO]: your putchar_fd does not work with unicode
@@ -224,19 +93,10 @@ Diffs:
   putchar_fd: |�|
 ft_putchar_fd: |ø|
 
-ft_putstr_fd:  [OK] [OK] {not protected}
-ft_putendl_fd: [OK] [OK] {not protected}
+ft_putstr_fd:  [OK] [OK] {protected}
+ft_putendl_fd: [OK] [OK] {protected}
 ft_putnbr_fd:  [OK] [OK] [OK] [OK] [OK] 
-ft_lstnew:     [OK] [OK] [CRASH] [OK] 
-[crash]: your lstnew does not work with null parameter
-Test code:
-	t_list *l = ft_lstnew(((void *)0));
-
-	if (!l->content)
-		exit(TEST_SUCCESS);
-	exit(TEST_FAILED);
-
-
+ft_lstnew:     [MISSING]
 ft_lstadd_front: [MISSING]
 ft_lstsize:    [MISSING]
 ft_lstlast:    [MISSING]
@@ -245,140 +105,15 @@ ft_lstdelone:  [MISSING]
 ft_lstclear:   [MISSING]
 ft_lstiter:    [MISSING]
 ft_lstmap:     [MISSING]
-ft_strncpy:    [FAILED] [OK] [FAILED] [FAILED] [OK] [FAILED] [FAILED] [FAILED] [OK] [OK] [OK] 
-[fail]: your strncpy does not work with basic input
+ft_memalloc:   [OK] [OK] [CRASH] [OK] [OK] 
+[crash]: your memalloc does not return null for too big value
 Test code:
-	char *src = "--> nyancat <--\n\r";
-	char dst1[30];
-	char dst2[30];
-	size_t max = 12;
+	char *ret = ft_memalloc((9223372036854775807L *2UL+1UL));
 
-	__builtin___memset_chk (dst1, 'B', sizeof(dst1), __builtin_object_size (dst1, 0));
-	__builtin___memset_chk (dst2, 'B', sizeof(dst2), __builtin_object_size (dst2, 0));
-	__builtin___strncpy_chk (dst1, src, max, __builtin_object_size (dst1, 2 > 1 ? 1 : 0));
-	ft_strncpy(dst2, src, max);
-	if (memcmp(dst1, dst2, 29))
-	{
-		exit(TEST_FAILED);
-	}
-	exit(TEST_SUCCESS);
-
-Diffs:
-     strncpy: |--> nyancat BBBBBBBBBBBBBBBBBB|
-  ft_strncpy: |--> nyancat |
-
-[fail]: your strncpy does not support unicode ?
-Test code:
-	char *src = "œð˛ʼˇ,´˛ˀ-ºª•¶ªˆ§´";
-	char dst1[80];
-	char dst2[80];
-	size_t max = 16;
-
-	__builtin___memset_chk (dst1, 'B', sizeof(dst1), __builtin_object_size (dst1, 0));
-	__builtin___memset_chk (dst2, 'B', sizeof(dst2), __builtin_object_size (dst2, 0));
-	__builtin___strncpy_chk (dst1, src, max, __builtin_object_size (dst1, 2 > 1 ? 1 : 0));
-	ft_strncpy(dst2, src, max);
-	if (memcmp(dst1, dst2, sizeof(dst1) - 1))
-	{
-		exit(TEST_FAILED);
-	}
-	exit(TEST_SUCCESS);
-
-Diffs:
-     strncpy: |œð˛ʼˇ,´˛�BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB|
-  ft_strncpy: |œð˛ʼˇ,´˛�|
-
-[fail]: your strncpy does not work with an empty string
-Test code:
-	char *src = "";
-	char dst1[30];
-	char dst2[30];
-	size_t max = 29;
-
-	__builtin___memset_chk (dst1, 'B', sizeof(dst1), __builtin_object_size (dst1, 0));
-	__builtin___memset_chk (dst2, 'B', sizeof(dst2), __builtin_object_size (dst2, 0));
-	__builtin___strncpy_chk (dst1, src, max, __builtin_object_size (dst1, 2 > 1 ? 1 : 0));
-	ft_strncpy(dst2, src, max);
-	if (memcmp(dst1, dst2, 29))
-	{
-		exit(TEST_FAILED);
-	}
-	exit(TEST_SUCCESS);
-
-Diffs:
-     strncpy: ||
-  ft_strncpy: ||
-
-[fail]: your strncpy does not fill with \0 the rest of the dest buffer
-Test code:
-	char *src = "stars";
-	char dst1[50];
-	char dst2[50];
-	size_t max = 50;
-
-	__builtin___memset_chk (dst1, 'B', sizeof(dst1), __builtin_object_size (dst1, 0));
-	__builtin___memset_chk (dst2, 'B', sizeof(dst2), __builtin_object_size (dst2, 0));
-	__builtin___strncpy_chk (dst1, src, max, __builtin_object_size (dst1, 2 > 1 ? 1 : 0));
-	ft_strncpy(dst2, src, max);
-	if (memcmp(dst1, dst2, max))
-	{
-		exit(TEST_FAILED);
-	}
-	exit(TEST_SUCCESS);
-
-Diffs:
-     strncpy: |stars|
-  ft_strncpy: |stars|
-
-[fail]: your strncpy put the bad number of \0 at the end of the string
-Test code:
-	char *src = "len\0AAAAAAAAAAAA";
-	char dst1[] = "BBBBBBBBBBBBBBBBBBBB";
-	char dst2[] = "BBBBBBBBBBBBBBBBBBBB";
-	size_t len = strlen(dst1);
-
-	__builtin___strncpy_chk (dst1, src, 7, __builtin_object_size (dst1, 2 > 1 ? 1 : 0));
-	ft_strncpy(dst2, src, 7);
-	for (size_t i = 0; i < len; i++)
-		if (dst1[i] != dst2[i])
-		{
-			for (size_t it = 0; it < len; it++)
-			for (size_t it = 0; it < len; it++)
-			exit(TEST_FAILED);
-		}
+	if (!ret)
 		exit(TEST_SUCCESS);
+	exit(TEST_FAILED);
 
-Diffs:
-     strncpy: |\x6c\x65\x6e\x00\x00\x00\x00\x42\x42\x42\x42\x42\x42\x42\x42\x42\x42\x42\x42\x42|
-  ft_strncpy: |\x6c\x65\x6e\x00\x42\x42\x42\x42\x42\x42\x42\x42\x42\x42\x42\x42\x42\x42\x42\x42|AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAG|
-  ft_memmove: |t� ßޭ��triñg will be øvérlapéd !
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAß ßޭ��triñg will be øvérlapéd !
-AAAAAAAAAAAAAAAAAAAA|
-
-[fail]: your strncpy set a \0 at the end of the string if strlen(src) > n
-Test code:
-	char *src = "AAAAAAAAAAAA";
-	char dst1[] = "BBBBBBBBBBBBBBBBBBBB";
-	char dst2[] = "BBBBBBBBBBBBBBBBBBBB";
-	size_t len = strlen(dst1);
-
-	__builtin___strncpy_chk (dst1, src, 2, __builtin_object_size (dst1, 2 > 1 ? 1 : 0));
-	ft_strncpy(dst2, src, 2);
-	for (size_t i = 0; i < len; i++)
-		if (dst1[i] != dst2[i])
-		{
-			for (size_t it = 0; it < len; it++)
-			for (size_t it = 0; it < len; it++)
-			exit(TEST_FAILED);
-		}
-		exit(TEST_SUCCESS);
-
-Diffs:
-     strncpy: |\x41\x41\x42\x42\x42\x42\x42\x42\x42\x42\x42\x42\x42\x42\x42\x42\x42\x42\x42\x42|
-  ft_strncpy: |\x41\x41\x00\x42\x42\x42\x42\x42\x42\x42\x42\x42\x42\x42\x42\x42\x42\x42\x42\x42|AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAG|
-  ft_memmove: |t� ßޭ��triñg will be øvérlapéd !
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAß ßޭ��triñg will be øvérlapéd !
-AAAAAAAAAAAAAAAAAAAA|
 
 ft_putchar:    [OK] [OK] [KO] 
 [KO]: your putchar does not work with unicode
@@ -405,23 +140,4 @@ Diffs:
 ft_putnbr:     [OK] [OK] [OK] [OK] [OK] 
 ft_islower:    [OK] 
 ft_isupper:    [OK] 
-ft_strndup:    [OK] [OK] [OK] [OK] [KO] [OK] [OK] [OK] 
-[KO]: your strndup did not allocate the good size so the \0 test may be false
-Test code:
-	char *str;
-	char *tmp = "this is a normal test";
-	int r_size = 5;
-	int size;
-
-	str = ft_strndup(tmp, r_size);
-	size = get_last_malloc_size();
-	if (size != r_size + 1)
-	{
-		exit(TEST_KO);
-	}
-	exit(TEST_SUCCESS);
-
-Diffs:
-     strndup: |6|
-  ft_strndup: |22|
-
+ft_strndup:    [OK] [OK] [OK] [OK] [OK] [OK] [OK] [OK] 
