@@ -1,25 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_strdel.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
+/*   By: jaleman <jaleman@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/27 16:39:13 by dsy               #+#    #+#             */
-/*   Updated: 2019/10/28 17:57:04 by dsy              ###   ########.fr       */
+/*   Created: 2016/11/03 15:18:33 by jaleman           #+#    #+#             */
+/*   Updated: 2016/11/03 15:18:34 by jaleman          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "libft.h"
 
-# define BUFFER_SIZE 0
-# define MAX_FD	1024
-# include <stdlib.h>
-# include <unistd.h>
+/*
+** Takes as a parameter the address of a string that need to be freed with
+** free(), then sets its pointer to NULL.
+*/
 
-int get_next_line(int, char**);
-int check_line_stack(char **, char **);
-char *ft_strdup(char *);
-
-#endif
+void	ft_strdel(char **as)
+{
+	if (as)
+	{
+		free(*as);
+		*as = NULL;
+	}
+}

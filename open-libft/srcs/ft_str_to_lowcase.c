@@ -1,25 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_str_to_lowcase.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
+/*   By: jaleman <jaleman@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/27 16:39:13 by dsy               #+#    #+#             */
-/*   Updated: 2019/10/28 17:57:04 by dsy              ###   ########.fr       */
+/*   Created: 2016/08/16 20:38:54 by jaleman           #+#    #+#             */
+/*   Updated: 2016/08/16 20:38:56 by jaleman          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "libft.h"
 
-# define BUFFER_SIZE 0
-# define MAX_FD	1024
-# include <stdlib.h>
-# include <unistd.h>
+/*
+** Makes every letter in the string lowercase.
+*/
 
-int get_next_line(int, char**);
-int check_line_stack(char **, char **);
-char *ft_strdup(char *);
+char	*ft_str_to_lowcase(char *str)
+{
+	int		i;
 
-#endif
+	i = 0;
+	while (str[i++])
+		if (ft_isupper(str[i - 1]))
+			str[i - 1] += 32;
+	return (str);
+}

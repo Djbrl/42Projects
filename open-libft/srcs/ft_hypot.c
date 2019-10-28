@@ -1,25 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_hypot.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
+/*   By: jaleman <jaleman@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/27 16:39:13 by dsy               #+#    #+#             */
-/*   Updated: 2019/10/28 17:57:04 by dsy              ###   ########.fr       */
+/*   Created: 2017/01/23 12:26:27 by jaleman           #+#    #+#             */
+/*   Updated: 2017/01/23 12:26:28 by jaleman          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "libft.h"
 
-# define BUFFER_SIZE 0
-# define MAX_FD	1024
-# include <stdlib.h>
-# include <unistd.h>
+/*
+** Computes the sqrt(x*x+y*y) without undue overflow or underflow.
+*/
 
-int get_next_line(int, char**);
-int check_line_stack(char **, char **);
-char *ft_strdup(char *);
-
-#endif
+double		ft_hypot(double x, double y)
+{
+	return (ft_sqrt((x * x) + (y * y)));
+}

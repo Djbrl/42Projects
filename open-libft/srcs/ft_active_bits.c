@@ -1,25 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_active_bits.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
+/*   By: jaleman <jaleman@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/27 16:39:13 by dsy               #+#    #+#             */
-/*   Updated: 2019/10/28 17:57:04 by dsy              ###   ########.fr       */
+/*   Created: 2017/03/30 21:27:38 by jaleman           #+#    #+#             */
+/*   Updated: 2017/03/30 21:27:39 by jaleman          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "libft.h"
 
-# define BUFFER_SIZE 0
-# define MAX_FD	1024
-# include <stdlib.h>
-# include <unistd.h>
+/*
+** Returns the number of active bits of value.
+*/
 
-int get_next_line(int, char**);
-int check_line_stack(char **, char **);
-char *ft_strdup(char *);
+int		ft_active_bits(int value)
+{
+	int	bits;
 
-#endif
+	bits = 0;
+	while (value > 0)
+	{
+		if ((value & 1) == 1)
+			bits += 1;
+		value >>= 1;
+	}
+	return (bits);
+}

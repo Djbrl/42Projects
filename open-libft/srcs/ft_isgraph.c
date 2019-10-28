@@ -1,25 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_isgraph.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
+/*   By: jaleman <jaleman@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/27 16:39:13 by dsy               #+#    #+#             */
-/*   Updated: 2019/10/28 17:57:04 by dsy              ###   ########.fr       */
+/*   Created: 2016/11/03 15:26:37 by jaleman           #+#    #+#             */
+/*   Updated: 2016/11/03 15:26:38 by jaleman          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "libft.h"
 
-# define BUFFER_SIZE 0
-# define MAX_FD	1024
-# include <stdlib.h>
-# include <unistd.h>
+/*
+** Checks if the character is a print one, excluding space.
+*/
 
-int get_next_line(int, char**);
-int check_line_stack(char **, char **);
-char *ft_strdup(char *);
-
-#endif
+int		ft_isgraph(int c)
+{
+	return (c >= '!' && c <= '~');
+}

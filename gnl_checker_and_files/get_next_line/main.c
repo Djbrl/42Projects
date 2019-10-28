@@ -4,11 +4,15 @@
 #include <fcntl.h>
 #include <sys/errno.h>
 #include <string.h>
-#include "/Users/dsy/Desktop/42Projects/libft_checker_and_files/libft/libft.h"
+
+#include "get_next_line.h"
 
 int main()
 {
 	int i = 0;
-	return (0);
+
+	char *stack = "this is a test lol\nanother test lel\n";
+	char *line;
+	check_line_stack(&stack, &line);
 //	get_next_line(open("test", O_RDONLY), line);
 }

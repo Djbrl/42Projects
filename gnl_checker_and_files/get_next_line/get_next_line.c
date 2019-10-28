@@ -25,6 +25,5 @@ int	get_next_line(int fd, char **line)
 		return (-1);//checking
 	if (!(read(fd, line_stack[fd], 0)))
 		return (-1);//checking
-
-
+	return (1);
 }
