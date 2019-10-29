@@ -9,11 +9,20 @@
 
 int main()
 {
-    int i = 0;
+	int i = 0;
+	char *file = "test";
+	int fd = open(file, O_RDONLY);
+    static char *line_buffer;
+    line_buffer	= malloc(50);
+    static char *line;
+    line = malloc(100);
+    printf("ret check %i\n", check_line_buffer(&line_buffer, &line));	
+	printf("ret read %i\n", gnl_read(fd, file, &line_buffer, &line));
+	printf("ln buf %s\n", line_buffer);
+	printf("ln \n%s\n", line);
 
-    char *stack = malloc(20);
-    stack = ft_strdup("this is a test lol\nanother test lel\n");
-    char *line;
-    check_line_stack(&stack, &line);
+	free(line_buffer);
+	free(line);
+   //	check_line_stack(&stack, &line);
 //    get_next_line(open("test", O_RDONLY), line);
 }

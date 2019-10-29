@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/27 16:39:13 by dsy               #+#    #+#             */
-/*   Updated: 2019/10/28 17:57:04 by dsy              ###   ########.fr       */
+/*   Updated: 2019/10/29 18:51:59 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,10 @@
 # define MAX_FD	1024
 # include <stdlib.h>
 # include <unistd.h>
+# include <stdio.h>
 
-int get_next_line(int, char**);
-int check_line_stack(char **, char **);
-char *ft_strdup(char *);
-
+int			get_next_line(int, char**);
+int	check_line_buffer(char **, char **);
+char 		*ft_strdup(char *s);
+int	gnl_read(int fd, char *file, char **line_buffer, char **line);
 #endif

@@ -14,7 +14,7 @@
 
 int	get_next_line(int fd, char **line)
 {
-	static char	*line_stack[256];
+	static char	*line_buffer[256];
 	char		*current_line;
 	int 		rd;
 	int 		i;
@@ -23,7 +23,7 @@ int	get_next_line(int fd, char **line)
 		return (-1);//checking
 	if (!(current_line = malloc(sizeof(char) * BUFFER_SIZE + 1)))
 		return (-1);//checking
-	if (!(read(fd, line_stack[fd], 0)))
+	if (!(read(fd, line_buffer[fd], 0)))
 		return (-1);//checking
 	return (1);
 }

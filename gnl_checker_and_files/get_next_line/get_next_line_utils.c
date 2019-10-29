@@ -6,13 +6,13 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/27 16:40:44 by dsy               #+#    #+#             */
-/*   Updated: 2019/10/29 17:01:06 by dsy              ###   ########.fr       */
+/*   Updated: 2019/10/29 18:53:18 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int ft_strlen(char *s)
+int			ft_strlen(char *s)
 {
 	int i;
 
@@ -24,7 +24,7 @@ int ft_strlen(char *s)
 	return (i);
 }
 
-char *ft_strdup(char *s)
+char		*ft_strdup(char *s)
 {
 	char	*newstr;
 	int	i;
@@ -44,32 +44,62 @@ char *ft_strdup(char *s)
 	return (newstr);
 }
 
-int    check_line_stack(char **stack, char **line)
+int	check_line_buffer(char **line_buffer, char **line)
 {
 	int i;
 
 	i = 0;
-	while ((*stack)[i] != '\n')
+	while ((*line_buffer)[i] != '\n')
 	{
-		if (*stack[i] == '\0')
+		if ((*line_buffer)[i] == '\0')
 			return (0);
 		i++;
 	}
-	(*stack)[i] = '\0';
-	*line = ft_strdup(*stack);
-	*stack = ft_strdup((*stack) + i + 1);
+	(*line_buffer)[i] = '\0';
+	*line = ft_strdup(*line_buffer);
+	*line_buffer = ft_strdup((*line_buffer) + i + 1);
 	return (1);
 }
-/*
-   static int	gnl_read(int fd, char *file, char **buffer)
-   {
-   static int rd;
 
-   if (fd > 0 && buffer)
-   {
-   while ((rd = read(fd, file, BUFFER_SIZE)) > 0);
-//
+char	*ft_strjoin(char  *s1, char *s2)
+{
+	char	*newstr;
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	j = 0;
+	if (!s1 || !(newstr = (char*)malloc(sizeof(char) *
+					ft_strlen(s1) + ft_strlen(s2) + 1)))
+		return (NULL);
+	while (i < ft_strlen(s1))
+	{
+		newstr[i] = s1[i];
+		i++;
+	}
+	while (s2[j])
+	{
+		newstr[i] = s2[j];
+		i++;
+		j++;
+	}
+	newstr[i] = '\0';
+	return (newstr);
 }
-else
-return (-1);
-}*/
+
+int	gnl_read(int fd, char *file, char **line_buffer, char **line)
+{
+	int		bytes;
+
+	while ((bytes = read(fd, file, BUFFER_SIZE))> 0)
+	{
+		file[bytes] = '\0';
+		if (*line_buffer)
+			*line_buffer = ft_strjoin(*line_buffer, file);
+		else
+			*line_buffer = ft_strdup(file);
+		if (!check_line_buffer(line_buffer, line))
+			return (-1);
+	}
+	return (bytes);
+}
