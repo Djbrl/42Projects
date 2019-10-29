@@ -9,10 +9,11 @@
 
 int main()
 {
-	int i = 0;
+    int i = 0;
 
-	char *stack = "this is a test lol\nanother test lel\n";
-	char *line;
-	check_line_stack(&stack, &line);
-//	get_next_line(open("test", O_RDONLY), line);
+    char *stack = malloc(20);
+    stack = ft_strdup("this is a test lol\nanother test lel\n");
+    char *line;
+    check_line_stack(&stack, &line);
+//    get_next_line(open("test", O_RDONLY), line);
 }
