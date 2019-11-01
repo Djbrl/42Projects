@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/27 16:40:44 by dsy               #+#    #+#             */
-/*   Updated: 2019/10/29 18:53:18 by dsy              ###   ########.fr       */
+/*   Updated: 2019/11/01 17:18:10 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,9 @@ char	*ft_strjoin(char  *s1, char *s2)
 int	gnl_read(int fd, char *file, char **line_buffer, char **line)
 {
 	int		bytes;
+	int		i;
 
+	i = 0;
 	while ((bytes = read(fd, file, BUFFER_SIZE))> 0)
 	{
 		file[bytes] = '\0';
@@ -99,7 +101,13 @@ int	gnl_read(int fd, char *file, char **line_buffer, char **line)
 		else
 			*line_buffer = ft_strdup(file);
 		if (!check_line_buffer(line_buffer, line))
-			return (-1);
+		{
+			i = 1;
+			break ;
+		}
 	}
-	return (bytes);
+	if (i)
+		return (1);
+	else
+		return (bytes);
 }

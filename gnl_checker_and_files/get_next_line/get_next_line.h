@@ -6,14 +6,14 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/27 16:39:13 by dsy               #+#    #+#             */
-/*   Updated: 2019/10/29 18:51:59 by dsy              ###   ########.fr       */
+/*   Updated: 2019/10/31 15:47:29 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-# define BUFFER_SIZE 0
+# define BUFFER_SIZE 10
 # define MAX_FD	1024
 # include <stdlib.h>
 # include <unistd.h>
