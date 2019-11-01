@@ -21,7 +21,8 @@ int main()
     printf("ret gnl %i\n", get_next_line(fd, &line));	
 	printf("ln buf %s\n", line_buffer);
 	printf("ln \n%s\n", line);
-
+	get_next_line(0, &line);
+	printf("ln \n%s\n", line);
 	free(line_buffer);
 	free(line);
    //	check_line_stack(&stack, &line);
