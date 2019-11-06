@@ -6,11 +6,12 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 15:09:29 by dsy               #+#    #+#             */
-/*   Updated: 2019/11/04 15:15:10 by dsy              ###   ########.fr       */
+/*   Updated: 2019/11/06 21:27:34 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include <stdio.h>
 
 int		setup_next_line(char **line_stack, char **line)
 {
@@ -20,7 +21,10 @@ int		setup_next_line(char **line_stack, char **line)
 	while ((*line_stack)[i] != '\n')
 	{
 		if ((*line_stack)[i] == '\0')
+		{
+			write(1, "\noops\n", 6);
 			return (0);
+		}
 		i++;
 	}
 	(*line_stack)[i] = '\0';
@@ -57,7 +61,11 @@ int		get_next_line(int fd, char **line)
 			|| !(current_line = malloc(sizeof(char) * BUFFER_SIZE + 1)))
 		return (-1);
 	if (line_stack[fd] && setup_next_line(&line_stack[fd], line))
+	{
+		write(1, "\no\n", 3);
+		free(current_line);
 		return (1);
+	}
 	ft_bzero(current_line, (size_t)BUFFER_SIZE);
 	ret = gnl_read(fd, current_line, &line_stack[fd], line);
 	free(current_line);
@@ -65,12 +73,17 @@ int		get_next_line(int fd, char **line)
 	{
 		if (!ret && *line)
 		{
+		write(1, "\np1\n", 3);
 			*line = NULL;
 			return (0);
 		}
+		printf("we're in gnl() and ret is %i\n", ret);
+		printf("line is currently: \"%s\"\nlinestack is currently : \"%s\"\n\n", *line, line_stack[fd]);
+		write(1, "\np2\n", 3);
 		return (1);
 	}
 	*line = line_stack[fd];
 	line_stack[fd] = NULL;
+	write(1, "d\n", 2);
 	return (1);
 }
