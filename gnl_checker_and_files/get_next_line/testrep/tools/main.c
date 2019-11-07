@@ -19,19 +19,20 @@ int main()
     static char *line_buffer;
     static char *line;
  
-	
 //	r = get_next_line(42, &line);
 
 //	printf("%d\n",r);
     
-	while (i < 3)
+	while (i < 12)
 	{
-		printf("\n================================\nretour de la fonction\n===========================\n\nretour de gnl : %i\n", get_next_line(fd, &line));	
-		printf("valeur de line : \n\"%s\"\n", line);
+		printf("retour de gnl : %i\n", get_next_line(fd, &line));	
+		printf("valeur de line : \"\x1b[32m%s\x1b[0m\"\n", line);
+		printf("\n===========================================================\n");	
 		i++;
 	}
 	free(line_buffer);
 	free(line);
+//	while (1);
    //	check_line_stack(&stack, &line);
 //    get_next_line(open("test", O_RDONLY), line);
 }
