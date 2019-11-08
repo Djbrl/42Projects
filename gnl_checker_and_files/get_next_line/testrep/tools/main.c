@@ -18,13 +18,14 @@ int main()
 	   printf("error\n");
     static char *line_buffer;
     static char *line;
- 
+	int p = 1;
 //	r = get_next_line(42, &line);
 
 //	printf("%d\n",r);
     
-	while (i < 12)
+		while (p > 0)
 	{
+		p = get_next_line(fd, &line);
 		printf("retour de gnl : %i\n", get_next_line(fd, &line));	
 		printf("valeur de line : \"\x1b[32m%s\x1b[0m\"\n", line);
 		printf("\n===========================================================\n");	
