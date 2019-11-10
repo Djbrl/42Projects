@@ -6,79 +6,65 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 15:09:29 by dsy               #+#    #+#             */
-/*   Updated: 2019/11/08 16:48:24 by dsy              ###   ########.fr       */
+/*   Updated: 2019/11/10 18:50:25 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <stdio.h>
 
-int		setup_next_line(char **save, char **line)
+int		setup_next_line(char **line_stack, char **line)
 {
 	int	i;
 
 	i = 0;
-	while ((*save)[i] != '\n')
+	while ((*line_stack)[i] != '\n')
 	{
-		if ((*save)[i] == '\0')
+		if ((*line_stack)[i] == '\0')
 			return (0);
 		i++;
 	}
-	(*save)[i] = '\0';
-	*line = ft_strdup(*save);
-	ft_bzero(*save, i);
-	*save = ft_strdup((*save) + i + 1);
+	(*line_stack)[i] = '\0';
+	*line = ft_strdup(*line_stack);
+	ft_bzero(*line_stack, i);
+	*line_stack = ft_strdup((*line_stack) + i + 1);
 	return (1);
 }
 
-int		gnl_read(int fd, char *this_line, char **save, char **line)
+int		gnl_read(int fd, char *current_line, char **line_stack, char **line)
 {
 	int	bytes;
 
-	if ((bytes = read(fd, this_line, BUFFER_SIZE)) > 0)
+	if ((bytes = read(fd, current_line, BUFFER_SIZE)) > 0)
 	{
-		this_line[bytes] = '\0';
-		if (*save)
-			*save = ft_strjoin(*save, this_line);
+		current_line[bytes] = '\0';
+		if (*line_stack)
+			*line_stack = ft_strjoin(*line_stack, current_line);
 		else
-			*save = ft_strdup(this_line);
-		setup_next_line(save, line);
+			*line_stack = ft_strdup(current_line);
+		setup_next_line(line_stack, line);
 	}
 	else
 		return (0);
-	return (bytes < 0 ? -bytes : bytes);
-}
-
-int		gnl_clean_line(char **line)
-{
-	*line = NULL;
-	return (0);
+	return (bytes);
 }
 
 int		get_next_line(int fd, char **line)
 {
-	static char		*save[MAX_FD];
-	char			*this_line;
+	static char		*line_stack;
+	char			*current_line;
 	int				ret;
 
-	if (!line || (fd < 0 || fd >= MAX_FD) || (read(fd, save[fd], 0) < 0) ||
-	BUFFER_SIZE < 1 || !(this_line = malloc(sizeof(char) * BUFFER_SIZE + 1)))
+	if (!line || !(current_line = malloc(sizeof(char) * BUFFER_SIZE + 1)))
 		return (-1);
-	if (save[fd] && setup_next_line(&save[fd], line))
+	if (line_stack && setup_next_line(&line_stack, line))
 	{
-		free(this_line);
+		free(current_line);
 		return (1);
 	}
-	ft_bzero(this_line, (size_t)BUFFER_SIZE);
-	ret = gnl_read(fd, this_line, &save[fd], line);
-	free(this_line);
-	if (ret != 0 || save[fd] == NULL || save[fd][0] == '\0')
-	{
-		if (!ret)
-			return (gnl_clean_line(line));
-		return (1);
-	}
-	*line = save[fd];
-	save[fd] = NULL;
-	return (1);
+	ft_bzero(current_line, (size_t)BUFFER_SIZE);
+	ret = gnl_read(fd, current_line, &line_stack, line);
+	printf("line : \x1b[32m%s\x1b[0m\nline stack :\x1b[32m %s\x1b[0m\nreturn of read : %i\n", *line, line_stack, ret);
+	free(current_line);
+	return (ret == 0 ? 0 : 1);
 }

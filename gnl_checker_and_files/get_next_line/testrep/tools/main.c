@@ -26,9 +26,9 @@ int main()
 		while (p > 0)
 	{
 		p = get_next_line(fd, &line);
-		printf("retour de gnl : %i\n", get_next_line(fd, &line));	
-		printf("valeur de line : \"\x1b[32m%s\x1b[0m\"\n", line);
-		printf("\n===========================================================\n");	
+//		printf("retour de gnl : %i\n", get_next_line(fd, &line));	
+//		printf("valeur de line : \"\x1b[32m%s\x1b[0m\"\n", line);
+//		printf("\n===========================================================\n");	
 		i++;
 	}
 	free(line_buffer);
