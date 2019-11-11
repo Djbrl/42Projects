@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 15:09:29 by dsy               #+#    #+#             */
-/*   Updated: 2019/11/07 15:31:56 by dsy              ###   ########.fr       */
+/*   Updated: 2019/11/11 18:18:29 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,17 +31,17 @@ int		setup_next_line(char **line_stack, char **line)
 	return (1);
 }
 
-int		gnl_read(int fd, char *current_line, char **line_stack, char **line)
+int		gnl_read(int fd, char *file_content, char **line_stack, char **line)
 {
 	int	bytes;
 
-	if ((bytes = read(fd, current_line, BUFFER_SIZE)) > 0)
+	if ((bytes = read(fd, file_content, BUFFER_SIZE + 1)) > 0)
 	{
-		current_line[bytes] = '\0';
+		file_content[bytes] = '\0';
 		if (*line_stack)
-			*line_stack = ft_strjoin(*line_stack, current_line);
+			*line_stack = ft_strjoin(*line_stack, file_content);
 		else
-			*line_stack = ft_strdup(current_line);
+			*line_stack = ft_strdup(file_content);
 		setup_next_line(line_stack, line);
 	}
 	else
@@ -49,36 +49,35 @@ int		gnl_read(int fd, char *current_line, char **line_stack, char **line)
 	return (bytes);
 }
 
-int		gnl_clean_line(char **line)
-{
-	*line = NULL;
-	return (0);
-}
-
 int		get_next_line(int fd, char **line)
 {
-	static char		*line_stack[MAX_FD];
-	char			*current_line;
+	static char		*line_stack;
+	char			*file_content;
 	int				ret;
 
-	if (!line || (fd < 0 || fd >= MAX_FD) || (read(fd, line_stack[fd], 0) < 0)
-			|| !(current_line = malloc(sizeof(char) * BUFFER_SIZE + 1)))
+	//---------------
+	if (!line || (fd < 0 || fd > MAX_FD) || BUFFER_SIZE < 1 ||
+			!(file_content = malloc(sizeof(char) * BUFFER_SIZE + 1)))
 		return (-1);
-	if (line_stack[fd] && setup_next_line(&line_stack[fd], line))
+	ft_bzero(file_content, (size_t)BUFFER_SIZE);
+	if (line_stack && setup_next_line(&line_stack, line))
 	{
-		free(current_line);
+		free(file_content);
 		return (1);
 	}
-	ft_bzero(current_line, (size_t)BUFFER_SIZE);
-	ret = gnl_read(fd, current_line, &line_stack[fd], line);
-	free(current_line);
-	if (ret != 0 || line_stack[fd] == NULL || line_stack[fd][0] == '\0')
+	//----------------
+	ret = gnl_read(fd, file_content, &line_stack, line);
+	if (ret == -1)
 	{
-		if (!ret && *line)
-			return (gnl_clean_line(line));
-		return (1);
+		free(file_content);
+		return (ret);
 	}
-	*line = line_stack[fd];
-	line_stack[fd] = NULL;
-	return (1);
+	printf("line : \x1b[32m%s\x1b[0m\nline stack :\x1b[31m %s\x1b[0m\nreturn of read : %i\n\n", *line, line_stack, ret);
+	free(file_content);
+	if (!line_stack || line_stack[0] == '\0')
+		*line = NULL;
+	if (ret == 0 && line_stack && !setup_next_line(&line_stack, line))
+		*line = ft_strdup(line_stack);
+	printf("last line read : %s\n", *line);
+	return (ret == 0 ? 0 : 1);
 }
