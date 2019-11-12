@@ -6,15 +6,17 @@
 #include <string.h>
 #include "get_next_line.h"
 
-int main()
+int main(int argc, char **argv)
 {
-	char *file = "test";
+	//char *file = "test";
 //	int r;
 //	printf("%zi\n", read(open(file, O_RDONLY), file, 0));
 //	printf("%s", file);
+//
+	argc = 0;
 	int fd;
 	int i = 0;
-   if (!(fd = open(file, O_RDONLY)))
+   if (!(fd = open(argv[1], O_RDONLY)))
 	   printf("error\n");
     static char *line_buffer;
     static char *line;

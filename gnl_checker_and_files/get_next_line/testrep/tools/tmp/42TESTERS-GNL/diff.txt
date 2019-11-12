@@ -1,0 +1,187 @@
+
+==========================================
+============== GNL TESTS =================
+==========================================
+BUFFER_SIZE 2 :
+72c72,73
+< Well Done
+---
+> |
+> Not Good - Wrong Number Of Lines
+126a128
+> |
+127a130
+> |
+129c132,133
+< Well Done
+---
+> |
+> Not Good - Wrong Number Of Lines
+145a150
+>   
+160c165,166
+< Well Done
+---
+> 
+> Not Good - Wrong Number Of Lines
+BUFFER_SIZE 3 :
+72c72,73
+< Well Done
+---
+> |
+> Not Good - Wrong Number Of Lines
+126a128
+> |
+127a130
+> |
+129c132,133
+< Well Done
+---
+> |
+> Not Good - Wrong Number Of Lines
+145a150
+>   
+160c165,166
+< Well Done
+---
+> 
+> Not Good - Wrong Number Of Lines
+BUFFER_SIZE 1 :
+72c72,73
+< Well Done
+---
+> |
+> Not Good - Wrong Number Of Lines
+126a128
+> |
+127a130
+> |
+129c132,133
+< Well Done
+---
+> |
+> Not Good - Wrong Number Of Lines
+145a150
+>   
+160c165,166
+< Well Done
+---
+> 
+> Not Good - Wrong Number Of Lines
+BUFFER_SIZE 42 :
+72c72,73
+< Well Done
+---
+> |
+> Not Good - Wrong Number Of Lines
+126a128
+> |
+127a130
+> |
+129c132,133
+< Well Done
+---
+> |
+> Not Good - Wrong Number Of Lines
+145a150
+>   
+160c165,166
+< Well Done
+---
+> 
+> Not Good - Wrong Number Of Lines
+BUFFER_SIZE 9999 :
+72c72,73
+< Well Done
+---
+> |
+> Not Good - Wrong Number Of Lines
+126a128
+> |
+127a130
+> |
+129c132,133
+< Well Done
+---
+> |
+> Not Good - Wrong Number Of Lines
+145a150
+>   
+160c165,166
+< Well Done
+---
+> 
+> Not Good - Wrong Number Of Lines
+BUFFER_SIZE 0 :
+6,7c6,7
+< |(null)
+< Well Done - Returned -1
+---
+> |
+> Not Good - Did not return -1 for BUFFER_SIZE=0
+13,14c13,14
+< |(null)
+< Well Done - Returned -1
+---
+> |
+> Not Good - Did not return -1 for BUFFER_SIZE=0
+20,21c20,21
+< |(null)
+< Well Done - Returned -1
+---
+> |
+> Not Good - Did not return -1 for BUFFER_SIZE=0
+27,28c27,28
+< |(null)
+< Well Done - Returned -1
+---
+> |
+> Not Good - Did not return -1 for BUFFER_SIZE=0
+34,35c34,35
+< |(null)
+< Well Done - Returned -1
+---
+> |
+> Not Good - Did not return -1 for BUFFER_SIZE=0
+48,51c48,51
+< |(null)
+< |(null)
+< |(null)
+< Well Done - Returned -1
+---
+> |
+> |
+> |
+> Not Good - Did not return -1 for BUFFER_SIZE=0
+57,58c57,58
+< (null)
+< Well Done - Returned -1
+---
+> 
+> Not Good - Did not return -1 for BUFFER_SIZE=0
+
+==========================================
+============== HUGE TESTS ================
+==========================================
+GNL :
+1062c1062,1064
+< Well Done
+---
+> |
+> Not Good - Wrong Number Of Lines
+> 
+2449c2451
+< |J17WPD/zjHLXdJrdOy5WSqkfEhQmr+RJuBRL4krWEZN+H87GyMaonBCa0YI8DoJj
+---
+> |
+3983c3985,3986
+< Well Done
+---
+> |
+> Not Good - Wrong Number Of Lines
+3990c3993,3994
+< Well Done
+---
+> 
+> Not Good - Wrong Number Of Lines
+
