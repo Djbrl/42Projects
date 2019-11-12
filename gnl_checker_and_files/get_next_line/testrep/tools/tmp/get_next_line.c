@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 15:09:29 by dsy               #+#    #+#             */
-/*   Updated: 2019/11/12 04:40:50 by dsy              ###   ########.fr       */
+/*   Updated: 2019/11/12 20:46:53 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ int		gnl_read(int fd, char *file_content, char **line_stack, char **line)
 		return (0);
 	return (1);
 }
-/*
+
 int					get_next_line(int const fd, char **line)
 {
 	static char		*stack[MAX_FD];
@@ -150,7 +150,7 @@ int					get_next_line(int const fd, char **line)
 	stack[fd] = NULL;
 	return (1);
 }
-*/
+/*
 int		get_next_line(int fd, char **line)
 {
 	static char		*line_stack;
@@ -190,4 +190,4 @@ int		get_next_line(int fd, char **line)
 		*line = ft_strdup(line_stack);
 	//printf("last line read : %s\n", *line);
 	return (ret == 0 ? 0 : 1);
-}
+}*/
