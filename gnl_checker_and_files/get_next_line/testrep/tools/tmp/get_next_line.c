@@ -6,13 +6,13 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 15:09:29 by dsy               #+#    #+#             */
-/*   Updated: 2019/11/13 03:25:04 by dsy              ###   ########.fr       */
+/*   Updated: 2019/11/13 06:16:45 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <stdio.h>
-
+/*
 int		ft_strlen(char *s)
 {
 	int i;
@@ -51,13 +51,16 @@ char	*ft_strjoin(char *s1, char *s2)
 	char	*newstr;
 	size_t	i;
 	size_t	j;
+	size_t	n;
 
 	i = 0;
 	j = 0;
+	n = ft_strlen(s1) + ft_strlen(s2);
 	if (!s1 || !(newstr = (char*)malloc(sizeof(char) *
-					ft_strlen(s1) + ft_strlen(s2) + 1)))
+				   n + 1)))
 		return (NULL);
-	while (i < (size_t)ft_strlen(s1))
+	n = ft_strlen(s1);
+	while (i < n)
 	{
 		newstr[i] = s1[i];
 		i++;
@@ -85,7 +88,7 @@ void	ft_bzero(void *s, size_t n)
 		i++;
 	}
 }
-
+*/
 int		setup_next_line(char **line_stack, char **line)
 {
 	int	i;
@@ -118,7 +121,9 @@ int		gnl_read(int fd, char *file_content, char **line_stack, char **line)
 		if (setup_next_line(line_stack, line))
 			break ;
 	}
-	return (bytes < 0 ? -bytes : bytes);
+//	if (bytes == BUFFER_SIZE && !line_stack)
+//		*line_stack = ft_strdup(file_content);
+	return (bytes == 0 ? 0 : 1);
 }
 
 int					get_next_line(int const fd, char **line)
@@ -144,9 +149,14 @@ int					get_next_line(int const fd, char **line)
 	free(heap);
 	if (ret != 0 || stack[fd] == NULL || stack[fd][0] == '\0')
 	{
+		//if (!ret && *line && !stack[fd])
 		if (!ret && *line)
+		{
+			printf("passing here\n");
 			*line = NULL;
-		return (ret);
+		}
+	printf("val of stack rn %s\n", stack[fd]);
+		return (0);
 	}
 	*line = stack[fd];
 	stack[fd] = NULL;
