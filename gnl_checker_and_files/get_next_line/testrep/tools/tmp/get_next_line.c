@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 15:09:29 by dsy               #+#    #+#             */
-/*   Updated: 2019/11/12 20:46:53 by dsy              ###   ########.fr       */
+/*   Updated: 2019/11/13 03:25:04 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,18 +108,17 @@ int		gnl_read(int fd, char *file_content, char **line_stack, char **line)
 {
 	int	bytes;
 
-	if ((bytes = read(fd, file_content, BUFFER_SIZE + 1)) > 0)
+	while ((bytes = read(fd, file_content, BUFFER_SIZE)) > 0)
 	{
 		file_content[bytes] = '\0';
 		if (*line_stack)
 			*line_stack = ft_strjoin(*line_stack, file_content);
 		else
 			*line_stack = ft_strdup(file_content);
-		setup_next_line(line_stack, line);
+		if (setup_next_line(line_stack, line))
+			break ;
 	}
-	else
-		return (0);
-	return (1);
+	return (bytes < 0 ? -bytes : bytes);
 }
 
 int					get_next_line(int const fd, char **line)
@@ -134,7 +133,10 @@ int					get_next_line(int const fd, char **line)
 		return (-1);
 	if (stack[fd])
 		if (setup_next_line(&stack[fd], line))
+		{
+			free(heap);
 			return (1);
+		}
 	i = 0;
 	while (i < BUFFER_SIZE)
 		heap[i++] = '\0';
