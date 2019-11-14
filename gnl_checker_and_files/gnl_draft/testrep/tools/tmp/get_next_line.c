@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 15:09:29 by dsy               #+#    #+#             */
-/*   Updated: 2019/11/14 15:28:11 by dsy              ###   ########.fr       */
+/*   Updated: 2019/11/14 16:50:33 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,6 @@ int		get_next_line(int const fd, char **line)
 	while (i < BUFFER_SIZE)
 		file_read[i++] = '\0';
 	ret = gnl_read(fd, file_read, &l_stack[fd], line);
-	free(file_read);
 	if (ret != 0 || l_stack[fd] == NULL || l_stack[fd][0] == '\0')
 	{
 		if (!ret && *line)

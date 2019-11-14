@@ -6,7 +6,7 @@
 #include <string.h>
 #include "get_next_line.h"
 
-int main()
+int main(int ac, char **av)
 {
 	int fd;
 	int fd2;
@@ -15,14 +15,17 @@ int main()
 	int dpipe[2];
 	int out = dup(1);
 	pipe(dpipe);
-
-	if (!(fd = open("fatline", O_RDONLY)))
+	(void)ac;
+	
+	if (!(fd = open(av[1], O_RDONLY)))
 		printf("main error\n");
 	//Test normal
 	printf("TEST NORMAL----------------------------------------------------------------\n");
 	while (ret > 0)
 	{
 		ret = get_next_line(fd, &line);
+		free(line);
+		fflush(stdin);
 		printf("\n===========================================================\n");	
 		printf("retour de gnl : %i\n", ret);	
 		printf("valeur de line : \"\x1b[32m%s\x1b[0m\"\n", line);
@@ -53,8 +56,7 @@ int main()
 	printf("valeur de line : \"\x1b[32m%s\x1b[0m\"\n", line);
 	ret = get_next_line(fd, &line);
 	printf("valeur de line : \"\x1b[32m%s\x1b[0m\"\n", line);
-	
-	//Test 4 avec entree standard
+	free(line);
 	printf("TEST IN----------------------------------------------------------------\n");
 	while (1)
 	{
