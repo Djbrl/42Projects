@@ -1,0 +1,393 @@
+
+==========================================
+============== GNL TESTS =================
+==========================================
+BUFFER_SIZE 2 :
+54c54
+< |WWWWWWWWWWWWWWWw
+---
+> |WWWWWWWWWWWWWWWwX
+70c70
+< |MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMm
+---
+> |MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMmN
+72c72,73
+< Well Done
+---
+> |(null)
+> Not Good - Wrong Number Of Lines
+86c87
+< |
+---
+> |(null)
+93c94
+< |
+---
+> |(null)
+101c102
+< |
+---
+> |(null)
+112c113
+< |
+---
+> |(null)
+126a128
+> |(null)
+127a130
+> |(null)
+129c132,133
+< Well Done
+---
+> |(null)
+> Not Good - Wrong Number Of Lines
+143a148
+>   OOOOOOOOOOOOOO 
+145,146c150,151
+<   OOOOOOOOOOOOOO
+<   OOOOOOOOOOOOOO
+---
+>   
+>   OOOOOOOOOOOOOO 
+160c165,166
+< Well Done
+---
+> (null)
+> Not Good - Wrong Number Of Lines
+BUFFER_SIZE 3 :
+24c24
+< |SSSSSSSSSSSSSSSs
+---
+> |SSSSSSSSSSSSSSSsT
+54c54
+< |WWWWWWWWWWWWWWWw
+---
+> |WWWWWWWWWWWWWWWwX
+70c70
+< |MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMm
+---
+> |MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMmN
+72c72,73
+< Well Done
+---
+> |(null)
+> Not Good - Wrong Number Of Lines
+86c87
+< |
+---
+> |(null)
+93c94
+< |
+---
+> |(null)
+101c102
+< |
+---
+> |(null)
+112c113
+< |
+---
+> |(null)
+126a128
+> |(null)
+127a130
+> |(null)
+129c132,133
+< Well Done
+---
+> |(null)
+> Not Good - Wrong Number Of Lines
+145,147c149,152
+<   OOOOOOOOOOOOOO
+<   OOOOOOOOOOOOOO
+<   OOOOOOOOOOOOOO
+---
+>   OOOOOOOOOOOOOO 
+>   
+>   OOOOOOOOOOOOOO 
+>   OOOOOOOOOOOOOO  
+160c165,166
+< Well Done
+---
+> (null)
+> Not Good - Wrong Number Of Lines
+BUFFER_SIZE 1 :
+72c72,73
+< Well Done
+---
+> |(null)
+> Not Good - Wrong Number Of Lines
+86c87
+< |
+---
+> |(null)
+93c94
+< |
+---
+> |(null)
+101c102
+< |
+---
+> |(null)
+112c113
+< |
+---
+> |(null)
+126a128
+> |(null)
+127a130
+> |(null)
+129c132,133
+< Well Done
+---
+> |(null)
+> Not Good - Wrong Number Of Lines
+145a150
+>   
+160c165,166
+< Well Done
+---
+> (null)
+> Not Good - Wrong Number Of Lines
+BUFFER_SIZE 42 :
+8c8
+< |CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCc
+---
+> |CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCcDDDDDDDDDDDDDDDDDDDDDDDD
+24c24
+< |SSSSSSSSSSSSSSSs
+---
+> |SSSSSSSSSSSSSSSsTTTTTTTTTT
+54c54,55
+< |WWWWWWWWWWWWWWWw
+---
+> |WWWWWWWWWWWWWWWwXXXXXXXXXXXXXXXXx
+> Y
+70c71
+< |MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMm
+---
+> |MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMmNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+72c73,74
+< Well Done
+---
+> |(null)
+> Not Good - Wrong Number Of Lines
+86c88
+< |
+---
+> |(null)
+93c95
+< |
+---
+> |(null)
+101c103
+< |
+---
+> |(null)
+112c114
+< |
+---
+> |(null)
+126a129
+> |(null)
+127a131
+> |(null)
+129c133,134
+< Well Done
+---
+> |(null)
+> Not Good - Wrong Number Of Lines
+145a151
+>   
+160c166,167
+< Well Done
+---
+> (null)
+> Not Good - Wrong Number Of Lines
+BUFFER_SIZE 9999 :
+54c54,70
+< |WWWWWWWWWWWWWWWw
+---
+> |WWWWWWWWWWWWWWWwXXXXXXXXXXXXXXXXx
+> YYYYYYYYYYYYYYYYYy
+> ZZZZZZZZZZZZZZZZZZz
+> AAAAAAAAAAAAAAAAAAAa
+> BBBBBBBBBBBBBBBBBBBBb
+> CCCCCCCCCCCCCCCCCCCCCc
+> DDDDDDDDDDDDDDDDDDDDDDd
+> EEEEEEEEEEEEEEEEEEEEEEEe
+> FFFFFFFFFFFFFFFFFFFFFFFFf
+> GGGGGGGGGGGGGGGGGGGGGGGGGg
+> HHHHHHHHHHHHHHHHHHHHHHHHHHh
+> IIIIIIIIIIIIIIIIIIIIIIIIIIIi
+> JJJJJJJJJJJJJJJJJJJJJJJJJJJJj
+> KKKKKKKKKKKKKKKKKKKKKKKKKKKKKk
+> LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLl
+> MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMm
+> NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNnPPPPPPPPPPPPPPPPPPpEEEeUUUUUUUUUUUUUu
+70,72c86,89
+< |MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMm
+< |NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNn
+< Well Done
+---
+> |MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMmNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNnPPPPPPPPPPPPPPPPPPpEEEeUUUUUUUUUUUUUuBBBBBBBBBBBBBBBBBBBBbEEEEEEEEEEEEEEEEEEEEEEEe
+> |NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNnPPPPPPPPPPPPPPPPPPpEEEeUUUUUUUUUUUUUuBBBBBBBBBBBBBBBBBBBBbEEEEEEEEEEEEEEEEEEEEEEEe
+> |(null)
+> Not Good - Wrong Number Of Lines
+86c103
+< |
+---
+> |(null)
+93c110
+< |
+---
+> |(null)
+101c118
+< |
+---
+> |(null)
+112c129
+< |
+---
+> |(null)
+126a144
+> |(null)
+127a146
+> |(null)
+129c148,149
+< Well Done
+---
+> |(null)
+> Not Good - Wrong Number Of Lines
+145a166
+>   
+160c181,182
+< Well Done
+---
+> (null)
+> Not Good - Wrong Number Of Lines
+BUFFER_SIZE 0 :
+7c7
+< Well Done - Returned -1
+---
+> Not Good - Did not return -1 for BUFFER_SIZE=0
+14c14
+< Well Done - Returned -1
+---
+> Not Good - Did not return -1 for BUFFER_SIZE=0
+21c21
+< Well Done - Returned -1
+---
+> Not Good - Did not return -1 for BUFFER_SIZE=0
+28c28
+< Well Done - Returned -1
+---
+> Not Good - Did not return -1 for BUFFER_SIZE=0
+35c35
+< Well Done - Returned -1
+---
+> Not Good - Did not return -1 for BUFFER_SIZE=0
+51c51
+< Well Done - Returned -1
+---
+> Not Good - Did not return -1 for BUFFER_SIZE=0
+58c58
+< Well Done - Returned -1
+---
+> Not Good - Did not return -1 for BUFFER_SIZE=0
+
+==========================================
+============== HUGE TESTS ================
+==========================================
+GNL :
+1062c1062,1064
+< Well Done
+---
+> |(null)
+> Not Good - Wrong Number Of Lines
+> 
+1205c1207,1221
+< |qN5EqPMtQ5LScxD/p+wNQlx2gfyhIKMfg8h6CgwLKn0yNxY8sz/TubbtjC432i2y
+---
+> |qN5EqPMtQ5LScxD/p+wNQlx2gfyhIKMfg8h6CgwLKn0yNxY8sz/TubbtjC432i2yMBviVsnAYaBVtUxDYLk2le7KDPQeKpCQtbLuaaaCbR4IOIH1VIo1sTNco98CsTz7
+> Kn7txwceEU/27QqtUMzS94nQrOY6IOzMdys7nyT9TH/V5+rRnxzMXb75DniRMaln
+> EjDp1KUl9975pJqvfTo/pUlujhqx4EVL0piMcq79dmpdnC8CtR1PVYgcEZ8eEoLy
+> fyO37qEbX1cN8enrlFBF+TwT/14pYO0ZNXrG9k3L8ZjOkM0YSI4bl3WojLiTvOGe
+> XUn/BVARpa63AgFI4swvNFCbpcBV8yXOw6Z/KwW8lBshfykut0Um0UZvukbPVm/O
+> SdHSTCM+V1yDIauQ6WA0D39LwpVCS9cm6D55KvS+Ly13MVCjuJBcBc+rYPB+YbOp
+> RC7bb+vUxttfo5OgEUjMSI+D0TTlaahqU7m1odZLVynZsNj75PW+y9QgzJ8ihu1W
+> syzWNMCqSkbikf7VLYldvKJAWe263Sds9iRPskZeXWt07AWR1ljdnRS6FGsXM72Y
+> QVPw6RW5bgxMPbd7YfvkqHfLxrdJ4plbkThA1Vg1od6iwyO+0Vq5f/VddrWL/D5e
+> 78pMw2zQ1zlG9fSMN/EvCeCpCw2aX8Qeyk7f0BNTgJeNwrLD0RpkYWU3t5vN1522
+> LCCYPTsXV2UJFbrolz6zCoHFVaLYwbXfw1e5zuSnhlqpMQgw2RVYsANiGZL/A2UC
+> NpVTXVAnKjln663y2L/7VE6MBDvM0bbdi1V+Q/a/IqPV00YNj78EwXtPkCjkf2/X
+> W//8rfTnFunlt4A0zlm2podBHRahd81q5LKGS4F1nG8OXkLZP7bAMEcbqwM7Tyii
+> KdydBVZdto9+6U7vPrRIFOFxQ0VgzY9mZMbqyWBpbrkBINc9Npul+p+p4qfMWJXU
+> 21UmmFrTr8mkh+9Bw1Ehe25wwApV7YRaiFQeY4dbK/SYfTHc1b4s7u
+1974c1990,2004
+< |n+YAEGk0FiwqaNwqBx1/bq3qEIMMyaBrPtjvzpgtJDTBkW/E29sTMnOpWLi9vxPD
+---
+> |n+YAEGk0FiwqaNwqBx1/bq3qEIMMyaBrPtjvzpgtJDTBkW/E29sTMnOpWLi9vxPDzsnvEgT/7ljBNr33z682RmkRzhjSVYLtUmzQMlVmIbB5SfGVLVT7oE0JwHscQh/u
+> AIDMucpXOX+JE3bG1dBPy6izT47CjQIaZrAp1NtES/vqoQgq+HnPANYR86va9JmE
+> SWOKe7LFGGW25aRhYPEZhXPfW9hsPtlE6vnmjWvNjDxufk/lcVBlWnEph41a8Ymh
+> XCh9zUN/SJNSKfX6aefJmK7GxQto4GnyaIRnZIKpeuK7px24YeMYjbYVep+IqJgb
+> YlezwETZ+F3VvgHtc4XRJNGWPmJu5ZS1GOijugjSpavMJX4iQlo/IwCF2SEMnCl9
+> Ma74ALoVVl7cHsesnAg9iOOKkQSpdAC6pR+7OzTd1ak9c8wwygaF1TeqGLnP8Ojm
+> mimQq3j0E8p5gvbluufAruSIodh2M/+4MBUok+7tcpdui3Wo33M2VmLcHqWOJwXT
+> D1MRi9WgOgceQTK9fFNjMpSKR60ITFU202IZ6JElMqrJHKiYbG8CNbkbqo/UWT01
+> 2DXH1ParpsDgbpfoHCeIOOkhNEP4RuXl8GfhJZFa3ZqHmomGYUqY4l2nEyxnkh7H
+> 90MTkwMmOljEEsIAXGIhLGw3yBSk1qHsNJvrLGqBKc2vadaFYz3cIvMVfhU9GbY3
+> Fa2ei4wdIAOYEIbKfhI2VRTg/pOKu11+ELqI4NgarlE3sd4omR2f4bADcznWTaU8
+> BFhTBUwsYDCNKOIJcPgUK7lZAUMVwf3muDZxH/41wqaVkvaw0mJZKsa847B+p5MM
+> 0HncaYc/N5jIeouAJillkdOSQj9lYhrOp2ZAg73cdskip7WSdq7g2DUe2PekmNVx
+> rjgOGxWi8Rz/Ap/iMbzX0C/t8CWSJvu80Ccv5e2LJQh3ddVQ4iJY5WplP9kSPcRQ
+> 5u+cwMlEnAFxigjJHhQxKPsneugGVdDGYbNuTKTHcRLSbbqLrGNLnRnD5hEO5Ecq
+3512c3542,3557
+< |IqDd7bWkRwzD7YydyxyO50M9+fIl4r3M7mn7YLE8nq3zo9OHvJKLJicr2LRceiMR
+---
+> |IqDd7bWkRwzD7YydyxyO50M9+fIl4r3M7mn7YLE8nq3zo9OHvJKLJicr2LRceiMRGMHYxe8al02rF6PnXEQmmEf33nls+e9jg3UAounLrZPYU0d0O/HHbWJ7RU7QdOTm
+> jGlyhQI0Jk9l8X6csO93HfcY6zM6gnD3VRBI/J+YvZY16JNHnDD42mpWmK2KdWfR
+> Z0Wmf+lUEZPjt9/Qe/AeyGCP9LoIbY+dWbC8kp60Z7MxHda4jlqD/3iwdDdOIDDn
+> bcXQ9M+44ygIf9hxAV6A3ZU2eOG/i2M/IEo5cr3bqjlmdQgv515YY9HZIhFYRxjg
+> Xkwxb3+xUYmSwLGPOr4GBo7NHAaaBEEwXSLqtUhtLa+humvqX7xae6QJEo6J2Bha
+> ofyVbm1vsQxbzbFPbRSOw4sKmfO0Ne4wYQqXHsmALHVIAbxWvkGPjsRoFfZyMj+k
+> h0yiDO0yjYRg0SlsmeBzIbkyzJRPo0x8VVobuKUk/5l8tfWWpqGylCtzMh+n5Bae
+> SLXPh09tJjhJCh4Zg0522GTAqhDm28obcSam3LWqg7EeQLJF+mJw+1yFTblPxLup
+> 76D5+HlXpimzANRHeAV+q8NmROfD9U8yIZokoi0fL8SYuPWLdlYn/f5EO01BqZ/m
+> 9+uoD++/RMp3xhDVVLhY1WYQ+Ue/Lo58EnECsXiikZFZ/JE3odm7rTJIO1YI5V+k
+> bMFNDBjHUEi9x+/4YPCN0LzZkth/VbDpvU362xCvOsYGIPcxXKo9aNxkQ2tV9qbF
+> Fr4jksLDDzlOSoz3t204tDeOsOjs2gToGhlIj8NHxtVL3RiPQKW/GjK4nsNGjPnj
+> tjZ7tByM0J27TjwrvoDW/0ZfPwG+ofMhHsSgYbDeZEYOHhkKyUiLSakCo6Njfdeo
+> We9XMWekyIttMsRPJToNK1okPkzJFhwCWo6xhXeG3l+inBIW3xV18pzj5Susos3F
+> /WzAdu6lhb0JKOWcDS509kQ0FQVR/blhVRW8WjI6rwFvv92uP/6NOaxdOCsIsIyX
+> xnJP2/f/2w/KmYHElhZ
+3666c3711,3726
+< |z7sLTJWFYtNfJN/+tLMHNgoljjGhGYXPDW9A/aP93yH1Roq1AFEWysPkeWvvnfMr
+---
+> |z7sLTJWFYtNfJN/+tLMHNgoljjGhGYXPDW9A/aP93yH1Roq1AFEWysPkeWvvnfMrR5qxQSBaoRWAQrY8irxf5AmKHdnXiQKMxqpf+te2uJ3jmP8rx4Z2YlhcHdDplUiv
+> lIJbwkA+Tlp4+xCtgPREGnO18GpdmWKWv+02agML8h57eCv5SuXwiOMT1Y7roKn7
+> w9fQYTcaymS1EprDeyBetpgnvPMOnLSfpSxVlOyru//MK6N8eOSAghxAwKGF8uLC
+> o5Xw6M46s7UmaubZkygEMa9uFgdQO7cqb9lOYgG8IPgTg54i2JRSoELHFYJwWGxO
+> 1mdQSr8Yioo5TuLFGD8yWTBVLIhYcpBJEcWnrqDrxy2Xy5dcDe8RDSQmBUbahZMA
+> K7VZESVc/9iNlA9g7q7v17HZ/d8pKifoW8f1cVo7FRdBA5YK7Ns2uVK0sTgu0CKb
+> rwQF9FTp/xe9JfUpHgtmlGJhZoCRRtDs/fX01mhKyz3BvjUbmJyVMWCuNsWk+qe5
+> gSCcFAchPWG1ZdzxmQ4jWz+IZJ+0RM1f273lzTIxWFdmR/RIeW+QyJJXO6LqfP1P
+> kYVD0DbK7ofkZdBHlVhXcMUs9iTTv5HWubDbHiQHDbfU+teSNWlks3GOCSghKUqF
+> kYmRpj/MifSwhQXtXBAjTTVKVM+C3lD4SbfdJmASTpVcyjCVh2TEqU+KLXQo1lx6
+> lf12jsF52szzr7YM8CkdOxzE6aCIsn8nJCHaw/4PxpLJIzbRlkfHnLcwOaQZSFVl
+> YwLRn0IKnlEi1C3hU+dJRVinDN+fWstdQAgr+UElh8QxPX6jRys2rI/f9domF/GV
+> NZRltwkO7474VCMC15x+F833QJmWg5U+OdNarxjHXDXubPY91ZxazIOQknPQw4bI
+> tSngv1imuyhn5n7mYHMcvP3PjQs84jmNLK0r7u6d3cYRoKN+U8JdS23YYzzM1dFE
+> jUdmG7bQieDgwK6pms56Xn6XMnDOiFtV6Zhi5DNYtDQvz3QuPZgW5lJmbAix6mkF
+> jACznbpn
+3983c4043,4044
+< Well Done
+---
+> |(null)
+> Not Good - Wrong Number Of Lines
+3990c4051,4052
+< Well Done
+---
+> (null)
+> Not Good - Wrong Number Of Lines
+
