@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 02:36:43 by dsy               #+#    #+#             */
-/*   Updated: 2019/11/16 02:37:05 by dsy              ###   ########.fr       */
+/*   Updated: 2019/11/16 03:41:11 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int			get_next_line(int fd, char **line)
 
 	ret = 1;
 	i = 0;
-	if ((read(fd, line_stack[fd], 0) < 0) || line == NULL 
+	if ((read(fd, line_stack[fd], 0) < 0) || line == NULL
 			|| fd < 0 || fd > MAX_FD || BUFFER_SIZE < 1)
 		return (-1);
 	while (line_stack[fd][i] != '\n' && line_stack[fd][i] != '\0')

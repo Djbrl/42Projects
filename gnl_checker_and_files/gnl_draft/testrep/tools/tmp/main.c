@@ -9,11 +9,11 @@
 int main(int ac, char **av)
 {
 	int fd;
-	int fd2;
+//	int fd2;
     char *line = calloc(1, 1);
 	int ret = 1;
 	int dpipe[2];
-	int out = dup(1);
+	//int out = dup(1);
 	pipe(dpipe);
 	(void)ac;
 	
@@ -24,8 +24,9 @@ int main(int ac, char **av)
 	while (ret > 0)
 	{
 		ret = get_next_line(fd, &line);
-		free(line);
-		fflush(stdin);
+//		free(line);
+//		while(1)
+//			;
 		printf("\n===========================================================\n");	
 		printf("retour de gnl : %i\n", ret);	
 		printf("valeur de line : \"\x1b[32m%s\x1b[0m\"\n", line);

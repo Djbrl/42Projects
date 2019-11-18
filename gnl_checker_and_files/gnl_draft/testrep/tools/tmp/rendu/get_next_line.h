@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apitoise <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/18 14:29:01 by apitoise          #+#    #+#             */
-/*   Updated: 2019/10/23 14:59:38 by apitoise         ###   ########.fr       */
+/*   Created: 2019/11/16 03:25:41 by dsy               #+#    #+#             */
+/*   Updated: 2019/11/16 03:25:58 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
-# define MAX_FD 3000
+# define MAX_FD 1024
 # include <stdlib.h>
 # include <unistd.h>
 
