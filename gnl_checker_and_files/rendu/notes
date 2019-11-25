@@ -1,3 +1,0 @@
-- free l_stack a la fin de la fonction car elle contient l'adresse avec strdup
-- meme chose pour strjoin
-return 0 si une ligne avec \0 a la fin
