@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 20:53:59 by dsy               #+#    #+#             */
-/*   Updated: 2019/11/28 02:24:11 by dsy              ###   ########.fr       */
+/*   Updated: 2019/11/28 04:58:22 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,5 +18,15 @@
 # include <stdlib.h>
 # include "../libft/libft.h"
 
-int	ft_printf(const char *format, ...);
+typedef struct		s_convs{
+	unsigned char	c;
+	char			*s;
+	void			*p;
+	signed int		d;
+	signed int		i;
+	unsigned int	u;
+	int				x;
+}					t_convs;
+
+int					ft_printf(const char *format, ...);
 #endif

@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 20:31:22 by dsy               #+#    #+#             */
-/*   Updated: 2019/11/28 02:08:43 by dsy              ###   ########.fr       */
+/*   Updated: 2019/11/28 03:52:18 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 
 int main()
 {
-	ft_printf("test ddjewjoiewoiejwioewioejwio%s\n");
-	printf("test ddjewjoiewoiejwioewioejwio\n");
+	ft_printf("test ddjewjoiewoie%ijwioewioejwio%s\n", 43, "de");
+	//printf(NULL);
 	
 	/*int i = 7;
 	int p = 5;
