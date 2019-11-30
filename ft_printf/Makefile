@@ -6,20 +6,21 @@
 #    By: djsy <marvin@42.fr>                        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/28 16:31:35 by djsy              #+#    #+#              #
-#    Updated: 2019/11/28 00:06:51 by dsy              ###   ########.fr        #
+#    Updated: 2019/11/30 18:08:58 by dsy              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libftprintf.a
 
-OBJS = srcs/ft_printf.o libft/*.o
+OBJS = srcs/ft_printf.o srcs/ft_printf_conv.o libft/*.o
 
-SRCS = srcs/ft_printf.c
+SRCS = srcs/ft_printf.c srcs/ft_printf_conv.c
 
 all:
 	@cd libft/ && make
 	@gcc -Wall -Wextra -Werror $(SRCS) -c
 	@mv ft_printf.o srcs/
+	@mv ft_printf_conv.o srcs/
 	@ar rcs $(NAME) $(OBJS)
 
 clean:
