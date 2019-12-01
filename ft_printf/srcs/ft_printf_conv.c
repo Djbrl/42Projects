@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 16:47:54 by dsy               #+#    #+#             */
-/*   Updated: 2019/11/30 18:17:59 by dsy              ###   ########.fr       */
+/*   Updated: 2019/12/01 17:37:39 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,23 @@ int c_conversion(va_list params, t_convs conv_arg)
 	return (0);
 }
 */
-int s_conversion(va_list params)
+int s_conversion(va_list params, char arg_type)
 {
-	int i;
 	char *conv_arg;
+	char c;
 
-	i = 0;
-	conv_arg = (char*)va_arg(params, char*);
-	printf("%s\n", conv_arg);
-	while (conv_arg[i])
-		write(1, &(conv_arg[i++]), 1);
-	return (0);
+	c = 0;
+	if (arg_type == 's')
+	{
+		conv_arg = (char*)va_arg(params, char*);
+		ft_putstr(conv_arg);
+	}
+	else
+	{
+		c = (char)va_arg(params, int);
+		write(1, &c, 1);
+	}
+	return (1);
 }
 
 //int p_conversion(va_list params);
@@ -40,13 +46,18 @@ int s_conversion(va_list params)
 	return (0);
 }
 */
-int i_conversion(va_list params)
+int i_conversion(va_list params, char arg_type)
 {
 	int conv_arg;
-	conv_arg = (int)va_arg(params, int);
-	printf("%i\n", conv_arg);
-	write(1, &conv_arg, 1);
-	return (0);
+	char c;
+
+	c = 0;
+	if (arg_type == 'i' || arg_type == 'd')
+		conv_arg = (int)va_arg(params, int);
+	else
+		conv_arg = (unsigned int)va_arg(params, int);
+	ft_putnbr(conv_arg);
+	return (1);
 }
 //int u_conversion(va_list params);
 //int x_conversion(va_list params);

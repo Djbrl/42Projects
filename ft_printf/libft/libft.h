@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/12 17:14:11 by dsy               #+#    #+#             */
-/*   Updated: 2019/11/26 18:57:53 by dsy              ###   ########.fr       */
+/*   Updated: 2019/12/01 14:56:26 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,13 @@ int				ft_strncmp(const char *str1, const char *str2, size_t n);
 size_t			ft_strlcpy(char *dest, const char *src, size_t dstsize);
 size_t			ft_strlcat(char *dest, const char *src, size_t size);
 char			*ft_strnstr(char const *haystack,
-				const char *needle, size_t len);
+		const char *needle, size_t len);
 int				ft_atoi(const char *str);
 char			*ft_itoa(int n);
 void			*ft_calloc(size_t nitems, size_t size);
 void			ft_putchar(char c);
 void			ft_putnbr(int c);
+void			ft_putstr(char *str);
 void			ft_putnbr_fd(int c, int fd);
 void			ft_putchar_fd(char c, int fd);
 void			ft_putstr_fd(char *str, int fd);

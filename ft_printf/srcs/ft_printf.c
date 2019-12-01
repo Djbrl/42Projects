@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 20:26:52 by dsy               #+#    #+#             */
-/*   Updated: 2019/11/30 18:12:09 by dsy              ###   ########.fr       */
+/*   Updated: 2019/12/01 17:27:51 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,32 +20,53 @@ static int	is_conversion(char c)
 	return (0);
 }
 
-static void	which_arg(char arg, va_list params)
+static int	which_arg(char arg, va_list params)
 {
 	if (arg == 'c' || arg == 's')
-		s_conversion(params);
-	if (arg == 'i' || arg == 'd')
-		i_conversion(params);
+		if(!(s_conversion(params, arg)))
+			return (0);
+	if (arg == 'i' || arg == 'd' || arg == 'u')
+		if(!(i_conversion(params, arg)))
+			return (0);
+	return (1);
 	//if (arg == 'p')
 	//func
 	//if (arg == 'x')
 	//
 }
 
-static void	print_text(const char *str, va_list params)
+/*
+static int	check_args(va_list params)
+{
+	va_list tmp;
+
+	tmp = va_copy(tmp, params);
+	va_end(tmp);
+}
+*/
+
+static int	print_text(const char *str, va_list params)
 {
 	int i;
 
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] == '%' && is_conversion(str[i + 1]))
-			which_arg(str[i + 1], params);
 		if (str[i] == '%' && str[i + 1] == '%')
 			i++;
-		write(1, &str[i], 1);
-		i++;
+		else if (str[i] == '%' && is_conversion(str[i + 1]))
+		{
+			if (!(which_arg(str[i + 1], params)))
+				return (0);
+			i = i + 2;
+		}
+		else
+		{
+			write(1, &str[i], 1);
+			i++;
+		}
 	}
+	return (1);
 }
 
 int			ft_printf(const char *format, ...)
@@ -57,7 +78,8 @@ int			ft_printf(const char *format, ...)
 	i = 0;
 	if (format == NULL)
 		return (-1);
-	print_text(format, params);
+	if (!(print_text(format, params)))
+		return (-1);
 	va_end(params);
 	return (0);
 }

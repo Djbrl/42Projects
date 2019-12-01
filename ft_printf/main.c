@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 20:31:22 by dsy               #+#    #+#             */
-/*   Updated: 2019/11/30 18:00:02 by dsy              ###   ########.fr       */
+/*   Updated: 2019/12/01 17:24:03 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@
 
 int main()
 {
-	ft_printf("test ddjewjoiewoie%ijwioewioejwio%s\n", 43, "de");
+//	ft_printf("test i : \"%i\"\ntest s : \"%s\"\n", 43, "test field");
+	ft_printf("%s%s%s%s%s%c\n", "huk", "huk", "huk", "huk", "huk", 'X');
 	//printf(NULL);
 	
 	/*int i = 7;
