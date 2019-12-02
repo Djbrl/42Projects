@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 20:26:52 by dsy               #+#    #+#             */
-/*   Updated: 2019/12/01 17:27:51 by dsy              ###   ########.fr       */
+/*   Updated: 2019/12/02 22:10:54 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,22 +28,24 @@ static int	which_arg(char arg, va_list params)
 	if (arg == 'i' || arg == 'd' || arg == 'u')
 		if(!(i_conversion(params, arg)))
 			return (0);
+	if (arg == 'p')
+		if(!(p_conversion(params)))
+			return (0);
+	if (arg == 'x')
+		if(!(x_conversion(params)))
+			return (0);
 	return (1);
-	//if (arg == 'p')
-	//func
-	//if (arg == 'x')
-	//
 }
 
 /*
-static int	check_args(va_list params)
-{
-	va_list tmp;
+   static int	check_args(va_list params)
+   {
+   va_list tmp;
 
-	tmp = va_copy(tmp, params);
-	va_end(tmp);
-}
-*/
+   tmp = va_copy(tmp, params);
+   va_end(tmp);
+   }
+   */
 
 static int	print_text(const char *str, va_list params)
 {

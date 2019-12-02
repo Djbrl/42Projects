@@ -6,19 +6,33 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 16:47:54 by dsy               #+#    #+#             */
-/*   Updated: 2019/12/01 17:37:39 by dsy              ###   ########.fr       */
+/*   Updated: 2019/12/02 22:10:51 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libftprintf.h"
-/*
-int c_conversion(va_list params, t_convs conv_arg)
+
+void	ft_putnbr_x(unsigned long n)
 {
-	conv_arg.c = (char)va_arg(params, char);
-	write(1, &conv_arg.c, 1);
-	return (0);
+	unsigned long nb;
+	char *base = "0132456789abcdef";
+
+	nb = (unsigned long)n;
+	if (nb < 0)
+	{
+		nb *= -1;
+		ft_putchar('-');
+	}
+	if (nb < 16)
+	{
+		ft_putchar(base[nb]);
+		return ;
+	}
+	ft_putnbr_x(nb / 16);
+	ft_putchar(base[nb % 16]);
+	return ;
 }
-*/
+
 int s_conversion(va_list params, char arg_type)
 {
 	char *conv_arg;
@@ -38,14 +52,15 @@ int s_conversion(va_list params, char arg_type)
 	return (1);
 }
 
-//int p_conversion(va_list params);
-/*int d_conversion(va_list params, t_convs conv_arg)
+int p_conversion(va_list params)
 {
-	conv_arg.d = (int)va_arg(params, int);
-	write(1, &conv_arg.d, 1);
-	return (0);
+	void *p;
+	write(1, "0x", 2);
+	p = va_arg(params, void*);`
+	ft_putnbr_x((unsigned long)p);
+	return (1);
 }
-*/
+
 int i_conversion(va_list params, char arg_type)
 {
 	int conv_arg;
@@ -59,5 +74,21 @@ int i_conversion(va_list params, char arg_type)
 	ft_putnbr(conv_arg);
 	return (1);
 }
-//int u_conversion(va_list params);
-//int x_conversion(va_list params);
+
+int x_conversion(va_list params)
+{
+	int conv_arg;
+
+	conv_arg = (int)va_arg(params, int);
+	ft_putnbr_x(conv_arg);
+	return (1);
+}
+
+int ouss(va_list params)
+{
+
+	long conv_arg = (int)va_arg(params, void*);
+	write(1, "0x", 2);
+	ft_putnbr_x(conv_arg);
+	return (1);
+}

@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 20:53:59 by dsy               #+#    #+#             */
-/*   Updated: 2019/12/01 17:28:30 by dsy              ###   ########.fr       */
+/*   Updated: 2019/12/02 21:20:17 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,7 @@ typedef struct		s_convs{
 
 int			i_conversion(va_list params, char type);
 int			s_conversion(va_list params, char type);
+int			x_conversion(va_list params);
+int			p_conversion(va_list params);
 int			ft_printf(const char *format, ...);
 #endif
