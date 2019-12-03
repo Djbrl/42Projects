@@ -6,33 +6,25 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 20:26:52 by dsy               #+#    #+#             */
-/*   Updated: 2019/12/03 23:15:34 by dsy              ###   ########.fr       */
+/*   Updated: 2019/12/04 00:03:09 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libftprintf.h"
 
-static int	is_conversion(char c)
-{
-	if (c == 'c' || c == 's' || c == 'p' || c == 'i' || c == 'd' || c == 'u'
-			|| c == 'x')
-		return (1);
-	return (0);
-}
-
 static int	which_arg(char arg, va_list params)
 {
 	if (arg == 'c' || arg == 's')
-		if(!(s_conversion(params, arg)))
+		if (!(s_conversion(params, arg)))
 			return (0);
 	if (arg == 'i' || arg == 'd' || arg == 'u')
-		if(!(i_conversion(params, arg)))
+		if (!(i_conversion(params, arg)))
 			return (0);
 	if (arg == 'p')
-		if(!(p_conversion(params)))
+		if (!(p_conversion(params)))
 			return (0);
 	if (arg == 'x')
-		if(!(x_conversion(params)))
+		if (!(x_conversion(params)))
 			return (0);
 	return (1);
 }
@@ -73,7 +65,7 @@ static int	print_text(const char *str, va_list params)
 
 int			ft_printf(const char *format, ...)
 {
-	int i;
+	int		i;
 	va_list params;
 
 	va_start(params, format);

@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 16:47:54 by dsy               #+#    #+#             */
-/*   Updated: 2019/12/03 23:15:40 by dsy              ###   ########.fr       */
+/*   Updated: 2019/12/04 00:09:44 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static unsigned long	ft_power(unsigned long x, int y)
 	return (x * ft_power(x, --y));
 }
 
-void				ft_putnbr_x(unsigned long value)
+void					ft_putnbr_x(unsigned long value)
 {
 	int				len;
 	unsigned long	rest;
@@ -37,7 +37,6 @@ void				ft_putnbr_x(unsigned long value)
 			len++;
 	if (!(res = malloc(sizeof(char) * (len + 1))))
 		return ;
-	res[len] = 0;
 	if (value < 10)
 		res[0] = '0' + value;
 	else
@@ -50,6 +49,7 @@ void				ft_putnbr_x(unsigned long value)
 	ft_putstr(res);
 	free(res);
 }
+
 /*
 void	ft_putnbr_x(unsigned long value)
 {
@@ -91,7 +91,7 @@ void	ft_putnbr_x(unsigned long value)
 	return ;
 }*/
 
-int s_conversion(va_list params, char arg_type)
+int						s_conversion(va_list params, char arg_type)
 {
 	char *conv_arg;
 	char c;
@@ -110,19 +110,20 @@ int s_conversion(va_list params, char arg_type)
 	return (1);
 }
 
-int p_conversion(va_list params)
+int						p_conversion(va_list params)
 {
 	void *p;
+
 	write(1, "0x", 2);
 	p = va_arg(params, void*);
 	ft_putnbr_x((unsigned long)p);
 	return (1);
 }
 
-int i_conversion(va_list params, char arg_type)
+int						i_conversion(va_list params, char arg_type)
 {
-	int conv_arg;
-	char c;
+	int		conv_arg;
+	char	c;
 
 	c = 0;
 	if (arg_type == 'i' || arg_type == 'd')
@@ -133,20 +134,11 @@ int i_conversion(va_list params, char arg_type)
 	return (1);
 }
 
-int x_conversion(va_list params)
+int						x_conversion(va_list params)
 {
 	int conv_arg;
 
 	conv_arg = (int)va_arg(params, int);
-	ft_putnbr_x(conv_arg);
-	return (1);
-}
-
-int ouss(va_list params)
-{
-
-	long conv_arg = (int)va_arg(params, void*);
-	write(1, "0x", 2);
 	ft_putnbr_x(conv_arg);
 	return (1);
 }

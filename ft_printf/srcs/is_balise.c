@@ -6,13 +6,13 @@
 /*   By: idouidi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 21:54:24 by idouidi           #+#    #+#             */
-/*   Updated: 2019/12/03 23:12:50 by idouidi          ###   ########.fr       */
+/*   Updated: 2019/12/04 00:04:37 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/libftprintf.h"
+#include "../includes/libftprintf.h"
 
-int		is_present(const char *str, char c)
+int			is_present(const char *str, char c)
 {
 	int	i;
 
@@ -28,8 +28,9 @@ int		is_present(const char *str, char c)
 
 void		is_balise_flags(const char *str)
 {
-	t_field	field;
+	t_field	*field;
 
+	field = NULL;
 	if (is_present(str, '+') == 0)
 		field->flags[0] = '+';
 	else
@@ -46,21 +47,21 @@ void		is_balise_flags(const char *str)
 		field->flags[3] = '0';
 	else
 		field->flags[3] = '/';
-	
 }
 
-void is_balise_width(const char *str)
+void		is_balise_width(const char *str)
 {
 	char	*tmp;
 	int		i;
 	int		j;
-	int		nb;
-	t_field	field;
+	t_field	*field;
 
+	field = NULL;
 	i = 0;
 	j = 0;
 	tmp = NULL;
-	while (str[i] && (str[i] == '+' || str[i] == '-' || str[i] == ' ' || str[i] == '0'))
+	while (str[i] && (str[i] == '+' || str[i] == '-'
+				|| str[i] == ' ' || str[i] == '0'))
 		i++;
 	j = i;
 	while (str[j] && str[j] >= '0' && str[j] <= '9')
@@ -69,4 +70,3 @@ void is_balise_width(const char *str)
 	field->width = ft_atoi(tmp);
 	free(tmp);
 }
-
