@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 20:53:59 by dsy               #+#    #+#             */
-/*   Updated: 2019/12/02 21:20:17 by dsy              ###   ########.fr       */
+/*   Updated: 2019/12/03 22:24:31 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,16 @@
 # include <stdlib.h>
 # include "../libft/libft.h"
 
-typedef struct		s_convs{
-	unsigned char	c;
-	char			*s;
-	void			*p;
-	signed int		d;
-	signed int		i;
-	unsigned int	u;
-	int				x;
-}					t_convs;
+typedef struct	s_field {
+	char		flags[4];
+	size_t		width;
+	size_t		precision;
+	size_t		length;
+}				t_field;
 
-int			i_conversion(va_list params, char type);
-int			s_conversion(va_list params, char type);
-int			x_conversion(va_list params);
-int			p_conversion(va_list params);
-int			ft_printf(const char *format, ...);
+int				i_conversion(va_list params, char type);
+int				s_conversion(va_list params, char type);
+int				x_conversion(va_list params);
+int				p_conversion(va_list params);
+int				ft_printf(const char *format, ...);
 #endif
