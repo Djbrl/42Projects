@@ -6,11 +6,16 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 20:26:52 by dsy               #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2019/12/04 06:23:09 by idouidi          ###   ########.fr       */
+=======
+/*   Updated: 2019/12/04 00:49:20 by dsy              ###   ########.fr       */
+>>>>>>> 0c0e553c3074e345ca91ff3f7793f83cee4993e8
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libftprintf.h"
+<<<<<<< HEAD
 
 int			is_conversion(char c)
 {
@@ -20,6 +25,10 @@ int			is_conversion(char c)
 	return (0);
 }
 
+=======
+//add function that checks combinaison of flags
+//add function that prints that combinaison before/after the result
+>>>>>>> 0c0e553c3074e345ca91ff3f7793f83cee4993e8
 static int	which_arg(char arg, va_list params)
 {
 	if (arg == 'c' || arg == 's')
@@ -37,7 +46,11 @@ static int	which_arg(char arg, va_list params)
 	return (1);
 }
 
+<<<<<<< HEAD
 static int	print_text(const char *str, va_list params, t_field field)
+=======
+static int	print_text(const char *str, va_list params)
+>>>>>>> 0c0e553c3074e345ca91ff3f7793f83cee4993e8
 {
 	int 	i;
 	t_field tmp;
