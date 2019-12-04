@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 20:53:59 by dsy               #+#    #+#             */
-/*   Updated: 2019/12/04 00:00:24 by dsy              ###   ########.fr       */
+/*   Updated: 2019/12/04 03:27:21 by idouidi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef struct	s_field {
 }				t_field;
 
 int				is_conversion(char c);
+t_field			is_balise(const char *str, t_field field);
 int				i_conversion(va_list params, char type);
 int				s_conversion(va_list params, char type);
 int				x_conversion(va_list params);
