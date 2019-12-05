@@ -12,15 +12,16 @@
 
 NAME = libftprintf.a
 
-OBJS = srcs/ft_printf.o srcs/ft_printf_conv.o srcs/is_balise.o libft/*.o
+OBJS = srcs/ft_printf.o srcs/ft_printf_conv.o srcs/is_balise.o srcs/ft_utils.o libft/*.o
 
-SRCS = srcs/ft_printf.c srcs/ft_printf_conv.c srcs/is_balise.c
+SRCS = srcs/ft_printf.c srcs/ft_printf_conv.c srcs/is_balise.c srcs/ft_utils.c 
 
 all:
 	@cd libft/ && make
-	@gcc -Wall -Wextra -Werror $(SRCS) -c
+	@gcc $(SRCS) -c 
 	@mv ft_printf.o srcs/
 	@mv ft_printf_conv.o srcs/
+	@mv ft_utils.o srcs/
 	@mv is_balise.o srcs/
 	@ar rcs $(NAME) $(OBJS)
 

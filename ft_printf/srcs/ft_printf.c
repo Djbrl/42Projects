@@ -6,16 +6,11 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 20:26:52 by dsy               #+#    #+#             */
-<<<<<<< HEAD
 /*   Updated: 2019/12/04 06:23:09 by idouidi          ###   ########.fr       */
-=======
-/*   Updated: 2019/12/04 00:49:20 by dsy              ###   ########.fr       */
->>>>>>> 0c0e553c3074e345ca91ff3f7793f83cee4993e8
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libftprintf.h"
-<<<<<<< HEAD
 
 int			is_conversion(char c)
 {
@@ -25,51 +20,50 @@ int			is_conversion(char c)
 	return (0);
 }
 
-=======
-//add function that checks combinaison of flags
-//add function that prints that combinaison before/after the result
->>>>>>> 0c0e553c3074e345ca91ff3f7793f83cee4993e8
-static int	which_arg(char arg, va_list params)
+static int	which_arg(char *str, va_list params)
 {
-	if (arg == 'c' || arg == 's')
-		if (!(s_conversion(params, arg)))
+	int	i;
+	t_field	*field;
+
+	i = 0;
+	field = is_balise(str);
+	if (field->error = 1)
+		return (0);
+	while(str[i] && !is_conversion(str[i]))
+			i++;
+	if (str[i] == '\0')
+		return (0);
+	if (str[i] == 'c' || str[i] == 's')
+		if (!(s_conversion(params, str[i])))
 			return (0);
-	if (arg == 'i' || arg == 'd' || arg == 'u')
-		if (!(i_conversion(params, arg)))
+	if (str[i] == 'i' || str[i] == 'd' || str[i] == 'u')
+		if (!(i_conversion(params, str[i], field)))
 			return (0);
-	if (arg == 'p')
+	if (str[i] == 'p')
 		if (!(p_conversion(params)))
 			return (0);
-	if (arg == 'x')
+	if (str[i] == 'x')
 		if (!(x_conversion(params)))
 			return (0);
 	return (1);
 }
 
-<<<<<<< HEAD
-static int	print_text(const char *str, va_list params, t_field field)
-=======
 static int	print_text(const char *str, va_list params)
->>>>>>> 0c0e553c3074e345ca91ff3f7793f83cee4993e8
 {
 	int 	i;
-	t_field tmp;
-
 	i = 0;
 	while (str[i])
 	{
 		if (str[i] == '%' && str[i + 1] == '%')
 			i++;
-		else if (str[i] == '%' && !is_conversion(str[i + 1]))
-		{
-			tmp = is_balise((char *)&str[i], field);
-			/*printf("flag = %c %c %c %c || width = %zu || precision = %lu\n", tmp.flags[0], tmp.flags[1], tmp.flags[2], tmp.flags[3] , tmp.width, tmp.precision);*/
-		}
 		if (str[i] == '%')
 		{
-			if (!(which_arg(str[i + 1], params)))
+			if (!(which_arg((char *)&str[i + 1], params)))
 				return (0);
-			i = i + 2;
+			i++;
+			while (str[i] && !is_conversion(str[i]))
+				i++;
+			i++;
 		}
 		else
 		{
@@ -82,20 +76,12 @@ static int	print_text(const char *str, va_list params)
 
 int			ft_printf(const char *format, ...)
 {
-	int		i;
 	va_list params;
-	t_field field;
 
-	field.flags[0] = '0';
-	field.flags[1] = '0';
-	field.flags[2] = '0';
-	field.flags[3] = '0';
-	field.width = 0;
 	va_start(params, format);
-	i = 0;
 	if (format == NULL)
 		return (-1);
-	if (!(print_text(format, params, field)))
+	if (!(print_text(format, params)))
 		return (-1);
 	va_end(params);
 	return (0);
