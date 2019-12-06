@@ -70,8 +70,6 @@ static int	print_text(const char *str, va_list params)
 			while (str[i] && !is_conversion(str[i]))
 				i++;
 			i++;
-
-			printf("|%d = i|", i);
 		}
 		else
 		{

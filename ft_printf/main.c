@@ -15,7 +15,7 @@
 
 int main()
 {
-	printf("%-+10d  %-+10d   %0+6d\n", 5, 5, 5);
-	ft_printf("%-+10d  %-+10d   %0+6d\n", 5, 5, 5);
+	printf("ori:% -.10d\n", 7);
+	ft_printf("cpy:% -.10d\n", 7);
 	return (0);
 }

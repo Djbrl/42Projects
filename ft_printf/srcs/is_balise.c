@@ -102,12 +102,14 @@ t_field		is_balise_width_n_precision(const char *str, t_field field)
 		field.precision = ft_atoi(tmp);
 		free(tmp);
 	}
+	if (field.precision > field.width)
+		field.width = 0;
 	return (field);
 }
 
 t_field		is_balise(char *str)
 {
-	t_field field = {"0000", 0, 1, 0, 0};
+	t_field field = {"0000", 0, 0, 0, 0};
 	if (pars(str) == 0)
 	{
 		field.error = 1;
