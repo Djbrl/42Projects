@@ -45,39 +45,34 @@ void			print_balise(int c, t_field field)
 	char *tmp;
 
 	tmp = ft_itoa(c);
-	if (field.flags[0] == '+')
-		ft_putchar('+');
 	if (field.flags[2] == ' ')
 		ft_putchar(' ');
-	printf("flags = %s || width = %d || precision =  %d || error = %d\n", field.flags, field.width, field.precision, field.error);
+//	printf("flags = %s || width = %d || precision =  %d || error = %d\n", field.flags, field.width, field.precision, field.error);
 	if (field.width != 0)
 	{
-		stock = (field.flags[0] == '+') ? field.width - ft_strlen(tmp) - 1 : field.width - ft_strlen(tmp);
+		stock = (field.flags[0] == '+' || field.flags[2] == ' ') ? field.width - ft_strlen(tmp) - 1 : field.width - ft_strlen(tmp);
 		if (field.flags[1] == '-')
 		{
+			if (field.flags[0] == '+')
+				ft_putchar('+');
 			ft_putnbr(c);
-			while (stock)
-			{
+			while (stock--)
 				ft_putchar(' ');
-				stock--;
-			}
 		}
 		else if (field.flags[3] == '0')
 		{
-			while (stock)
-                        {
+			if (field.flags[0] == '+')
+				ft_putchar('+');
+			while (stock--)
                                 ft_putchar('0');
-                                stock--;
-                        }
 			ft_putnbr(c);
 		}
 		else
 		{
-			while(stock)
-			{
+			while(stock--)
 				ft_putchar(' ');
-				stock--;
-			}
+			 if (field.flags[0] == '+')
+				 ft_putchar('+');
 			ft_putnbr(c);
 		}
 	}

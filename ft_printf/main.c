@@ -15,7 +15,7 @@
 
 int main()
 {
-	printf("%0+15d\n", 5);
-	ft_printf("%0+15d\n", 5);
+	printf("%-+10d  %-+10d   %0+6d\n", 5, 5, 5);
+	ft_printf("%-+10d  %-+10d   %0+6d\n", 5, 5, 5);
 	return (0);
 }

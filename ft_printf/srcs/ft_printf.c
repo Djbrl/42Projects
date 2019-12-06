@@ -67,8 +67,11 @@ static int	print_text(const char *str, va_list params)
 			if (!(which_arg((char *)&str[i + 1], params)))
 				return (0);
 			i++;
-			while (str[i] && (check_balise(str[i]) || is_conversion(str[i])))
+			while (str[i] && !is_conversion(str[i]))
 				i++;
+			i++;
+
+			printf("|%d = i|", i);
 		}
 		else
 		{
