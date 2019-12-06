@@ -20,19 +20,25 @@ int			is_conversion(char c)
 	return (0);
 }
 
+int			check_balise(char c)
+{
+	if (c == '+' || c == '-' || c == '0' || c == ' ' || c == '.' || c == 'l'
+			|| c == 'h' || (c >= '0' && c <= '9'))
+		return (1);
+	return (0);
+}
+
 static int	which_arg(char *str, va_list params)
 {
 	int	i;
-	t_field	*field;
+	t_field	field;
 
 	i = 0;
 	field = is_balise(str);
-	if (field->error = 1)
+	if (field.error == 1)
 		return (0);
-	while(str[i] && !is_conversion(str[i]))
+	while(str[i] && check_balise(str[i]))
 			i++;
-	if (str[i] == '\0')
-		return (0);
 	if (str[i] == 'c' || str[i] == 's')
 		if (!(s_conversion(params, str[i])))
 			return (0);
@@ -56,14 +62,13 @@ static int	print_text(const char *str, va_list params)
 	{
 		if (str[i] == '%' && str[i + 1] == '%')
 			i++;
-		if (str[i] == '%')
+		else if (str[i] == '%' && (check_balise(str[i + 1]) || is_conversion(str[i + 1])))
 		{
 			if (!(which_arg((char *)&str[i + 1], params)))
 				return (0);
 			i++;
-			while (str[i] && !is_conversion(str[i]))
+			while (str[i] && (check_balise(str[i]) || is_conversion(str[i])))
 				i++;
-			i++;
 		}
 		else
 		{

@@ -41,7 +41,7 @@ int		p_conversion(va_list params)
 	return (1);
 }
 
-int		i_conversion(va_list params, char arg_type, t_field *field)
+int		i_conversion(va_list params, char arg_type, t_field field)
 {
 	int		conv_arg;
 
@@ -50,7 +50,6 @@ int		i_conversion(va_list params, char arg_type, t_field *field)
 	else
 		conv_arg = (unsigned int)va_arg(params, int);
 	print_balise((int)conv_arg, field);
-	//ft_putnbr(conv_arg, field);
 	return (1);
 }
 

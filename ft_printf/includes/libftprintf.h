@@ -20,20 +20,20 @@
 
 typedef struct	s_field {
 	char		flags[4];
-	size_t		width;
-	size_t		precision;
-	size_t		length;
+	int		width;
+	int		precision;
+	int		length;
 	int		error;
 }				t_field;
 
 int			is_conversion(char c);
-t_field			*is_balise(char *str);
-int			i_conversion(va_list params, char type, t_field *field);
+t_field			is_balise(char *str);
+int			i_conversion(va_list params, char type, t_field field);
 int			s_conversion(va_list params, char type);
 int			x_conversion(va_list params);
 int			p_conversion(va_list params);
 int			ft_printf(const char *format, ...);
 unsigned long		ft_power(unsigned long x , unsigned long y);
 void			ft_putnbr_x(unsigned long value);
-void			print_balise(int c, t_field *field);
+void			print_balise(int c, t_field field);
 #endif

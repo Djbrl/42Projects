@@ -54,28 +54,28 @@ int			is_present(char *str, char c)
 	return (0);
 }
 
-t_field		*is_balise_flags(char *str, t_field *field)
+t_field		is_balise_flags(char *str, t_field field)
 {
 	if (is_present(str, '+') == 1)
-		field->flags[0] = '+';
+		field.flags[0] = '+';
 	else
-		field->flags[0] = '/';
+		field.flags[0] = '/';
 	if (is_present(str, '-') == 1)
-		field->flags[1] = '-';
+		field.flags[1] = '-';
 	else
-		field->flags[1] = '/';
+		field.flags[1] = '/';
 	if (is_present(str, ' ') == 1)
-		field->flags[2] = ' ';
+		field.flags[2] = ' ';
 	else
-		field->flags[2] = '/';
+		field.flags[2] = '/';
 	if (is_present(str, '0') == 1)
-		field->flags[3] = '0';
+		field.flags[3] = '0';
 	else
-		field->flags[3] = '/';
+		field.flags[3] = '/';
 	return (field);
 }
 
-t_field		*is_balise_width_n_precision(const char *str, t_field *field)
+t_field		is_balise_width_n_precision(const char *str, t_field field)
 {
 	char		*tmp;
 	int		i;
@@ -90,7 +90,7 @@ t_field		*is_balise_width_n_precision(const char *str, t_field *field)
 	while (str[j] && str[j] >= '0' && str[j] <= '9')
 		j++;
 	tmp = ft_substr(str, i, j);
-	field->width = ft_atoi(tmp);
+	field.width = ft_atoi(tmp);
 	free(tmp);
 	if (str[j] && str[j] == '.')
 	{
@@ -99,29 +99,22 @@ t_field		*is_balise_width_n_precision(const char *str, t_field *field)
 		while (str[i] && str[i] >= '0' && str[i] <= '9')
 			i++;
 		tmp = ft_substr(str, j, i);
-		field->precision = ft_atoi(tmp);
+		field.precision = ft_atoi(tmp);
 		free(tmp);
 	}
-	else
-		field->precision = 1;
 	return (field);
 }
 
-t_field		*is_balise(char *str)
+t_field		is_balise(char *str)
 {
-	t_field *field;
-
-	field->flags[0] = '0';
-	field->flags[1] = '0';
-	field->flags[2] = '0';
-	field->flags[3] = '0';
+	t_field field = {"0000", 0, 1, 0, 0};
 	if (pars(str) == 0)
 	{
-		field->error = 1;
-		return (0);
+		field.error = 1;
+		exit (EXIT_FAILURE);
 	}
 	else
-		field->error = 0;
+		field.error = 0;
 	field = is_balise_flags(str, field);
 	field = is_balise_width_n_precision(str, field);
 	return (field);

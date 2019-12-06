@@ -5,8 +5,8 @@ unsigned long    ft_power(unsigned long x, unsigned long y)
 {
         if (y == 0 || x == 1)
                 return (1);
-        if (x == 0 || y < 0)
-                return (0);
+        /*if (x == 0 || y < 0)
+                return (0);*/
         return (x * ft_power(x, --y));
 }
 
@@ -39,43 +39,44 @@ void			ft_putnbr_x(unsigned long value)
         free(res);
 }
 
-void			print_balise(int c, t_field *field)
+void			print_balise(int c, t_field field)
 {
 	int stock;
 	char *tmp;
 
 	tmp = ft_itoa(c);
-	if (field->flags[0] == '+')
+	if (field.flags[0] == '+')
 		ft_putchar('+');
-	if (field->flags[2] == ' ')
+	if (field.flags[2] == ' ')
 		ft_putchar(' ');
-	if (field->width != 0)
+	printf("flags = %s || width = %d || precision =  %d || error = %d\n", field.flags, field.width, field.precision, field.error);
+	if (field.width != 0)
 	{
-		stock = (field->flags[0] == '+') ? field->width - ft_strlen(tmp) - 1 : field->width - ft_strlen(tmp);
-		if (field->flags[1] == '-')
+		stock = (field.flags[0] == '+') ? field.width - ft_strlen(tmp) - 1 : field.width - ft_strlen(tmp);
+		if (field.flags[1] == '-')
 		{
 			ft_putnbr(c);
-			while (stock < field->width)
+			while (stock)
 			{
 				ft_putchar(' ');
-				stock++;
+				stock--;
 			}
 		}
-		else if (field->flags[3] == '0')
+		else if (field.flags[3] == '0')
 		{
-			while (stock < field->width)
+			while (stock)
                         {
-                                ft_putchar(0);
-                                stock++;
+                                ft_putchar('0');
+                                stock--;
                         }
 			ft_putnbr(c);
 		}
 		else
 		{
-			while(stock < field->width)
+			while(stock)
 			{
 				ft_putchar(' ');
-				stock++;
+				stock--;
 			}
 			ft_putnbr(c);
 		}
