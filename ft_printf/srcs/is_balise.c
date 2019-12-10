@@ -72,6 +72,7 @@ t_field		is_balise_flags(char *str, t_field field)
 		field.flags[3] = '0';
 	else
 		field.flags[3] = '/';
+	field.flags[4] = 0;
 	return (field);
 }
 
@@ -94,6 +95,8 @@ t_field		is_balise_width_n_precision(const char *str, t_field field)
 	free(tmp);
 	if (str[j] && str[j] == '.')
 	{
+		if (field.width == 0)
+			field.flags[1] = '/';
 		j++;
 		i = j;
 		while (str[i] && str[i] >= '0' && str[i] <= '9')
@@ -102,8 +105,7 @@ t_field		is_balise_width_n_precision(const char *str, t_field field)
 		field.precision = ft_atoi(tmp);
 		free(tmp);
 	}
-	if (field.precision > field.width)
-		field.width = 0;
+	field.width = (field.precision > field.width) ? 0 : field.width;
 	return (field);
 }
 
