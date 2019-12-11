@@ -19,12 +19,12 @@ int			pars(char *str)
 
         i = 0;
         j = 0;
-        while (str[i] && !(str[i] >= '1' && str[i] <= '9') && str[i] != '*')
+        while (str[i] && !(str[i] >= '1' && str[i] <= '9') && str[i] != '*' && !is_conversion(str[i]))
         {
                 j = i +1;
 		if (str[i + 1] && str[i] == '.' && !(str[i + 1] >= '0' && str[i + 1] <= '9'))
 			return (0);
-                while (str[j] && !(str[j] >= '1' && str[j] <= '9') && str[j] != '*')
+                while (str[j] && !(str[j] >= '1' && str[j] <= '9') && str[j] != '*' && !is_conversion(str[i]))
 		{
 			if (str[i] == str[j] || 
 			(((str[i] == ' ' || str[i] == '+') && (str[j] == ' ' || str[j] == '+')) 
@@ -113,13 +113,11 @@ t_field		is_balise(char *str)
 {
 	t_field field = {"0000", 0, 0, 0, 0};
 	if (pars(str) == 0)
-	{
 		field.error = 1;
-		exit (EXIT_FAILURE);
-	}
 	else
-		field.error = 0;
-	field = is_balise_flags(str, field);
-	field = is_balise_width_n_precision(str, field);
+	{
+		field = is_balise_flags(str, field);
+		field = is_balise_width_n_precision(str, field);
+	}
 	return (field);
 }

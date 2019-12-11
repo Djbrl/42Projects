@@ -62,7 +62,7 @@ void			print_balise(int c, t_field field)
 		field.precision = 0;
 	precision = (field.precision == 0) ? count_digit(c) : field.precision - count_digit(c);
 	stock = (field.flags[0] == '+' || field.flags[0] == ' ') ? precision + 1 : precision; 
-	field.flags[2] == ' ' && c > 0 ? ft_putchar(' ') : 0;
+	field.flags[2] == ' ' && c >= 0 ? ft_putchar(' ') : 0;
 	width = (field.flags[0] == '+' || field.flags[2] == ' ') ? field.width - field.precision -1 : field.width - field.precision;
 	if (field.flags[1] != '-' && field.flags[3] != '0')
 		while(width > 0 && width--)
