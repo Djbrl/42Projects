@@ -12,22 +12,6 @@
 
 #include "../includes/libftprintf.h"
 
-int			is_conversion(char c)
-{
-	if (c == 'c' || c == 's' || c == 'p' || c == 'i' || c == 'd' || c == 'u'
-			|| c == 'x')
-		return (1);
-	return (0);
-}
-
-int			check_balise(char c)
-{
-	if (c == '+' || c == '-' || c == '0' || c == ' ' || c == '.' || c == 'l'
-			|| c == 'h' || (c >= '0' && c <= '9'))
-		return (1);
-	return (0);
-}
-
 static int	which_arg(char *str, va_list params)
 {
 	int	i;
@@ -40,7 +24,7 @@ static int	which_arg(char *str, va_list params)
 	while(str[i] && check_balise(str[i]))
 			i++;
 	if (str[i] == 'c' || str[i] == 's')
-		if (!(s_conversion(params, str[i])))
+		if (!(s_conversion(params, str[i], field)))
 			return (0);
 	if (str[i] == 'i' || str[i] == 'd' || str[i] == 'u')
 		if (!(i_conversion(params, str[i], field)))

@@ -12,7 +12,7 @@
 
 #include "../includes/libftprintf.h"
 
-int		s_conversion(va_list params, char arg_type)
+int		s_conversion(va_list params, char arg_type, t_field field)
 {
 	char *conv_arg;
 	char c;
@@ -21,12 +21,12 @@ int		s_conversion(va_list params, char arg_type)
 	if (arg_type == 's')
 	{
 		conv_arg = (char*)va_arg(params, char*);
-		ft_putstr(conv_arg);
+		print_balise_str(conv_arg, field);
 	}
 	else
 	{
 		c = (char)va_arg(params, int);
-		write(1, &c, 1);
+		print_balise_char(c, field);
 	}
 	return (1);
 }
@@ -49,7 +49,7 @@ int		i_conversion(va_list params, char arg_type, t_field field)
 		conv_arg = (int)va_arg(params, int);
 	else
 		conv_arg = (unsigned int)va_arg(params, int);
-	print_balise((int)conv_arg, field);
+	print_balise_nb(conv_arg, field);
 	return (1);
 }
 

@@ -52,34 +52,18 @@ int	count_digit(int c)
 	return (count);
 }
 
-void			print_balise(int c, t_field field)
+int                     is_conversion(char c)
 {
-	int	width;
-	int	precision;
-	int	stock;
+        if (c == 'c' || c == 's' || c == 'p' || c == 'i' || c == 'd' || c == 'u'
+                        || c == 'x')
+                return (1);
+        return (0);
+}
 
-	if (count_digit(c) >= field.precision)
-		field.precision = 0;
-	precision = (field.precision == 0) ? count_digit(c) : field.precision - count_digit(c);
-	stock = (field.flags[0] == '+' || field.flags[0] == ' ') ? precision + 1 : precision; 
-	field.flags[2] == ' ' && c >= 0 ? ft_putchar(' ') : 0;
-	width = (field.flags[0] == '+' || field.flags[2] == ' ') ? field.width - field.precision -1 : field.width - field.precision;
-	if (field.flags[1] != '-' && field.flags[3] != '0')
-		while(width > 0 && width--)
-		       ft_putchar(' ');	
-	field.flags[0] == '+' ? ft_putchar('+') : 0;
-	while (precision > 0 && precision-- && field.precision != 0)
-		ft_putchar('0');
-	if (field.flags[1] == '-')
-	{
-		ft_putnbr(c);
-			while (width > 0 && width-- && field.precision != 0)
-				ft_putchar(' ');
-	}
-	if (field.flags[3] == '0' && field.precision == 0)
-		 while(stock++ < field.width)
-                       ft_putchar('0');
-	field.flags[1] == '-' ? 0 : ft_putnbr(c);
-	while (stock++ < field.width && width > 0 && field.precision == 0)
-		ft_putchar(' ');
+int                     check_balise(char c)
+{
+        if (c == '+' || c == '-' || c == '0' || c == ' ' || c == '.' || c == 'l'
+                        || c == 'h' || (c >= '0' && c <= '9'))
+                return (1);
+        return (0);
 }

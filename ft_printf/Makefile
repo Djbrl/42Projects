@@ -12,17 +12,19 @@
 
 NAME = libftprintf.a
 
-OBJS = srcs/ft_printf.o srcs/ft_printf_conv.o srcs/is_balise.o srcs/ft_utils.o libft/*.o
+OBJS = srcs/ft_printf.o srcs/ft_printf_conv.o srcs/ft_is_balise.o srcs/ft_pars.o srcs/ft_utils.o srcs/ft_display.o libft/*.o
 
-SRCS = srcs/ft_printf.c srcs/ft_printf_conv.c srcs/is_balise.c srcs/ft_utils.c 
+SRCS = srcs/ft_printf.c srcs/ft_printf_conv.c srcs/ft_is_balise.c srcs/ft_utils.c srcs/ft_display.c srcs/ft_pars.c 
 
 all:
 	@cd libft/ && make
 	@gcc -Wall -Werror -Wextra $(SRCS) -c 
 	@mv ft_printf.o srcs/
 	@mv ft_printf_conv.o srcs/
+	@mv ft_is_balise.o srcs/
+	@mv ft_pars.o srcs/
 	@mv ft_utils.o srcs/
-	@mv is_balise.o srcs/
+	@mv ft_display.o srcs/
 	@ar rcs $(NAME) $(OBJS)
 
 clean:
