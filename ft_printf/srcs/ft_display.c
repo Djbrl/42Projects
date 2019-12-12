@@ -34,6 +34,18 @@ void                    print_balise_nb(int c, t_field field)
 
 void	print_balise_str(char *str, t_field field)
 {
+	size_t len;
+	size_t precision;
+
+	len = ft_strlen(str);
+        if (count_digit(c) >= field.precision)
+                field.precision = 0;
+        precision = len - field.precision;
+	while(precision)
+	{
+		ft_putchar(' ');
+		precision--;
+	}
 	return;
 }
 
