@@ -15,7 +15,7 @@
 #include <limits.h>
 int main()
 {
-	printf("%10s\n", "Salut");
+	/*printf("%10s\n", "Salut");
 	printf("%-10s\n", "Salut");
 	printf("****court*****\n");
 
@@ -37,11 +37,11 @@ int main()
 
 	printf("%-10.5s\n", "Salut tout le monde");
 	printf("%-5.10s\n", "Salut tout le monde");
-	printf("****precision long avec - *****\n");
+	printf("****precision long avec - *****\n");*/
 
 	/*******************FT_PRINTF****************/
 
-	/*ft_printf("%10s\n", "Salut");
+	  ft_printf("%10s\n", "Salut");
 	  ft_printf("%-10s\n", "Salut");
 	  ft_printf("****court*****\n");
 
@@ -63,6 +63,6 @@ int main()
 
 	  ft_printf("%-10.5s\n", "Salut tout le monde");
 	  ft_printf("%-5.10s\n", "Salut tout le monde");
-	  ft_printf("****precision long avec - *****\n");*/
+	  ft_printf("****precision long avec - *****\n");
 	return (0);
 }

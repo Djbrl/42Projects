@@ -57,18 +57,13 @@ void	print_balise_str(char *str, t_field field)
 			while (width > 0 && width--)
 				ft_putchar(' ');
 	}
-	while((cpy > 0 && cpy--) && field.flags[1] != '-')
+	while(cpy > 0 && cpy--)
 	{
 		ft_putchar(*str);
 		*str++;
 	}
-	if (field.flags[1] == '-' && field.precision == 0)
+	if(field.width > field.precision && field.flags[1] == '-')
 	{
-		while((cpy > 0 && cpy--) && field.flags[1] != '-')
-		{
-			ft_putchar(*str);
-			*str++;
-		}
                 if (field.precision > 0)
                         while (field.precision --)
                                 ft_putchar(' ');
@@ -76,7 +71,6 @@ void	print_balise_str(char *str, t_field field)
                         while (width > 0 && width--)
                                 ft_putchar(' ');
 	}
-
 }
 void	print_balise_char(char c, t_field field)
 {
