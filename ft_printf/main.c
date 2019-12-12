@@ -15,33 +15,33 @@
 #include <limits.h>
 int main()
 {
+	/**********************STRING***************/
+
 	/*printf("%10s\n", "Salut");
-	printf("%-10s\n", "Salut");
-	printf("****court*****\n");
+	  printf("%-10s\n", "Salut");
+	  printf("****court*****\n");
 
-	printf("%10s\n", "Salut tout le monde");
-	printf("%-10s\n", "Salut tout le monde");
-	printf("****long****\n");
+	  printf("%10s\n", "Salut tout le monde");
+	  printf("%-10s\n", "Salut tout le monde");
+	  printf("****long****\n");
 
-	printf("%10.5s\n", "salut tout");
-	printf("%5.10s\n", "salut tout");
-	printf("****precision court****\n");
+	  printf("%10.5s\n", "salut tout");
+	  printf("%5.10s\n", "salut tout");
+	  printf("****precision court****\n");
 
-	printf("%10.5s\n", "Salut tout le monde");
-	printf("%5.10s\n", "Salut tout le monde");
-	printf("****precision long*****\n");
+	  printf("%10.5s\n", "Salut tout le monde");
+	  printf("%5.10s\n", "Salut tout le monde");
+	  printf("****precision long*****\n");
 
-	printf("%-10.5s\n", "salut tout");
-	printf("%-5.10s\n", "salut tout");
-	printf("****precision court avec - *****\n");
+	  printf("%-10.5s\n", "salut tout");
+	  printf("%-5.10s\n", "salut tout");
+	  printf("****precision court avec - *****\n");
 
-	printf("%-10.5s\n", "Salut tout le monde");
-	printf("%-5.10s\n", "Salut tout le monde");
-	printf("****precision long avec - *****\n");*/
+	  printf("%-10.5s\n", "Salut tout le monde");
+	  printf("%-5.10s\n", "Salut tout le monde");
+	  printf("****precision long avec - *****\n");*/
 
-	/*******************FT_PRINTF****************/
-
-	  ft_printf("%10s\n", "Salut");
+	/*ft_printf("%10s\n", "Salut");
 	  ft_printf("%-10s\n", "Salut");
 	  ft_printf("****court*****\n");
 
@@ -63,6 +63,64 @@ int main()
 
 	  ft_printf("%-10.5s\n", "Salut tout le monde");
 	  ft_printf("%-5.10s\n", "Salut tout le monde");
-	  ft_printf("****precision long avec - *****\n");
+	  ft_printf("****precision long avec - *****\n");*/
+
+	/*****************CHAR************/
+	/*printf("%c\n", 'a');
+	printf("*** test simple ****\n");
+
+	printf("%-c\n", 'a');
+	printf("*** avec '-' **\n");
+
+	printf("%10c\n", 'a');
+	printf("*** avec largeur ***\n");
+
+	printf("%-10c\n", 'a');
+	printf("**** largeur avec '-' ***\n");
+
+		printf("////////\n");
+
+	printf("%c\n", 97);
+        printf("*** test simple avec valeur decimal ****\n");
+
+        printf("%-c\n", 97);
+        printf("*** '-' avec valeur decimal**\n");
+
+        printf("%10c\n", 97);
+        printf("*** largeur avec valeur decimal ***\n");
+
+        printf("%-10c\n", 97);
+        printf("**** largeur ,'-' et valeur decimal***\n");*/
+
+	
+        /*ft_printf("*** test simple ****\n");
+
+        ft_printf("%-c\n", 'a');
+        ft_printf("*** avec '-' **\n");
+
+        ft_printf("%10c\n", 'a');
+        ft_printf("*** avec largeur ***\n");
+
+        ft_printf("%-10c\n", 'a');
+        ft_printf("**** largeur avec '-' ***\n");
+
+                ft_printf("////////\n");
+
+        ft_printf("%c\n", 97);
+        ft_printf("*** test simple avec valeur decimal ****\n");
+
+        ft_printf("%-c\n", 97);
+        ft_printf("*** '-' avec valeur decimal**\n");
+
+        ft_printf("%10c\n", 97);
+        ft_printf("*** largeur avec valeur decimal ***\n");
+
+        ft_printf("%-10c\n", 97);
+        ft_printf("**** largeur ,'-' et valeur decimal***\n");*/
+
+
+
+	/*printf("%+-10.20d, %-10.5s, %-5c\n", 1245, "salut tout le monde", 'a');
+	ft_printf("%+-10.20d, %-10.5s, %-5c\n", 1245, "salut tout le monde", 'a');*/
 	return (0);
 }

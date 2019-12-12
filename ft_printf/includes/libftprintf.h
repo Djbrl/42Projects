@@ -42,5 +42,6 @@ void			print_balise_char(char c, t_field field);
 int			pars_nb(char *str);
 int			count_digit(int c);
 int			pars_char(char *str);
+int			pars_str(char *str);
 int			check_balise(char c);
 #endif

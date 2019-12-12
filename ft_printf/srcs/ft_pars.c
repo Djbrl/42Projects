@@ -27,7 +27,7 @@ int	pars_nb(char *str)
 
 }
 
-int	pars_char(char *str)
+int	pars_str(char *str)
 {
 	int	i;
 	int	count;
@@ -45,4 +45,24 @@ int	pars_char(char *str)
 	if (count > 1)
 		return(0);
 	return (1);
+}
+
+int	pars_char(char *str)
+{
+	int     i;
+        int     count;
+
+        i = 0;
+        count = 0;
+        while (str[i] && !is_conversion(str[i]))
+        {
+                if ((str[i] == '0' && str[i - 1] == '%') || str[i] == '+' || str[i] == ' ' || str[i] == '.')
+                        return (0);
+                if (str[i] == '-')
+                        count++;
+                i++;
+        }
+        if (count > 1)
+                return(0);
+        return (1);
 }

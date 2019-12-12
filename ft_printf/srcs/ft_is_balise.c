@@ -22,8 +22,11 @@ int		pars(char *str)
 			str[i] == 'X' || str[i] == 'p')
 		if (pars_nb(str) == 1)
 			return (1);
-	if (str[i] == 'c' || str[i] == 's')
+	if (str[i] == 'c')
 		if (pars_char(str) == 1)
+			return (1);
+	if (str[i] == 's')
+		if (pars_str(str) == 1)
 			return (1);
 	return (0);
 }

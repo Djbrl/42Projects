@@ -38,7 +38,9 @@ void	print_balise_str(char *str, t_field field)
 	int	precision;
 	int	len;
 	int	cpy;
+	int	i;
 
+	i = 0;
 	len = ft_strlen(str);
 	precision = (field.precision > len) ? field.precision - len : len - field.precision;
 	width = field.width - precision;
@@ -59,8 +61,8 @@ void	print_balise_str(char *str, t_field field)
 	}
 	while(cpy > 0 && cpy--)
 	{
-		ft_putchar(*str);
-		*str++;
+		ft_putchar(str[i]);
+		i++;
 	}
 	if(field.width > field.precision && field.flags[1] == '-')
 	{
@@ -74,5 +76,19 @@ void	print_balise_str(char *str, t_field field)
 }
 void	print_balise_char(char c, t_field field)
 {
-	return;
+	int width;
+
+	width = (field.width > 1) ? field.width - 1 : 0;
+	if (field.flags[1] == '-')
+	{
+		ft_putchar(c);
+		while (width > 0 && width--)
+			ft_putchar(' ');
+	}
+	else
+	{
+		while(width > 0 && width--)
+			ft_putchar(' ');
+		ft_putchar(c);
+	}
 }
