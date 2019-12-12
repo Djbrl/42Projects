@@ -18,7 +18,7 @@ SRCS = srcs/ft_printf.c srcs/ft_printf_conv.c srcs/ft_is_balise.c srcs/ft_utils.
 
 all:
 	@cd libft/ && make
-	@gcc -Wall -Werror -Wextra $(SRCS) -c 
+	@gcc $(SRCS) -c 
 	@mv ft_printf.o srcs/
 	@mv ft_printf_conv.o srcs/
 	@mv ft_is_balise.o srcs/

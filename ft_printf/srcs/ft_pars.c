@@ -36,7 +36,7 @@ int	pars_char(char *str)
 	count = 0;
 	while (str[i] && !is_conversion(str[i]))
 	{
-		if (str[i] == '0' || str[i] == '+' || str[i] == ' ')
+		if ((str[i] == '0' && str[i - 1] == '%') || str[i] == '+' || str[i] == ' ')
 			return (0);
 		if (str[i] == '-')
 			count++;
