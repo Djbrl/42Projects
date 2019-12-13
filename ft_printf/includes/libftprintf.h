@@ -27,22 +27,24 @@ typedef struct		s_field {
 	int		error;
 }			t_field;
 
+int			count_digit(int c);
 int			is_conversion(char c);
+int			check_balise(char c);
 t_field			is_balise(char *str);
 int			i_conversion(va_list params, char type, t_field field);
 int			s_conversion(va_list params, char type, t_field field);
-int			x_conversion(va_list params);
-int			p_conversion(va_list params, t_field field);
+int			x_conversion(va_list params, char type, t_field field);
+int			p_conversion(va_list params, char type, t_field field);
 int			ft_printf(const char *format, ...);
 unsigned long		ft_power(unsigned long x , unsigned long y);
-void			ft_putnbr_x(unsigned long value);
+void			ft_putnbr_x(unsigned long value, char c);
 void			print_balise_nb(int c, t_field field);
 void			print_balise_str(char *str, t_field field);
 void			print_balise_char(char c, t_field field);
-void			print_balise_add(unsigned long p , t_field field);
-int			pars_nb(char *str);
-int			count_digit(int c);
+void			print_balise_add(unsigned long p, char c, t_field field);
+void			print_balise_hexa(int nb, char c, t_field fieldi);
+int			pars_decimal(char *str);
+int			pars_hexa(char *str);
 int			pars_char(char *str);
 int			pars_str(char *str);
-int			check_balise(char c);
 #endif

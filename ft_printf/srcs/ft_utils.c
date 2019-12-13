@@ -10,18 +10,20 @@ unsigned long    ft_power(unsigned long x, unsigned long y)
 	return (x * ft_power(x, --y));
 }
 
-void			ft_putnbr_x(unsigned long value)
+void			ft_putnbr_x(unsigned long value, char c)
 {
 	int             len;
 	unsigned long   rest;
 	char            *res;
 	int             base;
+	char		tmp;
 
+	tmp = (c == 'X') ? 'A' : 'a';
 	if (value == 0)
 		return ;
 	base = 16;
 	len = 0;
-	write(1, "0x", 2);
+	(c == 'X' || c == 'x') ? 0: write(1, "0x", 2);
 	if (value < 10)
 		len = 1;
 	else
@@ -35,7 +37,7 @@ void			ft_putnbr_x(unsigned long value)
 		while (--len >= 0)
 		{
 			rest = value % base;
-			res[len] = ((rest < 10) ? '0' : 'A' - 10) + rest;
+			res[len] = ((rest < 10) ? '0' : tmp - 10) + rest;
 			value /= base;
 		}
 	ft_putstr(res);
@@ -58,7 +60,7 @@ int	count_digit(int c)
 int                     is_conversion(char c)
 {
         if (c == 'c' || c == 's' || c == 'p' || c == 'i' || c == 'd' || c == 'u'
-                        || c == 'x')
+                        || c == 'x' || c == 'X')
                 return (1);
         return (0);
 }

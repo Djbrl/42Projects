@@ -18,9 +18,11 @@ int		pars(char *str)
 	i = 0;
 	while (str[i] && !is_conversion(str[i]))
 		i++;
-	if (str[i] == 'd' || str[i] == 'i' || str[i] == 'u' || str[i] == 'x' ||
-			str[i] == 'X')
-		if (pars_nb(str) == 1)
+	if (str[i] == 'x' || str[i] == 'X')
+		if(pars_hexa(str) == 1)
+			return(1);
+	if (str[i] == 'd' || str[i] == 'i' || str[i] == 'u')
+		if (pars_decimal(str) == 1)
 			return (1);
 	if (str[i] == 'c' || str[i] == 'p')
 		if (pars_char(str) == 1)

@@ -126,9 +126,19 @@ int main()
 
 			/**************ADRESSE*************/
 
-	char	*a;
-	a = 0;
-	printf("ori: %-20p\n", a);
-	ft_printf("cpy: %-20p\n", a);
+	/*char	*a;
+	a = "0";
+	//a = NULL;
+	printf("%20p\n", a);
+	printf("%-20p\n", a);
+        ft_printf("%20p\n", a);
+        ft_printf("%-20p\n", a);*/
+
+			/*********HEXADECIMAL*********/
+
+	printf("ori: %-5.10X\n",1248);
+	printf("ori: %-5.10x\n",1248);
+	ft_printf("cpy: %-5.10X\n",1248);
+        ft_printf("cpy: %-5.10x\n",1248);
 	return (0);
 }

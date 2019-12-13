@@ -31,12 +31,12 @@ int		s_conversion(va_list params, char arg_type, t_field field)
 	return (1);
 }
 
-int		p_conversion(va_list params, t_field field)
+int		p_conversion(va_list params, char arg_type, t_field field)
 {
 	void *p;
 
 	p = va_arg(params, void*);
-	print_balise_add((unsigned long)p, field);
+	print_balise_add((unsigned long)p, arg_type, field);
 	return (1);
 }
 
@@ -52,11 +52,11 @@ int		i_conversion(va_list params, char arg_type, t_field field)
 	return (1);
 }
 
-int		x_conversion(va_list params)
+int		x_conversion(va_list params, char arg_type, t_field field)
 {
 	int conv_arg;
 
 	conv_arg = (int)va_arg(params, int);
-	ft_putnbr_x(conv_arg);
+	print_balise_hexa(conv_arg, arg_type, field);
 	return (1);
 }
