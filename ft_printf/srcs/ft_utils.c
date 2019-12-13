@@ -44,14 +44,16 @@ void			ft_putnbr_x(unsigned long value, char c)
 	free(res);
 }
 
-int	count_digit(int c)
+int	count_digit(int nb, char c)
 {
 	int	count;
+	int	div;
 
 	count = 0;
-	while(c)
+	div = (c == 'd' || c == 'i' || c == 'u') ? 10 : 16;
+	while(nb)
 	{
-		c = c /10;
+		nb = nb /div;
 		count++;
 	}
 	return (count);

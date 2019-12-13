@@ -5,7 +5,7 @@ void			print_balise_hexa(int nb, char c, t_field field)
 	int	width;
 	int	precision;
 
-	precision = (field.precision == 0) ? count_digit(nb) : field.precision - count_digit(nb);
+	precision = (field.precision == 0) ? count_digit(nb, c) : field.precision - count_digit(nb, c);
 	width = field.width - precision;
 	if (field.flags[1] != '-' && field.flags[3] != '0')
 		while (width > 0 && width--)
@@ -24,15 +24,15 @@ void			print_balise_hexa(int nb, char c, t_field field)
 	field.flags[1] == '-' ? 0 : ft_putnbr_x(nb , c);
 
 }
-void                    print_balise_nb(int c, t_field field)
+void                    print_balise_nb(int nb, char c, t_field field)
 {
 	int     width;
 	int     precision;
 	int     stock;
 
-	if (count_digit(c) >= field.precision)
+	if (count_digit(nb, c) >= field.precision)
 		field.precision = 0;
-	precision = (field.precision == 0) ? count_digit(c) : field.precision - count_digit(c);
+	precision = (field.precision == 0) ? count_digit(nb , c) : field.precision - count_digit(nb, c);
 	stock = (field.flags[0] == '+' || field.flags[2] == ' ') ? precision + 1 : precision;
 	field.flags[2] == ' ' && c >= 0 ? ft_putchar(' ') : 0;
 	width = (field.flags[0] == '+' || field.flags[2] == ' ') ? field.width - field.precision -1 : field.width - field.precision;
