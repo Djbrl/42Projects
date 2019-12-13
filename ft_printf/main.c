@@ -135,10 +135,54 @@ int main()
         ft_printf("%-20p\n", a);*/
 
 			/*********HEXADECIMAL*********/
+	/*printf("ori: %3x\n", 1248);
+	printf("ori: %-3x\n", 1248);
+	printf("ori: %10x\n", 1248);
+	printf("ori: %-10x\n", 1248);
+	printf("******* largeur ******\n");
 
-	printf("ori: %-5.10X\n",1248);
-	printf("ori: %-5.10x\n",1248);
-	ft_printf("cpy: %-5.10X\n",1248);
-        ft_printf("cpy: %-5.10x\n",1248);
+	printf("ori: %.3X\n",1248);
+	printf("ori: %-.3x\n",1248);
+	printf("ori: %.10x\n", 1248);
+	printf("ori: %-10x\n", 1248);
+	printf("******** precision *******\n");
+
+	printf("ori: %10.3x\n", 1248);
+	printf("ori: %3.10x\n", 1248);
+	printf("ori: %10.3x\n", 12480);
+        printf("ori: %3.10x\n", 12480);
+	printf("***** largeur et precision ****\n");
+
+	printf("ori: %-10.3x\n", 1248);
+        printf("ori: %-3.10x\n", 1248);
+        printf("ori: %-10.3x\n", 12480);
+        printf("ori: %-3.10x\n", 12480);
+	printf("***** largeur, precision et - *****\n");*/
+
+	/*--------------------------------------------*/
+        ft_printf("cpy: %3x\n", 1248);
+        ft_printf("cpy: %-3x\n", 1248);
+        ft_printf("cpy: %10x\n", 1248);
+        ft_printf("cpy: %-10x\n", 1248);
+        ft_printf("******* largeur ******\n");
+
+        ft_printf("cpy: %.3X\n",1248);
+        ft_printf("cpy: %-.3x\n",1248);
+        ft_printf("cpy: %.10x\n", 1248);
+        ft_printf("cpy: %-10x\n", 1248);
+        ft_printf("******** precision *******\n");
+
+        ft_printf("cpy: %10.3x\n", 1248);
+        ft_printf("cpy: %3.10x\n", 1248);
+        ft_printf("cpy: %10.3x\n", 12480);
+        ft_printf("cpy: %3.10x\n", 12480);
+        ft_printf("***** largeur et precision ****\n");
+
+        ft_printf("cpy: %-10.3x\n", 1248);
+        ft_printf("cpy: %-3.10x\n", 1248);
+        ft_printf("cpy: %-10.3x\n", 12480);
+        ft_printf("cpy: %-3.10x\n", 12480);
+        ft_printf("***** largeur, precision et - *****\n");
+
 	return (0);
 }

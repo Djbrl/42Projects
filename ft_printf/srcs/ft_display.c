@@ -1,29 +1,5 @@
 #include "../includes/libftprintf.h"
 
-void			print_balise_hexa(int nb, char c, t_field field)
-{
-	int	width;
-	int	precision;
-
-	precision = (field.precision == 0) ? count_digit(nb, c) : field.precision - count_digit(nb, c);
-	width = field.width - precision;
-	if (field.flags[1] != '-' && field.flags[3] != '0')
-		while (width > 0 && width--)
-			ft_putchar(' ');
-	while (precision > 0 && precision-- && field.precision != 0)
-		ft_putchar('0');
-	if (field.flags[1] == '-')
-	{
-		ft_putnbr_x(nb, c);
-		while (width > 0 && width--)
-			ft_putchar(' ');
-	}
-	if (field.flags[3] == '0')
-		while (width > 0 && width--)
-			ft_putchar('0');
-	field.flags[1] == '-' ? 0 : ft_putnbr_x(nb , c);
-
-}
 void                    print_balise_nb(int nb, char c, t_field field)
 {
 	int     width;
@@ -44,14 +20,15 @@ void                    print_balise_nb(int nb, char c, t_field field)
 		ft_putchar('0');
 	if (field.flags[1] == '-')
 	{
-		ft_putnbr(c);
+		(c == 'x' || c == 'X') ? ft_putnbr_x((unsigned long)nb, c) : ft_putnbr(c);
 		while (width > 0 && width-- && field.precision != 0)
 			ft_putchar(' ');
+		return ;
 	}
 	if (field.flags[3] == '0' && field.precision == 0)
 		while(stock++ < field.width)
-			ft_putchar('0');
-	field.flags[1] == '-' ? 0 : ft_putnbr(c);
+			ft_putchar('0');	
+	(c == 'x' || c == 'X') ? ft_putnbr_x((unsigned long)nb, c) : ft_putnbr(c);
 	while (stock++ < field.width && width > 0 && field.precision == 0)
 		ft_putchar(' ');
 }

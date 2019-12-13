@@ -57,6 +57,6 @@ int		x_conversion(va_list params, char arg_type, t_field field)
 	int conv_arg;
 
 	conv_arg = (int)va_arg(params, int);
-	print_balise_hexa(conv_arg, arg_type, field);
+	print_balise_nb(conv_arg, arg_type, field);
 	return (1);
 }

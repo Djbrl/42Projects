@@ -42,7 +42,6 @@ void			print_balise_nb(int nb, char c, t_field field);
 void			print_balise_str(char *str, t_field field);
 void			print_balise_char(char c, t_field field);
 void			print_balise_add(unsigned long p, char c, t_field field);
-void			print_balise_hexa(int nb, char c, t_field field);
 int			pars_decimal(char *str);
 int			pars_hexa(char *str);
 int			pars_char(char *str);
