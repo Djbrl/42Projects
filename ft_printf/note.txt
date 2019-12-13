@@ -1,0 +1,7 @@
+-faire l'affcichage avec *
+-checker l'affichage avec une valeur de 0 (d, x, i, u)
+-checker l'affichage avec une valeur a NULL (p, s)
+-implanter la balise longueur (h et l)
+-mettre a la norme les fonctions
+-checker les leaks
+ 
