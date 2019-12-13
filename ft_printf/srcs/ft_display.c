@@ -66,14 +66,15 @@ void	print_balise_str(char *str, t_field field)
 	}
 	if(field.width > field.precision && field.flags[1] == '-')
 	{
-                if (field.precision > 0)
-                        while (field.precision --)
-                                ft_putchar(' ');
-                else
-                        while (width > 0 && width--)
-                                ft_putchar(' ');
+		if (field.precision > 0)
+			while (field.precision --)
+				ft_putchar(' ');
+		else
+			while (width > 0 && width--)
+				ft_putchar(' ');
 	}
 }
+
 void	print_balise_char(char c, t_field field)
 {
 	int width;
@@ -92,3 +93,21 @@ void	print_balise_char(char c, t_field field)
 		ft_putchar(c);
 	}
 }
+
+void	print_balise_add(unsigned long p, t_field field)
+{
+	int     width;
+
+	width = (p != 0) ? field.width - 14 : field.width;
+	if (width > 0 && field.flags[1] != '-')
+		while (width--)
+			ft_putchar(' ');
+	else if(width > 0 && field.flags[1] == '-')
+	{
+		ft_putnbr_x(p);
+		while (width--)
+			ft_putchar(' ');
+	}
+	field.flags[1] != '-' ? ft_putnbr_x(p) : 0;
+}
+

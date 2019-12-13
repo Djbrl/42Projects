@@ -19,10 +19,10 @@ int		pars(char *str)
 	while (str[i] && !is_conversion(str[i]))
 		i++;
 	if (str[i] == 'd' || str[i] == 'i' || str[i] == 'u' || str[i] == 'x' ||
-			str[i] == 'X' || str[i] == 'p')
+			str[i] == 'X')
 		if (pars_nb(str) == 1)
 			return (1);
-	if (str[i] == 'c')
+	if (str[i] == 'c' || str[i] == 'p')
 		if (pars_char(str) == 1)
 			return (1);
 	if (str[i] == 's')

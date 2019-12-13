@@ -30,7 +30,7 @@ static int	which_arg(char *str, va_list params)
 		if (!(i_conversion(params, str[i], field)))
 			return (0);
 	if (str[i] == 'p')
-		if (!(p_conversion(params)))
+		if (!(p_conversion(params, field)))
 			return (0);
 	if (str[i] == 'x')
 		if (!(x_conversion(params)))

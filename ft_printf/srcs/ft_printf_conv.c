@@ -31,13 +31,12 @@ int		s_conversion(va_list params, char arg_type, t_field field)
 	return (1);
 }
 
-int		p_conversion(va_list params)
+int		p_conversion(va_list params, t_field field)
 {
 	void *p;
 
-	write(1, "0x", 2);
 	p = va_arg(params, void*);
-	ft_putnbr_x((unsigned long)p);
+	print_balise_add((unsigned long)p, field);
 	return (1);
 }
 

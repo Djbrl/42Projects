@@ -122,5 +122,13 @@ int main()
 
 	/*printf("%+-10.20d, %-10.5s, %-5c\n", 1245, "salut tout le monde", 'a');
 	ft_printf("%+-10.20d, %-10.5s, %-5c\n", 1245, "salut tout le monde", 'a');*/
+
+
+			/**************ADRESSE*************/
+
+	char	*a;
+	a = 0;
+	printf("ori: %-20p\n", a);
+	ft_printf("cpy: %-20p\n", a);
 	return (0);
 }

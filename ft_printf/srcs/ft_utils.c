@@ -17,8 +17,11 @@ void			ft_putnbr_x(unsigned long value)
 	char            *res;
 	int             base;
 
+	if (value == 0)
+		return ;
 	base = 16;
 	len = 0;
+	write(1, "0x", 2);
 	if (value < 10)
 		len = 1;
 	else
