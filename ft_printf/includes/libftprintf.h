@@ -30,13 +30,14 @@ typedef struct		s_field {
 int			count_digit(int nb, char c);
 int			is_conversion(char c);
 int			check_balise(char c);
-t_field			is_balise(char *str);
+t_field			is_balise(char *str, va_list args);
 int			i_conversion(va_list params, char type, t_field field);
 int			s_conversion(va_list params, char type, t_field field);
 int			x_conversion(va_list params, char type, t_field field);
 int			p_conversion(va_list params, char type, t_field field);
 int			ft_printf(const char *format, ...);
 unsigned long		ft_power(unsigned long x , unsigned long y);
+void			get_balise_star(va_list args, t_field field);
 void			ft_putnbr_x(unsigned long value, char c);
 void			print_balise_nb(int nb, char c, t_field field);
 void			print_balise_str(char *str, t_field field);

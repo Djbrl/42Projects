@@ -49,8 +49,10 @@ int			is_present(char *str, char c)
 	return (0);
 }
 
-t_field		is_balise_flags(char *str, t_field field)
+t_field		is_balise_flags(char *str, va_list args, t_field field)
 {
+	if (is_present(str, '*') == 1)
+		get_balise_star(args, field);
 	if (is_present(str, '+') == 1)
 		field.flags[0] = '+';
 	else
@@ -104,14 +106,14 @@ t_field		is_balise_width_n_precision(const char *str, t_field field)
 	return (field);
 }
 
-t_field		is_balise(char *str)
+t_field		is_balise(char *str, va_list args)
 {
 	t_field field = {"0000", 0, 0, 0, 0};
 	if (pars(str) == 0)
 		field.error = 1;
 	else
 	{
-		field = is_balise_flags(str, field);
+		field = is_balise_flags(str, args, field);
 		field = is_balise_width_n_precision(str, field);
 	}
 	return (field);

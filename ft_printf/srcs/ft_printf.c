@@ -18,7 +18,7 @@ static int	which_arg(char *str, va_list params)
 	t_field	field;
 
 	i = 0;
-	field = is_balise(str);
+	field = is_balise(str, params);
 	if (field.error == 1)
 		return (0);
 	while(str[i] && check_balise(str[i]))
