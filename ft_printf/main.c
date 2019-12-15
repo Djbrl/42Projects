@@ -14,7 +14,56 @@
 #include <stdio.h>
 #include <limits.h>
 int main()
-{
+{                        /*********DECIMAL*********/
+        /*printf("ori: %3d\n", 1248);
+        printf("ori: %-3d\n", 1248);
+        printf("ori: %10d\n", 1248);
+        printf("ori: %-10d\n", 1248);
+        printf("******* largeur ******\n");
+
+        printf("ori: %.3d\n",1248);
+        printf("ori: %-.3d\n",1248);
+        printf("ori: %.10d\n", 1248);
+        printf("ori: %-10d\n", 1248);
+        printf("******** precision *******\n");
+
+        printf("ori: %10.3d\n", 1248);
+        printf("ori: %3.10d\n", 1248);
+        printf("ori: %10.3d\n", 12480);
+        printf("ori: %3.10d\n", 12480);
+        printf("***** largeur et precision ****\n");
+
+        printf("ori: %-10.3d\n", 1248);
+        printf("ori: %-3.10d\n", 1248);
+        printf("ori: %-10.3d\n", 12480);
+        printf("ori: %-3.10d\n", 12480);
+        printf("***** largeur, precision et - *****\n");*/
+
+        /*--------------------------------------------*/
+        /*ft_printf("cpy: %3d\n", 1248);
+        ft_printf("cpy: %-3d\n", 1248);
+        ft_printf("cpy: %10d\n", 1248);
+        ft_printf("cpy: %-10d\n", 1248);
+        ft_printf("******* largeur ******\n");
+
+        ft_printf("cpy: %.3d\n",1248);
+        ft_printf("cpy: %-.3d\n",1248);
+        ft_printf("cpy: %.10d\n", 1248);
+        ft_printf("cpy: %-10d\n", 1248);
+        ft_printf("******** precision *******\n");
+
+        ft_printf("cpy: %10.3d\n", 1248);
+        ft_printf("cpy: %3.10d\n", 1248);
+        ft_printf("cpy: %10.3d\n", 12480);
+        ft_printf("cpy: %3.10d\n", 12480);
+        ft_printf("***** largeur et precision ****\n");
+
+        ft_printf("cpy: %-10.3d\n", 1248);
+        ft_printf("cpy: %-3.10d\n", 1248);
+        ft_printf("cpy: %-10.3d\n", 12480);
+        ft_printf("cpy: %-3.10d\n", 12480);
+        ft_printf("***** largeur, precision et - *****\n");*/
+
 	/**********************STRING***************/
 
 	/*printf("%10s\n", "Salut");
@@ -183,7 +232,11 @@ int main()
         ft_printf("cpy: %-10.3x\n", 12480);
         ft_printf("cpy: %-3.10x\n", 12480);
         ft_printf("***** largeur, precision et - *****\n");*/
-	ft_printf("|%d|\n",5);
+	
+	char *a = "45";
 
+	printf("%-+*.10d, %-10s, %-10p, %-x, %10c\n", 10, 5, "salut", a, 1248, 'c');
+	ft_printf("%-+*.10d, %-10s, %-10p, %-x, %10c\n", 10, 5, "salut", a, 1248, 'c');
+	//ft_printf("%-10p\n", a);
 	return (0);
 }

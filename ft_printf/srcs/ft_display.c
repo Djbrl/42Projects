@@ -3,34 +3,33 @@
 void                    print_balise_nb(int nb, char c, t_field field)
 {
 	int     width;
-	int     precision;
-	int     stock;
+	int	precision;
+	int	len;
 
-	if (count_digit(nb, c) >= field.precision)
-		field.precision = 0;
-	precision = (field.precision == 0) ? count_digit(nb , c) : field.precision - count_digit(nb, c);
-	stock = (field.flags[0] == '+' || field.flags[2] == ' ') ? precision + 1 : precision;
-	field.flags[2] == ' ' && c >= 0 ? ft_putchar(' ') : 0;
-	width = (field.flags[0] == '+' || field.flags[2] == ' ') ? field.width - field.precision -1 : field.width - field.precision;
+	len = count_digit(nb, c);
+	if (len >= field.precision)
+		field.precision  = 0;
+	precision = (field.precision == 0) ? len : field.precision - len;
+	(field.flags[2] == ' ' && nb >= 0) ? ft_putchar(' ') : 0;
+	width = (field.flags[0] == '+' || field.flags[2] == '-') ? field.width - precision -1 :
+		field.width - precision;
 	if (field.flags[1] != '-' && field.flags[3] != '0')
-		while(width > 0 && width--)
+		while (width > 0 && width--)
 			ft_putchar(' ');
-	field.flags[0] == '+' ? ft_putchar('+') : 0;
+	(field.flags[0] == '+') ? ft_putchar('+') : 0;
 	while (precision > 0 && precision-- && field.precision != 0)
 		ft_putchar('0');
 	if (field.flags[1] == '-')
 	{
-		(c == 'x' || c == 'X') ? ft_putnbr_x((unsigned long)nb, c) : ft_putnbr(c);
-		while (width > 0 && width-- && field.precision != 0)
+		(c == 'x' || c == 'X') ? ft_putnbr_x(nb, c) : ft_putnbr(nb);
+		while (width > 0 && width--)
 			ft_putchar(' ');
-		return ;
+		return;
 	}
-	if (field.flags[3] == '0' && field.precision == 0)
-		while(stock++ < field.width)
-			ft_putchar('0');	
-	(c == 'x' || c == 'X') ? ft_putnbr_x((unsigned long)nb, c) : ft_putnbr(c);
-	while (stock++ < field.width && width > 0 && field.precision == 0)
-		ft_putchar(' ');
+	if (field.flags[3] == '0')
+		while (width > 0 && width--)
+			ft_putchar('0');
+	(c == 'x' || c == 'X') ? ft_putnbr_x(nb, c) : ft_putnbr(nb);
 }
 
 void	print_balise_str(char *str, t_field field)
@@ -103,10 +102,10 @@ void	print_balise_add(unsigned long p, char c, t_field field)
 	if (width > 0 && field.flags[1] != '-')
 		while (width--)
 			ft_putchar(' ');
-	else if(width > 0 && field.flags[1] == '-')
+	else if(field.flags[1] == '-')
 	{
 		ft_putnbr_x(p, c);
-		while (width--)
+		while (width > 0 && width--)
 			ft_putchar(' ');
 	}
 	field.flags[1] != '-' ? ft_putnbr_x(p, c) : 0;
