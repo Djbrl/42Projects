@@ -111,15 +111,3 @@ void	print_balise_add(unsigned long p, char c, t_field field)
 	}
 	field.flags[1] != '-' ? ft_putnbr_x(p, c) : 0;
 }
-//new func
-void	get_balise_star(va_list args, t_field field)
-{
-	char c;
-	int i;
-
-	i = 0;
-	c = (char)va_arg(args, int);
-	while(field.flags[i] != '*')
-		i++;
-	field.flags[i] = c;
-}

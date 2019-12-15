@@ -160,7 +160,7 @@ int main()
 	printf("***** largeur, precision et - *****\n");*/
 
 	/*--------------------------------------------*/
-        ft_printf("cpy: %3x\n", 1248);
+        /*ft_printf("cpy: %3x\n", 1248);
         ft_printf("cpy: %-3x\n", 1248);
         ft_printf("cpy: %10x\n", 1248);
         ft_printf("cpy: %-10x\n", 1248);
@@ -182,7 +182,8 @@ int main()
         ft_printf("cpy: %-3.10x\n", 1248);
         ft_printf("cpy: %-10.3x\n", 12480);
         ft_printf("cpy: %-3.10x\n", 12480);
-        ft_printf("***** largeur, precision et - *****\n");
+        ft_printf("***** largeur, precision et - *****\n");*/
+	ft_printf("|%d|\n",5);
 
 	return (0);
 }

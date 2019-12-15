@@ -49,38 +49,28 @@ int			is_present(char *str, char c)
 	return (0);
 }
 
-t_field		is_balise_flags(char *str, va_list args, t_field field)
+t_field		is_balise_flags(char *str, t_field field)
 {
-	if (is_present(str, '*') == 1)
-		get_balise_star(args, field);
 	if (is_present(str, '+') == 1)
 		field.flags[0] = '+';
-	else
-		field.flags[0] = '/';
 	if (is_present(str, '-') == 1)
 		field.flags[1] = '-';
-	else
-		field.flags[1] = '/';
 	if (is_present(str, ' ') == 1)
 		field.flags[2] = ' ';
-	else
-		field.flags[2] = '/';
 	if (is_present(str, '0') == 1)
 		field.flags[3] = '0';
-	else
-		field.flags[3] = '/';
 	field.flags[4] = 0;
 	return (field);
 }
 
-t_field		is_balise_width_n_precision(const char *str, t_field field)
+t_field		is_balise_width_n_precision(char *str, t_field field)
 {
 	char		*tmp;
 	int		i;
 	int		j;
-
 	i = 0;
 	j = 0;
+
 	while (str[i] && (str[i] == '+' || str[i] == '-' || str[i] == ' '
 				|| str[i] == '0'))
 		i++;
@@ -89,32 +79,38 @@ t_field		is_balise_width_n_precision(const char *str, t_field field)
 		j++;
 	tmp = ft_substr(str, i, j);
 	field.width = ft_atoi(tmp);
-	free(tmp);
 	if (str[j] && str[j] == '.')
 	{
-		if (field.width == 0)
-			field.flags[1] = '/';
 		j++;
 		i = j;
 		while (str[i] && str[i] >= '0' && str[i] <= '9')
 			i++;
 		tmp = ft_substr(str, j, i);
 		field.precision = ft_atoi(tmp);
-		free(tmp);
 	}
-	field.width = (field.precision > field.width) ? 0 : field.width;
 	return (field);
 }
 
 t_field		is_balise(char *str, va_list args)
 {
-	t_field field = {"0000", 0, 0, 0, 0};
+	t_field field = {"////", 0, 0, 0, 0};
+	int	c;
+
+	c = 0;
 	if (pars(str) == 0)
 		field.error = 1;
 	else
 	{
-		field = is_balise_flags(str, args, field);
+		field = is_balise_flags(str, field);
 		field = is_balise_width_n_precision(str, field);
+		if (is_present(str, '*') == 1)
+		{
+			c = (int)va_arg(args, int); 
+			if (is_present(str, '.') == 1)
+				field.precision = c;
+			else
+				field.width = c;		
+        	}
 	}
 	return (field);
 }

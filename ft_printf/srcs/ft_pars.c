@@ -8,7 +8,7 @@ int	pars_hexa(char *str)
 	j = 0;
 	while (str[i] && !(str[i] >= '1' && str[i] <= '9') && str[i] != '*' && !is_conversion(str[i]))
 	{
-		if (str[i + 1] && str[i] == '.' && !(str[i + 1] >= '0' && str[i + 1] <= '9'))
+		if (str[i + 1] && str[i] == '.' && !((str[i + 1] >= '0' && str[i + 1] <= '9') || str[i + 1] == '*'))
 			return (0);
 		if (str[i] == '+' || str[i] == ' ')
 			return (0);
@@ -24,6 +24,7 @@ int	pars_hexa(char *str)
 	}
 	return (1);
 }
+
 int	pars_decimal(char *str)
 {
 	int     i;
@@ -34,7 +35,7 @@ int	pars_decimal(char *str)
 	while (str[i] && !(str[i] >= '1' && str[i] <= '9') && str[i] != '*' && !is_conversion(str[i]))
 	{
 		j = i +1;
-		if (str[i + 1] && str[i] == '.' && !(str[i + 1] >= '0' && str[i + 1] <= '9'))
+		if (str[i + 1] && str[i] == '.' && !((str[i + 1] >= '0' && str[i + 1] <= '9') || str[i + 1] == '*'))
 			return (0);
 		while (str[j] && !(str[j] >= '1' && str[j] <= '9') && str[j] != '*' && !is_conversion(str[i]))
 		{

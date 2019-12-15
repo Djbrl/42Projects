@@ -70,7 +70,7 @@ int                     is_conversion(char c)
 int                     check_balise(char c)
 {
         if (c == '+' || c == '-' || c == '0' || c == ' ' || c == '.' || c == 'l'
-                        || c == 'h' || (c >= '0' && c <= '9'))
+                        || c == 'h' || (c >= '0' && c <= '9') || c == '*')
                 return (1);
         return (0);
 }

@@ -37,7 +37,6 @@ int			x_conversion(va_list params, char type, t_field field);
 int			p_conversion(va_list params, char type, t_field field);
 int			ft_printf(const char *format, ...);
 unsigned long		ft_power(unsigned long x , unsigned long y);
-void			get_balise_star(va_list args, t_field field);
 void			ft_putnbr_x(unsigned long value, char c);
 void			print_balise_nb(int nb, char c, t_field field);
 void			print_balise_str(char *str, t_field field);
