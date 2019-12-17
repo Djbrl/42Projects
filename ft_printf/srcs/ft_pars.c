@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_pars.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: idouidi <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/12/17 21:40:06 by idouidi           #+#    #+#             */
+/*   Updated: 2019/12/17 21:49:27 by idouidi          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/libftprintf.h"
 
 int	pars_hexa(char *str)
@@ -6,23 +18,21 @@ int	pars_hexa(char *str)
 	int	j;
 
 	i = 0;
-	j = 0;
-	while (str[i] && !(str[i] >= '1' && str[i] <= '9') 
+	while (str[i] && !(str[i] >= '1' && str[i] <= '9')
 			&& str[i] != '*' && !is_conversion(str[i]))
 	{
-		if (str[i + 1] && str[i] == '.' && !((str[i + 1] >= '0' 
+		if (str[i + 1] && str[i] == '.' && !((str[i + 1] >= '0'
 		&& str[i + 1] <= '9') || str[i + 1] == '*'))
 			return (0);
 		if (str[i] == '+' || str[i] == ' ')
 			return (0);
 		j = i + 1;
-		while (str[j] && !(str[j] >= '1' && str[j] <= '9') && 
+		while (str[j] && !(str[j] >= '1' && str[j] <= '9') &&
 				str[j] != '*' && !is_conversion(str[j]))
 		{
-			if (str[i] == str[j] || ((str[i] == '-' 
-			|| str[i] == '0') && (str[j] == '-' || 
-			str[j] == '0')) || ((str[i] == '.' || str[i] == '0') && 
-			(str[j] == '.' || str[j] == '0')))
+			if (str[i] == str[j] || ((str[i] == '-' || str[i] == '0') &&
+			(str[j] == '-' || str[j] == '0')) || ((str[i] == '.' ||
+			str[i] == '0') && (str[j] == '.' || str[j] == '0')))
 				return (0);
 			j++;
 		}
@@ -30,29 +40,27 @@ int	pars_hexa(char *str)
 	}
 	return (1);
 }
+
 int	pars_decimal(char *str)
 {
-	int     i;
-	int     j;
+	int	i;
+	int	j;
 
 	i = 0;
 	while (str[i] && !(str[i] >= '1' && str[i] <= '9') && str[i] != '*'
-		 && !is_conversion(str[i]))
+			&& !is_conversion(str[i]))
 	{
-		j = i +1;
+		j = i + 1;
 		if (str[i + 1] && str[i] == '.' && !((str[i + 1] >= '0' &&
-			 str[i + 1] <= '9') || str[i + 1] == '*'))
+						str[i + 1] <= '9') || str[i + 1] == '*'))
 			return (0);
-		while (str[j] && !(str[j] >= '1' && str[j] <= '9') && 
+		while (str[j] && !(str[j] >= '1' && str[j] <= '9') &&
 			str[j] != '*' && !is_conversion(str[i]))
 		{
-			if (str[i] == str[j] ||
-				(((str[i] == ' ' || str[i] == '+')
-				&& (str[j] == ' ' || str[j] == '+'))
-				|| ((str[i] == '-' || str[i] == '0') &&
-				 (str[j] == '-' || str[j] == '0'))
-				|| ((str[i] == '.' || str[i] == '0') &&
-				 (str[j] == '.' || str[j] == '0'))))
+			if (str[i] == str[j] || (((str[i] == ' ' || str[i] == '+') &&
+			(str[j] == ' ' || str[j] == '+')) || ((str[i] == '-' ||
+			str[i] == '0') && (str[j] == '-' || str[j] == '0')) || ((str[i] ==
+			'.' || str[i] == '0') && (str[j] == '.' || str[j] == '0'))))
 				return (0);
 			j++;
 		}
@@ -60,6 +68,7 @@ int	pars_decimal(char *str)
 	}
 	return (1);
 }
+
 int	pars_str(char *str)
 {
 	int	i;
@@ -70,34 +79,34 @@ int	pars_str(char *str)
 	while (str[i] && !is_conversion(str[i]))
 	{
 		if ((str[i] == '0' && str[i - 1] == '%') || str[i] == '+'
-		 || str[i] == ' ')
+				|| str[i] == ' ')
 			return (0);
 		if (str[i] == '-')
 			count++;
 		i++;
 	}
 	if (count > 1)
-		return(0);
+		return (0);
 	return (1);
 }
 
 int	pars_char(char *str)
 {
-	int     i;
-	int     count;
+	int	i;
+	int	count;
 
 	i = 0;
 	count = 0;
 	while (str[i] && !is_conversion(str[i]))
 	{
 		if ((str[i] == '0' && str[i - 1] == '%') || str[i] == '+'
-		 || str[i] == ' ' || str[i] == '.')
+				|| str[i] == ' ' || str[i] == '.')
 			return (0);
 		if (str[i] == '-')
 			count++;
 		i++;
 	}
 	if (count > 1)
-		return(0);
+		return (0);
 	return (1);
 }

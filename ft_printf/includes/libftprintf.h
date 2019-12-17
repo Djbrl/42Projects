@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 20:53:59 by dsy               #+#    #+#             */
-/*   Updated: 2019/12/04 03:27:21 by idouidi          ###   ########.fr       */
+/*   Updated: 2019/12/17 22:43:17 by idouidi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,9 @@
 
 typedef struct		s_field {
 
-	char		flags[4];
+	char	*flags;
 	int		width;
 	int		precision;
-	int		length;
 	int		error;
 }			t_field;
 

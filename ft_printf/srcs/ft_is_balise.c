@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   is_balise.c                                        :+:      :+:    :+:   */
+/*   ft_is_balise.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: idouidi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/03 21:54:24 by idouidi           #+#    #+#             */
-/*   Updated: 2019/12/04 06:18:12 by idouidi          ###   ########.fr       */
+/*   Created: 2019/12/17 21:34:49 by idouidi           #+#    #+#             */
+/*   Updated: 2019/12/17 22:44:31 by idouidi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libftprintf.h"
 
-int		pars(char *str)
+int			pars(char *str)
 {
 	int	i;
+
 	i = 0;
 	while (str[i] && !is_conversion(str[i]))
 		i++;
 	if (str[i] == 'x' || str[i] == 'X')
-		if(pars_hexa(str) == 1)
-			return(1);
+		if (pars_hexa(str) == 1)
+			return (1);
 	if (str[i] == 'd' || str[i] == 'i' || str[i] == 'u')
 		if (pars_decimal(str) == 1)
 			return (1);
@@ -41,7 +42,7 @@ int			is_present(char *str, char c)
 	while (str[i] && !is_conversion(str[i]))
 	{
 		if (str[i - 1] && str[i] == '0' && str[i - 1] >= '0' &&
-		 str[i - 1] <= '9')
+				str[i - 1] <= '9')
 			return (0);
 		else if (str[i] == c)
 			return (1);
@@ -60,18 +61,17 @@ t_field		is_balise_flags(char *str, t_field field)
 		field.flags[2] = ' ';
 	if (is_present(str, '0') == 1)
 		field.flags[3] = '0';
-	field.flags[4] = 0;
 	return (field);
 }
 
 t_field		is_balise_width_n_precision(char *str, t_field field)
 {
-	char		*tmp;
+	char	*tmp;
 	int		i;
 	int		j;
+
 	i = 0;
 	j = 0;
-
 	while (str[i] && (str[i] == '+' || str[i] == '-' || str[i] == ' '
 				|| str[i] == '0'))
 		i++;
@@ -80,7 +80,6 @@ t_field		is_balise_width_n_precision(char *str, t_field field)
 		j++;
 	tmp = ft_substr(str, i, j);
 	field.width = ft_atoi(tmp);
-	free(tmp);
 	if (str[j] && str[j] == '.')
 	{
 		j++;
@@ -96,9 +95,13 @@ t_field		is_balise_width_n_precision(char *str, t_field field)
 
 t_field		is_balise(char *str, va_list args)
 {
-	t_field field = {"////", 0, 0, 0, 0};
-	int	c;
+	int		c;
+	t_field field;
 
+	field.flags = "////";
+	field.width = 0;
+	field.precision = 0;
+	field.error = 0;
 	c = 0;
 	if (pars(str) == 0)
 		field.error = 1;
@@ -108,12 +111,12 @@ t_field		is_balise(char *str, va_list args)
 		field = is_balise_width_n_precision(str, field);
 		if (is_present(str, '*') == 1)
 		{
-			c = (int)va_arg(args, int); 
+			c = (int)va_arg(args, int);
 			if (is_present(str, '.') == 1)
 				field.precision = c;
 			else
-				field.width = c;		
-        	}
+				field.width = c;
+		}
 	}
 	return (field);
 }

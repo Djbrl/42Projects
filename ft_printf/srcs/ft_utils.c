@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_utils.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: idouidi <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/12/17 21:30:11 by idouidi           #+#    #+#             */
+/*   Updated: 2019/12/17 22:42:48 by idouidi          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/libftprintf.h"
 
-unsigned long    ft_power(unsigned long x, unsigned long y)
+unsigned long	ft_power(unsigned long x, unsigned long y)
 {
 	if (y == 0 || x == 1)
 		return (1);
@@ -9,18 +21,16 @@ unsigned long    ft_power(unsigned long x, unsigned long y)
 
 void			ft_putnbr_x(unsigned long value, char c)
 {
-	int             len;
-	unsigned long   rest;
-	char            *res;
-	int             base;
-	char		tmp;
+	int				len;
+	unsigned long	rest;
+	char			*res;
+	int				base;
+	char			tmp;
 
 	tmp = (c == 'X') ? 'A' : 'a';
-	if (value == 0)
-		return ;
 	base = 16;
 	len = 0;
-	(c == 'X' || c == 'x') ? 0: write(1, "0x", 2);
+	(c == 'X' || c == 'x') ? 0 : write(1, "0x", 2);
 	if (value < 10)
 		len = 1;
 	else
@@ -41,33 +51,33 @@ void			ft_putnbr_x(unsigned long value, char c)
 	free(res);
 }
 
-int	count_digit(int nb, char c)
+int				count_digit(int nb, char c)
 {
 	int	count;
 	int	div;
 
 	count = 0;
 	div = (c == 'd' || c == 'i' || c == 'u') ? 10 : 16;
-	while(nb)
+	while (nb)
 	{
-		nb = nb /div;
+		nb = nb / div;
 		count++;
 	}
 	return (count);
 }
 
-int                     is_conversion(char c)
+int				is_conversion(char c)
 {
-        if (c == 'c' || c == 's' || c == 'p' || c == 'i' || c == 'd' || c == 'u'
-                        || c == 'x' || c == 'X')
-                return (1);
-        return (0);
+	if (c == 'c' || c == 's' || c == 'p' || c == 'i' || c == 'd' || c == 'u'
+			|| c == 'x' || c == 'X')
+		return (1);
+	return (0);
 }
 
-int                     check_balise(char c)
+int				check_balise(char c)
 {
-        if (c == '+' || c == '-' || c == '0' || c == ' ' || c == '.'
-	 || (c >= '0' && c <= '9') || c == '*')
-                return (1);
-        return (0);
+	if (c == '+' || c == '-' || c == '0' || c == ' ' || c == '.'
+			|| (c >= '0' && c <= '9') || c == '*')
+		return (1);
+	return (0);
 }

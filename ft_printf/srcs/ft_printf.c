@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
+/*   By: idouidi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/25 20:26:52 by dsy               #+#    #+#             */
-/*   Updated: 2019/12/04 06:23:09 by idouidi          ###   ########.fr       */
+/*   Created: 2019/12/17 21:18:21 by idouidi           #+#    #+#             */
+/*   Updated: 2019/12/17 21:51:11 by idouidi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,15 @@
 
 static int	which_arg(char *str, va_list params)
 {
-	int	i;
+	int		i;
 	t_field	field;
 
 	i = 0;
 	field = is_balise(str, params);
 	if (field.error == 1)
 		return (0);
-	while(str[i] && check_balise(str[i]))
-			i++;
+	while (str[i] && check_balise(str[i]))
+		i++;
 	if (str[i] == 'c' || str[i] == 's')
 		if (!(s_conversion(params, str[i], field)))
 			return (0);
@@ -40,14 +40,15 @@ static int	which_arg(char *str, va_list params)
 
 static int	print_text(const char *str, va_list params)
 {
-	int 	i;
+	int	i;
+
 	i = 0;
 	while (str[i])
 	{
 		if (str[i] == '%' && str[i + 1] == '%')
 			i++;
 		else if (str[i] == '%' && (check_balise(str[i + 1])
-			|| is_conversion(str[i + 1])))
+					|| is_conversion(str[i + 1])))
 		{
 			if (!(which_arg((char *)&str[i + 1], params)))
 				return (0);

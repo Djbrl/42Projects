@@ -1,10 +1,20 @@
 /* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_display.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: idouidi <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/12/17 21:22:05 by idouidi           #+#    #+#             */
+/*   Updated: 2019/12/17 22:23:50 by idouidi          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../includes/libftprintf.h"
 
-void                    print_balise_nb(int nb, char c, t_field field)
+void	print_balise_nb(int nb, char c, t_field field)
 {
-	int     width;
+	int	width;
 	int	precision;
 	int	len;
 
@@ -12,7 +22,7 @@ void                    print_balise_nb(int nb, char c, t_field field)
 	precision = (field.precision == 0) ? len : field.precision - len;
 	(field.flags[2] == ' ' && nb >= 0) ? ft_putchar(' ') : 0;
 	width = (field.flags[0] == '+' || field.flags[2] == '-') ?
-		field.width - precision -1 : field.width - precision;
+		field.width - precision - 1 : field.width - precision;
 	if (field.flags[1] != '-' && field.flags[3] != '0')
 		while (width > 0 && width--)
 			ft_putchar(' ');
@@ -24,7 +34,7 @@ void                    print_balise_nb(int nb, char c, t_field field)
 		(c == 'x' || c == 'X') ? ft_putnbr_x(nb, c) : ft_putnbr(nb);
 		while (width > 0 && width--)
 			ft_putchar(' ');
-		return;
+		return ;
 	}
 	if (field.flags[3] == '0')
 		while (width > 0 && width--)
@@ -37,7 +47,7 @@ void	to_set_str(t_field field, int width)
 	if (field.width > field.precision && field.flags[1] != '-')
 	{
 		if (field.precision > 0)
-			while (field.precision --)
+			while (field.precision--)
 				ft_putchar(' ');
 		else
 			while (width > 0 && width--)
@@ -46,7 +56,7 @@ void	to_set_str(t_field field, int width)
 	else if (field.width > field.precision && field.flags[1] == '-')
 	{
 		if (field.precision > 0)
-			while (field.precision --)
+			while (field.precision--)
 				ft_putchar(' ');
 		else
 			while (width > 0 && width--)
@@ -65,16 +75,16 @@ void	print_balise_str(char *str, t_field field)
 	i = 0;
 	len = ft_strlen(str);
 	precision = (field.precision > len) ?
-	field.precision - len : len - field.precision;
+		field.precision - len : len - field.precision;
 	width = field.width - precision;
 	cpy = (field.precision == 0) ? width : field.precision;
 	if (field.width < len && field.precision == 0)
 	{
 		ft_putstr(str);
-		return;
+		return ;
 	}
 	to_set_str(field, width);
-	while(cpy > 0 && cpy--)
+	while (cpy > 0 && cpy--)
 	{
 		ft_putchar(str[i]);
 		i++;
@@ -95,7 +105,7 @@ void	print_balise_char(char c, t_field field)
 	}
 	else
 	{
-		while(width > 0 && width--)
+		while (width > 0 && width--)
 			ft_putchar(' ');
 		ft_putchar(c);
 	}
@@ -103,13 +113,13 @@ void	print_balise_char(char c, t_field field)
 
 void	print_balise_add(unsigned long p, char c, t_field field)
 {
-	int     width;
+	int	width;
 
 	width = (p != 0) ? field.width - 14 : field.width;
 	if (width > 0 && field.flags[1] != '-')
 		while (width--)
 			ft_putchar(' ');
-	else if(field.flags[1] == '-')
+	else if (field.flags[1] == '-')
 	{
 		ft_putnbr_x(p, c);
 		while (width > 0 && width--)
