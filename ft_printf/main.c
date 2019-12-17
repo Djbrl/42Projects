@@ -233,10 +233,10 @@ int main()
         ft_printf("cpy: %-3.10x\n", 12480);
         ft_printf("***** largeur, precision et - *****\n");*/
 	
-	char *a = "45";
+	//char *a = "45";
 
-	printf("%-+*.10d, %-10s, %-10p, %-x, %10c\n", 10, 5, "salut", a, 1248, 'c');
-	ft_printf("%-+*.10d, %-10s, %-10p, %-x, %10c\n", 10, 5, "salut", a, 1248, 'c');
-	//ft_printf("%-10p\n", a);
+	//printf("%-+*.10d, %-10s, %-10p, %-x, %10c\n", 10, 5, "salut", a, 1248, 'c');
+	//ft_printf("%-+*.10d, %-10s, %-10p, %-x, %10c\n", 10, 5, "salut", a, 1248, 'c');
+	ft_printf("%100d\n", -2147483648);
 	return (0);
 }

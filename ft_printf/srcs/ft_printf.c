@@ -46,7 +46,8 @@ static int	print_text(const char *str, va_list params)
 	{
 		if (str[i] == '%' && str[i + 1] == '%')
 			i++;
-		else if (str[i] == '%' && (check_balise(str[i + 1]) || is_conversion(str[i + 1])))
+		else if (str[i] == '%' && (check_balise(str[i + 1])
+			|| is_conversion(str[i + 1])))
 		{
 			if (!(which_arg((char *)&str[i + 1], params)))
 				return (0);

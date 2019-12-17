@@ -48,6 +48,8 @@ int		i_conversion(va_list params, char arg_type, t_field field)
 		conv_arg = (int)va_arg(params, int);
 	else
 		conv_arg = (unsigned int)va_arg(params, int);
+	if (count_digit(conv_arg, arg_type) > field.precision)
+		field.precision = 0;
 	print_balise_nb(conv_arg, arg_type, field);
 	return (1);
 }

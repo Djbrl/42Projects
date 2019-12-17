@@ -1,12 +1,9 @@
-
 #include "../includes/libftprintf.h"
 
 unsigned long    ft_power(unsigned long x, unsigned long y)
 {
 	if (y == 0 || x == 1)
 		return (1);
-	/*if (x == 0 || y < 0)
-	  return (0);*/
 	return (x * ft_power(x, --y));
 }
 
@@ -69,8 +66,8 @@ int                     is_conversion(char c)
 
 int                     check_balise(char c)
 {
-        if (c == '+' || c == '-' || c == '0' || c == ' ' || c == '.' || c == 'l'
-                        || c == 'h' || (c >= '0' && c <= '9') || c == '*')
+        if (c == '+' || c == '-' || c == '0' || c == ' ' || c == '.'
+	 || (c >= '0' && c <= '9') || c == '*')
                 return (1);
         return (0);
 }

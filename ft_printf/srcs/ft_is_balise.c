@@ -40,7 +40,8 @@ int			is_present(char *str, char c)
 	i = 0;
 	while (str[i] && !is_conversion(str[i]))
 	{
-		if (str[i - 1] && str[i] == '0' && str[i - 1] >= '0' && str[i - 1] <= '9')
+		if (str[i - 1] && str[i] == '0' && str[i - 1] >= '0' &&
+		 str[i - 1] <= '9')
 			return (0);
 		else if (str[i] == c)
 			return (1);
@@ -79,6 +80,7 @@ t_field		is_balise_width_n_precision(char *str, t_field field)
 		j++;
 	tmp = ft_substr(str, i, j);
 	field.width = ft_atoi(tmp);
+	free(tmp);
 	if (str[j] && str[j] == '.')
 	{
 		j++;
@@ -87,6 +89,7 @@ t_field		is_balise_width_n_precision(char *str, t_field field)
 			i++;
 		tmp = ft_substr(str, j, i);
 		field.precision = ft_atoi(tmp);
+		free(tmp);
 	}
 	return (field);
 }

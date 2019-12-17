@@ -1,3 +1,5 @@
+/* ************************************************************************** */
+
 #include "../includes/libftprintf.h"
 
 void                    print_balise_nb(int nb, char c, t_field field)
@@ -7,12 +9,10 @@ void                    print_balise_nb(int nb, char c, t_field field)
 	int	len;
 
 	len = count_digit(nb, c);
-	if (len >= field.precision)
-		field.precision  = 0;
 	precision = (field.precision == 0) ? len : field.precision - len;
 	(field.flags[2] == ' ' && nb >= 0) ? ft_putchar(' ') : 0;
-	width = (field.flags[0] == '+' || field.flags[2] == '-') ? field.width - precision -1 :
-		field.width - precision;
+	width = (field.flags[0] == '+' || field.flags[2] == '-') ?
+		field.width - precision -1 : field.width - precision;
 	if (field.flags[1] != '-' && field.flags[3] != '0')
 		while (width > 0 && width--)
 			ft_putchar(' ');
@@ -32,6 +32,28 @@ void                    print_balise_nb(int nb, char c, t_field field)
 	(c == 'x' || c == 'X') ? ft_putnbr_x(nb, c) : ft_putnbr(nb);
 }
 
+void	to_set_str(t_field field, int width)
+{
+	if (field.width > field.precision && field.flags[1] != '-')
+	{
+		if (field.precision > 0)
+			while (field.precision --)
+				ft_putchar(' ');
+		else
+			while (width > 0 && width--)
+				ft_putchar(' ');
+	}
+	else if (field.width > field.precision && field.flags[1] == '-')
+	{
+		if (field.precision > 0)
+			while (field.precision --)
+				ft_putchar(' ');
+		else
+			while (width > 0 && width--)
+				ft_putchar(' ');
+	}
+}
+
 void	print_balise_str(char *str, t_field field)
 {
 	int	width;
@@ -42,7 +64,8 @@ void	print_balise_str(char *str, t_field field)
 
 	i = 0;
 	len = ft_strlen(str);
-	precision = (field.precision > len) ? field.precision - len : len - field.precision;
+	precision = (field.precision > len) ?
+	field.precision - len : len - field.precision;
 	width = field.width - precision;
 	cpy = (field.precision == 0) ? width : field.precision;
 	if (field.width < len && field.precision == 0)
@@ -50,29 +73,13 @@ void	print_balise_str(char *str, t_field field)
 		ft_putstr(str);
 		return;
 	}
-	if (field.width > field.precision && field.flags[1] != '-')
-	{
-		if (field.precision > 0)
-			while (field.precision --)
-				ft_putchar(' ');
-		else
-			while (width > 0 && width--)
-				ft_putchar(' ');
-	}
+	to_set_str(field, width);
 	while(cpy > 0 && cpy--)
 	{
 		ft_putchar(str[i]);
 		i++;
 	}
-	if(field.width > field.precision && field.flags[1] == '-')
-	{
-		if (field.precision > 0)
-			while (field.precision --)
-				ft_putchar(' ');
-		else
-			while (width > 0 && width--)
-				ft_putchar(' ');
-	}
+	to_set_str(field, width);
 }
 
 void	print_balise_char(char c, t_field field)
