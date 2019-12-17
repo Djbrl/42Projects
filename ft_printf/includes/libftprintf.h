@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libftprintf.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
+/*   By: othabchi <othabchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 20:53:59 by dsy               #+#    #+#             */
-/*   Updated: 2019/12/17 22:43:17 by idouidi          ###   ########.fr       */
+/*   Updated: 2019/12/17 23:04:46 by othabchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,31 +18,38 @@
 # include <stdlib.h>
 # include "../libft/libft.h"
 
-typedef struct		s_field {
+extern int			g_ret;
 
-	char	*flags;
-	int		width;
-	int		precision;
-	int		error;
-}			t_field;
+typedef struct		s_field{
 
-int			count_digit(int nb, char c);
-int			is_conversion(char c);
-int			check_balise(char c);
-t_field			is_balise(char *str, va_list args);
-int			i_conversion(va_list params, char type, t_field field);
-int			s_conversion(va_list params, char type, t_field field);
-int			x_conversion(va_list params, char type, t_field field);
-int			p_conversion(va_list params, char type, t_field field);
-int			ft_printf(const char *format, ...);
+	char			*flags;
+	int				width;
+	int				precision;
+	int				length;
+	int				error;
+}					t_field;
+
+int					count_digit(int nb, char c);
+int					is_conversion(char c);
+int					check_balise(char c);
+t_field				is_balise(char *str, va_list args);
+int					i_conversion(va_list params, char type, t_field field);
+int					s_conversion(va_list params, char type, t_field field);
+int					x_conversion(va_list params, char type, t_field field);
+int					p_conversion(va_list params, char type, t_field field);
+int					ft_printf(const char *format, ...);
 unsigned long		ft_power(unsigned long x , unsigned long y);
-void			ft_putnbr_x(unsigned long value, char c);
-void			print_balise_nb(int nb, char c, t_field field);
-void			print_balise_str(char *str, t_field field);
-void			print_balise_char(char c, t_field field);
-void			print_balise_add(unsigned long p, char c, t_field field);
-int			pars_decimal(char *str);
-int			pars_hexa(char *str);
-int			pars_char(char *str);
-int			pars_str(char *str);
+void				ft_putnbr_x(unsigned long value, char c);
+void				print_balise_nb(int nb, char c, t_field field);
+void				print_balise_str(char *str, t_field field);
+void				print_balise_char(char c, t_field field);
+void				print_balise_add(unsigned long p, char c, t_field field);
+int					pars_decimal(char *str);
+int					pars_hexa(char *str);
+int					pars_char(char *str);
+int					pars_str(char *str);
+void				ft_putstrplus(char *str);
+void				ft_putcharplus(char c);
+void				ft_putnbrplus(int n);
+
 #endif

@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: idouidi <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: othabchi <othabchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 21:18:21 by idouidi           #+#    #+#             */
-/*   Updated: 2019/12/17 21:51:11 by idouidi          ###   ########.fr       */
+/*   Updated: 2019/12/17 23:07:17 by othabchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libftprintf.h"
+
+int			g_ret = 0;
 
 static int	which_arg(char *str, va_list params)
 {
@@ -60,6 +62,7 @@ static int	print_text(const char *str, va_list params)
 		else
 		{
 			write(1, &str[i], 1);
+			g_ret++;
 			i++;
 		}
 	}
@@ -76,5 +79,5 @@ int			ft_printf(const char *format, ...)
 	if (!(print_text(format, params)))
 		return (-1);
 	va_end(params);
-	return (0);
+	return (g_ret);
 }

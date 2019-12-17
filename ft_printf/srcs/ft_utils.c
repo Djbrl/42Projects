@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: idouidi <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: othabchi <othabchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 21:30:11 by idouidi           #+#    #+#             */
-/*   Updated: 2019/12/17 22:42:48 by idouidi          ###   ########.fr       */
+/*   Updated: 2019/12/17 23:11:20 by othabchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void			ft_putnbr_x(unsigned long value, char c)
 	tmp = (c == 'X') ? 'A' : 'a';
 	base = 16;
 	len = 0;
-	(c == 'X' || c == 'x') ? 0 : write(1, "0x", 2);
+	(c == 'X' || c == 'x') ? 0 : ft_putstrplus("0x");
 	if (value < 10)
 		len = 1;
 	else
@@ -47,7 +47,7 @@ void			ft_putnbr_x(unsigned long value, char c)
 			res[len] = ((rest < 10) ? '0' : tmp - 10) + rest;
 			value /= base;
 		}
-	ft_putstr(res);
+	ft_putstrplus(res);
 	free(res);
 }
 
