@@ -6,7 +6,7 @@
 /*   By: othabchi <othabchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 19:01:54 by othabchi          #+#    #+#             */
-/*   Updated: 2019/12/17 23:14:02 by othabchi         ###   ########.fr       */
+/*   Updated: 2019/12/18 00:47:19 by idouidi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	ft_putstrplus(char *str)
 	int i;
 
 	i = 0;
-	while (str[i] != '\0')
+	while (str[i])
 	{
 		ft_putcharplus(str[i]);
 		i++;

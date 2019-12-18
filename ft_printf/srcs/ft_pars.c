@@ -6,7 +6,7 @@
 /*   By: idouidi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 21:40:06 by idouidi           #+#    #+#             */
-/*   Updated: 2019/12/17 21:49:27 by idouidi          ###   ########.fr       */
+/*   Updated: 2019/12/18 02:24:10 by idouidi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	pars_hexa(char *str)
 		while (str[j] && !(str[j] >= '1' && str[j] <= '9') &&
 				str[j] != '*' && !is_conversion(str[j]))
 		{
-			if (str[i] == str[j] || ((str[i] == '-' || str[i] == '0') &&
+			if (((str[i] == '-' || str[i] == '0') &&
 			(str[j] == '-' || str[j] == '0')) || ((str[i] == '.' ||
 			str[i] == '0') && (str[j] == '.' || str[j] == '0')))
 				return (0);
@@ -57,7 +57,7 @@ int	pars_decimal(char *str)
 		while (str[j] && !(str[j] >= '1' && str[j] <= '9') &&
 			str[j] != '*' && !is_conversion(str[i]))
 		{
-			if (str[i] == str[j] || (((str[i] == ' ' || str[i] == '+') &&
+			if ((((str[i] == ' ' || str[i] == '+') &&
 			(str[j] == ' ' || str[j] == '+')) || ((str[i] == '-' ||
 			str[i] == '0') && (str[j] == '-' || str[j] == '0')) || ((str[i] ==
 			'.' || str[i] == '0') && (str[j] == '.' || str[j] == '0'))))

@@ -6,7 +6,7 @@
 /*   By: idouidi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 21:34:49 by idouidi           #+#    #+#             */
-/*   Updated: 2019/12/17 22:44:31 by idouidi          ###   ########.fr       */
+/*   Updated: 2019/12/18 03:41:55 by idouidi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,28 @@ int			pars(char *str)
 	int	i;
 
 	i = 0;
-	while (str[i] && !is_conversion(str[i]))
+	while (str[i])
+	{
+		if (str[i] == '%')
+		{
+			while (str[i] && !is_conversion(str[i]))
+				i++;
+			if (str[i] == 'x' || str[i] == 'X')
+				if (pars_hexa(str) != 1)
+					return (0);
+			if (str[i] == 'd' || str[i] == 'i' || str[i] == 'u')
+				if (pars_decimal(str) != 1)
+					return (0);
+			if (str[i] == 'c' || str[i] == 'p')
+				if (pars_char(str) != 1)
+					return (0);
+			if (str[i] == 's')
+				if (pars_str(str) != 1)
+					return (0);
+		}
 		i++;
-	if (str[i] == 'x' || str[i] == 'X')
-		if (pars_hexa(str) == 1)
-			return (1);
-	if (str[i] == 'd' || str[i] == 'i' || str[i] == 'u')
-		if (pars_decimal(str) == 1)
-			return (1);
-	if (str[i] == 'c' || str[i] == 'p')
-		if (pars_char(str) == 1)
-			return (1);
-	if (str[i] == 's')
-		if (pars_str(str) == 1)
-			return (1);
-	return (0);
+	}
+	return (1);
 }
 
 int			is_present(char *str, char c)
@@ -96,19 +103,20 @@ t_field		is_balise_width_n_precision(char *str, t_field field)
 t_field		is_balise(char *str, va_list args)
 {
 	int		c;
+	char	**tmp;
 	t_field field;
 
+	tmp = &str;
 	field.flags = "////";
 	field.width = 0;
 	field.precision = 0;
 	field.error = 0;
-	c = 0;
 	if (pars(str) == 0)
 		field.error = 1;
 	else
 	{
-		field = is_balise_flags(str, field);
-		field = is_balise_width_n_precision(str, field);
+		field = is_balise_flags(*tmp + 1, field);
+		field = is_balise_width_n_precision(*tmp + 1, field);
 		if (is_present(str, '*') == 1)
 		{
 			c = (int)va_arg(args, int);

@@ -6,7 +6,7 @@
 /*   By: othabchi <othabchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 20:31:22 by dsy               #+#    #+#             */
-/*   Updated: 2019/12/17 23:06:46 by othabchi         ###   ########.fr       */
+/*   Updated: 2019/12/18 03:18:41 by idouidi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -237,7 +237,7 @@ int main()
 
 	//printf("%-+*.10d, %-10s, %-10p, %-x, %10c\n", 10, 5, "salut", a, 1248, 'c');
 	//ft_printf("%-+*.10d, %-10s, %-10p, %-x, %10c\n", 10, 5, "salut", a, 1248, 'c');
-	printf("mine [%d]\n", ft_printf("%100d\n", 2147483647));
-        printf("real [%d]\n", printf("%100d\n", 2147483647));
+	/*printf("mine [%d]\n", ft_printf("%100d\n", 2147483647));
+        printf("real [%d]\n", printf("%100d\n", 2147483647));*/
 	return (0);
 }

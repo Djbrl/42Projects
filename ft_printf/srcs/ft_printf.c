@@ -6,7 +6,7 @@
 /*   By: othabchi <othabchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 21:18:21 by idouidi           #+#    #+#             */
-/*   Updated: 2019/12/17 23:07:17 by othabchi         ###   ########.fr       */
+/*   Updated: 2019/12/18 03:08:30 by idouidi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static int	print_text(const char *str, va_list params)
 		else if (str[i] == '%' && (check_balise(str[i + 1])
 					|| is_conversion(str[i + 1])))
 		{
-			if (!(which_arg((char *)&str[i + 1], params)))
+			if ((which_arg((char *)&str[i], params) == 0))
 				return (0);
 			i++;
 			while (str[i] && !is_conversion(str[i]))
