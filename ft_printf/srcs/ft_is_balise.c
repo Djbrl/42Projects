@@ -6,7 +6,7 @@
 /*   By: idouidi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 21:34:49 by idouidi           #+#    #+#             */
-/*   Updated: 2019/12/18 03:41:55 by idouidi          ###   ########.fr       */
+/*   Updated: 2019/12/18 05:07:08 by idouidi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int			pars(char *str)
 	int	i;
 
 	i = 0;
+	str = NULL;
 	while (str[i])
 	{
 		if (str[i] == '%')
@@ -38,6 +39,7 @@ int			pars(char *str)
 		}
 		i++;
 	}
+	printf("oui");
 	return (1);
 }
 
