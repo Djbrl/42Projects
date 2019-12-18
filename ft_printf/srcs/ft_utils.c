@@ -6,7 +6,7 @@
 /*   By: othabchi <othabchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 21:30:11 by idouidi           #+#    #+#             */
-/*   Updated: 2019/12/18 01:38:13 by idouidi          ###   ########.fr       */
+/*   Updated: 2019/12/18 04:31:51 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,10 @@ void			ft_putnbr_x(unsigned long value, char c)
 
 	tmp = (c == 'X') ? 'A' : 'a';
 	base = 16;
-	len = 0;
+	len = (value < 10) ? 1 : 0;
 	(c == 'X' || c == 'x') ? 0 : ft_putstrplus("0x");
-	if (value < 10)
-		len = 1;
-	else
-		while (ft_power(base, len) <= value)
-			len++;
+	while ((ft_power(base, len) <= value) && value >= 10)
+		len++;
 	if (!(res = malloc(sizeof(char) * (len + 1))))
 		return ;
 	if (value < 10)
