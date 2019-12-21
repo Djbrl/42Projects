@@ -1,38 +1,43 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_pars.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: idouidi <marvin@42.fr>                     +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/17 21:40:06 by idouidi           #+#    #+#             */
-/*   Updated: 2019/12/18 02:24:10 by idouidi          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../includes/libftprintf.h"
 
-int	pars_hexa(char *str)
+int     check_zero(char *str, int i)
+{
+	int	j;
+	int	check;
+
+	check = 0;
+	j = 0;
+	while (j < i)
+	{
+		if (str[j] == '0' && (flags(str[j - 1]) || flags(str[j + 1])))
+			check = 1;
+		j++;
+	}
+	return (check);
+}
+
+
+int	pars_hexa(char *s)
 {
 	int	i;
 	int	j;
 
 	i = 0;
-	while (str[i] && !(str[i] >= '1' && str[i] <= '9')
-			&& str[i] != '*' && !is_conversion(str[i]))
+	while (s[i] && !is_conversion(s[i]))
 	{
-		if (str[i + 1] && str[i] == '.' && !((str[i + 1] >= '0'
-		&& str[i + 1] <= '9') || str[i + 1] == '*'))
+		if (s[i + 1] && s[i] == '.' && !(ft_isdigit(s[i + 1]) ||
+			s[i + 1] == '*'))
 			return (0);
-		if (str[i] == '+' || str[i] == ' ')
+		if (s[i + 1] && s[i] == '*' && !(s[i + 1] == '.'
+			|| is_conversion(s[i + 1])))
 			return (0);
-		j = i + 1;
-		while (str[j] && !(str[j] >= '1' && str[j] <= '9') &&
-				str[j] != '*' && !is_conversion(str[j]))
+		j = (s[i] == '.' && check_zero(s, i) == 1) ? 1 : i + 1;
+		if ((s[i] == '.' && j == 1) || s[i] == '+' || s[i] == ' ')
+			return (0);
+		while (s[j] && flags(s[i]) && flags(s[j]))
 		{
-			if (((str[i] == '-' || str[i] == '0') &&
-			(str[j] == '-' || str[j] == '0')) || ((str[i] == '.' ||
-			str[i] == '0') && (str[j] == '.' || str[j] == '0')))
+			if (((s[i] == '-' || s[i] == '0') &&
+				(s[j] == '-' || s[j] == '0')))
 				return (0);
 			j++;
 		}
@@ -41,26 +46,28 @@ int	pars_hexa(char *str)
 	return (1);
 }
 
-int	pars_decimal(char *str)
+int	pars_decimal(char *s)
 {
-	int	i;
-	int	j;
+	int     i;
+	int     j;
 
 	i = 0;
-	while (str[i] && !(str[i] >= '1' && str[i] <= '9') && str[i] != '*'
-			&& !is_conversion(str[i]))
+	while (s[i] && !is_conversion(s[i]))
 	{
-		j = i + 1;
-		if (str[i + 1] && str[i] == '.' && !((str[i + 1] >= '0' &&
-						str[i + 1] <= '9') || str[i + 1] == '*'))
+		if (s[i + 1] && s[i] == '.' && !(ft_isdigit(s[i + 1]) ||
+			 s[i + 1] == '*'))
 			return (0);
-		while (str[j] && !(str[j] >= '1' && str[j] <= '9') &&
-			str[j] != '*' && !is_conversion(str[i]))
+		if (s[i + 1] && s[i] == '*' && !(s[i + 1] == '.' ||
+			 is_conversion(s[i + 1])))
+			return (0);
+		j = (s[i] == '.' && check_zero(s, i) == 1) ? 1 : i + 1;
+		if (s[i] == '.' && j == 1)
+			return (0);
+		while (s[j] && flags(s[i]) && flags(s[j]))
 		{
-			if ((((str[i] == ' ' || str[i] == '+') &&
-			(str[j] == ' ' || str[j] == '+')) || ((str[i] == '-' ||
-			str[i] == '0') && (str[j] == '-' || str[j] == '0')) || ((str[i] ==
-			'.' || str[i] == '0') && (str[j] == '.' || str[j] == '0'))))
+			if ((((s[i] == ' ' || s[i] == '+') && (s[j] == ' '
+				|| s[j] == '+')) || ((s[i] == '-' || s[i]
+				== '0') && (s[j] == '-' || s[j] == '0'))))
 				return (0);
 			j++;
 		}
@@ -69,44 +76,39 @@ int	pars_decimal(char *str)
 	return (1);
 }
 
-int	pars_str(char *str)
+int	pars_str(char *s)
 {
 	int	i;
-	int	count;
+	int	j;
 
 	i = 0;
-	count = 0;
-	while (str[i] && !is_conversion(str[i]))
+	while (s[i] && !is_conversion(s[i]))
 	{
-		if ((str[i] == '0' && str[i - 1] == '%') || str[i] == '+'
-				|| str[i] == ' ')
+		j = check_zero(s, i);
+		if (s[i] == '+'|| s[i] == ' ' || j == 1)
 			return (0);
-		if (str[i] == '-')
-			count++;
+                if (s[i + 1] && s[i] == '.' && !(ft_isdigit(s[i + 1]) ||
+                         s[i + 1] == '*'))
+                        return (0);
+		if (s[i + 1] && s[i] == '*' && !(s[i + 1] == '.' ||
+			 is_conversion(s[i + 1])))
+			return (0);
 		i++;
 	}
-	if (count > 1)
-		return (0);
 	return (1);
 }
 
-int	pars_char(char *str)
+int	pars_char_n_add(char *s)
 {
-	int	i;
-	int	count;
-
+	int     i;
+	int	j;
 	i = 0;
-	count = 0;
-	while (str[i] && !is_conversion(str[i]))
+	while (s[i] && !is_conversion(s[i]))
 	{
-		if ((str[i] == '0' && str[i - 1] == '%') || str[i] == '+'
-				|| str[i] == ' ' || str[i] == '.')
+		j = check_zero(s, i);
+		if (s[i] == '+'|| s[i] == ' ' || s[i] == '.' || j == 1)
 			return (0);
-		if (str[i] == '-')
-			count++;
 		i++;
 	}
-	if (count > 1)
-		return (0);
 	return (1);
 }

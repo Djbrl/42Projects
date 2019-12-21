@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: othabchi <othabchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 20:31:22 by dsy               #+#    #+#             */
-/*   Updated: 2019/12/18 04:59:55 by idouidi          ###   ########.fr       */
+/*   Updated: 2019/12/20 08:02:23 by idouidi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 #include <stdio.h>
 #include <limits.h>
 int main()
-{                        /*********DECIMAL*********/
+{
+	int ret;
+                        /*********DECIMAL*********/
         /*printf("ori: %3d\n", 1248);
         printf("ori: %-3d\n", 1248);
         printf("ori: %10d\n", 1248);
@@ -235,10 +237,22 @@ int main()
 	
 	char *a = "45";
 
-	ft_printf("%-+*.10d, %-10s, %-10p, %-x, %10c\n", 10, 5, "salut", a, 1248, 'c');
-	ft_printf("%-+*.10d, %-10s, %-10p, %-x, %10c\n", 10, 5, "salut", a, 1248, 'c');
-	ft_printf("%-+*.10d, %-10s, %-10p, %-x, %10c\n", 10, 5, "salut", a, 1248, 'c');
-	/*printf("mine [%d]\n", ft_printf("%100d\n", 2147483647));
-        printf("real [%d]\n", printf("%100d\n", 2147483647));*/
+	//printf("ori:%10s\n", "salut");
+	//ft_printf("%-10s\n", "salut");
+	//printf("ori:%20.10d, %10s, %10p, %x, %10c\n", 5, "salut", a, 1248, 'c');
+	//printf("ori:%20.10d\n", 5);
+	//ft_printf("ori:%20.10d\n", 5);
+	//ft_printf("%10p\n", a);
+	//ft_printf("ori:%10c, %-+10.10d, salut, %10p\n",'c', 5, a);
+	ret = ft_printf("ori : %+10.10d, %-10s, %-10p, %10c\n", 5, "salut", a, 'c');
+	printf("%d\n", ret);
+	//ft_printf("cpy : %-+10.10d, %d, %d, %c\n", 5, 5, 5, 's');
+	//ft_printf("%-+*.10d, %-10s, %-10p, %-x, %10c\n", 10, 5, "salut", a, 1248, 'c');
+	//ft_printf("cpy:%-+*.10d, %-10s, %-10p, %-x, %10c\n", 10, 5, "salut", a, 1248, 'c');
+	//ft_printf("%100d\n", -2147483648);
+	//printf("%*.*d\n", -20, 10, 5);
+	//ft_printf("%10d", 5);
+	//ft_printf("%*.*d\n", -20, 10, 5);
+	//ft_printf("%*d\n",-10, 10);
 	return (0);
 }

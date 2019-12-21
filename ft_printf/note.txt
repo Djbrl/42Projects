@@ -2,4 +2,3 @@
 -checker l'affichage avec une valeur a NULL (p, s) et une chaine vide pour s
 -mettre a la norme les fonctions
 -checker les leaks
- 

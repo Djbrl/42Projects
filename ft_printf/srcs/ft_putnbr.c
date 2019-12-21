@@ -1,36 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_puts.c                                          :+:      :+:    :+:   */
+/*   ft_putnbr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: othabchi <othabchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/17 19:01:54 by othabchi          #+#    #+#             */
-/*   Updated: 2019/12/18 05:04:57 by idouidi          ###   ########.fr       */
+/*   Created: 2019/10/18 16:14:43 by dsy               #+#    #+#             */
+/*   Updated: 2019/10/18 16:14:48 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libftprintf.h"
 
-void	ft_putcharplus(char c)
-{
-	write(1, &c, 1);
-	g_ret++;
-}
-
-void	ft_putstrplus(char *str)
-{
-	int i;
-
-	i = 0;
-	while (str[i])
-	{
-		ft_putcharplus(str[i]);
-		i++;
-	}
-}
-
-void	ft_putnbrplus(int n)
+void	ft_putnbr(int n)
 {
 	long nb;
 
@@ -38,14 +20,14 @@ void	ft_putnbrplus(int n)
 	if (nb < 0)
 	{
 		nb *= -1;
-		ft_putcharplus('-');
+		ft_putchar('-');
 	}
 	if (nb < 10)
 	{
-		ft_putcharplus(nb + '0');
+		ft_putchar(nb + '0');
 		return ;
 	}
-	ft_putnbrplus(nb / 10);
-	ft_putcharplus((nb % 10) + '0');
+	ft_putnbr(nb / 10);
+	ft_putchar((nb % 10) + '0');
 	return ;
 }
