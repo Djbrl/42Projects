@@ -26,7 +26,6 @@ typedef struct	s_field {
 	char			flags[4];
 	int			width;
 	int			precision;
-	int			error;
 }				t_field;
 
 size_t				ft_strlen(const char *str);

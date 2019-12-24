@@ -15,9 +15,9 @@
 #include <limits.h>
 int main()
 {
-	int ret;
+	//int ret;
                         /*********DECIMAL*********/
-        /*printf("ori: %3d\n", 1248);
+       /* printf("ori: %3d\n", 1248);
         printf("ori: %-3d\n", 1248);
         printf("ori: %10d\n", 1248);
         printf("ori: %-10d\n", 1248);
@@ -143,8 +143,9 @@ int main()
         printf("%-10c\n", 97);
         printf("**** largeur ,'-' et valeur decimal***\n");*/
 
-	
-        /*ft_printf("*** test simple ****\n");
+
+	/*ft_printf("%c\n", 'a');	
+        ft_printf("*** test simple ****\n");
 
         ft_printf("%-c\n", 'a');
         ft_printf("*** avec '-' **\n");
@@ -235,7 +236,7 @@ int main()
         ft_printf("cpy: %-3.10x\n", 12480);
         ft_printf("***** largeur, precision et - *****\n");*/
 	
-	char *a = "45";
+	//char *a = 0;
 
 	//printf("ori:%10s\n", "salut");
 	//ft_printf("%-10s\n", "salut");
@@ -244,8 +245,10 @@ int main()
 	//ft_printf("ori:%20.10d\n", 5);
 	//ft_printf("%10p\n", a);
 	//ft_printf("ori:%10c, %-+10.10d, salut, %10p\n",'c', 5, a);
-	ret = ft_printf("ori : %+10.10d, %-10s, %-10p, %10c\n", 5, "salut", a, 'c');
-	printf("%d\n", ret);
+	//ret = ft_printf("cpy:%s\n", a);
+	//printf("cpy:%d\n", ret);
+	//ret = printf("ori:%s\n", a);
+	//printf("ori:%d\n", ret);
 	//ft_printf("cpy : %-+10.10d, %d, %d, %c\n", 5, 5, 5, 's');
 	//ft_printf("%-+*.10d, %-10s, %-10p, %-x, %10c\n", 10, 5, "salut", a, 1248, 'c');
 	//ft_printf("cpy:%-+*.10d, %-10s, %-10p, %-x, %10c\n", 10, 5, "salut", a, 1248, 'c');

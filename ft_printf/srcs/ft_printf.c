@@ -50,8 +50,6 @@ static int	which_arg(char *str, va_list params)
 
 	i = 0;
 	field = is_balise(str, params);
-	if (field.error == 1)
-		return (0);
 	while(str[i] && !is_conversion(str[i]))
 			i++;
 	if (str[i] == 'c' || str[i] == 's')
