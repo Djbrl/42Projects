@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 20:31:22 by dsy               #+#    #+#             */
-/*   Updated: 2019/12/27 11:16:14 by dsy              ###   ########.fr       */
+/*   Updated: 2019/12/27 14:42:19 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,19 @@ int main()
 {
 //	ft_printf("test i : \"%i\"\ntest s : \"%s\"\n", 43, "test field");
 //	ft_printf("%s%s%s%i%s%u%s%c\n", "huk", "huk", "huk", 213, "huk", 321, "huk", 'X');
-	char *s = NULL;
-	char *s1 = "";
-	char *s2 = "DSA";
-	char *s3 = "fsasd";
-	char *s4 = "SAD A";
-	ft_printf("p : %p\n", s);
-	printf("rp : %p\n", s);
-	printf("rp : %p\n", s1);
-	printf("rp : %p\n", s2);
-	printf("rp : %p\n", s3);
-	printf("rp : %p\n", s4);
+//	char *s = NULL;
+	int ret;
+	//ft_printf("p : %p\n", s);
+	//printf("rp : %p\n", s);
 
+	//ft_printf("XTEST %x\t%X\n", 9999, 9999);
+//	ret = ft_printf("XTEST, this is some sort of elaborate printing test. %s%x%X%s%c%p%u%i%s\n", GRN, 9999, 9999, "it seems to be working tho", '.', s, 9999, 9999, RST);
+	ret = ft_printf("abcd");
+	ft_printf("%i\n", ret);
+	ret = ft_printf("abcd abcd");
+	ft_printf("%i\n", ret);
+	ret = ft_printf("");
+	ft_printf("%i\n", ret);
 	/*int i = 7;
 	int p = 5;
 	int	test = printf("");

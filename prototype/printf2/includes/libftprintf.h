@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 20:53:59 by dsy               #+#    #+#             */
-/*   Updated: 2019/12/27 10:46:16 by dsy              ###   ########.fr       */
+/*   Updated: 2019/12/27 13:50:33 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,12 @@ typedef struct	s_field {
 	size_t		length;
 }				t_field;
 
+unsigned long	power(unsigned long x, int y);
+void			ft_putnbr_x(unsigned long value, char type);
 int				is_conversion(char c);
 int				i_conversion(va_list params, char type);
 int				s_conversion(va_list params, char type);
-int				x_conversion(va_list params);
+int				x_conversion(va_list params, char type);
 int				p_conversion(va_list params);
 int				ft_printf(const char *format, ...);
 #endif
