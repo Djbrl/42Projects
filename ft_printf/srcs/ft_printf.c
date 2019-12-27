@@ -6,13 +6,21 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 20:26:52 by dsy               #+#    #+#             */
-/*   Updated: 2019/12/20 08:35:24 by idouidi          ###   ########.fr       */
+/*   Updated: 2019/12/27 11:55:03 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libftprintf.h"
 
 int			g_ret = 0;
+
+/*
+** chqnged line 45 in pars from
+** i++;
+** stock = i;
+**						     to
+** stock = ++i;
+*/
 
 int			pars(char *str)
 {
@@ -31,27 +39,27 @@ int			pars(char *str)
 			while (str[i] && !is_conversion(str[i]))
 				i++;
 			if ((str[i] == '\0') || ((str[i] == 'x' || str[i] ==
-                         'X') && pars_hexa(&str[stock]) != 1) || ((str[i] ==
-                         'd' || str[i] == 'i' || str[i] == 'u') && 
-			 (pars_decimal(&str[stock]) != 1)) || ((str[i] == 'c'
-			  || str[i] == 'p') && (pars_char_n_add(&str[stock])
-			!= 1)) || (str[i] == 's' && pars_str(&str[stock]) != 1))
-                                return (0);
+							'X') && pars_hexa(&str[stock]) != 1) || ((str[i] ==
+							'd' || str[i] == 'i' || str[i] == 'u') &&
+						(pars_decimal(&str[stock]) != 1)) || ((str[i] == 'c'
+						|| str[i] == 'p') && (pars_char_n_add(&str[stock])
+						!= 1)) || (str[i] == 's' && pars_str(&str[stock]) != 1))
+				return (0);
 		}
-		i++;
-		stock = i;
+		stock = ++i;
 	}
 	return (1);
 }
+
 static int	which_arg(char *str, va_list params)
 {
-	int	i;
+	int		i;
 	t_field	field;
 
 	i = 0;
 	field = is_balise(str, params);
-	while(str[i] && !is_conversion(str[i]))
-			i++;
+	while (str[i] && !is_conversion(str[i]))
+		i++;
 	if (str[i] == 'c' || str[i] == 's')
 		if (!(s_conversion(params, str[i], field)))
 			return (0);
@@ -69,7 +77,8 @@ static int	which_arg(char *str, va_list params)
 
 static int	print_text(const char *str, va_list params)
 {
-	int 	i;
+	int	i;
+
 	i = 0;
 	if (pars((char *)str) == 0)
 		return (0);

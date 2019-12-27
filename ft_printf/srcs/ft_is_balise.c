@@ -6,13 +6,13 @@
 /*   By: idouidi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 21:54:24 by idouidi           #+#    #+#             */
-/*   Updated: 2019/12/20 08:38:21 by idouidi          ###   ########.fr       */
+/*   Updated: 2019/12/27 11:34:18 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libftprintf.h"
 
-t_field check_star(char *str, va_list args)
+t_field		check_star(char *str, va_list args)
 {
 	int		i;
 	int		c;
@@ -81,7 +81,7 @@ t_field		is_balise_flags(char *str, t_field field, int check_neg)
 
 t_field		is_balise_width_n_precision(char *str, t_field field)
 {
-	char		*tmp;
+	char	*tmp;
 	int		i;
 	int		j;
 
@@ -101,7 +101,7 @@ t_field		is_balise_width_n_precision(char *str, t_field field)
 		while (str[i] && str[i] >= '0' && str[i] <= '9')
 			i++;
 		tmp = ft_substr(str, j, i);
-		field.precision = (field.precision == 0) ? 
+		field.precision = (field.precision == 0) ?
 			ft_atoi(tmp) : field.precision;
 		free(tmp);
 	}
@@ -111,7 +111,7 @@ t_field		is_balise_width_n_precision(char *str, t_field field)
 t_field		is_balise(char *str, va_list args)
 {
 	t_field		field;
-	int		check_neg;
+	int			check_neg;
 
 	field = check_star(str, args);
 	check_neg = (field.flags[1] == '-') ? 1 : 0;

@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_utils.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/12/27 11:40:25 by dsy               #+#    #+#             */
+/*   Updated: 2019/12/27 11:42:21 by dsy              ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/libftprintf.h"
 
-unsigned long    ft_power(unsigned long x, unsigned long y)
+unsigned long	ft_power(unsigned long x, unsigned long y)
 {
 	if (y == 0 || x == 1)
 		return (1);
@@ -9,11 +21,11 @@ unsigned long    ft_power(unsigned long x, unsigned long y)
 
 void			ft_putnbr_x(unsigned long value, char c)
 {
-	int		len;
+	int				len;
 	unsigned long	rest;
-	char		*res;
-	int		base;
-	char		tmp;
+	char			*res;
+	int				base;
+	char			tmp;
 
 	tmp = (c == 'X') ? 'A' : 'a';
 	base = 16;
@@ -29,39 +41,39 @@ void			ft_putnbr_x(unsigned long value, char c)
 		while (--len >= 0)
 		{
 			rest = value % base;
-			res[len] = ((rest < 10) ? '0' : tmp - 10) + rest; 
+			res[len] = ((rest < 10) ? '0' : tmp - 10) + rest;
 			value /= base;
 		}
 	ft_putstr(res);
 	free(res);
 }
 
-int	count_digit(int nb, char c)
+int				count_digit(int nb, char c)
 {
 	int	count;
 	int	div;
 
 	count = 0;
 	div = (c == 'd' || c == 'i' || c == 'u') ? 10 : 16;
-	while(nb)
+	while (nb)
 	{
-		nb = nb /div;
+		nb = nb / div;
 		count++;
 	}
 	return (count);
 }
 
-int                     is_conversion(char c)
+int				is_conversion(char c)
 {
-        if (c == 'c' || c == 's' || c == 'p' || c == 'i' || c == 'd' || c == 'u'
-		|| c == 'x' || c == 'X')
-                return (1);
-        return (0);
+	if (c == 'c' || c == 's' || c == 'p' || c == 'i' || c == 'd' || c == 'u'
+			|| c == 'x' || c == 'X')
+		return (1);
+	return (0);
 }
 
-int                     flags(char c)
+int				flags(char c)
 {
-	if (c == '%' || c == '+' || c  == '-' || c == ' ' || c == '0')
+	if (c == '%' || c == '+' || c == '-' || c == ' ' || c == '0')
 		return (1);
-        return (0);
+	return (0);
 }
