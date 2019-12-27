@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/27 11:28:13 by dsy               #+#    #+#             */
-/*   Updated: 2019/12/27 11:51:06 by dsy              ###   ########.fr       */
+/*   Updated: 2019/12/27 15:49:46 by idouidi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	pars_hexa(char *s)
 	i = 0;
 	while (s[i] && !is_conversion(s[i]))
 	{
-		if (s[i + 1] && s[i] == '.' && !(ft_isdigit(s[i + 1]) ||
+		if (s[i + 1] && s[i] == '.' && !(nb_digit(s[i + 1]) ||
 					s[i + 1] == '*'))
 			return (0);
 		if (s[i + 1] && s[i] == '*' && !(s[i + 1] == '.'
@@ -65,8 +65,7 @@ int	pars_decimal(char *s)
 	i = 0;
 	while (s[i] && !is_conversion(s[i]))
 	{
-		if (s[i + 1] && s[i] == '.' && !(ft_isdigit(s[i + 1]) ||
-					s[i + 1] == '*'))
+		if (s[i + 1] && s[i] == '.' && !(nb_digit(s[i + 1]) || s[i + 1] == '*'))
 			return (0);
 		if (s[i + 1] && s[i] == '*' && !(s[i + 1] == '.' ||
 					is_conversion(s[i + 1])))
@@ -98,7 +97,7 @@ int	pars_str(char *s)
 		j = check_zero(s, i);
 		if (s[i] == '+' || s[i] == ' ' || j == 1)
 			return (0);
-		if (s[i + 1] && s[i] == '.' && !(ft_isdigit(s[i + 1]) ||
+		if (s[i + 1] && s[i] == '.' && !(nb_digit(s[i + 1]) ||
 					s[i + 1] == '*'))
 			return (0);
 		if (s[i + 1] && s[i] == '*' && !(s[i + 1] == '.' ||

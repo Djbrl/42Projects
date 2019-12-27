@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 20:31:22 by dsy               #+#    #+#             */
-/*   Updated: 2019/12/20 08:02:23 by idouidi          ###   ########.fr       */
+/*   Updated: 2019/12/27 23:57:25 by idouidi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int main()
 {
 	//int ret;
                         /*********DECIMAL*********/
-       /* printf("ori: %3d\n", 1248);
+        /*printf("ori: %3d\n", 1248);
         printf("ori: %-3d\n", 1248);
         printf("ori: %10d\n", 1248);
         printf("ori: %-10d\n", 1248);
@@ -39,10 +39,10 @@ int main()
         printf("ori: %-3.10d\n", 1248);
         printf("ori: %-10.3d\n", 12480);
         printf("ori: %-3.10d\n", 12480);
-        printf("***** largeur, precision et - *****\n");*/
+        printf("***** largeur, precision et - *****\n");
 
-        /*--------------------------------------------*/
-        /*ft_printf("cpy: %3d\n", 1248);
+        //--------------------------------------------
+        ft_printf("cpy: %3d\n", 1248);
         ft_printf("cpy: %-3d\n", 1248);
         ft_printf("cpy: %10d\n", 1248);
         ft_printf("cpy: %-10d\n", 1248);
@@ -68,53 +68,56 @@ int main()
 
 	/**********************STRING***************/
 
-	/*printf("%10s\n", "Salut");
+     
+	  /*printf("%10s\n", "Salut");
 	  printf("%-10s\n", "Salut");
-	  printf("****court*****\n");
+	 // printf("****court*****\n");
 
 	  printf("%10s\n", "Salut tout le monde");
 	  printf("%-10s\n", "Salut tout le monde");
-	  printf("****long****\n");
+	  //printf("****long****\n");
 
 	  printf("%10.5s\n", "salut tout");
 	  printf("%5.10s\n", "salut tout");
-	  printf("****precision court****\n");
+	  //printf("****precision court****\n");
 
 	  printf("%10.5s\n", "Salut tout le monde");
 	  printf("%5.10s\n", "Salut tout le monde");
-	  printf("****precision long*****\n");
+	  //printf("****precision long*****\n");
 
 	  printf("%-10.5s\n", "salut tout");
 	  printf("%-5.10s\n", "salut tout");
-	  printf("****precision court avec - *****\n");
+	  //printf("****precision court avec - *****\n");
 
 	  printf("%-10.5s\n", "Salut tout le monde");
 	  printf("%-5.10s\n", "Salut tout le monde");
-	  printf("****precision long avec - *****\n");*/
+	  //printf("****precision long avec - *****\n");*/
 
-	/*ft_printf("%10s\n", "Salut");
+	  /*---------------------------------------------*/
+	  
+	  /*ft_printf("%10s\n", "Salut");
 	  ft_printf("%-10s\n", "Salut");
-	  ft_printf("****court*****\n");
+	  //ft_printf("****court*****\n");
 
 	  ft_printf("%10s\n", "Salut tout le monde");
 	  ft_printf("%-10s\n", "Salut tout le monde");
-	  ft_printf("****long****\n");
+	  //printf("****long****\n");
 
 	  ft_printf("%10.5s\n", "salut tout");
 	  ft_printf("%5.10s\n", "salut tout");
-	  ft_printf("****precision court****\n");
+	  //printf("****precision court****\n");
 
 	  ft_printf("%10.5s\n", "Salut tout le monde");
 	  ft_printf("%5.10s\n", "Salut tout le monde");
-	  ft_printf("****precision long*****\n");
+	  //ft_printf("****precision long*****\n");
 
 	  ft_printf("%-10.5s\n", "salut tout");
 	  ft_printf("%-5.10s\n", "salut tout");
-	  ft_printf("****precision court avec - *****\n");
+	  //ft_printf("****precision court avec - *****\n");
 
 	  ft_printf("%-10.5s\n", "Salut tout le monde");
 	  ft_printf("%-5.10s\n", "Salut tout le monde");
-	  ft_printf("****precision long avec - *****\n");*/
+	  //ft_printf("****precision long avec - *****\n");*/
 
 	/*****************CHAR************/
 	/*printf("%c\n", 'a');
@@ -216,25 +219,25 @@ int main()
         ft_printf("cpy: %-3x\n", 1248);
         ft_printf("cpy: %10x\n", 1248);
         ft_printf("cpy: %-10x\n", 1248);
-        ft_printf("******* largeur ******\n");
+        //ft_printf("******* largeur ******\n");
 
         ft_printf("cpy: %.3X\n",1248);
         ft_printf("cpy: %-.3x\n",1248);
         ft_printf("cpy: %.10x\n", 1248);
         ft_printf("cpy: %-10x\n", 1248);
-        ft_printf("******** precision *******\n");
+        //ft_printf("******** precision *******\n");
 
         ft_printf("cpy: %10.3x\n", 1248);
         ft_printf("cpy: %3.10x\n", 1248);
         ft_printf("cpy: %10.3x\n", 12480);
         ft_printf("cpy: %3.10x\n", 12480);
-        ft_printf("***** largeur et precision ****\n");
+        //ft_printf("***** largeur et precision ****\n");
 
         ft_printf("cpy: %-10.3x\n", 1248);
         ft_printf("cpy: %-3.10x\n", 1248);
         ft_printf("cpy: %-10.3x\n", 12480);
         ft_printf("cpy: %-3.10x\n", 12480);
-        ft_printf("***** largeur, precision et - *****\n");*/
+        //ft_printf("***** largeur, precision et - *****\n");*/
 	
 	//char *a = 0;
 

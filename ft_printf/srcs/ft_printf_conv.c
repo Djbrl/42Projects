@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 16:47:54 by dsy               #+#    #+#             */
-/*   Updated: 2019/12/04 06:23:49 by idouidi          ###   ########.fr       */
+/*   Updated: 2019/12/27 16:26:13 by idouidi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,23 +42,29 @@ int		p_conversion(va_list params, char arg_type, t_field field)
 
 int		i_conversion(va_list params, char arg_type, t_field field)
 {
-	int		conv_arg;
+	int		nb;
+	int		len;
 
 	if (arg_type == 'i' || arg_type == 'd')
-		conv_arg = (int)va_arg(params, int);
+		nb = (int)va_arg(params, int);
 	else
-		conv_arg = (unsigned int)va_arg(params, int);
-	if (count_digit(conv_arg, arg_type) > field.precision)
+		nb = (unsigned int)va_arg(params, int);
+	len = count_digit(nb, arg_type);
+	if (len >= field.precision)
 		field.precision = 0;
-	print_balise_nb(conv_arg, arg_type, field);
+	print_balise_nb(nb, arg_type, field, len);
 	return (1);
 }
 
 int		x_conversion(va_list params, char arg_type, t_field field)
 {
-	int conv_arg;
+	int	nb;
+	int	len;
 
-	conv_arg = (int)va_arg(params, int);
-	print_balise_nb(conv_arg, arg_type, field);
+	nb = (int)va_arg(params, int);
+	len = count_digit(nb, arg_type);
+	if (len >= field.precision)
+		field.precision = 0;
+	print_balise_nb(nb, arg_type, field, len);
 	return (1);
 }

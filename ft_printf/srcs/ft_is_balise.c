@@ -6,7 +6,7 @@
 /*   By: idouidi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 21:54:24 by idouidi           #+#    #+#             */
-/*   Updated: 2019/12/27 11:34:18 by dsy              ###   ########.fr       */
+/*   Updated: 2019/12/27 20:10:40 by idouidi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,14 +86,14 @@ t_field		is_balise_width_n_precision(char *str, t_field field)
 	int		j;
 
 	i = 0;
-	while (str[i] && (str[i] == '+' || str[i] == '-' || str[i] == ' '
-				|| str[i] == '0' || str[i] == '%'))
+	while (str[i] && flags(str[i]))
 		i++;
 	j = i;
 	while (str[j] && str[j] >= '0' && str[j] <= '9')
 		j++;
 	tmp = ft_substr(str, i, j);
 	field.width = (field.width == 0) ? ft_atoi(tmp) : field.width;
+	free(tmp);
 	if (str[j] && str[j] == '.')
 	{
 		j++;
