@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 20:26:52 by dsy               #+#    #+#             */
-/*   Updated: 2019/12/27 11:55:03 by dsy              ###   ########.fr       */
+/*   Updated: 2019/12/28 02:06:23 by idouidi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ static int	print_text(const char *str, va_list params)
 		{
 			if (!(which_arg((char *)&str[i], params)))
 				return (0);
-			i++;
 			while (str[i] && !is_conversion(str[i]))
 				i++;
 			i++;

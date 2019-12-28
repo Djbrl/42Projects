@@ -1,2 +1,3 @@
--checker l'affichage avec une valeur de 0 (d, x, i, u)
+-checker l'affichage avec une valeur de 0 et test avec les field (d, x, i, u)
 -checker l'affichage avec une valeur a NULL (p, s) et une chaine vide pour s
+-fixe affichage * a repetion

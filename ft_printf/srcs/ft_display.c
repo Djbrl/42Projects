@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/27 11:30:22 by dsy               #+#    #+#             */
-/*   Updated: 2019/12/27 22:49:08 by idouidi          ###   ########.fr       */
+/*   Updated: 2019/12/28 03:13:57 by idouidi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ void	print_balise_nb(int nb, char c, t_field field, int len)
 		while (width > 0 && width--)
 			ft_putchar(' ');
 	(field.flags[0] == '+') ? ft_putchar('+') : 0;
-	while (precision > 0 && precision-- && field.precision != 0)
-		ft_putchar('0');
+	/*while (precision > 0 && precision-- && field.precision != 0)
+		ft_putchar('0');*/
 	if (field.flags[1] == '-')
 	{
 		(c == 'x' || c == 'X') ? ft_putnbr_x(nb, c) : ft_putnbr(nb);
@@ -98,7 +98,7 @@ void	print_balise_char(char c, t_field field)
 
 void	print_balise_add(unsigned long p, char c, t_field field)
 {
-	int	width;
+	int		width;
 
 	width = (p != 0) ? field.width - 14 : field.width;
 	if (width > 0 && field.flags[1] != '-')

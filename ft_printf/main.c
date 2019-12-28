@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 20:31:22 by dsy               #+#    #+#             */
-/*   Updated: 2019/12/27 23:57:25 by idouidi          ###   ########.fr       */
+/*   Updated: 2019/12/28 03:46:35 by idouidi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,53 +71,53 @@ int main()
      
 	  /*printf("%10s\n", "Salut");
 	  printf("%-10s\n", "Salut");
-	 // printf("****court*****\n");
+	  printf("****court*****\n");
 
 	  printf("%10s\n", "Salut tout le monde");
 	  printf("%-10s\n", "Salut tout le monde");
-	  //printf("****long****\n");
+	  printf("****long****\n");
 
 	  printf("%10.5s\n", "salut tout");
 	  printf("%5.10s\n", "salut tout");
-	  //printf("****precision court****\n");
+	  printf("****precision court****\n");
 
 	  printf("%10.5s\n", "Salut tout le monde");
 	  printf("%5.10s\n", "Salut tout le monde");
-	  //printf("****precision long*****\n");
+	  printf("****precision long*****\n");
 
 	  printf("%-10.5s\n", "salut tout");
 	  printf("%-5.10s\n", "salut tout");
-	  //printf("****precision court avec - *****\n");
+	  printf("****precision court avec - *****\n");
 
 	  printf("%-10.5s\n", "Salut tout le monde");
 	  printf("%-5.10s\n", "Salut tout le monde");
-	  //printf("****precision long avec - *****\n");*/
+	  printf("****precision long avec - *****\n");*/
 
 	  /*---------------------------------------------*/
 	  
-	  /*ft_printf("%10s\n", "Salut");
+	 /* ft_printf("%10s\n", "Salut");
 	  ft_printf("%-10s\n", "Salut");
-	  //ft_printf("****court*****\n");
+	  ft_printf("****court*****\n");
 
 	  ft_printf("%10s\n", "Salut tout le monde");
 	  ft_printf("%-10s\n", "Salut tout le monde");
-	  //printf("****long****\n");
+	  printf("****long****\n");
 
 	  ft_printf("%10.5s\n", "salut tout");
 	  ft_printf("%5.10s\n", "salut tout");
-	  //printf("****precision court****\n");
+	  printf("****precision court****\n");
 
 	  ft_printf("%10.5s\n", "Salut tout le monde");
 	  ft_printf("%5.10s\n", "Salut tout le monde");
-	  //ft_printf("****precision long*****\n");
+	  ft_printf("****precision long*****\n");
 
 	  ft_printf("%-10.5s\n", "salut tout");
 	  ft_printf("%-5.10s\n", "salut tout");
-	  //ft_printf("****precision court avec - *****\n");
+	  ft_printf("****precision court avec - *****\n");
 
 	  ft_printf("%-10.5s\n", "Salut tout le monde");
 	  ft_printf("%-5.10s\n", "Salut tout le monde");
-	  //ft_printf("****precision long avec - *****\n");*/
+	  ft_printf("****precision long avec - *****\n");*/
 
 	/*****************CHAR************/
 	/*printf("%c\n", 'a');
@@ -239,8 +239,9 @@ int main()
         ft_printf("cpy: %-3.10x\n", 12480);
         //ft_printf("***** largeur, precision et - *****\n");*/
 	
-	//char *a = 0;
-
+	char *a = "salut";	
+	//printf("1[%3$d] 2[%d] 3[%1$d] 4[%d]  %d %d \n" ,1,2,3,4,5,6);
+	
 	//printf("ori:%10s\n", "salut");
 	//ft_printf("%-10s\n", "salut");
 	//printf("ori:%20.10d, %10s, %10p, %x, %10c\n", 5, "salut", a, 1248, 'c');
@@ -253,6 +254,14 @@ int main()
 	//ret = printf("ori:%s\n", a);
 	//printf("ori:%d\n", ret);
 	//ft_printf("cpy : %-+10.10d, %d, %d, %c\n", 5, 5, 5, 's');
+	ft_printf("cpy=>>[%d]\n",printf("%-+*.10d, %-10s, %-10p, %-x, %10c\n", 10, 5, "salut", a, 1248, 'c'));
+	//printf("ori=>>[%d]\n",printf("%-+*.10d, %-10s, %-10p, %-x, %10c\n", 10, 5, "salut", a, 1248, 'c'));
+	ft_printf("%*d\n", 10, 3);
+	//ft_printf("%-+*.10d, %-10s, %-10p, %-x, %10c\n", 10, 5, "salut", a, 1248, 'c');
+	//printf("%-+*.10d, %-10s, %-10p, %-x, %10c\n", 10, 5, "salut", a, 1248, 'c');
+	//ft_printf("%-+*.10d, %-10s, %-10p, %-x, %10c\n", 10, 5, "salut", a, 1248, 'c');
+	//ft_printf("%x\n", 1248);
+	//printf("%-10p\n", a);
 	//ft_printf("%-+*.10d, %-10s, %-10p, %-x, %10c\n", 10, 5, "salut", a, 1248, 'c');
 	//ft_printf("cpy:%-+*.10d, %-10s, %-10p, %-x, %10c\n", 10, 5, "salut", a, 1248, 'c');
 	//ft_printf("%100d\n", -2147483648);

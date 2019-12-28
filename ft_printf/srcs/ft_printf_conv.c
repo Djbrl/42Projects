@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 16:47:54 by dsy               #+#    #+#             */
-/*   Updated: 2019/12/27 16:26:13 by idouidi          ###   ########.fr       */
+/*   Updated: 2019/12/28 03:13:50 by idouidi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,6 @@ int		i_conversion(va_list params, char arg_type, t_field field)
 	else
 		nb = (unsigned int)va_arg(params, int);
 	len = count_digit(nb, arg_type);
-	if (len >= field.precision)
-		field.precision = 0;
 	print_balise_nb(nb, arg_type, field, len);
 	return (1);
 }
