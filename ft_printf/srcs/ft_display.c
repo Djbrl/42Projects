@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_display.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
+/*   By: othabchi <othabchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/27 11:30:22 by dsy               #+#    #+#             */
-/*   Updated: 2019/12/28 03:13:57 by idouidi          ###   ########.fr       */
+/*   Updated: 2019/12/30 14:40:23 by othabchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ void	print_balise_nb(int nb, char c, t_field field, int len)
 		while (width > 0 && width--)
 			ft_putchar(' ');
 	(field.flags[0] == '+') ? ft_putchar('+') : 0;
-	/*while (precision > 0 && precision-- && field.precision != 0)
-		ft_putchar('0');*/
+	while (precision > 0 && precision-- && field.precision != 0)
+		ft_putchar('0');
 	if (field.flags[1] == '-')
 	{
 		(c == 'x' || c == 'X') ? ft_putnbr_x(nb, c) : ft_putnbr(nb);

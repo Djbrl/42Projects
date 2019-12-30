@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
+/*   By: othabchi <othabchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 20:31:22 by dsy               #+#    #+#             */
-/*   Updated: 2019/12/28 03:46:35 by idouidi          ###   ########.fr       */
+/*   Updated: 2019/12/30 15:42:49 by othabchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -239,7 +239,7 @@ int main()
         ft_printf("cpy: %-3.10x\n", 12480);
         //ft_printf("***** largeur, precision et - *****\n");*/
 	
-	char *a = "salut";	
+	// char *a = "salut";	
 	//printf("1[%3$d] 2[%d] 3[%1$d] 4[%d]  %d %d \n" ,1,2,3,4,5,6);
 	
 	//printf("ori:%10s\n", "salut");
@@ -254,9 +254,9 @@ int main()
 	//ret = printf("ori:%s\n", a);
 	//printf("ori:%d\n", ret);
 	//ft_printf("cpy : %-+10.10d, %d, %d, %c\n", 5, 5, 5, 's');
-	ft_printf("cpy=>>[%d]\n",printf("%-+*.10d, %-10s, %-10p, %-x, %10c\n", 10, 5, "salut", a, 1248, 'c'));
+	// ft_printf("cpy=>>[%d]\n",printf("%-+*.10d, %-10s, %-10p, %-x, %10c\n", 10, 5, "salut", a, 1248, 'c'));
 	//printf("ori=>>[%d]\n",printf("%-+*.10d, %-10s, %-10p, %-x, %10c\n", 10, 5, "salut", a, 1248, 'c'));
-	ft_printf("%*d\n", 10, 3);
+	// ft_printf("%*d\n", 10, 3);
 	//ft_printf("%-+*.10d, %-10s, %-10p, %-x, %10c\n", 10, 5, "salut", a, 1248, 'c');
 	//printf("%-+*.10d, %-10s, %-10p, %-x, %10c\n", 10, 5, "salut", a, 1248, 'c');
 	//ft_printf("%-+*.10d, %-10s, %-10p, %-x, %10c\n", 10, 5, "salut", a, 1248, 'c');
@@ -266,8 +266,7 @@ int main()
 	//ft_printf("cpy:%-+*.10d, %-10s, %-10p, %-x, %10c\n", 10, 5, "salut", a, 1248, 'c');
 	//ft_printf("%100d\n", -2147483648);
 	//printf("%*.*d\n", -20, 10, 5);
-	//ft_printf("%10d", 5);
-	//ft_printf("%*.*d\n", -20, 10, 5);
-	//ft_printf("%*d\n",-10, 10);
+	// ft_printf("%d\n", 5, 50);
+	// ft_printf("%*.*d\n", -20, 10, 5, 56, 2782684, "b");
 	return (0);
 }
