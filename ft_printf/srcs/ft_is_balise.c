@@ -19,6 +19,8 @@ t_field		check_star(char *str, va_list args)
 	t_field	field;
 
 	i = 0;
+	field.width = 0;
+	field.precision = 0;
 	while (str[i] && !is_conversion(str[i]))
 	{
 		if (str[i] == '*')
@@ -32,11 +34,6 @@ t_field		check_star(char *str, va_list args)
 				field.width = (c < 0) ? -c : c;
 		}
 		i++;
-	}
-	if (is_present(str, '*') != 1)
-	{
-		field.width = 0;
-		field.precision = 0;
 	}
 	return (field);
 }

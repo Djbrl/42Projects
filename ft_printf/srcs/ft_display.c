@@ -17,6 +17,8 @@ void	print_balise_nb(int nb, char c, t_field field, int len)
 	int	width;
 	int	precision;
 
+	if(len > field.precision)
+		field.precision = 0;
 	precision = (field.precision > len) ? field.precision - len : len;
 	(field.flags[2] == ' ' && nb >= 0) ? ft_putchar(' ') : 0;
 	width = (field.flags[0] == '+' || field.flags[2] == '-') ?
@@ -25,7 +27,7 @@ void	print_balise_nb(int nb, char c, t_field field, int len)
 		while (width > 0 && width--)
 			ft_putchar(' ');
 	(field.flags[0] == '+') ? ft_putchar('+') : 0;
-	while (precision > 0 && precision-- && field.precision != 0)
+	while (precision > 0 && precision-- && field.precision > 0)
 		ft_putchar('0');
 	if (field.flags[1] == '-')
 	{
@@ -43,8 +45,8 @@ void	print_balise_nb(int nb, char c, t_field field, int len)
 void	to_set_str(int width, t_field field, char *str)
 {
 	if (!str)
-		if (field.precision > 6)
-			width = 4;
+		if (field.precision >= 6)
+			width = field.width - 6;
 	while (width > 0 && width--)
 		ft_putchar(' ');
 }
@@ -54,8 +56,10 @@ void	print_balise_str(char *str, t_field field)
 	int		width;
 	int		precision;
 	int		len;
-	char	*null;
+	char		*null;
+	int		i;
 
+	i = field.precision;
 	null = "(null)";
 	len = ft_strlen(str);
 	precision = (field.precision > 0) ? field.precision : len;
@@ -71,7 +75,7 @@ void	print_balise_str(char *str, t_field field)
 		while (precision > 0 && precision-- && *str)
 			ft_putchar(*str++);
 	else
-		while (field.precision > 0 && field.precision-- && *null)
+		while (i && i-- && field.precision >= 6 && *null)
 			ft_putchar(*null++);
 	if (field.flags[1] == '-')
 		to_set_str(width, field, str);
