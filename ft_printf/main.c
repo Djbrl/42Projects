@@ -271,5 +271,9 @@ int main()
 	//char *a = NULL;
 	//printf("ori:%*.*s\n",10, 6, a);
 	//ft_printf("cpy:%*.*s\n",10, 6, a);
+	//ft_printf("cpy:%10.10d\n", 256);
+	//printf("ori:%10.10d\n", 256);
+	ft_printf("%0*d\n", 10, 256);
+	//printf("%0*.*d\n", 10,10, 256);
 	return (0);
 }

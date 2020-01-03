@@ -45,8 +45,7 @@ int			is_present(char *str, char c)
 	i = 0;
 	while (str[i] && !is_conversion(str[i]))
 	{
-		if (str[i - 1] && str[i] == '0' && str[i - 1] >= '0' &&
-				str[i - 1] <= '9')
+		if (str[i - 1] && str[i] == '0' && nb_digit(str[i - 1]))
 			return (0);
 		else if (str[i] == c)
 			return (1);

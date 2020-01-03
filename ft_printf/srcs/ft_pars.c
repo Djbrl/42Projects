@@ -24,10 +24,7 @@ int	check_zero(char *str, int i)
 		if (str[j] == '0' && (flags(str[j - 1]) || flags(str[j + 1])))
 			check = 1;
 		j++;
-		// printf("j = %d\n", j);
 	}
-	// printf("check = %d\n", check);
-	// printf("\n ------ \n");
 	return (check);
 }
 
@@ -83,8 +80,8 @@ int	pars_decimal(char *s, int check)
 		while (check == 0 && s[j] && (flags(s[i]) && flags(s[j])))
 		{
 			if ((((s[i] == ' ' || s[i] == '+') && (s[j] == ' ' || s[j] == '+'))
-			|| ((s[i] == '-' || check_zero(s, i)) &&
-			(s[j] == '-' || check_zero(s, j)))))
+			|| ((s[i] == '-' || s[i] == '0') &&
+			(s[j] == '-' || s[j] == '0'))))
 				return (0);
 			j++;
 		}
@@ -123,8 +120,6 @@ int	pars_char_n_add(char *s)
 	i = 0;
 	while (s[i] && !is_conversion(s[i]))
 	{
-		if (s[i] > '0' && s[i] <= '9')
-			break ;
 		j = check_zero(s, i);
 		if (s[i] == '+' || s[i] == ' ' || s[i] == '.' || j == 1)
 			return (0);
