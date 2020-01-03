@@ -6,7 +6,7 @@
 /*   By: othabchi <othabchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 20:26:52 by dsy               #+#    #+#             */
-/*   Updated: 2019/12/30 14:27:23 by othabchi         ###   ########.fr       */
+/*   Updated: 2020/01/03 21:07:21 by idouidi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,9 @@ int			pars(char *str)
 {
 	int stock;
 	int	i;
-	int check;
 
 	i = 0;
 	stock = 0;
-	check = 0;
 	while (str[i])
 	{
 		while (str[stock] && str[stock] != '%')
@@ -33,11 +31,10 @@ int			pars(char *str)
 			while (str[i] && !is_conversion(str[i]))
 				i++;
 			if ((str[i] == '\0') || ((str[i] == 'x' || str[i] == 'X')
-			&& pars_hexa(&str[stock], check) != 1) || ((str[i] == 'd' ||
-			str[i] == 'i' || str[i] == 'u') && (pars_decimal(&str[stock], check)
-			!= 1)) || ((str[i] == 'c' || str[i] == 'p')
-			&& (pars_char_n_add(&str[stock]) != 1))
-			|| (str[i] == 's' && pars_str(&str[stock]) != 1))
+			&& pars_hexa(&str[stock]) != 1) || ((str[i] == 'd' || str[i] == 'i'
+			|| str[i] == 'u') && (pars_decimal(&str[stock]) != 1)) || ((str[i]
+			== 'c' || str[i] == 'p') && (pars_char_n_add(&str[stock]) != 1)) ||
+			(str[i] == 's' && pars_str(&str[stock]) != 1))
 				return (0);
 		}
 		i++;
@@ -45,17 +42,16 @@ int			pars(char *str)
 	}
 	return (1);
 }
+
 static int	which_arg(char *str, va_list params)
 {
-	int	i;
+	int		i;
 	t_field	field;
 
 	i = 0;
 	field = is_balise(str, params);
-	// if (field.error == 1)
-	// 	return (0);
-	while(str[i] && !is_conversion(str[i]))
-			i++;
+	while (str[i] && !is_conversion(str[i]))
+		i++;
 	if (str[i] == 'c' || str[i] == 's')
 		if (!(s_conversion(params, str[i], field)))
 			return (0);
@@ -73,7 +69,8 @@ static int	which_arg(char *str, va_list params)
 
 static int	print_text(const char *str, va_list params)
 {
-	int 	i;
+	int i;
+
 	i = 0;
 	if (pars((char *)str) == 0)
 		return (0);

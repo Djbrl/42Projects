@@ -6,7 +6,7 @@
 /*   By: othabchi <othabchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/27 11:28:13 by dsy               #+#    #+#             */
-/*   Updated: 2019/12/30 15:42:33 by othabchi         ###   ########.fr       */
+/*   Updated: 2020/01/03 21:10:06 by idouidi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,16 @@ int	check_zero(char *str, int i)
 	return (check);
 }
 
-int	pars_hexa(char *s, int check)
+int	pars_hexa(char *s)
 {
 	int	i;
 	int	j;
+	int	check;
 
 	i = 0;
 	while (s[i] && !is_conversion(s[i]))
 	{
-		if (s[i] > '0' && s[i] <= '9')
-			check = 1;
+		check = (s[i] > '0' && s[i] <= '9') ? 1 : 0;
 		if (s[i + 1] && s[i] == '.' && !(nb_digit(s[i + 1]) || s[i + 1] == '*'))
 			return (0);
 		if (s[i + 1] && s[i] == '*' && !(s[i + 1] == '.'
@@ -48,8 +48,7 @@ int	pars_hexa(char *s, int check)
 			return (0);
 		while (check == 0 && s[j] && flags(s[i]) && flags(s[j]))
 		{
-			if (((s[i] == '-' || s[i] == '0') &&
-						(s[j] == '-' || s[j] == '0')))
+			if (((s[i] == '-' || s[i] == '0') && (s[j] == '-' || s[j] == '0')))
 				return (0);
 			j++;
 		}
@@ -58,21 +57,19 @@ int	pars_hexa(char *s, int check)
 	return (1);
 }
 
-int	pars_decimal(char *s, int check)
+int	pars_decimal(char *s)
 {
 	int	i;
 	int	j;
+	int check;
 
 	i = 0;
-	check = 0;
 	while (s[i] && !is_conversion(s[i]))
 	{
-		if (s[i] > '0' && s[i] <= '9')
-			check = 1;
+		check = (s[i] > '0' && s[i] <= '9') ? 1 : 0;
 		if (s[i + 1] && s[i] == '.' && !(nb_digit(s[i + 1]) || s[i + 1] == '*'))
 			return (0);
-		if (s[i + 1] && s[i] == '*' && !(s[i + 1] == '.' ||
-					is_conversion(s[i + 1])))
+		if (s[i] == '*' && !(s[i + 1] == '.' || is_conversion(s[i + 1])))
 			return (0);
 		j = (s[i] == '.' && check_zero(s, i) == 1) ? 1 : i + 1;
 		if (s[i] == '.' && j == 1)
@@ -80,8 +77,7 @@ int	pars_decimal(char *s, int check)
 		while (check == 0 && s[j] && (flags(s[i]) && flags(s[j])))
 		{
 			if ((((s[i] == ' ' || s[i] == '+') && (s[j] == ' ' || s[j] == '+'))
-			|| ((s[i] == '-' || s[i] == '0') &&
-			(s[j] == '-' || s[j] == '0'))))
+			|| ((s[i] == '-' || s[i] == '0') && (s[j] == '-' || s[j] == '0'))))
 				return (0);
 			j++;
 		}

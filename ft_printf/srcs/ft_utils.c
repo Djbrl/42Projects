@@ -6,20 +6,20 @@
 /*   By: othabchi <othabchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/27 11:40:25 by dsy               #+#    #+#             */
-/*   Updated: 2019/12/30 11:32:19 by othabchi         ###   ########.fr       */
+/*   Updated: 2020/01/03 23:47:13 by idouidi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libftprintf.h"
 
-unsigned long	ft_power(unsigned long x, unsigned long y)
+long	ft_power(long x, long y)
 {
 	if (y == 0 || x == 1)
 		return (1);
 	return (x * ft_power(x, --y));
 }
 
-void			ft_putnbr_x(unsigned long value, char c)
+void			ft_putnbr_x(long value, char c)
 {
 	int				len;
 	unsigned long	rest;

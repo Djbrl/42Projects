@@ -6,7 +6,7 @@
 /*   By: othabchi <othabchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 20:53:59 by dsy               #+#    #+#             */
-/*   Updated: 2019/12/30 15:43:20 by othabchi         ###   ########.fr       */
+/*   Updated: 2020/01/03 23:42:46 by idouidi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,17 +43,17 @@ int				s_conversion(va_list params, char type, t_field field);
 int				x_conversion(va_list params, char type, t_field field);
 int				p_conversion(va_list params, char type, t_field field);
 int				ft_printf(const char *format, ...);
-unsigned long	ft_power(unsigned long x, unsigned long y);
+long			ft_power(long x, long y);
 void			ft_putchar(char c);
 void			ft_putstr(char *str);
 void			ft_putnbr(int n);
-void			ft_putnbr_x(unsigned long value, char c);
+void			ft_putnbr_x(long value, char c);
 void			print_balise_nb(int nb, char c, t_field field, int len);
 void			print_balise_str(char *str, t_field field);
 void			print_balise_char(char c, t_field field);
 void			print_balise_add(unsigned long p, char c, t_field field);
-int				pars_decimal(char *str, int check);
-int				pars_hexa(char *str, int check);
+int				pars_decimal(char *str);
+int				pars_hexa(char *str);
 int				pars_char_n_add(char *str);
 int				pars_str(char *str);
 char			*ft_substr(char const *s, unsigned int start, size_t len);
