@@ -12,31 +12,31 @@
 
 #include "../includes/libftprintf.h"
 
-void	print_balise_nb(int nb, char c, t_field field, int len)
+void	print_balise_nb(int nb, char c, t_field f, int len)
 {
 	int	width;
 	int	precision;
 
-	if(len > field.precision)
-		field.precision = 0;
-	precision = (field.precision > len) ? field.precision - len : len;
-	(field.flags[2] == ' ' && nb >= 0) ? ft_putchar(' ') : 0;
-	width = (field.flags[0] == '+' || field.flags[2] == '-') ?
-		field.width - precision - 1 : field.width - precision;
-	if (field.flags[1] != '-' && field.flags[3] != '0')
-		while (width > 0 && width--)
+	if(len > f.precision)
+		f.precision = 0;
+	precision = (f.precision > len) ? f.precision - len : len;
+	(f.flags[2] == ' ' && nb >= 0) ? ft_putchar(' ') : 0;
+	width = (f.flags[0] == '+' || f.flags[2] == ' ') ?
+		f.width - precision - 1 : f.width - precision;
+	if (f.flags[1] != '-' && f.flags[3] != '0')
+		while (width > 0 && width-- && f.width > (f.precision +len))
 			ft_putchar(' ');
-	(field.flags[0] == '+') ? ft_putchar('+') : 0;
-	while (precision > 0 && precision-- && field.precision > 0)
+	(f.flags[0] == '+') ? ft_putchar('+') : 0;
+	while (precision > 0 && precision-- && f.precision > 0)
 		ft_putchar('0');
-	if (field.flags[1] == '-')
+	if (f.flags[1] == '-')
 	{
 		(c == 'x' || c == 'X') ? ft_putnbr_x(nb, c) : ft_putnbr(nb);
-		while (width > 0 && width--)
+		while (width > 0 && width-- && f.width > (f.precision +len))
 			ft_putchar(' ');
 		return ;
 	}
-	if (field.flags[3] == '0')
+	if (f.flags[3] == '0')
 		while (width > 0 && width--)
 			ft_putchar('0');
 	(c == 'x' || c == 'X') ? ft_putnbr_x(nb, c) : ft_putnbr(nb);

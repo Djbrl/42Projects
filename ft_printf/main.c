@@ -42,7 +42,7 @@ int main()
         printf("***** largeur, precision et - *****\n");*/
 
         //--------------------------------------------
-        /*ft_printf("cpy: %3d\n", 1248);
+        ft_printf("cpy: %3d\n", 1248);
         ft_printf("cpy: %-3d\n", 1248);
         ft_printf("cpy: %10d\n", 1248);
         ft_printf("cpy: %-10d\n", 1248);
@@ -64,7 +64,7 @@ int main()
         ft_printf("cpy: %-3.10d\n", 1248);
         ft_printf("cpy: %-10.3d\n", 12480);
         ft_printf("cpy: %-3.10d\n", 12480);
-        ft_printf("***** largeur, precision et - *****\n");*/
+        ft_printf("***** largeur, precision et - *****\n");
 
 	/**********************STRING***************/
 
@@ -271,9 +271,7 @@ int main()
 	//char *a = NULL;
 	//printf("ori:%*.*s\n",10, 6, a);
 	//ft_printf("cpy:%*.*s\n",10, 6, a);
-	//ft_printf("cpy:%10.10d\n", 256);
-	//printf("ori:%10.10d\n", 256);
-	ft_printf("%0*d\n", 10, 256);
-	//printf("%0*.*d\n", 10,10, 256);
+	ft_printf("cpy:%010d\n", 256);
+	printf("ori:%010d\n", 256);
 	return (0);
 }
