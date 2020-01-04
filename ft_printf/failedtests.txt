@@ -1,0 +1,39 @@
+Conversion %d/%i:
+-	"%.d", 0. (devrait rien afficher et return 0; affiche "0" et return 1)
+	"%04d", 0. (devrait afficher "0000"; affiche "00000")
+
+-	"%---d", 5. (devrait ignorer les flags '-' et gerer ca comme un %d classique)
+
+-	"%*.3", -5, 25. (devrait afficher "025  "(ret = 5); affiche "025"(ret = 3))
+
+-	"%.5d", -421. (devrait afficher "-00421"; affiche "00-421")
+	"%5d", -421. (devrait affcher " -421"(ret = 5); affiche "  -421"(ret = 6))
+	"%-2d", -5. (devrait afficher "-7" (ret = 2); affiche "-7 " (ret = 3))
+/* Pour les trois derniers je pense que le pb est le même, faut séparer 
+	le signe des chiffres dans le parsing et "recoler" ça dans le bon ordre
+	pendant l'affichage */ 
+
+Conversion %x:
+-	"%x", x == int negatif 
+
+Conversion %s:
+-	"%.s". (devrait rien afficher et return 0, return -1 à la place)
+	"%.0s". (devrait rien afficher et return 0, affiche toute la string
+			et return sa len à la place)
+
+-	"%10s", NULL. (devrait print "    (null)" (ret = 10)
+					; affiche 10 ' ' à la place)
+note : l'affichage de NULL bug en general, "%-10s" marche pas non plus
+
+-	"%-10s", "test" (ft_ return -1, le vrai print 10 ' ' et return 10)
+
+%%:
+-	"%%"	| 
+	"%-%"	|-> ("ft_" return -1 au lieu de print %)
+	"%.%"	|
+
+-	"%10%" (doit afficher "         %" (ret = 10))
+	"%-10%" (doit afficher "%         " (ret = 10))
+
+-	"%010%" (doit afficher "000000000%" (ret = 10))
+
