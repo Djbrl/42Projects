@@ -53,7 +53,7 @@ static int	which_arg(char *str, va_list params)
 	while (str[i] && !is_conversion(str[i]))
 		i++;
 	if (str[i] == 'c' || str[i] == 's')
-		if (!(s_conversion(params, str[i], field)))
+		if (!(s_conversion(str, params, str[i], field)))
 			return (0);
 	if (str[i] == 'i' || str[i] == 'd' || str[i] == 'u')
 		if (!(i_conversion(params, str[i], field)))

@@ -12,18 +12,18 @@
 
 #include "../includes/libftprintf.h"
 
-int	check_zero(char *str, int i)
+int	check_zero(char *str)
 {
-	int	j;
+	int	i;
 	int	check;
 
 	check = 0;
-	j = 0;
-	while (j < i)
+	i = 0;
+	while (str[i])
 	{
-		if (str[j] == '0' && (flags(str[j - 1]) || flags(str[j + 1])))
+		if (str[i] == '0' && (flags(str[i - 1]) || flags(str[i + 1])))
 			check = 1;
-		j++;
+		i++;
 	}
 	return (check);
 }
@@ -32,26 +32,19 @@ int	pars_hexa(char *s)
 {
 	int	i;
 	int	j;
-	int	check;
 
 	i = 0;
 	while (s[i] && !is_conversion(s[i]))
 	{
-		check = (s[i] > '0' && s[i] <= '9') ? 1 : 0;
-		if (s[i + 1] && s[i] == '.' && !(nb_digit(s[i + 1]) || s[i + 1] == '*'))
+		if (s[i] == '.' && !(nb_digit(s[i + 1]) || s[i + 1] == '*'
+			 || is_conversion(s[i + 1])))
 			return (0);
 		if (s[i + 1] && s[i] == '*' && !(s[i + 1] == '.'
 					|| is_conversion(s[i + 1])))
 			return (0);
-		j = (s[i] == '.' && check_zero(s, i) == 1) ? 1 : i + 1;
-		if ((s[i] == '.' && j == 1) || s[i] == '+' || s[i] == ' ')
+		j = ((s[i] == '.' || s[i] == '-') && check_zero(s) == 1) ? 1 : 0;
+		if ((s[i] == '.' || s[i] == '-') && j == 1)
 			return (0);
-		while (check == 0 && s[j] && flags(s[i]) && flags(s[j]))
-		{
-			if (((s[i] == '-' || s[i] == '0') && (s[j] == '-' || s[j] == '0')))
-				return (0);
-			j++;
-		}
 		i++;
 	}
 	return (1);
@@ -61,26 +54,18 @@ int	pars_decimal(char *s)
 {
 	int	i;
 	int	j;
-	int check;
 
 	i = 0;
 	while (s[i] && !is_conversion(s[i]))
 	{
-		check = (s[i] > '0' && s[i] <= '9') ? 1 : 0;
-		if (s[i + 1] && s[i] == '.' && !(nb_digit(s[i + 1]) || s[i + 1] == '*'))
+		if (s[i] == '.' && !(nb_digit(s[i + 1]) || s[i + 1] == '*' ||
+			 is_conversion(s[i + 1])))
 			return (0);
 		if (s[i] == '*' && !(s[i + 1] == '.' || is_conversion(s[i + 1])))
 			return (0);
-		j = (s[i] == '.' && check_zero(s, i) == 1) ? 1 : i + 1;
-		if (s[i] == '.' && j == 1)
+		j = ((s[i] == '.' || s[i] == '-') && check_zero(s) == 1) ? 1 : 0;
+		if ((s[i] == '.' || s[i] == '-') && j == 1)
 			return (0);
-		while (check == 0 && s[j] && (flags(s[i]) && flags(s[j])))
-		{
-			if ((((s[i] == ' ' || s[i] == '+') && (s[j] == ' ' || s[j] == '+'))
-			|| ((s[i] == '-' || s[i] == '0') && (s[j] == '-' || s[j] == '0'))))
-				return (0);
-			j++;
-		}
 		i++;
 	}
 	return (1);
@@ -94,11 +79,10 @@ int	pars_str(char *s)
 	i = 0;
 	while (s[i] && !is_conversion(s[i]))
 	{
-		j = check_zero(s, i);
+		j = ((s[i] == '.' || s[i] == '-' || s[i] == '0') && check_zero(s) == 1) ? 1 : 0;
 		if (s[i] == '+' || s[i] == ' ' || j == 1)
 			return (0);
-		if (s[i + 1] && s[i] == '.' && !(nb_digit(s[i + 1]) ||
-					s[i + 1] == '*'))
+		if (s[i] == '.' && !(nb_digit(s[i + 1]) || s[i + 1] == '*' || is_conversion(s[i + 1])))
 			return (0);
 		if (s[i + 1] && s[i] == '*' && !(s[i + 1] == '.' ||
 					is_conversion(s[i + 1])))
@@ -116,7 +100,7 @@ int	pars_char_n_add(char *s)
 	i = 0;
 	while (s[i] && !is_conversion(s[i]))
 	{
-		j = check_zero(s, i);
+		j = ((s[i] == '-' || s[i] == '0') && check_zero(s) == 1) ? 1 : 0;
 		if (s[i] == '+' || s[i] == ' ' || s[i] == '.' || j == 1)
 			return (0);
 		i++;

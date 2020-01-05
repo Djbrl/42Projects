@@ -12,41 +12,6 @@
 
 #include "../includes/libftprintf.h"
 
-long	ft_power(long x, long y)
-{
-	if (y == 0 || x == 1)
-		return (1);
-	return (x * ft_power(x, --y));
-}
-
-void			ft_putnbr_x(long value, char c)
-{
-	int				len;
-	unsigned long	rest;
-	char			*res;
-	char			tmp;
-
-	tmp = (c == 'X') ? 'A' : 'a';
-	len = (value < 10) ? 1 : 0;
-	(c == 'X' || c == 'x') ? 0 : ft_putstr("0x");
-	while ((ft_power(16, len) <= value) && value >= 10)
-		len++;
-	if (!(res = malloc(sizeof(char) * (len))))
-		return ;
-	res[len] = 0;
-	if (value < 10)
-		res[0] = '0' + value;
-	else
-		while (--len >= 0)
-		{
-			rest = value % 16;
-			res[len] = ((rest < 10) ? '0' : tmp - 10) + rest;
-			value /= 16;
-		}
-	ft_putstr(res);
-	free(res);
-}
-
 int				count_digit(int nb, char c)
 {
 	int	count;
@@ -54,6 +19,8 @@ int				count_digit(int nb, char c)
 
 	count = 0;
 	div = (c == 'd' || c == 'i' || c == 'u') ? 10 : 16;
+	if (nb == 0)
+		return (1);
 	while (nb)
 	{
 		nb = nb / div;

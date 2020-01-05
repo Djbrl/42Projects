@@ -273,11 +273,11 @@ int main()
 	//ft_printf("cpy:%*.*s\n",10, 6, a);
 	//ft_printf("cpy:%010d\n", 256);
 	//printf("ori:%010d\n", 256);
-	int t;
+	/*int t;
 	char c;
 
 	c = 'a';
-	t = 50;
+	t = 50;*/
 	/*printf("pp %.50d\n", 10000);
 	printf("p1 %.4s\n", "cccc");
 	printf("p2 %.10s\n", "cccc");
@@ -681,7 +681,10 @@ int main()
 	ft_printf("neg10 %*.*d\n", -15586, 15, 150);
 	ft_printf("neg11 %*.*d\n", -15586, 15, 0);
 	ft_printf("***************%*s%*d**************%*u*************\n", 10, "coucou", 10, 10, -50, 20);*/
-	ft_printf("%10x\n", -10);
-	printf("%10x\n", -10);
+	//ft_printf("%.s\n", "salut");
+	//ft_printf("%.0d\n", 11);
+	char *a = "salut";
+	ft_printf("%-11.s\n",a);
+	printf("%-11.s\n",a);
 	return (0);
 }
