@@ -683,8 +683,7 @@ int main()
 	ft_printf("***************%*s%*d**************%*u*************\n", 10, "coucou", 10, 10, -50, 20);*/
 	//ft_printf("%.s\n", "salut");
 	//ft_printf("%.0d\n", 11);
-	char *a = "salut";
-	ft_printf("%-11.s\n",a);
-	printf("%-11.s\n",a);
+	ft_printf("cpy:%.0s, %d\n","salut", 10);
+	printf("ori:.0s, %d","salut", 10);
 	return (0);
 }

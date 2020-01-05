@@ -21,28 +21,28 @@
 
 extern int		g_ret;
 
-typedef struct	s_field {
+typedef struct		s_field {
 
 	char		flags[4];
-	int			width;
-	int			precision;
-}				t_field;
+	int		width;
+	int		precision;
+}			t_field;
 
 size_t			ft_strlen(const char *str);
-int				ft_atoi(const char *str);
-int				nb_digit(int c);
-int				pars(char *str);
-int				count_digit(int nb, char c);
-int				is_conversion(char c);
-int				is_present(char *str, char c);
-int				flags(char c);
+int			ft_atoi(const char *str);
+int			nb_digit(int c);
+int			pars(char *str);
+int			count_digit(int nb, char c);
+int			is_conversion(char c);
+int			is_present(char *str, char c);
+int			flags(char c);
+int			check_precision(char *str, int check);
 t_field			check_star(char *str, va_list args);
 t_field			is_balise(char *str, va_list args);
-int				i_conversion(va_list params, char type, t_field field);
-int				s_conversion(char *s, va_list params, char type, t_field field);
-int				x_conversion(va_list params, char type, t_field field);
-int				p_conversion(va_list params, char type, t_field field);
-int				ft_printf(const char *format, ...);
+void			nb_conversion(char *str,va_list params, char type, t_field field);
+void			s_conversion(char *s, va_list params, char type, t_field field);
+void			p_conversion(va_list params, char type, t_field field);
+int			ft_printf(const char *format, ...);
 long			ft_power(long x, long y);
 void			ft_putchar(char c);
 void			ft_putstr(char *str);
@@ -52,10 +52,10 @@ void			print_balise_nb(int nb, char c, t_field field, int len);
 void			print_balise_str(char *s, char *str, t_field field, int len);
 void			print_balise_char(char c, t_field field);
 void			print_balise_add(unsigned long p, char c, t_field field);
-int				pars_decimal(char *str);
-int				pars_hexa(char *str);
-int				pars_char_n_add(char *str);
-int				pars_str(char *str);
+int			pars_decimal(char *str);
+int			pars_hexa(char *str);
+int			pars_char_n_add(char *str);
+int			pars_str(char *str);
 char			*ft_substr(char const *s, unsigned int start, size_t len);
 
 #endif

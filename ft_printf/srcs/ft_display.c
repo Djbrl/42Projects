@@ -50,18 +50,6 @@ void	to_set_str(int width, t_field field, char *str, int check)
 		ft_putchar(' ');
 }
 
-int check_precision(char *s, int check)
-{
-	int	i;
-
-	i = 0;
-	while (s[i] && s[i] != '.')
-		i++;
-	if (s[i + 1] && s[i] == '.' && (s[i + 1] == 's' || s[i + 1] == '0'))
-		check = 1;
-	return (check);
-}
-
 void	print_balise_str(char *s, char *str, t_field field, int len)
 {
 	int		width;

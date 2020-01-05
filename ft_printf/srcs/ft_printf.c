@@ -14,7 +14,7 @@
 
 int			g_ret = 0;
 
-int			pars(char *str)
+int		pars(char *str)
 {
 	int stock;
 	int	i;
@@ -43,9 +43,9 @@ int			pars(char *str)
 	return (1);
 }
 
-static int	which_arg(char *str, va_list params)
+void		which_arg(char *str, va_list params)
 {
-	int		i;
+	int	i;
 	t_field	field;
 
 	i = 0;
@@ -53,18 +53,12 @@ static int	which_arg(char *str, va_list params)
 	while (str[i] && !is_conversion(str[i]))
 		i++;
 	if (str[i] == 'c' || str[i] == 's')
-		if (!(s_conversion(str, params, str[i], field)))
-			return (0);
-	if (str[i] == 'i' || str[i] == 'd' || str[i] == 'u')
-		if (!(i_conversion(params, str[i], field)))
-			return (0);
+		s_conversion(str, params, str[i], field);
+	if (str[i] == 'i' || str[i] == 'd' || str[i] == 'u' ||
+		 str[i] == 'x' || str[i] == 'X')
+		nb_conversion(str, params, str[i], field);
 	if (str[i] == 'p')
-		if (!(p_conversion(params, str[i], field)))
-			return (0);
-	if (str[i] == 'x' || str[i] == 'X')
-		if (!(x_conversion(params, str[i], field)))
-			return (0);
-	return (1);
+		p_conversion(params, str[i], field);
 }
 
 static int	print_text(const char *str, va_list params)
@@ -79,8 +73,7 @@ static int	print_text(const char *str, va_list params)
 			i++;
 		else if (str[i] == '%' && str[i + 1] != '%')
 		{
-			if (!(which_arg((char *)&str[i], params)))
-				return (0);
+			which_arg((char *)&str[i], params);
 			i++;
 			while (str[i] && !is_conversion(str[i]))
 				i++;
@@ -94,7 +87,7 @@ static int	print_text(const char *str, va_list params)
 	return (1);
 }
 
-int			ft_printf(const char *format, ...)
+int		ft_printf(const char *format, ...)
 {
 	va_list params;
 

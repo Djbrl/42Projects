@@ -12,7 +12,7 @@
 
 #include "../includes/libftprintf.h"
 
-int		s_conversion(char *s, va_list params, char arg_type, t_field field)
+void	s_conversion(char *s, va_list params, char arg_type, t_field field)
 {
 	char 	*conv_arg;
 	int	len;
@@ -31,41 +31,33 @@ int		s_conversion(char *s, va_list params, char arg_type, t_field field)
 		c = (char)va_arg(params, int);
 		print_balise_char(c, field);
 	}
-	return (1);
 }
 
-int		p_conversion(va_list params, char arg_type, t_field field)
+void	p_conversion(va_list params, char arg_type, t_field field)
 {
 	void *p;
 
 	p = va_arg(params, void*);
 	print_balise_add((unsigned long)p, arg_type, field);
-	return (1);
 }
 
-int		i_conversion(va_list params, char arg_type, t_field field)
+void	nb_conversion(char *str, va_list params, char arg_type, t_field field)
 {
 	int		nb;
 	int		len;
+	int		check;
 
-	if (arg_type == 'i' || arg_type == 'd')
+	check = 0;
+	check = check_precision(str, check);
+	if (arg_type == 'i' || arg_type == 'd' || arg_type == 'x'
+		|| arg_type || 'X')
 		nb = (int)va_arg(params, int);
 	else
 		nb = (unsigned int)va_arg(params, int);
 	len = count_digit(nb, arg_type);
-	print_balise_nb(nb, arg_type, field, len);
-	return (1);
-}
-
-int		x_conversion(va_list params, char arg_type, t_field field)
-{
-	int	nb;
-	int	len;
-
-	nb = (int)va_arg(params, int);
-	len = count_digit(nb, arg_type);
-	if (len >= field.precision)
-		field.precision = 0;
-	print_balise_nb(nb, arg_type, field, len);
-	return (1);
+	if (check == 0 || arg_type == 'x' || arg_type == 'X')
+		print_balise_nb(nb, arg_type, field, len);
+	else
+		while (field.width > 0 && field.width--)
+			ft_putchar(' ');
 }

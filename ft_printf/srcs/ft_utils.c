@@ -12,7 +12,7 @@
 
 #include "../includes/libftprintf.h"
 
-int				count_digit(int nb, char c)
+int	count_digit(int nb, char c)
 {
 	int	count;
 	int	div;
@@ -29,7 +29,19 @@ int				count_digit(int nb, char c)
 	return (count);
 }
 
-int				is_conversion(char c)
+int	check_precision(char *s, int check)
+{
+	int	i;
+
+	i = 0;
+	while (s[i] && s[i] != '.')
+		i++;
+	if (s[i] == '.' && (is_conversion(s[i + 1]) || s[i + 1] == '0'))
+		check = 1;
+	return (check);
+}
+
+int	is_conversion(char c)
 {
 	if (c == 'c' || c == 's' || c == 'p' || c == 'i' || c == 'd' || c == 'u'
 			|| c == 'x' || c == 'X')
@@ -37,7 +49,7 @@ int				is_conversion(char c)
 	return (0);
 }
 
-int				flags(char c)
+int	flags(char c)
 {
 	if (c == '%' || c == '+' || c == '-' || c == ' ' || c == '0')
 		return (1);
