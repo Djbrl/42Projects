@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 16:47:54 by dsy               #+#    #+#             */
-/*   Updated: 2019/12/27 14:10:34 by dsy              ###   ########.fr       */
+/*   Updated: 2020/01/06 11:20:29 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,10 @@
 **	return ;
 **}
 */
+void					percent_conversion()
+{
+	write(1, "%", 1);
+}
 
 int						s_conversion(va_list params, char arg_type)
 {

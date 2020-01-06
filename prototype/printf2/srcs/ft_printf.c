@@ -6,11 +6,13 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 20:26:52 by dsy               #+#    #+#             */
-/*   Updated: 2019/12/27 15:13:00 by dsy              ###   ########.fr       */
+/*   Updated: 2020/01/06 11:41:43 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libftprintf.h"
+
+int	ret_val = 0;
 
 /*
 ** Main file, handles communication between the main function,
@@ -21,8 +23,11 @@
 ** Tree function, checks which one is the current argument to handle,
 ** Sends the argument to the conversion function in charge of i.
 */
+
 static int	which_arg(char arg, va_list params)
 {
+	if (arg == '%')
+		percent_conversion();
 	if (arg == 'c' || arg == 's')
 		if (!(s_conversion(params, arg)))
 			return (0);
@@ -43,19 +48,16 @@ static int	which_arg(char arg, va_list params)
 ** When an argument is found, calls the tree function above,
 ** Then, continues to go through the string until \0. (repeat)
 */
+
 static int	print_text(const char *str, va_list params)
 {
 	int i;
-	int ret_val;
 
 	i = 0;
-	ret_val = 0;
 	while (str[i])
 	{
 		ret_val++;
-		if (str[i] == '%' && str[i + 1] == '%')
-			i++;
-		else if (str[i] == '%' && is_conversion(str[i + 1]))
+		if (str[i] == '%' && is_conversion(str[i + 1]))
 		{
 			if (!(which_arg(str[i + 1], params)))
 				return (0);
@@ -69,11 +71,12 @@ static int	print_text(const char *str, va_list params)
 
 /*
 ** Main function. Checks if the string to print exists,
-** Then creates the list of arguments, 
+** Then creates the list of arguments,
 ** And calls the main printing function,
 ** Returning -1 if anything fails,
 ** Or the number of caracters printed if successful.
 */
+
 int			ft_printf(const char *format, ...)
 {
 	int		i;
