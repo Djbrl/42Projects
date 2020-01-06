@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 20:31:22 by dsy               #+#    #+#             */
-/*   Updated: 2020/01/06 10:35:26 by dsy              ###   ########.fr       */
+/*   Updated: 2020/01/06 14:11:05 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@ int main()
 
 	//ft_printf("XTEST %x\t%X\n", 9999, 9999);
 //	ret = ft_printf("XTEST, this is some sort of elaborate printing test. %s%x%X%s%c%p%u%i%s\n", GRN, 9999, 9999, "it seems to be working tho", '.', s, 9999, 9999, RST);
-	ret = ft_printf("abcd");
+	ret = ft_printf("abcd%s", "abcd");
 	ft_printf("%i\n", ret);
-	ret = ft_printf("abcd abcd");
+	ret = ft_printf("abcdabcd");
 	ft_printf("%i\n", ret);
-	ret = ft_printf("");
+	ret = ft_printf("%%%%%%%%");
 	ft_printf("%i\n", ret);
 	/*int i = 7;
 	int p = 5;

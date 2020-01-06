@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 16:47:54 by dsy               #+#    #+#             */
-/*   Updated: 2020/01/06 11:20:29 by dsy              ###   ########.fr       */
+/*   Updated: 2020/01/06 14:28:56 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,11 @@
 **	return ;
 **}
 */
-void					percent_conversion()
+
+void					percent_conversion(void)
 {
 	write(1, "%", 1);
+	g_ret++;
 }
 
 int						s_conversion(va_list params, char arg_type)
@@ -68,11 +70,13 @@ int						s_conversion(va_list params, char arg_type)
 	{
 		conv_arg = (char*)va_arg(params, char*);
 		ft_putstr(conv_arg);
+		g_ret += ft_strlen(conv_arg);
 	}
 	else
 	{
 		c = (char)va_arg(params, int);
 		write(1, &c, 1);
+		g_ret++;
 	}
 	return (1);
 }
@@ -84,6 +88,7 @@ int						p_conversion(va_list params)
 	write(1, "0x", 2);
 	p = va_arg(params, void*);
 	ft_putnbr_x((unsigned long)p, 'x');
+	g_ret += 2;
 	return (1);
 }
 
@@ -98,6 +103,11 @@ int						i_conversion(va_list params, char arg_type)
 	else
 		conv_arg = (unsigned int)va_arg(params, int);
 	ft_putnbr(conv_arg);
+	while (conv_arg > 0)
+	{
+		conv_arg /= 10;
+		g_ret++;
+	}
 	return (1);
 }
 

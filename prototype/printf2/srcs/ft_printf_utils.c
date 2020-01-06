@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/27 13:52:46 by dsy               #+#    #+#             */
-/*   Updated: 2020/01/06 11:27:27 by dsy              ###   ########.fr       */
+/*   Updated: 2020/01/06 14:28:24 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,5 +62,6 @@ void			ft_putnbr_x(unsigned long value, char type)
 			value /= 16;
 		}
 	ft_putstr(res);
+	g_ret += ft_strlen(res);
 	free(res);
 }

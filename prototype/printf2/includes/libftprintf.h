@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 20:53:59 by dsy               #+#    #+#             */
-/*   Updated: 2020/01/06 11:28:38 by dsy              ###   ########.fr       */
+/*   Updated: 2020/01/06 13:56:52 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <stdlib.h>
 # include "../libft/libft.h"
 
-extern int		ret_val;
+int				g_ret;
 
 typedef struct	s_field {
 	char		flags[4];

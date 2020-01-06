@@ -6,13 +6,13 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 20:26:52 by dsy               #+#    #+#             */
-/*   Updated: 2020/01/06 11:41:43 by dsy              ###   ########.fr       */
+/*   Updated: 2020/01/06 14:09:18 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libftprintf.h"
 
-int	ret_val = 0;
+int g_ret = 0;
 
 /*
 ** Main file, handles communication between the main function,
@@ -56,7 +56,6 @@ static int	print_text(const char *str, va_list params)
 	i = 0;
 	while (str[i])
 	{
-		ret_val++;
 		if (str[i] == '%' && is_conversion(str[i + 1]))
 		{
 			if (!(which_arg(str[i + 1], params)))
@@ -64,9 +63,12 @@ static int	print_text(const char *str, va_list params)
 			i = i + 2;
 		}
 		else
+		{
 			write(1, &str[i++], 1);
+			g_ret++;
+		}
 	}
-	return (ret_val);
+	return (g_ret);
 }
 
 /*
@@ -74,7 +76,7 @@ static int	print_text(const char *str, va_list params)
 ** Then creates the list of arguments,
 ** And calls the main printing function,
 ** Returning -1 if anything fails,
-** Or the number of caracters printed if successful.
+** Or the number of characters printed if successful.
 */
 
 int			ft_printf(const char *format, ...)
@@ -85,6 +87,7 @@ int			ft_printf(const char *format, ...)
 
 	i = 0;
 	return_value = 0;
+	g_ret = 0;
 	va_start(params, format);
 	if (format[0] == '\0')
 		return (0);
