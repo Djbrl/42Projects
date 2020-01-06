@@ -6,7 +6,7 @@
 /*   By: othabchi <othabchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/27 11:40:25 by dsy               #+#    #+#             */
-/*   Updated: 2020/01/03 23:47:13 by idouidi          ###   ########.fr       */
+/*   Updated: 2020/01/06 10:56:55 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	check_precision(char *s, int check)
 int	is_conversion(char c)
 {
 	if (c == 'c' || c == 's' || c == 'p' || c == 'i' || c == 'd' || c == 'u'
-			|| c == 'x' || c == 'X')
+			|| c == 'x' || c == 'X' || c == '%')
 		return (1);
 	return (0);
 }

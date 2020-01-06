@@ -6,7 +6,7 @@
 /*   By: othabchi <othabchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 20:26:52 by dsy               #+#    #+#             */
-/*   Updated: 2020/01/03 21:07:21 by idouidi          ###   ########.fr       */
+/*   Updated: 2020/01/06 10:56:14 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ void		which_arg(char *str, va_list params)
 	field = is_balise(str, params);
 	while (str[i] && !is_conversion(str[i]))
 		i++;
+	if (str[i] == '%')
+		percent_conversion();
 	if (str[i] == 'c' || str[i] == 's')
 		s_conversion(str, params, str[i], field);
 	if (str[i] == 'i' || str[i] == 'd' || str[i] == 'u' ||
@@ -69,9 +71,7 @@ static int	print_text(const char *str, va_list params)
 	if (pars((char *)str) == 0)
 		return (0);
 	while (str[i])
-		if (str[i] == '%' && str[i + 1] == '%')
-			i++;
-		else if (str[i] == '%' && str[i + 1] != '%')
+		if (str[i] == '%')
 		{
 			which_arg((char *)&str[i], params);
 			i++;
