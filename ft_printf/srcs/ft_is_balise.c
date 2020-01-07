@@ -56,22 +56,14 @@ int			is_present(char *str, char c)
 
 t_field		is_balise_flags(char *str, t_field field, int check_neg)
 {
-	if (is_present(str, '+') == 1)
-		field.flags[0] = '+';
+	if (is_present(str, '0') == 1)
+		field.flags[0] = '0';
 	else
 		field.flags[0] = '/';
 	if (is_present(str, '-') == 1 || check_neg == 1)
 		field.flags[1] = '-';
 	else
 		field.flags[1] = '/';
-	if (is_present(str, ' ') == 1)
-		field.flags[2] = ' ';
-	else
-		field.flags[2] = '/';
-	if (is_present(str, '0') == 1)
-		field.flags[3] = '0';
-	else
-		field.flags[3] = '/';
 	return (field);
 }
 
@@ -107,7 +99,7 @@ t_field		is_balise_width_n_precision(char *str, t_field field)
 t_field		is_balise(char *str, va_list args)
 {
 	t_field		field;
-	int			check_neg;
+	int		check_neg;
 
 	field = check_star(str, args);
 	check_neg = (field.flags[1] == '-') ? 1 : 0;

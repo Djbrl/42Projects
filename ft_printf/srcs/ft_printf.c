@@ -6,7 +6,7 @@
 /*   By: othabchi <othabchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 20:26:52 by dsy               #+#    #+#             */
-/*   Updated: 2020/01/06 10:56:14 by dsy              ###   ########.fr       */
+/*   Updated: 2020/01/03 21:07:21 by idouidi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,11 @@ void		which_arg(char *str, va_list params)
 	field = is_balise(str, params);
 	while (str[i] && !is_conversion(str[i]))
 		i++;
-	if (str[i] == '%')
-		percent_conversion();
 	if (str[i] == 'c' || str[i] == 's')
 		s_conversion(str, params, str[i], field);
 	if (str[i] == 'i' || str[i] == 'd' || str[i] == 'u' ||
 		 str[i] == 'x' || str[i] == 'X')
-		nb_conversion(str, params, str[i], field);
+		nb_conversion(params, str[i], field);
 	if (str[i] == 'p')
 		p_conversion(params, str[i], field);
 }
@@ -73,8 +71,8 @@ static int	print_text(const char *str, va_list params)
 	while (str[i])
 		if (str[i] == '%')
 		{
-			which_arg((char *)&str[i], params);
 			i++;
+			which_arg((char *)&str[i], params);
 			while (str[i] && !is_conversion(str[i]))
 				i++;
 			i++;
@@ -90,6 +88,7 @@ static int	print_text(const char *str, va_list params)
 int		ft_printf(const char *format, ...)
 {
 	va_list params;
+	int	stock;
 
 	va_start(params, format);
 	if (format == NULL)
@@ -97,5 +96,7 @@ int		ft_printf(const char *format, ...)
 	if (!(print_text(format, params)))
 		return (-1);
 	va_end(params);
-	return (g_ret);
+	stock = g_ret;
+	g_ret = 0;
+	return (stock);
 }

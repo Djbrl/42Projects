@@ -20,7 +20,7 @@ void	print_balise_nb(int nb, char c, t_field f, int len)
 	precision = (f.precision > len) ? f.precision - len : len;
 	width = (f.precision > len) ? f.width - (precision + len) : f.width - len;
 	width = (nb < 0) ? width - 1 : width;	
-	if (f.flags[1] != '-' && f.flags[3] != '0')
+	if (f.flags[1] != '-' && f.flags[0] != '0')
 		while (width > 0 && width--)
 			ft_putchar(' ');
 	(nb < 0) ? ft_putchar('-') : 0;
@@ -33,7 +33,7 @@ void	print_balise_nb(int nb, char c, t_field f, int len)
 			ft_putchar(' ');
 		return ;
 	}
-	if (f.flags[3] == '0')
+	if (f.flags[0] == '0')
 		while (width > 0 && width--)
 			ft_putchar('0');
 	(c == 'x' || c == 'X') ? ft_putnbr_x(nb, c) : ft_putnbr(nb);

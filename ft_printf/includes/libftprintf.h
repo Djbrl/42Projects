@@ -6,7 +6,7 @@
 /*   By: othabchi <othabchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 20:53:59 by dsy               #+#    #+#             */
-/*   Updated: 2020/01/06 10:47:11 by dsy              ###   ########.fr       */
+/*   Updated: 2020/01/03 23:42:46 by idouidi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ extern int		g_ret;
 
 typedef struct		s_field {
 
-	char		flags[4];
+	char		flags[2];
 	int		width;
 	int		precision;
 }			t_field;
@@ -36,11 +36,10 @@ int			count_digit(int nb, char c);
 int			is_conversion(char c);
 int			is_present(char *str, char c);
 int			flags(char c);
-int			check_precision(char *str, int check);
+int			check_precision(char *s, int check);
 t_field			check_star(char *str, va_list args);
 t_field			is_balise(char *str, va_list args);
-void			nb_conversion(char *str,va_list params, char type, t_field field);
-void			percent__conversion();
+void			nb_conversion(va_list params, char type, t_field field);
 void			s_conversion(char *s, va_list params, char type, t_field field);
 void			p_conversion(va_list params, char type, t_field field);
 int			ft_printf(const char *format, ...);

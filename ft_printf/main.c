@@ -683,7 +683,11 @@ int main()
 	ft_printf("***************%*s%*d**************%*u*************\n", 10, "coucou", 10, 10, -50, 20);*/
 	//ft_printf("%.s\n", "salut");
 	//ft_printf("%.0d\n", 11);
-	ft_printf("cpy:%.0s, %d\n","salut", 10);
-	printf("ori:.0s, %d","salut", 10);
+	/*printf("1cpy:%d\n", ft_printf("1cpy:%.012d\n", 100));
+	printf("1ori:%d\n", printf("1ori:%.012d\n", 100));
+	printf("2cpy:%d\n", ft_printf("2cpy:%.d\n", 100));
+	printf("2ori:%d\n", printf("2ori:%.d\n", 100));*/
+//	printf("%10%\n", 11);
+
 	return (0);
 }
