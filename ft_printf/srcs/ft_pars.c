@@ -6,7 +6,7 @@
 /*   By: othabchi <othabchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/27 11:28:13 by dsy               #+#    #+#             */
-/*   Updated: 2020/01/03 21:10:06 by idouidi          ###   ########.fr       */
+/*   Updated: 2020/01/08 18:53:20 by othabchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,8 @@ int	pars_decimal(char *s)
 			return (0);
 		if (s[i] == '*' && !(s[i + 1] == '.' || is_conversion(s[i + 1])))
 			return (0);
-		j = ((s[i] == '.' || s[i] == '-') && check_zero(s) == 1) ? 1 : 0;
-		if ((s[i] == '.' || s[i] == '-') && j == 1)
+		j = (s[i] == '-' && check_zero(s) == 1) ? 1 : 0;
+		if (s[i] == '-' && j == 1)
 			return (0);
 		i++;
 	}

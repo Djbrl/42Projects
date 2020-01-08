@@ -6,7 +6,7 @@
 /*   By: othabchi <othabchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 20:26:52 by dsy               #+#    #+#             */
-/*   Updated: 2020/01/03 21:07:21 by idouidi          ###   ########.fr       */
+/*   Updated: 2020/01/08 19:57:58 by othabchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void		which_arg(char *str, va_list params)
 		s_conversion(str, params, str[i], field);
 	if (str[i] == 'i' || str[i] == 'd' || str[i] == 'u' ||
 		 str[i] == 'x' || str[i] == 'X')
-		nb_conversion(params, str[i], field);
+		nb_conversion(params, str, str[i], field);
 	if (str[i] == 'p')
 		p_conversion(params, str[i], field);
 }
@@ -69,6 +69,7 @@ static int	print_text(const char *str, va_list params)
 	if (pars((char *)str) == 0)
 		return (0);
 	while (str[i])
+	{
 		if (str[i] == '%' && str[i + 1] != '%')
 		{
 			i++;
@@ -79,6 +80,7 @@ static int	print_text(const char *str, va_list params)
 		else
 			ft_putchar(str[i]);
 		i++;
+	}
 	return (1);
 }
 

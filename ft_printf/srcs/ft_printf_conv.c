@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf_conv.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
+/*   By: othabchi <othabchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 16:47:54 by dsy               #+#    #+#             */
-/*   Updated: 2020/01/03 20:44:12 by idouidi          ###   ########.fr       */
+/*   Updated: 2020/01/08 20:11:41 by othabchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,26 @@ void	p_conversion(va_list params, char arg_type, t_field field)
 	print_balise_add((unsigned long)p, arg_type, field);
 }
 
-void	nb_conversion(va_list params, char arg_type, t_field field)
+void	nb_conversion(va_list params, char *str, char arg_type, t_field field)
 {
 	int		nb;
 	int		len;
+	int		check;
 
+	check = 0;
+	check = check_precision(str, check);
 	if (arg_type == 'i' || arg_type == 'd' || arg_type == 'x'
-		|| arg_type || 'X')
+		|| arg_type == 'X')
 		nb = (int)va_arg(params, int);
 	else
 		nb = (unsigned int)va_arg(params, int);
 	len = count_digit(nb, arg_type);
-	print_balise_nb(nb, arg_type, field, len);
+	// if (field.flags[0] != '0' && field.width == 0
+	// && check_precision(str, check) == 1 && field.precision == 0 && nb == 0)
+	// 	return ;
+	if (check == 0 || nb != 0)
+		print_balise_nb(nb, arg_type, field, len);
+	else
+		while (field.width && field.width--)
+			ft_putchar(' ');
 }

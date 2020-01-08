@@ -6,7 +6,7 @@
 /*   By: othabchi <othabchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/27 11:30:22 by dsy               #+#    #+#             */
-/*   Updated: 2020/01/03 23:46:35 by idouidi          ###   ########.fr       */
+/*   Updated: 2020/01/08 20:23:39 by othabchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ void	print_balise_nb(int nb, char c, t_field f, int len)
 	precision = (f.precision > len) ? f.precision - len : len;
 	width = (f.precision > len) ? f.width - (precision + len) : f.width - len;
 	width = (nb < 0) ? width - 1 : width;	
-	if (f.flags[1] != '-' && f.flags[0] != '0')
+	if (f.flags[1] != '-' && (f.flags[0] != '0' ||
+	(f.flags[0] == '0' && f.precision != 0)))
 		while (width > 0 && width--)
 			ft_putchar(' ');
 	(nb < 0) ? ft_putchar('-') : 0;
@@ -33,7 +34,7 @@ void	print_balise_nb(int nb, char c, t_field f, int len)
 			ft_putchar(' ');
 		return ;
 	}
-	if (f.flags[0] == '0')
+	if (f.flags[0] == '0' && f.precision == 0)
 		while (width > 0 && width--)
 			ft_putchar('0');
 	(c == 'x' || c == 'X') ? ft_putnbr_x(nb, c) : ft_putnbr(nb);
@@ -55,7 +56,7 @@ void	print_balise_str(char *s, char *str, t_field field, int len)
 	int		width;
 	int		precision;
 	int		check;
-	char		*null;
+	char	*null;
 
 	null = "(null)";
 	check = 0;
