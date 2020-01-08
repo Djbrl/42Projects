@@ -39,10 +39,10 @@ int main()
         printf("ori: %-3.10d\n", 1248);
         printf("ori: %-10.3d\n", 12480);
         printf("ori: %-3.10d\n", 12480);
-        printf("***** largeur, precision et - *****\n");
+        printf("***** largeur, precision et - *****\n");*/
 
         //--------------------------------------------
-        ft_printf("cpy: %3d\n", 1248);
+       /* ft_printf("cpy: %3d\n", 1248);
         ft_printf("cpy: %-3d\n", 1248);
         ft_printf("cpy: %10d\n", 1248);
         ft_printf("cpy: %-10d\n", 1248);
@@ -95,7 +95,7 @@ int main()
 
 	  /*---------------------------------------------*/
 	  
-	 /* ft_printf("%10s\n", "Salut");
+	  /*ft_printf("%10s\n", "Salut");
 	  ft_printf("%-10s\n", "Salut");
 	  ft_printf("****court*****\n");
 
@@ -174,9 +174,8 @@ int main()
         ft_printf("**** largeur ,'-' et valeur decimal***\n");*/
 
 
-
-	/*printf("%+-10.20d, %-10.5s, %-5c\n", 1245, "salut tout le monde", 'a');
-	ft_printf("%+-10.20d, %-10.5s, %-5c\n", 1245, "salut tout le monde", 'a');*/
+	/*printf("%-10.20d, %-10.5s, %-5c\n", 1245, "salut tout le monde", 'a');
+	ft_printf("%-10.20d, %-10.5s, %-5c\n", 1245, "salut tout le monde", 'a');*/
 
 
 			/**************ADRESSE*************/
@@ -269,15 +268,15 @@ int main()
 	// ft_printf("%d\n", 5, 50);
 	// ft_printf("%*.*d\n", -20, 10, 5, 56, 2782684, "b");
 	//char *a = NULL;
-	//printf("ori:%*.*s\n",10, 6, a);
-	//ft_printf("cpy:%*.*s\n",10, 6, a);
+//	printf("ori:%*.*s\n",10, 6, a);
+//	ft_printf("cpy:%*.*s\n",10, 6, a);
 	//ft_printf("cpy:%010d\n", 256);
 	//printf("ori:%010d\n", 256);
-	/*int t;
-	char c;
+	int t;
+//	char c;
 
-	c = 'a';
-	t = 50;*/
+//	c = 'a';
+	t = 50;
 	/*printf("pp %.50d\n", 10000);
 	printf("p1 %.4s\n", "cccc");
 	printf("p2 %.10s\n", "cccc");
@@ -483,7 +482,7 @@ int main()
 	
 	
 	
-	/*ft_printf("pp %.50d\n", 10000);
+	ft_printf("pp %.50d\n", 10000);
 	ft_printf("p1 %.4s\n", "cccc");
 	ft_printf("p2 %.10s\n", "cccc");
 	ft_printf("p3 %.4s\n", NULL);
@@ -680,7 +679,7 @@ int main()
 	ft_printf("neg9 %*.*d\n", 15856, 155, -3000);
 	ft_printf("neg10 %*.*d\n", -15586, 15, 150);
 	ft_printf("neg11 %*.*d\n", -15586, 15, 0);
-	ft_printf("***************%*s%*d**************%*u*************\n", 10, "coucou", 10, 10, -50, 20);*/
+	ft_printf("***************%*s%*d**************%*u*************\n", 10, "coucou", 10, 10, -50, 20);
 	//ft_printf("%.s\n", "salut");
 	//ft_printf("%.0d\n", 11);
 	/*printf("1cpy:%d\n", ft_printf("1cpy:%.012d\n", 100));

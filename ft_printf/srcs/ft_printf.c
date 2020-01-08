@@ -69,19 +69,16 @@ static int	print_text(const char *str, va_list params)
 	if (pars((char *)str) == 0)
 		return (0);
 	while (str[i])
-		if (str[i] == '%')
+		if (str[i] == '%' && str[i + 1] != '%')
 		{
 			i++;
 			which_arg((char *)&str[i], params);
 			while (str[i] && !is_conversion(str[i]))
 				i++;
-			i++;
 		}
 		else
-		{
 			ft_putchar(str[i]);
-			i++;
-		}
+		i++;
 	return (1);
 }
 
