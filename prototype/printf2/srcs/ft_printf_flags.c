@@ -17,4 +17,8 @@
 ** -	0	.	*
 */
 
-
+//seek flags
+//
+//store flags
+//
+//apply flags
