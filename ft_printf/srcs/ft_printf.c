@@ -6,7 +6,7 @@
 /*   By: othabchi <othabchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 20:26:52 by dsy               #+#    #+#             */
-/*   Updated: 2020/01/11 17:57:45 by othabchi         ###   ########.fr       */
+/*   Updated: 2020/01/11 19:09:00 by othabchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int			pars(char *s)
 			stock++;
 		if (s[stock] == '%')
 		{
-			i = stock;
+			i = stock + 1;
 			while (s[i] && !is_conversion(s[i]))
 				i++;
 			if ((s[i] == '\0') || ((s[i] == 'x' || s[i] == 'X') &&
@@ -52,8 +52,6 @@ void		which_arg(char *str, va_list params)
 	field = is_balise(str, params);
 	while (str[i] && !is_conversion(str[i]))
 		i++;
-	if (str[i] == '%')
-		print_balise_pct(field);
 	if (str[i] == 'c' || str[i] == 's')
 		s_conversion(str, params, str[i], field);
 	if (str[i] == 'i' || str[i] == 'd' || str[i] == 'u' ||
@@ -61,6 +59,8 @@ void		which_arg(char *str, va_list params)
 		nb_conversion(params, str, str[i], field);
 	if (str[i] == 'p')
 		p_conversion(params, str[i], field);
+	if (str[i] == '%')
+		print_balise_pct(field);
 }
 
 static int	print_text(const char *str, va_list params)
