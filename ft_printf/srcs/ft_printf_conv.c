@@ -6,7 +6,7 @@
 /*   By: othabchi <othabchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 16:47:54 by dsy               #+#    #+#             */
-/*   Updated: 2020/01/08 20:11:41 by othabchi         ###   ########.fr       */
+/*   Updated: 2020/01/10 20:50:25 by othabchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	s_conversion(char *s, va_list params, char arg_type, t_field field)
 	if (arg_type == 's')
 	{
 		conv_arg = (char*)va_arg(params, char*);
-		len = ft_strlen(conv_arg);
+		len = (!conv_arg) ? 6 : ft_strlen(conv_arg);
 		print_balise_str(s, conv_arg, field, len);
 	}
 	else
@@ -55,9 +55,6 @@ void	nb_conversion(va_list params, char *str, char arg_type, t_field field)
 	else
 		nb = (unsigned int)va_arg(params, int);
 	len = count_digit(nb, arg_type);
-	// if (field.flags[0] != '0' && field.width == 0
-	// && check_precision(str, check) == 1 && field.precision == 0 && nb == 0)
-	// 	return ;
 	if (check == 0 || nb != 0)
 		print_balise_nb(nb, arg_type, field, len);
 	else
