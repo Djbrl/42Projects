@@ -6,7 +6,7 @@
 /*   By: othabchi <othabchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 20:31:22 by dsy               #+#    #+#             */
-/*   Updated: 2020/01/11 15:32:57 by othabchi         ###   ########.fr       */
+/*   Updated: 2020/01/11 18:04:12 by othabchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -688,8 +688,8 @@ int main()
 // 	printf("2ori:%d\n", printf("2ori:%.d\n", 100));*/
 // //	printf("%10%\n", 11);
 
-	printf("[%d]\n", ft_printf("hello ca%----4c %1c%10c%-c ??", '\0', '\n', (char)56, 0));
-	printf("[%d]\n", printf("hello ca%----4c %1c%10c%-c ??", '\0', '\n', (char)56, 0));
+	printf("[%d]\n", ft_printf("%0004%"));
+	printf("[%d]\n", printf("%0004%"));
 
 	return (0);
 }

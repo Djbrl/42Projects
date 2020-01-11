@@ -6,7 +6,7 @@
 /*   By: othabchi <othabchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 20:26:52 by dsy               #+#    #+#             */
-/*   Updated: 2020/01/08 19:57:58 by othabchi         ###   ########.fr       */
+/*   Updated: 2020/01/11 17:57:45 by othabchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,27 @@
 
 int			g_ret = 0;
 
-int		pars(char *str)
+int			pars(char *s)
 {
 	int stock;
 	int	i;
 
 	i = 0;
 	stock = 0;
-	while (str[i])
+	while (s[i])
 	{
-		while (str[stock] && str[stock] != '%')
+		while (s[stock] && s[stock] != '%')
 			stock++;
-		if (str[stock] == '%')
+		if (s[stock] == '%')
 		{
 			i = stock;
-			while (str[i] && !is_conversion(str[i]))
+			while (s[i] && !is_conversion(s[i]))
 				i++;
-			if ((str[i] == '\0') || ((str[i] == 'x' || str[i] == 'X')
-			&& pars_hexa(&str[stock]) != 1) || ((str[i] == 'd' || str[i] == 'i'
-			|| str[i] == 'u') && (pars_decimal(&str[stock]) != 1)) || ((str[i]
-			== 'c' || str[i] == 'p') && (pars_char_n_add(&str[stock]) != 1)) ||
-			(str[i] == 's' && pars_str(&str[stock]) != 1))
+			if ((s[i] == '\0') || ((s[i] == 'x' || s[i] == 'X') &&
+			pars_hexa(&s[stock]) != 1) || ((s[i] == 'd' || s[i] == 'i' ||
+			s[i] == 'u' || s[i] == '%') && (pars_decimal(&s[stock]) != 1)) ||
+			((s[i] == 'c' || s[i] == 'p') && (pars_char_n_add(&s[stock]) != 1))
+			|| (s[i] == 's' && pars_str(&s[stock]) != 1))
 				return (0);
 		}
 		i++;
@@ -45,17 +45,19 @@ int		pars(char *str)
 
 void		which_arg(char *str, va_list params)
 {
-	int	i;
+	int		i;
 	t_field	field;
 
 	i = 0;
 	field = is_balise(str, params);
 	while (str[i] && !is_conversion(str[i]))
 		i++;
+	if (str[i] == '%')
+		print_balise_pct(field);
 	if (str[i] == 'c' || str[i] == 's')
 		s_conversion(str, params, str[i], field);
 	if (str[i] == 'i' || str[i] == 'd' || str[i] == 'u' ||
-		 str[i] == 'x' || str[i] == 'X')
+		str[i] == 'x' || str[i] == 'X')
 		nb_conversion(params, str, str[i], field);
 	if (str[i] == 'p')
 		p_conversion(params, str[i], field);
@@ -70,7 +72,7 @@ static int	print_text(const char *str, va_list params)
 		return (0);
 	while (str[i])
 	{
-		if (str[i] == '%' && str[i + 1] != '%')
+		if (str[i] == '%')
 		{
 			i++;
 			which_arg((char *)&str[i], params);
@@ -84,10 +86,10 @@ static int	print_text(const char *str, va_list params)
 	return (1);
 }
 
-int		ft_printf(const char *format, ...)
+int			ft_printf(const char *format, ...)
 {
-	va_list params;
-	int	stock;
+	va_list	params;
+	int		stock;
 
 	va_start(params, format);
 	if (format == NULL)

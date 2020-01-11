@@ -6,13 +6,13 @@
 /*   By: othabchi <othabchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/27 11:30:22 by dsy               #+#    #+#             */
-/*   Updated: 2020/01/10 21:12:00 by othabchi         ###   ########.fr       */
+/*   Updated: 2020/01/11 17:27:29 by othabchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libftprintf.h"
 
-void	print_balise_nb(int nb, char c, t_field f, int len)
+void	print_balise_nb(long nb, char c, t_field f, int len)
 {
 	int	width;
 	int	precision;

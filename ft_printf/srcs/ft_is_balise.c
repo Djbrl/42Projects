@@ -6,7 +6,7 @@
 /*   By: othabchi <othabchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 21:54:24 by idouidi           #+#    #+#             */
-/*   Updated: 2020/01/08 20:07:25 by othabchi         ###   ########.fr       */
+/*   Updated: 2020/01/11 17:27:04 by othabchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ t_field		check_star(char *str, va_list args)
 	i = 0;
 	field.width = 0;
 	field.precision = 0;
+	field.flags[0] = '/';
+	field.flags[1] = '/';
 	while (str[i] && !is_conversion(str[i]))
 	{
 		if (str[i] == '*')
@@ -56,6 +58,8 @@ int			is_present(char *str, char c)
 
 t_field		is_balise_flags(char *str, t_field field, int check_neg)
 {
+	field.flags[0] = '/';
+	field.flags[1] = '/';
 	if (is_present(str, '0') == 1)
 		field.flags[0] = '0';
 	else
@@ -100,6 +104,7 @@ t_field		is_balise(char *str, va_list args)
 {
 	t_field		field;
 	int		check_neg;
+
 
 	field = check_star(str, args);
 	check_neg = (field.flags[1] == '-') ? 1 : 0;

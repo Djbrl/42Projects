@@ -6,7 +6,7 @@
 /*   By: othabchi <othabchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 16:47:54 by dsy               #+#    #+#             */
-/*   Updated: 2020/01/10 20:50:25 by othabchi         ###   ########.fr       */
+/*   Updated: 2020/01/11 17:03:17 by othabchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,10 @@
 void	s_conversion(char *s, va_list params, char arg_type, t_field field)
 {
 	char 	*conv_arg;
-	int	len;
+	int		len;
 	char 	c;
 
+	conv_arg = NULL;
 	c = 0;
 	len = 0;
 	if (arg_type == 's')
@@ -43,7 +44,7 @@ void	p_conversion(va_list params, char arg_type, t_field field)
 
 void	nb_conversion(va_list params, char *str, char arg_type, t_field field)
 {
-	int		nb;
+	long	nb;
 	int		len;
 	int		check;
 

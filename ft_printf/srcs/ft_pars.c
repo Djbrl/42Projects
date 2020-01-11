@@ -6,7 +6,7 @@
 /*   By: othabchi <othabchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/27 11:28:13 by dsy               #+#    #+#             */
-/*   Updated: 2020/01/08 18:53:20 by othabchi         ###   ########.fr       */
+/*   Updated: 2020/01/11 17:17:11 by othabchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,13 +79,15 @@ int	pars_str(char *s)
 	i = 0;
 	while (s[i] && !is_conversion(s[i]))
 	{
-		j = ((s[i] == '.' || s[i] == '-' || s[i] == '0') && check_zero(s) == 1) ? 1 : 0;
+		j = ((s[i] == '.' || s[i] == '-' || s[i] == '0') && check_zero(s) == 1)
+			? 1 : 0;
 		if (s[i] == '+' || s[i] == ' ' || j == 1)
 			return (0);
-		if (s[i] == '.' && !(nb_digit(s[i + 1]) || s[i + 1] == '*' || is_conversion(s[i + 1])))
+		if (s[i] == '.' && !(nb_digit(s[i + 1]) || s[i + 1] == '*' ||
+			is_conversion(s[i + 1])))
 			return (0);
 		if (s[i + 1] && s[i] == '*' && !(s[i + 1] == '.' ||
-					is_conversion(s[i + 1])))
+			is_conversion(s[i + 1])))
 			return (0);
 		i++;
 	}
