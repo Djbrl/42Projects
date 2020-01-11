@@ -6,7 +6,7 @@
 /*   By: othabchi <othabchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 21:54:24 by idouidi           #+#    #+#             */
-/*   Updated: 2020/01/11 17:27:04 by othabchi         ###   ########.fr       */
+/*   Updated: 2020/01/11 20:31:40 by othabchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,8 +103,7 @@ t_field		is_balise_width_n_precision(char *str, t_field field)
 t_field		is_balise(char *str, va_list args)
 {
 	t_field		field;
-	int		check_neg;
-
+	int			check_neg;
 
 	field = check_star(str, args);
 	check_neg = (field.flags[1] == '-') ? 1 : 0;

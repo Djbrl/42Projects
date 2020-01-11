@@ -6,7 +6,7 @@
 /*   By: othabchi <othabchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 16:47:54 by dsy               #+#    #+#             */
-/*   Updated: 2020/01/11 17:03:17 by othabchi         ###   ########.fr       */
+/*   Updated: 2020/01/11 20:32:26 by othabchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	s_conversion(char *s, va_list params, char arg_type, t_field field)
 {
-	char 	*conv_arg;
+	char	*conv_arg;
 	int		len;
-	char 	c;
+	char	c;
 
 	conv_arg = NULL;
 	c = 0;

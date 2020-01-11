@@ -6,7 +6,7 @@
 /*   By: othabchi <othabchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/27 11:40:25 by dsy               #+#    #+#             */
-/*   Updated: 2020/01/03 23:47:13 by idouidi          ###   ########.fr       */
+/*   Updated: 2020/01/11 20:31:25 by othabchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	neg_value(long *value)
 	}
 }
 
-void			ft_putnbr_x(long value, char c)
+void	ft_putnbr_x(long value, char c)
 {
 	int				len;
 	unsigned long	rest;

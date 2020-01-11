@@ -6,7 +6,7 @@
 /*   By: othabchi <othabchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 20:53:59 by dsy               #+#    #+#             */
-/*   Updated: 2020/01/11 17:46:47 by othabchi         ###   ########.fr       */
+/*   Updated: 2020/01/11 20:33:48 by othabchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ int				flags(char c);
 int				check_precision(char *s, int check);
 t_field			check_star(char *str, va_list args);
 t_field			is_balise(char *str, va_list args);
-void			nb_conversion(va_list params, char *str, char type, t_field field);
+void			nb_conversion(va_list params, char *str, char type,
+																t_field field);
 void			s_conversion(char *s, va_list params, char type, t_field field);
 void			p_conversion(va_list params, char type, t_field field);
 int				ft_printf(const char *format, ...);
