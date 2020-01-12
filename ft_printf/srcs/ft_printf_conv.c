@@ -6,7 +6,7 @@
 /*   By: othabchi <othabchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 16:47:54 by dsy               #+#    #+#             */
-/*   Updated: 2020/01/11 20:32:26 by othabchi         ###   ########.fr       */
+/*   Updated: 2020/01/12 18:48:08 by othabchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,9 @@ void	nb_conversion(va_list params, char *str, char arg_type, t_field field)
 	else
 		nb = (unsigned int)va_arg(params, int);
 	len = count_digit(nb, arg_type);
-	if (check == 0 || nb != 0)
+	if (check == 0 && ((arg_type == 'x' || arg_type == 'X') && nb < 0))
+		print_balise_nb(4294967296 + nb, arg_type, field, len);
+	else if (check == 0 || nb != 0)
 		print_balise_nb(nb, arg_type, field, len);
 	else
 		while (field.width && field.width--)
