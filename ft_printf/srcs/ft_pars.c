@@ -15,17 +15,15 @@
 int	check_zero(char *str)
 {
 	int	i;
-	int	check;
 
-	check = 0;
 	i = 1;
 	while (str[i] && !is_conversion(str[i]))
 	{
 		if (str[i] == '0' && (str[i - 1] == '%' || str[i + 1] == '-'))
-			check = 1;
+			return (1);
 		i++;
 	}
-	return (check);
+	return (0);
 }
 
 int	pars_hexa(char *s)
@@ -39,10 +37,9 @@ int	pars_hexa(char *s)
 		if (s[i] == '.' && !(nb_digit(s[i + 1]) || s[i + 1] == '*'
 			|| is_conversion(s[i + 1])))
 			return (0);
-		if (s[i + 1] && s[i] == '*' && !(s[i + 1] == '.'
-					|| is_conversion(s[i + 1])))
+		if (s[i] == '*' && !(s[i + 1] == '.' || is_conversion(s[i + 1])))
 			return (0);
-		j = (s[i] == '-' && check_zero(s) == 1) ? 1 : 0;
+		j = (s[i] == '0' && s[i + 1] == '-') ? 1 : 0;
 		if (s[i] == '-' && j == 1)
 			return (0);
 		i++;
@@ -78,7 +75,7 @@ int	pars_str(char *s)
 	i = 1;
 	while (s[i] && !is_conversion(s[i]))
 	{
-		if (s[i] == '+' || s[i] == ' ' || check_zero(s) == 1)
+		if (s[i] == '+' || s[i] == ' ' || (s[i] == '.' && check_zero(s) == 1))
 			return (0);
 		if (s[i] == '.' && !(nb_digit(s[i + 1]) || s[i + 1] == '*' ||
 			is_conversion(s[i + 1])))
