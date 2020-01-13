@@ -5,20 +5,22 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: othabchi <othabchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/27 11:40:25 by dsy               #+#    #+#             */
-/*   Updated: 2020/01/11 18:32:27 by othabchi         ###   ########.fr       */
+/*   Created: 2019/12/27 11:40:25 by othabchi          #+#    #+#             */
+/*   Updated: 2020/01/13 17:58:11 by othabchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libftprintf.h"
 
-int	count_digit(int nb, char c)
+int	count_digit(long nb, char c)
 {
 	int	count;
 	int	div;
 
 	count = 0;
 	div = (c == 'd' || c == 'i' || c == 'u') ? 10 : 16;
+	if (c == 'u' && nb < 0)
+		nb += 4294967296;
 	if (nb == 0)
 		return (1);
 	while (nb)

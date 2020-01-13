@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: othabchi <othabchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/25 20:53:59 by dsy               #+#    #+#             */
-/*   Updated: 2020/01/11 20:33:48 by othabchi         ###   ########.fr       */
+/*   Created: 2019/11/25 20:53:59 by othabchi          #+#    #+#             */
+/*   Updated: 2020/01/13 17:55:26 by othabchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ size_t			ft_strlen(const char *str);
 int				ft_atoi(const char *str);
 int				nb_digit(int c);
 int				pars(char *str);
-int				count_digit(int nb, char c);
+int				count_digit(long nb, char c);
 int				is_conversion(char c);
 int				is_present(char *str, char c);
 int				flags(char c);
@@ -47,7 +47,7 @@ int				ft_printf(const char *format, ...);
 long			ft_power(long x, long y);
 void			ft_putchar(char c);
 void			ft_putstr(char *str);
-void			ft_putnbr(int n);
+void			ft_putnbr(long n);
 void			ft_putnbr_x(long value, char c);
 void			print_balise_nb(long nb, char c, t_field field, int len);
 void			print_balise_str(char *s, char *str, t_field field, int len);

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putnbr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
+/*   By: othabchi <othabchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/18 16:14:43 by dsy               #+#    #+#             */
-/*   Updated: 2019/10/18 16:14:48 by dsy              ###   ########.fr       */
+/*   Created: 2019/10/18 16:14:43 by othabchi          #+#    #+#             */
+/*   Updated: 2020/01/13 17:48:42 by othabchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libftprintf.h"
 
-void	ft_putnbr(int n)
+void	ft_putnbr(long n)
 {
 	long nb;
 
