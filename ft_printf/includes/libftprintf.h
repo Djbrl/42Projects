@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libftprintf.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: othabchi <othabchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: idouidi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/25 20:53:59 by othabchi          #+#    #+#             */
-/*   Updated: 2020/01/13 17:55:26 by othabchi         ###   ########.fr       */
+/*   Created: 2020/01/13 18:34:13 by idouidi           #+#    #+#             */
+/*   Updated: 2020/01/14 04:59:19 by idouidi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@
 # include <unistd.h>
 # include <stdlib.h>
 
-# include <stdio.h>
-
 extern int		g_ret;
 
 typedef struct	s_field {
@@ -26,6 +24,7 @@ typedef struct	s_field {
 	char		flags[2];
 	int			width;
 	int			precision;
+	int			error;
 }				t_field;
 
 size_t			ft_strlen(const char *str);

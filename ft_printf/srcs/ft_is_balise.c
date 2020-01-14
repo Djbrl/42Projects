@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_is_balise.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: othabchi <othabchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: idouidi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/03 21:54:24 by othabchi          #+#    #+#             */
-/*   Updated: 2020/01/12 20:18:03 by othabchi         ###   ########.fr       */
+/*   Created: 2020/01/13 18:36:17 by idouidi           #+#    #+#             */
+/*   Updated: 2020/01/14 05:07:27 by idouidi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_field		check_star(char *str, va_list args)
 
 	i = 0;
 	field.width = 0;
-	field.precision = 0;
+	field.precision = -1;
 	field.flags[0] = '/';
 	field.flags[1] = '/';
 	while (str[i] && !is_conversion(str[i]))
@@ -93,7 +93,7 @@ t_field		is_balise_width_n_precision(char *str, t_field field)
 		while (str[i] && str[i] >= '0' && str[i] <= '9')
 			i++;
 		tmp = ft_substr(str, j, i);
-		field.precision = (field.precision == 0) ?
+		field.precision = (field.precision == -1) ?
 			ft_atoi(tmp) : field.precision;
 		free(tmp);
 	}
@@ -107,7 +107,10 @@ t_field		is_balise(char *str, va_list args)
 
 	field = check_star(str, args);
 	check_neg = (field.flags[1] == '-') ? 1 : 0;
+	field.error = (field.precision == 0) ? 1 : 0;
 	field = is_balise_flags(str, field, check_neg);
 	field = is_balise_width_n_precision(str, field);
+	if (field.precision == -1)
+		field.precision = 0;
 	return (field);
 }

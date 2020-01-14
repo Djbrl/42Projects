@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: othabchi <othabchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: idouidi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/25 20:26:52 by othabchi          #+#    #+#             */
-/*   Updated: 2020/01/12 20:19:49 by othabchi         ###   ########.fr       */
+/*   Created: 2020/01/13 18:37:19 by idouidi           #+#    #+#             */
+/*   Updated: 2020/01/14 06:28:38 by idouidi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,15 +52,21 @@ void		which_arg(char *str, va_list params)
 	field = is_balise(str, params);
 	while (str[i] && !is_conversion(str[i]))
 		i++;
-	if (str[i] == 'c' || str[i] == 's')
-		s_conversion(str, params, str[i], field);
-	if (str[i] == 'i' || str[i] == 'd' || str[i] == 'u' ||
-		str[i] == 'x' || str[i] == 'X')
-		nb_conversion(params, str, str[i], field);
-	if (str[i] == 'p')
-		p_conversion(params, str[i], field);
-	if (str[i] == '%')
-		print_balise_pct(field);
+	if (str[i] == 's' && field.error == 1)
+		while (field.width > 0 && field.width--)
+			ft_putchar(' ');
+	else
+	{
+		if (str[i] == 'c' || str[i] == 's')
+			s_conversion(str, params, str[i], field);
+		if (str[i] == 'i' || str[i] == 'd' || str[i] == 'u' ||
+			str[i] == 'x' || str[i] == 'X')
+			nb_conversion(params, str, str[i], field);
+		if (str[i] == 'p')
+			p_conversion(params, str[i], field);
+		if (str[i] == '%')
+			print_balise_pct(field);
+	}
 }
 
 static int	print_text(const char *str, va_list params)

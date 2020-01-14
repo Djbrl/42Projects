@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: othabchi <othabchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: idouidi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/27 11:40:25 by othabchi          #+#    #+#             */
-/*   Updated: 2020/01/13 17:58:11 by othabchi         ###   ########.fr       */
+/*   Created: 2020/01/13 18:44:18 by idouidi           #+#    #+#             */
+/*   Updated: 2020/01/14 05:23:09 by idouidi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	count_digit(long nb, char c)
 
 	count = 0;
 	div = (c == 'd' || c == 'i' || c == 'u') ? 10 : 16;
-	if (c == 'u' && nb < 0)
+	if ((c == 'u' || c == 'x' || c == 'X') && nb < 0)
 		nb += 4294967296;
 	if (nb == 0)
 		return (1);

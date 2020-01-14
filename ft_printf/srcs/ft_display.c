@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_display.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: othabchi <othabchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: idouidi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/27 11:30:22 by othabchi          #+#    #+#             */
-/*   Updated: 2020/01/12 20:24:59 by othabchi         ###   ########.fr       */
+/*   Created: 2020/01/13 18:35:56 by idouidi           #+#    #+#             */
+/*   Updated: 2020/01/14 03:12:41 by idouidi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ void	print_balise_add(unsigned long p, char c, t_field field)
 {
 	int		width;
 
-	width = (p != 0) ? field.width - 14 : field.width;
+	width = (p != 0) ? field.width - 11 : field.width - 3;
 	if (width > 0 && field.flags[1] != '-')
 		while (width--)
 			ft_putchar(' ');

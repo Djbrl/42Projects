@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: othabchi <othabchi@student.42.fr>          +#+  +:+       +#+         #
+#    By: idouidi <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2019/02/28 16:31:35 by othabchi          #+#    #+#              #
-#    Updated: 2020/01/12 20:17:39 by othabchi         ###   ########.fr        #
+#    Created: 2020/01/13 18:47:27 by idouidi           #+#    #+#              #
+#    Updated: 2020/01/14 06:24:15 by idouidi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,8 +22,13 @@ srcs/ft_utils.c srcs/ft_display.c srcs/ft_pars.c srcs/ft_nb_digit.c \
 srcs/ft_putchar.c srcs/ft_putstr.c srcs/ft_putnbr.c srcs/ft_strlen.c \
 srcs/ft_substr.c srcs/ft_atoi.c srcs/ft_putnbr_x.c srcs/ft_printf_pct.c
 
-all:
-	@gcc -Wall -Werror -Wextra $(SRCS) -c 
+all: $(NAME)
+
+$(NAME): $(OBJS)
+	ar rcs $(NAME) $^
+
+$(OBJS): $(SRCS)
+	@gcc -Wall -Wextra -Werror $^ -c
 	@mv ft_printf.o srcs/
 	@mv ft_printf_conv.o srcs/
 	@mv ft_is_balise.o srcs/

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf_conv.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: othabchi <othabchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: idouidi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/29 16:47:54 by othabchi          #+#    #+#             */
-/*   Updated: 2020/01/13 17:52:54 by othabchi         ###   ########.fr       */
+/*   Created: 2020/01/13 18:39:32 by idouidi           #+#    #+#             */
+/*   Updated: 2020/01/14 06:28:03 by idouidi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,11 @@ void	nb_conversion(va_list params, char *str, char arg_type, t_field field)
 	else
 		nb = (unsigned int)va_arg(params, int);
 	len = count_digit(nb, arg_type);
-	if (check == 0 && ((arg_type == 'x' || arg_type == 'X') && nb < 0))
+	if (check == 0 && (arg_type == 'x' || arg_type == 'X') && nb < 0)
 		print_balise_nb(4294967296 + nb, arg_type, field, len);
-	else if (check == 0 || nb != 0)
-		print_balise_nb(nb, arg_type, field, len);
-	else
+	else if (nb == 0 && field.error == 1)
 		while (field.width && field.width--)
 			ft_putchar(' ');
+	else if (check == 0 || nb != 0)
+		print_balise_nb(nb, arg_type, field, len);
 }
