@@ -6,7 +6,7 @@
 #    By: dsy <marvin@42.fr>                         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/21 20:42:34 by dsy               #+#    #+#              #
-#    Updated: 2020/01/29 18:21:49 by dsy              ###   ########.fr        #
+#    Updated: 2020/02/03 11:24:08 by dsy              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,10 +18,22 @@ RUN apt-get update -y
 RUN apt-get install -y nginx
 RUN apt-get install -y wget
 RUN apt-get install -y unzip
-RUN apt-get install -y php-fpm
-RUN apt-get install -y php-mysql
+RUN  sudo apt install php7.3 php7.3-fpm php7.3-mysql php-common php7.3-cli php7.3-common php7.3-json php7.3-opcache php7.3-readline
 RUN apt-get install -y mariadb-server
 RUN apt-get install -y mariadb-client
+
+#MariaDB
+RUN systemctl enable mariadb
+RUN sudo mariadb -u root
+
+#PHP
+RUN sudo systemctl enable php7.3-fpm
+
+#Nginx
+RUN systemctl enable nginx
+RUN sudo chown www-data:www-data /usr/share/nginx/html/ -R
+RUN sudo rm /etc/nginx/sites-enabled/default
+
 
 #Wordpress
 RUN wget https://fr.wordpress.org/wordpress-latest-fr_FR.zip
