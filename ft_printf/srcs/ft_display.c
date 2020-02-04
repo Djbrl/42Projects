@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 14:11:27 by dsy               #+#    #+#             */
-/*   Updated: 2020/01/20 14:11:28 by dsy              ###   ########.fr       */
+/*   Updated: 2020/02/04 16:12:13 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	print_balise_nb(long nb, char c, t_field f, int len)
 	int	width;
 	int	precision;
 
+	if (f.precision < 0)
+		f.precision = 0;
 	precision = (f.precision > len) ? f.precision - len : len;
 	width = (f.precision > len) ? f.width - (precision + len) : f.width - len;
 	width = (nb < 0) ? width - 1 : width;
