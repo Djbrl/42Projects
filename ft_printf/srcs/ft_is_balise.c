@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 14:11:38 by dsy               #+#    #+#             */
-/*   Updated: 2020/02/04 15:57:43 by dsy              ###   ########.fr       */
+/*   Updated: 2020/02/04 17:32:27 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_field		check_star(char *str, va_list args)
 			c = (int)va_arg(args, int);
 			if (c < 0)
 				field.flags[1] = '-';
-			if (str[i - 1] && str[i - 1] == '.')
+			if (str[i - 1] && str[i - 1] == '.' && (field.flags[1] = '/'))
 				field.precision = c;
 			else
 				field.width = (c < 0) ? -c : c;

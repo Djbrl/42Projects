@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 15:44:42 by dsy               #+#    #+#             */
-/*   Updated: 2020/02/04 16:23:53 by dsy              ###   ########.fr       */
+/*   Updated: 2020/02/04 17:42:55 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int main()
 	 printf("[%d]\n", ft_printf("%s%*.*s%s", GRN, -15, 10, "hello", NC));
 	 printf("[%d]\n", printf("%*.*s", -15, 10, "hello"));
 	//WRONG OUTPUT
-	 printf("[%d]\n", ft_printf("%s%*.*s%s", GRN, 15, -10, "hello", NC));
+	 printf("[%d]\n", ft_printf("%s%*.*s%s", YLW, 15, -10, "hello", NC));
 	 printf("[%d]\n", printf("%*.*s", 15, -10, "hello"));
 	return (0);
 }
