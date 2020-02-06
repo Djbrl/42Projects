@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 14:11:38 by dsy               #+#    #+#             */
-/*   Updated: 2020/02/04 17:32:27 by dsy              ###   ########.fr       */
+/*   Updated: 2020/02/06 22:39:07 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ t_field		is_balise(char *str, va_list args)
 
 	field = check_star(str, args);
 	check_neg = (field.flags[1] == '-') ? 1 : 0;
-	field.error = (field.precision == 0) ? 1 : 0;
+	field.error = (field.precision < 0) ? 1 : 0;
 	field = is_balise_flags(str, field, check_neg);
 	field = is_balise_width_n_precision(str, field);
 	if (field.precision == -1)
