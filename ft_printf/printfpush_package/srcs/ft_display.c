@@ -6,11 +6,12 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/07 05:04:03 by dsy               #+#    #+#             */
-/*   Updated: 2020/02/07 05:04:04 by dsy              ###   ########.fr       */
+/*   Updated: 2020/02/08 22:30:20 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libftprintf.h"
+#include <stdio.h>
 
 void	print_balise_nb(long nb, char c, t_field f, int len)
 {
@@ -37,7 +38,8 @@ void	print_balise_nb(long nb, char c, t_field f, int len)
 	if (f.flags[0] == '0' && f.precision == 0)
 		while (width > 0 && width--)
 			ft_putchar('0');
-	(c == 'x' || c == 'X') ? ft_putnbr_x(nb, c) : ft_putnbr(nb);
+	if (precision > 0)
+		(c == 'x' || c == 'X') ? ft_putnbr_x(nb, c) : ft_putnbr(nb);
 }
 
 void	to_set_str(int width, t_field field, char *str, int check)
