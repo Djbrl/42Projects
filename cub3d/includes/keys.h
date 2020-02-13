@@ -6,7 +6,7 @@
 /*   By: myoung <myoung@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/04 20:37:57 by myoung            #+#    #+#             */
-/*   Updated: 2020/02/12 22:06:11 by dsy              ###   ########.fr       */
+/*   Updated: 2020/02/13 17:32:08 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,13 @@
 **	"67 89";
 */
 
+/*
+**WSAD : 13, 1, 0, 2
+**ESC : 53
+**HAUT BAS GAUCHE DROITE : 126, 124, 123, 125
+*/
+
+# define KEY_ESC 53
 # define KEY_A 0
 # define KEY_S 1
 # define KEY_D 2
@@ -76,6 +83,8 @@ typedef struct	s_params
 {
 	void		*mlx_ptr;
 	void		*win_ptr;
+	void		*mlx_img;
+	int			*img_addr;
 }				t_params;
 
 typedef struct	s_keys
