@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:24:47 by dsy               #+#    #+#             */
-/*   Updated: 2020/02/14 16:54:20 by dsy              ###   ########.fr       */
+/*   Updated: 2020/02/14 17:03:59 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@
 # define KEY_RIGHT 124
 # define KEY_DOWN 125
 # define KEY_UP 126
+
+#include "libft/libft.h"
 
 typedef struct	s_mlx
 {
@@ -123,6 +125,8 @@ typedef	struct	s_keys
 typedef	struct	s_data
 {
 	int			b;
+	t_mlx		mlx;
+	t_keys		keys;
 }				t_data;
 
 #endif
