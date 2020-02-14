@@ -1,17 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
+/*   keys.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
+/*   By: myoung <myoung@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/14 16:24:47 by dsy               #+#    #+#             */
-/*   Updated: 2020/02/14 20:08:58 by dsy              ###   ########.fr       */
+/*   Created: 2017/01/04 20:37:57 by myoung            #+#    #+#             */
+/*   Updated: 2020/02/14 13:09:03 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D_H
-# define CUB3D_H
+#ifndef KEYS_H
+# define KEYS_H
+
+/*
+** char *string = ""
+**	"asdfhgzxcv"		This string has the matching symbol or letter
+**	"bqweryt123"		for the index of the keycode for the key.
+**	"465=97-80]"		if you press KEY_BRACE_R or ]
+**	"ou[ip lj\"k"		You could use string[30] or string[KEY_BRACE_R]
+**	";\\,/nm.  ` "		to access the matching symbol or letter.
+**	"	. * +   "
+**	"/ -  =012345"		If you find anything missing please let me know.
+**	"67 89";
+*/
+
+/*
+**WSAD : 13, 1, 0, 2
+**ESC : 53
+**HAUT BAS GAUCHE DROITE : 126, 124, 123, 125
+*/
 
 # define KEY_ESC 53
 # define KEY_A 0
@@ -61,18 +79,15 @@
 # define KEY_DOWN 125
 # define KEY_UP 126
 
-#include "libft/libft.h"
-#include <stdio.h>
-
-typedef struct	s_mlx
+typedef struct	s_params
 {
 	void		*mlx_ptr;
 	void		*win_ptr;
 	void		*mlx_img;
 	int			*img_addr;
-}				t_mlx;
+}				t_params;
 
-typedef	struct	s_keys
+typedef struct	s_keys
 {
 	int			a:1;
 	int			s:1;
@@ -114,7 +129,6 @@ typedef	struct	s_keys
 	int			n:1;
 	int			m:1;
 	int			tab:1;
-	int			esc:1;
 	int			plus:1;
 	int			minus:1;
 	int			left:1;
@@ -122,11 +136,4 @@ typedef	struct	s_keys
 	int			down:1;
 	int			up:1;
 }				t_keys;
-
-typedef	struct	s_data
-{
-	t_mlx		mlx;
-	t_keys		keys;
-}				t_data;
-
 #endif

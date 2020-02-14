@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/12 17:14:11 by dsy               #+#    #+#             */
-/*   Updated: 2019/12/27 13:38:11 by dsy              ###   ########.fr       */
+/*   Updated: 2020/02/14 20:08:46 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
+# include "get_next_line.h"
 
 void			*ft_memset(void *str, int c, size_t n);
 void			ft_bzero(void *s, size_t n);
