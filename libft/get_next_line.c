@@ -6,11 +6,11 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 02:10:51 by dsy               #+#    #+#             */
-/*   Updated: 2020/02/14 19:36:15 by dsy              ###   ########.fr       */
+/*   Updated: 2020/02/14 20:07:58 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "libft.h"
 
 int			cut_stack(char **s, char **line, int fd)
 {
