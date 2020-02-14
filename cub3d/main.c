@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 17:09:30 by dsy               #+#    #+#             */
-/*   Updated: 2020/02/13 17:54:59 by dsy              ###   ########.fr       */
+/*   Updated: 2020/02/14 14:35:10 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int ft_images(int key, void *params)
 		while (++x < 600)
 			p->img_addr[x * 600 + y] = 0xFFFFFF;
 	}
-	mlx_put_image_to_window(p->mlx_ptr, p->win_ptr, p->mlx_img, 300, 300);
+	//mlx_put_image_to_window(p->mlx_ptr, p->win_ptr, p->mlx_img, 200, 200);
 	//mlx_destroy_image(p->mlx_ptr, p->mlx_img);
 	return (0);
 }
@@ -61,11 +61,11 @@ int main()
 
 	p.mlx_ptr = mlx_init();
 	p.win_ptr = mlx_new_window(p.mlx_ptr, 600, 600, "cub3d");
-	p.mlx_img = mlx_new_image(p.mlx_ptr, 200, 200);
+	p.mlx_img = mlx_new_image(p.mlx_ptr, 200, 100);
 
 	
-	//mlx_hook(p.win_ptr, 2, 0, ft_print_pix, &p);
-	mlx_hook(p.win_ptr, 2, 0, ft_images, &p);
+	mlx_hook(p.win_ptr, 2, 0, ft_print_pix, &p);
+	//mlx_hook(p.win_ptr, 2, 0, ft_images, &p);
 	mlx_loop(p.mlx_ptr);
 	//mlx_key_hook(win_ptr, deal_key, (void*)&p);
 	//mlx_mouse_hook(init, (&mlx_new_window)(init, 300, 300, "test"), keys.a);
