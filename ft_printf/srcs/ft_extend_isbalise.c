@@ -6,19 +6,16 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/07 04:55:17 by dsy               #+#    #+#             */
-/*   Updated: 2020/02/09 17:42:32 by dsy              ###   ########.fr       */
+/*   Updated: 2020/02/09 17:37:32 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libftprintf.h"
 
-t_field		extend_check_star(int c, t_field field)
+void		extend_check_star(int c, t_field field)
 {
 	if (c < 0 && field.width > 0)
 		field.flags[1] = '/';
-//	if (field.width < 0 && field.precision < 0)
-//		field.flags[1] = '/';
-	return field;
 }
 
 t_field		check_star(char *str, va_list args)
@@ -39,12 +36,11 @@ t_field		check_star(char *str, va_list args)
 			c = (int)va_arg(args, int);
 			if (c < 0)
 				field.flags[1] = '-';
-			field = extend_check_star(c, field);
+			extend_check_star(c, field);
 			if (str[i - 1] && str[i - 1] == '.')
 				field.precision = c;
 			else
-				field.width = c;
-//			field = extend_check_star(c, field);
+				field.width = (c < 0) ? -c : c;
 		}
 		i++;
 	}

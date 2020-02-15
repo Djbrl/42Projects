@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/20 14:12:07 by dsy               #+#    #+#             */
-/*   Updated: 2020/02/04 16:04:11 by dsy              ###   ########.fr       */
+/*   Created: 2020/02/07 05:04:48 by dsy               #+#    #+#             */
+/*   Updated: 2020/02/07 05:04:49 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,21 +52,15 @@ void		which_arg(char *str, va_list params)
 	field = is_balise(str, params);
 	while (str[i] && !is_conversion(str[i]))
 		i++;
-	if (str[i] == 's' && field.error == 1)
-		while (field.width > 0 && field.width--)
-			ft_putchar(' ');
-	else
-	{
-		if (str[i] == 'c' || str[i] == 's')
-			s_conversion(str, params, str[i], field);
-		if (str[i] == 'i' || str[i] == 'd' || str[i] == 'u' ||
-			str[i] == 'x' || str[i] == 'X')
-			nb_conversion(params, str, str[i], field);
-		if (str[i] == 'p')
-			p_conversion(params, str[i], field);
-		if (str[i] == '%')
-			print_balise_pct(field);
-	}
+	if (str[i] == 'c' || str[i] == 's')
+		s_conversion(str, params, str[i], field);
+	if (str[i] == 'i' || str[i] == 'd' || str[i] == 'u' ||
+		str[i] == 'x' || str[i] == 'X')
+		nb_conversion(params, str, str[i], field);
+	if (str[i] == 'p')
+		p_conversion(params, str[i], field);
+	if (str[i] == '%')
+		print_balise_pct(field);
 }
 
 static int	print_text(const char *str, va_list params)

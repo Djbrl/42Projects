@@ -5,40 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/20 14:11:38 by dsy               #+#    #+#             */
-/*   Updated: 2020/02/06 22:39:07 by dsy              ###   ########.fr       */
+/*   Created: 2020/02/07 05:04:18 by dsy               #+#    #+#             */
+/*   Updated: 2020/02/07 05:04:19 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libftprintf.h"
-
-t_field		check_star(char *str, va_list args)
-{
-	int		i;
-	int		c;
-	t_field	field;
-
-	i = 0;
-	field.width = 0;
-	field.precision = -1;
-	field.flags[0] = '/';
-	field.flags[1] = '/';
-	while (str[i] && !is_conversion(str[i]))
-	{
-		if (str[i] == '*')
-		{
-			c = (int)va_arg(args, int);
-			if (c < 0)
-				field.flags[1] = '-';
-			if (str[i - 1] && str[i - 1] == '.' && (field.flags[1] = '/'))
-				field.precision = c;
-			else
-				field.width = (c < 0) ? -c : c;
-		}
-		i++;
-	}
-	return (field);
-}
 
 int			is_present(char *str, char c)
 {
@@ -93,7 +65,7 @@ t_field		is_balise_width_n_precision(char *str, t_field field)
 		while (str[i] && str[i] >= '0' && str[i] <= '9')
 			i++;
 		tmp = ft_substr(str, j, i);
-		field.precision = (field.precision == -1) ?
+		field.precision = (field.precision == 0) ?
 			ft_atoi(tmp) : field.precision;
 		free(tmp);
 	}
@@ -107,10 +79,7 @@ t_field		is_balise(char *str, va_list args)
 
 	field = check_star(str, args);
 	check_neg = (field.flags[1] == '-') ? 1 : 0;
-	field.error = (field.precision < 0) ? 1 : 0;
 	field = is_balise_flags(str, field, check_neg);
 	field = is_balise_width_n_precision(str, field);
-	if (field.precision == -1)
-		field.precision = 0;
 	return (field);
 }

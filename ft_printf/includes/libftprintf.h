@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/20 14:10:52 by dsy               #+#    #+#             */
-/*   Updated: 2020/02/04 16:14:08 by dsy              ###   ########.fr       */
+/*   Created: 2020/02/07 05:03:16 by dsy               #+#    #+#             */
+/*   Updated: 2020/02/07 05:03:17 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 # include <unistd.h>
 # include <stdlib.h>
 
+# include <stdio.h>
+
 extern int		g_ret;
 
 typedef struct	s_field {
@@ -24,7 +26,6 @@ typedef struct	s_field {
 	char		flags[2];
 	int			width;
 	int			precision;
-	int			error;
 }				t_field;
 
 size_t			ft_strlen(const char *str);

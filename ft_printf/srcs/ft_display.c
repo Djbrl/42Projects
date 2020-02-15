@@ -5,19 +5,18 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/20 14:11:27 by dsy               #+#    #+#             */
-/*   Updated: 2020/02/06 22:45:40 by dsy              ###   ########.fr       */
+/*   Created: 2020/02/07 05:04:03 by dsy               #+#    #+#             */
+/*   Updated: 2020/02/09 17:48:33 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libftprintf.h"
-#include <stdio.h>
+
 void	print_balise_nb(long nb, char c, t_field f, int len)
 {
 	int	width;
 	int	precision;
 
-	printf("here\n");
 	precision = (f.precision > len) ? f.precision - len : len;
 	width = (f.precision > len) ? f.width - (precision + len) : f.width - len;
 	width = (nb < 0) ? width - 1 : width;
@@ -110,7 +109,7 @@ void	print_balise_add(unsigned long p, char c, t_field field)
 {
 	int		width;
 
-	width = (p != 0) ? field.width - 11 : field.width - 3;
+	width = (p != 0) ? field.width - 14 : field.width;
 	if (width > 0 && field.flags[1] != '-')
 		while (width--)
 			ft_putchar(' ');
