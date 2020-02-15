@@ -6,7 +6,7 @@
 #    By: dsy <marvin@42.fr>                         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/12 17:08:38 by dsy               #+#    #+#              #
-#    Updated: 2020/02/14 20:07:45 by dsy              ###   ########.fr        #
+#    Updated: 2020/02/16 00:42:23 by dsy              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,8 +17,10 @@
 LIBFTPATH = includes/libft 
 LIBOBJ = includes/libft/libft.a
 
-all:
+libft:
 	@cd $(LIBFTPATH) && make
+
+all: lifbt
 	@gcc -Wall -Wextra -Werror srcs/parser/*.c $(LIBOBJ)
 
 clean:
@@ -31,3 +33,5 @@ fclean: clean
 	#@/bin/rm -f $(NAME)
 
 re: fclean all
+
+.PHONY: libft all clean fclean re

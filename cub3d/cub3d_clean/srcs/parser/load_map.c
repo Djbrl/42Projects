@@ -6,20 +6,32 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:13:08 by dsy               #+#    #+#             */
-/*   Updated: 2020/02/14 20:06:55 by dsy              ###   ########.fr       */
+/*   Updated: 2020/02/15 23:51:52 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
-#include <stdio.h>
-void xd()
+
+int	load_into_file(char **file)
 {
-	printf("\n");
+	
+}
+
+int fetch_file(char *path)
+{
+	char	*file;
+	char	*buf;
+	int		fd;
+
+	fd = open(path, O_RDONLY);
+	while ((read(fd, file, 10)))
+		buf = ft_strjoin(file, buf);
+	printf("file : \n%s", buf);
+	return (0);
 }
 
 int main()
 {
-	get_next_line(0, NULL);
-	printf ("ok\n");
+	fetch_file("../../files/map.cub");
 	return (0);
 }

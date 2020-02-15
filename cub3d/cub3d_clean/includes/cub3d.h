@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:24:47 by dsy               #+#    #+#             */
-/*   Updated: 2020/02/14 20:08:58 by dsy              ###   ########.fr       */
+/*   Updated: 2020/02/15 22:25:39 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,10 @@
 # define KEY_DOWN 125
 # define KEY_UP 126
 
-#include "libft/libft.h"
-#include <stdio.h>
+# include "libft/libft.h"
+# include <stdio.h>
+# include <mlx.h>
+# include <fcntl.h>
 
 typedef struct	s_mlx
 {
