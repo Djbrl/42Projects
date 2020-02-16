@@ -6,13 +6,14 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:24:47 by dsy               #+#    #+#             */
-/*   Updated: 2020/02/15 22:25:39 by dsy              ###   ########.fr       */
+/*   Updated: 2020/02/16 03:57:41 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
+# define PATH_MAP "../../files/map.cub"
 # define KEY_ESC 53
 # define KEY_A 0
 # define KEY_S 1
@@ -65,6 +66,8 @@
 # include <stdio.h>
 # include <mlx.h>
 # include <fcntl.h>
+# include <sys/types.h>
+# include <unistd.h>
 
 typedef struct	s_mlx
 {
@@ -73,6 +76,19 @@ typedef struct	s_mlx
 	void		*mlx_img;
 	int			*img_addr;
 }				t_mlx;
+
+typedef struct	s_map
+{
+	char 		**r_key;
+	char 		**n_key;
+	char 		**s_key;
+	char 		**w_key;
+	char 		**e_key;
+	char 		**s_key;
+	char 		**f_key;
+	char 		**c_key;
+	char		**map_key;
+}				t_map;
 
 typedef	struct	s_keys
 {
@@ -131,4 +147,5 @@ typedef	struct	s_data
 	t_keys		keys;
 }				t_data;
 
+char			**load_map_file(char *path);
 #endif
