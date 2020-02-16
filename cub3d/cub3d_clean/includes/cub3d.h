@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:24:47 by dsy               #+#    #+#             */
-/*   Updated: 2020/02/16 03:57:41 by dsy              ###   ########.fr       */
+/*   Updated: 2020/02/16 07:29:55 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ typedef struct	s_map
 {
 	char 		**r_key;
 	char 		**n_key;
-	char 		**s_key;
+	char 		**so_key;
 	char 		**w_key;
 	char 		**e_key;
 	char 		**s_key;
@@ -147,5 +147,9 @@ typedef	struct	s_data
 	t_keys		keys;
 }				t_data;
 
+void			free_array(char **array);
 char			**load_map_file(char *path);
+void			free_map_struct(t_map map);
+int				get_rows(t_map map);
+int				get_cols(t_map map);
 #endif

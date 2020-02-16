@@ -6,17 +6,17 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:13:08 by dsy               #+#    #+#             */
-/*   Updated: 2020/02/16 03:38:55 by dsy              ###   ########.fr       */
+/*   Updated: 2020/02/16 06:44:47 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-int get_file_size(char *path)
+int		get_file_size(char *path)
 {
-	int fd;
-	int file_size;
-	char tmp[1];
+	int		fd;
+	int		file_size;
+	char	tmp[1];
 
 	file_size = 0;
 	fd = open(path, O_RDONLY);
@@ -33,7 +33,7 @@ char	*fetch_file(char *path)
 {
 	char	*file;
 	int		fd;
-	int 	ret;
+	int		ret;
 	int		n;
 
 	if ((n = get_file_size(path)) < 0)
@@ -50,33 +50,20 @@ char	*fetch_file(char *path)
 	return (file);
 }
 
-char		**load_map_file(char *path)
+char	**load_map_file(char *path)
 {
 	char	**parsed_file;
 	char	*file;
-	int i;
-
-	i = 0;
-	if ((file = fetch_file(path)) == 0)
-		return NULL;
-	if ((parsed_file = ft_split(file, '\n')) == 0)
-	{
-		free(parsed_file);
-		return NULL;
-	}
-	free(file);
-	return (parsed_file);
-}
-
-int main()
-{
-	char	**loaded_file;
 	int		i;
 
 	i = 0;
-	//loaded_file = load_map_file("../../files/map.cub");//free later
-	//
-	//while (parsed_file[i] != 0)
-	//	printf("parsed file : %s\n", parsed_file[i++]);
-	return (0);
+	if ((file = fetch_file(path)) == 0)
+		return (NULL);
+	if ((parsed_file = ft_split(file, '\n')) == 0)
+	{
+		free_array(parsed_file);
+		return (NULL);
+	}
+	free(file);
+	return (parsed_file);
 }
