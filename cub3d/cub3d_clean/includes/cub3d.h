@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:24:47 by dsy               #+#    #+#             */
-/*   Updated: 2020/02/16 07:29:55 by dsy              ###   ########.fr       */
+/*   Updated: 2020/02/17 22:22:20 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define CUB3D_H
 
 # define PATH_MAP "../../files/map.cub"
+
 # define KEY_ESC 53
 # define KEY_A 0
 # define KEY_S 1

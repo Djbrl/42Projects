@@ -5,5 +5,5 @@ find . -type f -name  "*.a" -exec rm -f {} \;
 find . -type f -name  "*.he" -exec rm -f {} \;
 
 git add *
-git commit -m "cleanup routine"
+git commit -m "[$1]"
 git push
