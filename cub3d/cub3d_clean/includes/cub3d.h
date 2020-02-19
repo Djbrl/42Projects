@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:24:47 by dsy               #+#    #+#             */
-/*   Updated: 2020/02/19 21:44:15 by dsy              ###   ########.fr       */
+/*   Updated: 2020/02/19 22:14:16 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ typedef struct	s_mlx
 
 typedef struct	s_map
 {
+	int			map_error;
 	char 		**r_key;
 	char 		**n_key;
 	char 		**so_key;

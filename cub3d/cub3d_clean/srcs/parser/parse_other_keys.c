@@ -6,8 +6,18 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 20:35:14 by dsy               #+#    #+#             */
-/*   Updated: 2020/02/19 21:11:50 by dsy              ###   ########.fr       */
+/*   Updated: 2020/02/19 22:14:19 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
+
+int	check_keys_order(char **map)
+{
+	int i;
+
+	i = 0;
+	if (ft_strcmp(map.r_key[0], "R") != 0)
+		return (0);
+	return (1);
+}

@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:13:18 by dsy               #+#    #+#             */
-/*   Updated: 2020/02/19 21:47:02 by dsy              ###   ########.fr       */
+/*   Updated: 2020/02/19 22:13:56 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,15 @@ t_map	check_file_keys(char **loaded_file, t_map map)
 	map.f_key = ft_split(loaded_file[6] + 2, ',');
 	map.c_key = ft_split(loaded_file[7] + 2, ',');
 	map = fill_map(map, loaded_file);
-	check_map(map);
+	if (!check_map(map))
+		map.map_error = 1;
 	return (map);
 }
 
 t_map parse_map_file(char *path, t_map map)
 {
 	char **loaded_file;
-
+	//pass struct as pointer
 	loaded_file = load_map_file(path);
 	map = check_file_keys(loaded_file, map);
 	free_array(loaded_file);
