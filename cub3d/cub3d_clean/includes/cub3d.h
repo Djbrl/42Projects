@@ -6,14 +6,14 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:24:47 by dsy               #+#    #+#             */
-/*   Updated: 2020/02/17 22:22:20 by dsy              ###   ########.fr       */
+/*   Updated: 2020/02/19 21:44:15 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# define PATH_MAP "../../files/map.cub"
+# define PATH_MAP "/Users/dsy/42Projects/cub3d/cub3d_clean/files/map.cub"
 
 # define KEY_ESC 53
 # define KEY_A 0
@@ -148,9 +148,19 @@ typedef	struct	s_data
 	t_keys		keys;
 }				t_data;
 
+t_map			fill_map(t_map map, char **loaded_file);
+t_map			check_file_keys(char **loaded_file, t_map map);
+t_map			parse_map_file(char *path, t_map map);
 void			free_array(char **array);
-char			**load_map_file(char *path);
 void			free_map_struct(t_map map);
-int				get_rows(t_map map);
+char			**load_map_file(char *path);
+char			*remove_spaces(char *line);
+char			*fetch_file(char *path);
+int				check_map_borders(t_map map, int row, int col);
+int				check_map_player(t_map map);
+int				check_map_values(t_map map);
+int				get_file_size(char *path);
+int				check_map(t_map map);
 int				get_cols(t_map map);
+int				get_rows(t_map map);
 #endif

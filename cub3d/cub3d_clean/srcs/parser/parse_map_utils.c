@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/16 06:31:50 by dsy               #+#    #+#             */
-/*   Updated: 2020/02/17 22:10:51 by dsy              ###   ########.fr       */
+/*   Updated: 2020/02/19 21:45:13 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,34 @@ int		get_cols(t_map map)
 		i++;
 	}
 	return (j - 1);
+}
+
+char *remove_spaces(char *line)
+{
+    char *clean_line;
+    int i;
+    int j;
+
+    j = 0;
+    i = 0;
+    while (line[j])
+    {
+        if (line[j] != ' ')
+            i++;
+        j++;
+    }
+    clean_line = (char*)malloc(sizeof(char) * i);
+    i = 0;
+    j = 0;
+    while (line[i])
+    {
+        if (line[i] != ' ')
+        {
+            clean_line[j] = line[i];
+            j++;
+        }
+        i++;
+    }
+    clean_line[j] = 0;
+    return (clean_line);
 }

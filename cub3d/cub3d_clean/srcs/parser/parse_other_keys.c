@@ -1,23 +1,13 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   parse_other_keys.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/14 16:15:56 by dsy               #+#    #+#             */
-/*   Updated: 2020/02/19 21:47:51 by dsy              ###   ########.fr       */
+/*   Created: 2020/02/19 20:35:14 by dsy               #+#    #+#             */
+/*   Updated: 2020/02/19 21:11:50 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/cub3d.h"
-
-//Parsing map done, now parse keys
-int main()
-{
-	t_map map;
-
-	map = parse_map_file(PATH_MAP, map);
-	free_map_struct(map);
-	return (0);
-}
+#include "../../includes/cub3d.h"

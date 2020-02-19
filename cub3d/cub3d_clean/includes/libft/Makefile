@@ -6,7 +6,7 @@
 #    By: dsy <marvin@42.fr>                        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/28 16:31:35 by dsy              #+#    #+#              #
-#    Updated: 2020/02/16 00:41:49 by dsy              ###   ########.fr        #
+#    Updated: 2020/02/19 21:24:40 by dsy              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,15 +37,15 @@ SRCS = ft_islower.c ft_memcpy.c ft_putstr_fd.c ft_strlen.c ft_tolower.c \
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	ar rcs $(NAME) $^
+	@ar rcs $(NAME) $^
 
 $(OBJS): $(SRCS)
-	gcc -Wall -Wextra -Werror $^ -c
+	@gcc -Wall -Wextra -Werror $^ -c
 
 clean:
-	/bin/rm -f $(OBJS)
+	@/bin/rm -f $(OBJS)
 
 fclean: clean
-	/bin/rm -f $(NAME)
+	@/bin/rm -f $(NAME)
 
 re: fclean all
