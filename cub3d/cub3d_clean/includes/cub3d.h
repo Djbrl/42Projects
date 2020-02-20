@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:24:47 by dsy               #+#    #+#             */
-/*   Updated: 2020/02/20 18:17:12 by dsy              ###   ########.fr       */
+/*   Updated: 2020/02/20 20:36:10 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,10 @@
 # include <sys/types.h>
 # include <unistd.h>
 
+/*
+**	STRUCTURES
+*/
+
 typedef struct	s_mlx
 {
 	void		*mlx_ptr;
@@ -78,14 +82,14 @@ typedef struct	s_mlx
 
 typedef struct	s_map
 {
-	char 		**r_key;
-	char 		**n_key;
-	char 		**so_key;
-	char 		**w_key;
-	char 		**e_key;
-	char 		**s_key;
-	char 		**f_key;
-	char 		**c_key;
+	char		**r_key;
+	char		**n_key;
+	char		**so_key;
+	char		**w_key;
+	char		**e_key;
+	char		**s_key;
+	char		**f_key;
+	char		**c_key;
 	char		**map_key;
 }				t_map;
 
@@ -143,28 +147,40 @@ typedef	struct	s_keys
 typedef	struct	s_data
 {
 	t_mlx		mlx;
-	t_keys		keys;
+	t_map		map;
 }				t_data;
 
-int				fill_map(t_map *map, char **loaded_file);
-int				check_file_keys(char **loaded_file, t_map *map);
-int				parse_map_file(char *path, t_map *map);
+/*
+** PARSING FUNCTIONS
+*/
+
 void			free_array(char **array);
 void			free_map_struct(t_map map);
 char			**load_map_file(char *path);
 char			*remove_spaces(char *line);
 char			*fetch_file(char *path);
+
+int				fill_map(t_map *map, char **loaded_file);
+int				check_file_keys(char **loaded_file, t_map *map);
+int				parse_map_file(char *path, t_map *map);
+
 int				check_map_borders(t_map *map, int row, int col);
 int				check_map_player(t_map *map);
 int				check_map_values(t_map *map);
 int				check_keys_order(t_map *map, char **loaded_file);
 int				check_keys_content(t_map *map, char **loaded_file);
-int				get_file_size(char *path);
 int				check_res_key(t_map *map);
-int 			check_rgb_keys(t_map *map);
-int 			check_rgb_keys_2(t_map *map);
-int 			check_rgb_values(t_map *map);
+int				check_rgb_keys(t_map *map);
+int				check_rgb_keys_2(t_map *map);
+int				check_rgb_values(t_map *map);
 int				check_map(t_map *map);
+int				get_file_size(char *path);
 int				get_cols(t_map *map);
 int				get_rows(t_map *map);
+
+/*
+** MLX FUNCTIONS
+*/
+
+int				init_window(t_mlx *mlx);
 #endif

@@ -1,30 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   display.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/12 17:09:30 by dsy               #+#    #+#             */
-/*   Updated: 2020/02/20 13:26:30 by dsy              ###   ########.fr       */
+/*   Created: 2020/02/20 19:51:13 by dsy               #+#    #+#             */
+/*   Updated: 2020/02/20 20:56:25 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/keys.h"
-#include <mlx.h>
-#include <stdio.h>
-#include <unistd.h>
+#include "../../includes/cub3d.h"
 
 int	ft_print_pix(int key, void *params)
 {
-	t_params *p = (t_params *)params;
-	mlx_pixel_put(p->mlx_ptr, p->win_ptr, key, key, 0x2FFF6A);
+	t_mlx *m = (t_mlx *)params;
+	mlx_pixel_put(m->mlx_ptr, m->win_ptr, key, key, 0x2FFF6A);
 	printf("key %d\n", key);
 	if (key == KEY_ESC)
-		mlx_destroy_window(p->mlx_ptr, p->win_ptr);
-	return (0);
+	{
+		mlx_destroy_window(m->mlx_ptr, m->win_ptr);
+		exit(EXIT_SUCCESS);
+		return (0);
+	}
+	return (1);
 }
-
+/*
 int ft_images(int key, void *params)
 {
 	t_params *p = (t_params *)params;
@@ -43,30 +44,26 @@ int ft_images(int key, void *params)
 	//mlx_put_image_to_window(p->mlx_ptr, p->win_ptr, p->mlx_img, 200, 200);
 	//mlx_destroy_image(p->mlx_ptr, p->mlx_img);
 	return (0);
-}
+}*/
 
 int	ft_destroy_window(int key, void *params)
 {
-	t_params *p = (t_params *)params;
-	mlx_destroy_window(p->mlx_ptr, p->win_ptr);
+	t_mlx *m = (t_mlx *)params;
+	mlx_destroy_window(m->mlx_ptr, m->win_ptr);
 	return (0);
 }
-int main()
-{
-	void *mlx_ptr; //id connexion serv
-	void *win_ptr; //id fenetre
-	t_params p;
 
+int init_window(t_mlx *m)
+{
 	int colors = 0x2FFF6A, x = 300, y = 300;
 
-	p.mlx_ptr = mlx_init();
-	p.win_ptr = mlx_new_window(p.mlx_ptr, 600, 600, "cub3d");
-	p.mlx_img = mlx_new_image(p.mlx_ptr, 200, 100);
-
-	
-	//mlx_hook(p.win_ptr, 2, 0, ft_print_pix, &p);
+	m->mlx_ptr = mlx_init();
+	m->win_ptr = mlx_new_window(m->mlx_ptr, 600, 600, "cub3d");
+	m->mlx_img = mlx_new_image(m->mlx_ptr, 200, 100);
+	mlx_hook(m->win_ptr, 2, 0, ft_print_pix, m);
+//	mlx_loop_hook (m->mlx_ptr, ft_print_pix, m);
 //	mlx_hook(p.win_ptr, 2, 0, ft_images, &p);
-//	mlx_loop(p.mlx_ptr);
+	mlx_loop(m->mlx_ptr);
 	//mlx_key_hook(win_ptr, deal_key, (void*)&p);
 	//mlx_mouse_hook(init, (&mlx_new_window)(init, 300, 300, "test"), keys.a);
 	return (0);

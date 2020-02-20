@@ -6,7 +6,7 @@
 #    By: dsy <marvin@42.fr>                         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/12 17:08:38 by dsy               #+#    #+#              #
-#    Updated: 2020/02/19 21:48:26 by dsy              ###   ########.fr        #
+#    Updated: 2020/02/20 19:59:32 by dsy              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ libft:
 	@cd $(LIBFTPATH) && make
 
 all: libft
-	@gcc $(SRCS) main.c -L /usr/local/lib -lmlx -framework OpenGL -framework AppKit $(LIBOBJ) -o cub3D
+	gcc $(SRCS) main.c -L /usr/local/lib -lmlx -framework OpenGL -framework AppKit $(LIBOBJ) -o cub3D
 
 clean:
 	@cd $(LIBFTPATH) && make clean
