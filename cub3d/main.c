@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 17:09:30 by dsy               #+#    #+#             */
-/*   Updated: 2020/02/15 22:33:10 by dsy              ###   ########.fr       */
+/*   Updated: 2020/02/20 13:26:30 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int main()
 	
 	//mlx_hook(p.win_ptr, 2, 0, ft_print_pix, &p);
 //	mlx_hook(p.win_ptr, 2, 0, ft_images, &p);
-	mlx_loop(p.mlx_ptr);
+//	mlx_loop(p.mlx_ptr);
 	//mlx_key_hook(win_ptr, deal_key, (void*)&p);
 	//mlx_mouse_hook(init, (&mlx_new_window)(init, 300, 300, "test"), keys.a);
 	return (0);

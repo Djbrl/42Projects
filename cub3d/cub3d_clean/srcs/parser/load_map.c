@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:13:08 by dsy               #+#    #+#             */
-/*   Updated: 2020/02/19 21:46:35 by dsy              ###   ########.fr       */
+/*   Updated: 2020/02/20 18:18:03 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,10 @@ char	**load_map_file(char *path)
 
 	i = 0;
 	if ((file = fetch_file(path)) == 0)
+	{
+		write(1, "Error\n[Path]Couldn't find map file.\n", 36);
 		return (NULL);
+	}
 	if ((parsed_file = ft_split(file, '\n')) == 0)
 	{
 		free_array(parsed_file);
