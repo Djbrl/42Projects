@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:24:47 by dsy               #+#    #+#             */
-/*   Updated: 2020/02/20 20:36:10 by dsy              ###   ########.fr       */
+/*   Updated: 2020/02/21 18:16:33 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,6 @@ typedef	struct	s_data
 /*
 ** PARSING FUNCTIONS
 */
-
 void			free_array(char **array);
 void			free_map_struct(t_map map);
 char			**load_map_file(char *path);
@@ -164,6 +163,7 @@ int				fill_map(t_map *map, char **loaded_file);
 int				check_file_keys(char **loaded_file, t_map *map);
 int				parse_map_file(char *path, t_map *map);
 
+int				adjust_resolution(t_map *map);
 int				check_map_borders(t_map *map, int row, int col);
 int				check_map_player(t_map *map);
 int				check_map_values(t_map *map);
@@ -182,5 +182,5 @@ int				get_rows(t_map *map);
 ** MLX FUNCTIONS
 */
 
-int				init_window(t_mlx *mlx);
+int				init_game(t_mlx *mlx, t_map *map);
 #endif

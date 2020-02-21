@@ -6,13 +6,43 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 17:53:16 by dsy               #+#    #+#             */
-/*   Updated: 2020/02/20 18:13:03 by dsy              ###   ########.fr       */
+/*   Updated: 2020/02/21 18:37:55 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-int	check_rgb_values(t_map *map)
+int		adjust_resolution(t_map *map)
+{
+	int res_values[2];
+
+	res_values[0] = ft_atoi(map->r_key[1]);
+	res_values[1] = ft_atoi(map->r_key[2]);
+	if (res_values[0] < 200 || res_values[1] < 200)
+	{
+		free(map->r_key[1]);
+		free(map->r_key[2]);
+		map->r_key[1] = ft_strdup("200");
+		map->r_key[2] = ft_strdup("200");
+	}
+	else
+	{
+		if (res_values[0] > 2560)
+		{
+			free(map->r_key[1]);
+			map->r_key[1] = ft_strdup("2560");
+		}
+		if (res_values[1] > 1440)
+		{
+			free(map->r_key[2]);
+			map->r_key[2] = ft_strdup("1440");
+		}
+	}
+	printf("new res %s %s\n", map->r_key[1], map->r_key[2]);
+	return (1);
+}
+
+int		check_rgb_values(t_map *map)
 {
 	int rgb_vals1[3];
 	int rgb_vals2[3];
@@ -30,7 +60,7 @@ int	check_rgb_values(t_map *map)
 	return (1);
 }
 
-int	check_rgb_keys_2(t_map *map)
+int		check_rgb_keys_2(t_map *map)
 {
 	int i;
 	int j;

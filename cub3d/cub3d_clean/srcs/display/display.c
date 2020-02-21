@@ -6,11 +6,19 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 19:51:13 by dsy               #+#    #+#             */
-/*   Updated: 2020/02/20 20:56:25 by dsy              ###   ########.fr       */
+/*   Updated: 2020/02/21 18:26:34 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
+
+int exit_game(int key, void *params)
+{
+    t_mlx *m = (t_mlx *)params;
+    mlx_destroy_window(m->mlx_ptr, m->win_ptr);
+    exit(EXIT_SUCCESS);
+    return (0);
+}
 
 int	ft_print_pix(int key, void *params)
 {
@@ -19,12 +27,14 @@ int	ft_print_pix(int key, void *params)
 	printf("key %d\n", key);
 	if (key == KEY_ESC)
 	{
-		mlx_destroy_window(m->mlx_ptr, m->win_ptr);
+		mlx_hook(m->win_ptr, 2, 0, exit_game, m);
+	//	mlx_destroy_window(m->mlx_ptr, m->win_ptr);
 		exit(EXIT_SUCCESS);
 		return (0);
 	}
 	return (1);
 }
+
 /*
 int ft_images(int key, void *params)
 {
@@ -46,19 +56,12 @@ int ft_images(int key, void *params)
 	return (0);
 }*/
 
-int	ft_destroy_window(int key, void *params)
+int init_game(t_mlx *m, t_map *map)
 {
-	t_mlx *m = (t_mlx *)params;
-	mlx_destroy_window(m->mlx_ptr, m->win_ptr);
-	return (0);
-}
-
-int init_window(t_mlx *m)
-{
-	int colors = 0x2FFF6A, x = 300, y = 300;
+	int colors = 0x2FFF6A, x_res = ft_atoi(map->r_key[1]), y_res = ft_atoi(map->r_key[2]);
 
 	m->mlx_ptr = mlx_init();
-	m->win_ptr = mlx_new_window(m->mlx_ptr, 600, 600, "cub3d");
+	m->win_ptr = mlx_new_window(m->mlx_ptr, x_res, y_res, "Cub3D");
 	m->mlx_img = mlx_new_image(m->mlx_ptr, 200, 100);
 	mlx_hook(m->win_ptr, 2, 0, ft_print_pix, m);
 //	mlx_loop_hook (m->mlx_ptr, ft_print_pix, m);
