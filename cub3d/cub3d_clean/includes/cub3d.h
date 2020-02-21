@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:24:47 by dsy               #+#    #+#             */
-/*   Updated: 2020/02/21 20:40:46 by dsy              ###   ########.fr       */
+/*   Updated: 2020/02/21 23:33:12 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,6 +159,7 @@ void			free_mlx_struct(t_mlx *mlx);
 void			init_mlx_struct(t_mlx *mlx);
 char			**load_map_file(char *path);
 char			*remove_spaces(char *line);
+char			**rearrange_keys(char **parsed_file, int n);
 char			*fetch_file(char *path);
 
 int				fill_map(t_map *map, char **loaded_file);

@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:15:56 by dsy               #+#    #+#             */
-/*   Updated: 2020/02/21 20:56:42 by dsy              ###   ########.fr       */
+/*   Updated: 2020/02/21 23:28:08 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,6 @@ int main(int ac, char **av)
 	if (ret)
 		init_game(&mlx, &map);
 	//if (ret != 0)
-	free_map_struct(&map);
+	//free_map_struct(&map);
 	return (0);
 }

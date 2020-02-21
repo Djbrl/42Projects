@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:13:08 by dsy               #+#    #+#             */
-/*   Updated: 2020/02/21 20:18:28 by dsy              ###   ########.fr       */
+/*   Updated: 2020/02/21 23:42:39 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,56 @@ char	*fetch_file(char *path)
 	return (file);
 }
 
+char	**rearrange_keys(char **parsed_file, int n)
+{
+	char **lines;
+	int i;
+
+	if (!(lines = (char**)malloc(sizeof(char*) * n)))
+		return (NULL);
+	i = 0;
+	while (parsed_file[i])
+	{
+		if (parsed_file[i][0] == 'R')
+			lines[0] = ft_strdup(parsed_file[i]);
+		if (parsed_file[i][0] == 'N')
+			lines[1] = ft_strdup(parsed_file[i]);
+		if (parsed_file[i][0] == 'S' && parsed_file[i][1] == 'O')
+			lines[2] = ft_strdup(parsed_file[i]);
+		if (parsed_file[i][0] == 'W')
+			lines[3] = ft_strdup(parsed_file[i]);
+		if (parsed_file[i][0] == 'E')
+			lines[4] = ft_strdup(parsed_file[i]);
+		if (parsed_file[i][0] == 'S' && parsed_file[i][1] == ' ')
+			lines[5] = ft_strdup(parsed_file[i]);
+		if (parsed_file[i][0] == 'F')
+			lines[6] = ft_strdup(parsed_file[i]);
+		if (parsed_file[i][0] == 'C')
+			lines[7] = ft_strdup(parsed_file[i]);
+		if (i > 7)
+			lines[i] = ft_strdup(parsed_file[i]);
+		i++;
+	}
+	lines[i] = 0;
+	i = 0;
+	while (lines[i])
+		printf("lines : %s\n", lines[i++]);
+	i = 0;
+//	while (parsed_file[i])
+//		printf("messy file : %s\n", parsed_file[i++]);
+//	free_array(parsed_file);
+	return (lines);
+}
+
 char	**load_map_file(char *path)
 {
 	char	**parsed_file;
 	char	*file;
+	int		file_size;
 	int		i;
 
 	i = 0;
+	file_size = 0;
 	if ((file = fetch_file(path)) == 0)
 	{
 		write(1, "Error\n[Path]Couldn't find map file.\n", 36);
@@ -67,6 +110,9 @@ char	**load_map_file(char *path)
 		free_array(parsed_file);
 		return (NULL);
 	}
+	while (parsed_file[file_size])
+		file_size++;
+	rearrange_keys(parsed_file, file_size);
 	free(file);
 	return (parsed_file);
 }
