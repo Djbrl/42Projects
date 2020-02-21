@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:13:18 by dsy               #+#    #+#             */
-/*   Updated: 2020/02/21 18:23:55 by dsy              ###   ########.fr       */
+/*   Updated: 2020/02/21 20:21:30 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	check_file_keys(char **loaded_file, t_map *map)
 	if (!(fill_map(map, loaded_file)))
 		return (0);
 	if (!(check_keys_content(map, loaded_file)))
-		write(1, "Error\n[Bad map keys] Map Keys are incorrect.\n", 45);
+		write(1, "Error\n[nique ta mere en fait] Map Keys are incorrect.\n", 45);
 	if (!(adjust_resolution(map)) || !(check_map(map)))
 		return (0);
 	return (1);

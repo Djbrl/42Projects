@@ -1,32 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/14 16:15:56 by dsy               #+#    #+#             */
-/*   Updated: 2020/02/21 20:56:42 by dsy              ###   ########.fr       */
+/*   Created: 2020/02/21 20:46:55 by dsy               #+#    #+#             */
+/*   Updated: 2020/02/21 20:47:43 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/cub3d.h"
+#include "../../includes/cub3d.h"
 
-int main(int ac, char **av)
+void	init_mlx_struct(t_mlx *mlx)
 {
-	t_map	map;
-	t_mlx	mlx;
-	int		ret;
+	mlx->mlx_ptr = NULL;
+	mlx->win_ptr = NULL;
+	mlx->mlx_img = NULL;
+	mlx->img_addr = NULL;
+}
 
-	if (ac != 2)
-	{
-		write(1, "Error\nPlease only input a valid map path.\n", 42);
-		return (0);
-	}
-	ret = parse_map_file(av[1], &map);
-	if (ret)
-		init_game(&mlx, &map);
-	//if (ret != 0)
-	free_map_struct(&map);
-	return (0);
+void	free_mlx_struct(t_mlx *mlx)
+{
+	if (mlx->mlx_ptr != NULL)
+		free(mlx->mlx_ptr);
+	if (mlx->mlx_ptr != NULL)
+		free(mlx->win_ptr);
+//	if (mlx->mlx_ptr != NULL)
+//		free(mlx->mlx_img);
+//	if (mlx->mlx_ptr != NULL)
+//		free(mlx->img_addr);
 }

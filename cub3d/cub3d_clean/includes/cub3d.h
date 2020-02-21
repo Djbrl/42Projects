@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:24:47 by dsy               #+#    #+#             */
-/*   Updated: 2020/02/21 18:16:33 by dsy              ###   ########.fr       */
+/*   Updated: 2020/02/21 20:40:46 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,9 @@ typedef	struct	s_data
 ** PARSING FUNCTIONS
 */
 void			free_array(char **array);
-void			free_map_struct(t_map map);
+void			free_map_struct(t_map *map);
+void			free_mlx_struct(t_mlx *mlx);
+void			init_mlx_struct(t_mlx *mlx);
 char			**load_map_file(char *path);
 char			*remove_spaces(char *line);
 char			*fetch_file(char *path);

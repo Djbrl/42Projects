@@ -6,23 +6,23 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/16 06:31:50 by dsy               #+#    #+#             */
-/*   Updated: 2020/02/20 14:43:40 by dsy              ###   ########.fr       */
+/*   Updated: 2020/02/21 20:43:10 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-void	free_map_struct(t_map map)
+void	free_map_struct(t_map *map)
 {
-	free_array(map.r_key);
-	free_array(map.n_key);
-	free_array(map.so_key);
-	free_array(map.w_key);
-	free_array(map.e_key);
-	free_array(map.s_key);
-	free_array(map.f_key);
-	free_array(map.c_key);
-	free_array(map.map_key);
+	free_array(map->r_key);
+	free_array(map->n_key);
+	free_array(map->so_key);
+	free_array(map->w_key);
+	free_array(map->e_key);
+	free_array(map->s_key);
+	free_array(map->f_key);
+	free_array(map->c_key);
+	free_array(map->map_key);
 }
 
 int		get_rows(t_map *map)
