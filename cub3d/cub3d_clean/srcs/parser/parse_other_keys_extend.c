@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 17:53:16 by dsy               #+#    #+#             */
-/*   Updated: 2020/02/21 20:27:01 by dsy              ###   ########.fr       */
+/*   Updated: 2020/02/22 15:45:45 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int		adjust_resolution(t_map *map)
 {
 	int res_values[2];
 
+	if (!map->r_key[1] || !map->r_key[2])
+		return (0);
 	res_values[0] = ft_atoi(map->r_key[1]);
 	res_values[1] = ft_atoi(map->r_key[2]);
 	if (res_values[0] < 200 || res_values[1] < 200)

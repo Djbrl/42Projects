@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:13:08 by dsy               #+#    #+#             */
-/*   Updated: 2020/02/21 23:42:39 by dsy              ###   ########.fr       */
+/*   Updated: 2020/02/22 15:29:07 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,10 @@ char	**rearrange_keys(char **parsed_file, int n)
 		if (parsed_file[i][0] == 'N')
 			lines[1] = ft_strdup(parsed_file[i]);
 		if (parsed_file[i][0] == 'S' && parsed_file[i][1] == 'O')
+		{
 			lines[2] = ft_strdup(parsed_file[i]);
+			printf("we in\n%s\n%s\n", lines[2], parsed_file[i]);
+		}
 		if (parsed_file[i][0] == 'W')
 			lines[3] = ft_strdup(parsed_file[i]);
 		if (parsed_file[i][0] == 'E')
@@ -81,12 +84,17 @@ char	**rearrange_keys(char **parsed_file, int n)
 		i++;
 	}
 	lines[i] = 0;
+	printf("i val : %i\n", i);
 	i = 0;
+	printf("check line 3 : %s\n", lines[2]);
 	while (lines[i])
-		printf("lines : %s\n", lines[i++]);
+	{
+		printf("\x1b[32mlines : %s\x1b[0m\n", lines[i]);
+		i++;
+	}
 	i = 0;
-//	while (parsed_file[i])
-//		printf("messy file : %s\n", parsed_file[i++]);
+	while (parsed_file[i])
+		printf("messy file : %s\n", parsed_file[i++]);
 //	free_array(parsed_file);
 	return (lines);
 }
