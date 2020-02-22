@@ -6,7 +6,7 @@
 #    By: dsy <marvin@42.fr>                        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/28 16:31:35 by dsy              #+#    #+#              #
-#    Updated: 2020/02/19 21:24:40 by dsy              ###   ########.fr        #
+#    Updated: 2020/02/22 16:12:38 by dsy              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,7 @@ $(NAME): $(OBJS)
 	@ar rcs $(NAME) $^
 
 $(OBJS): $(SRCS)
-	@gcc -Wall -Wextra -Werror $^ -c
+	@gcc -glldb -Wall -Wextra -Werror $^ -c
 
 clean:
 	@/bin/rm -f $(OBJS)

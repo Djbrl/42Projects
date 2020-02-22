@@ -1,8 +1,8 @@
-SO ./textures/texture2
 NO ./textures/texture1
 EA ./textures/texture4
 WE ./textures/texture3
 R 13 10
+SO ./textures/texture2
 
 S ./textures/texture5
 F 255,255,03
