@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 19:51:13 by dsy               #+#    #+#             */
-/*   Updated: 2020/02/23 19:00:57 by dsy              ###   ########.fr       */
+/*   Updated: 2020/02/23 20:50:56 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,13 @@ int cross_window(int key, void *params)
 
 int toggle_minimap(int key, void *params)
 {
+	(void)key;
 	t_mlx *p = (t_mlx *)params;
 	int bpp = 1;
 	int sl = 1;
 	int endian = 0;;
 	int x = 0, y = 0;
+	p->mlx_img = mlx_new_image(p->mlx_ptr, 1500, 1700);
 	p->img_addr = (int*)mlx_get_data_addr(p->mlx_img, &bpp, &sl, &endian);
 	while (++y < 100)
 	{
@@ -50,7 +52,8 @@ int toggle_minimap(int key, void *params)
 			mlx_destroy_image(p->mlx_ptr, p->mlx_img);
 	}
 	else*/
-		mlx_put_image_to_window(p->mlx_ptr, p->win_ptr, p->mlx_img, 200+key, 200+key);
+	if (p->mlx_img != NULL)
+		mlx_put_image_to_window(p->mlx_ptr, p->win_ptr, p->mlx_img, 0, 0);
 	return (0);
 }
 
@@ -74,7 +77,12 @@ int	key_stroke(int key, void *params)
 	if (key == KEY_DOWN)
 		printf("Pressed down.\n");
 	if (key == KEY_M)
-		mlx_hook(m->win_ptr, 2, 0, toggle_minimap, m);
+		toggle_minimap(key, m);
+	if (key == KEY_U && m->mlx_img != NULL)
+	{
+		mlx_destroy_image(m->mlx_ptr, m->mlx_img);
+		m->mlx_img = NULL;
+	}
 	if (key == KEY_ESC)
 		esc_window(key, m);
 	return (0);
@@ -87,7 +95,6 @@ int init_game(t_mlx *m, t_map *map)
 	init_mlx_struct(m);
 	m->mlx_ptr = mlx_init();
 	m->win_ptr = mlx_new_window(m->mlx_ptr, x_res, y_res, "Cub3D");
-	m->mlx_img = mlx_new_image(m->mlx_ptr, 200, 100);
 	mlx_hook(m->win_ptr, 2, 0, key_stroke, m);
 	mlx_hook(m->win_ptr, 17, 0, cross_window, m);
 	mlx_loop(m->mlx_ptr);
