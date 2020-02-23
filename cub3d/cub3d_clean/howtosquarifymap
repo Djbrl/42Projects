@@ -1,0 +1,4 @@
+get size of longest row
+malloc **newmap at row x col size
+copy map into newmap, replace empty with 1s
+
