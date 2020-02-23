@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 17:53:16 by dsy               #+#    #+#             */
-/*   Updated: 2020/02/22 15:45:45 by dsy              ###   ########.fr       */
+/*   Updated: 2020/02/23 13:39:21 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,15 @@ int		adjust_resolution(t_map *map)
 		map->r_key[1] = ft_strdup("300");
 		map->r_key[2] = ft_strdup("200");
 	}
-	else
+	if (res_values[0] > 2560)
 	{
-		if (res_values[0] > 2560)
-		{
-			free(map->r_key[1]);
-			map->r_key[1] = ft_strdup("2560");
-		}
-		if (res_values[1] > 1440)
-		{
-			free(map->r_key[2]);
-			map->r_key[2] = ft_strdup("1440");
-		}
+		free(map->r_key[1]);
+		map->r_key[1] = ft_strdup("2560");
+	}
+	if (res_values[1] > 1440)
+	{
+		free(map->r_key[2]);
+		map->r_key[2] = ft_strdup("1440");
 	}
 	return (1);
 }

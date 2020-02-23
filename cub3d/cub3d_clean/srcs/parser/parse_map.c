@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:13:18 by dsy               #+#    #+#             */
-/*   Updated: 2020/02/22 15:46:07 by dsy              ###   ########.fr       */
+/*   Updated: 2020/02/23 13:09:17 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	fill_map(t_map *map, char **loaded_file)
 	while (loaded_file[i] != 0)
 		i++;
 	map_size = i - 8;
-	if (!(map->map_key = (char **)malloc(sizeof(char*) * map_size + 1)))
+	if (!(map->map_key = (char **)malloc(sizeof(char*) * (map_size + 1))))
 		return (0);
 	i = 8;
 	j = 0;

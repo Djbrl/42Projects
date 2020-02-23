@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:13:08 by dsy               #+#    #+#             */
-/*   Updated: 2020/02/22 16:07:50 by dsy              ###   ########.fr       */
+/*   Updated: 2020/02/23 16:04:26 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	*fetch_file(char *path)
 
 	if ((n = get_file_size(path)) < 0)
 		return (0);
-	if (!(file = (char*)malloc(sizeof(char) * n)))
+	if (!(file = (char*)malloc(sizeof(char) * (n + 1))))
 	{
 		free(file);
 		return (0);
@@ -50,58 +50,39 @@ char	*fetch_file(char *path)
 	return (file);
 }
 
-char	**rearrange_keys(char **parsed_file, int n)
+char	**rearrange_keys(char **f, int n)
 {
-	char **lines;
-	int i;
+	char	**s;
+	int		i;
 
-	if (!(lines = (char**)malloc(sizeof(char*) * n)))
+	if (!(s = (char**)malloc(sizeof(char*) * (n + 1))))
 		return (NULL);
 	i = 0;
-	while (parsed_file[i])
+	while (f[i])
 	{
-		if (parsed_file[i][0] == 'R')
-			lines[0] = ft_strdup(parsed_file[i]);
-		if (parsed_file[i][0] == 'N')
-			lines[1] = ft_strdup(parsed_file[i]);
-		if (parsed_file[i][0] == 'S' && parsed_file[i][1] == 'O')
-		{
-			lines[2] = ft_strdup(parsed_file[i]);
-			//printf("we in\n%s\n%s\n", lines[2], parsed_file[i]);
-		}
-		if (parsed_file[i][0] == 'W')
-			lines[3] = ft_strdup(parsed_file[i]);
-		if (parsed_file[i][0] == 'E')
-			lines[4] = ft_strdup(parsed_file[i]);
-		if (parsed_file[i][0] == 'S' && parsed_file[i][1] == ' ')
-			lines[5] = ft_strdup(parsed_file[i]);
-		if (parsed_file[i][0] == 'F')
-			lines[6] = ft_strdup(parsed_file[i]);
-		if (parsed_file[i][0] == 'C')
-			lines[7] = ft_strdup(parsed_file[i]);
 		if (i > 7)
-			lines[i] = ft_strdup(parsed_file[i]);
+			s[i] = ft_strdup(f[i]);
+		else
+		{
+			f[i][0] == 'R' ? s[0] = ft_strdup(f[i]) : 0;
+			f[i][0] == 'N' ? s[1] = ft_strdup(f[i]) : 0;
+			f[i][0] == 'S' && f[i][1] == 'O' ? s[2] = ft_strdup(f[i]) : 0;
+			f[i][0] == 'W' ? s[3] = ft_strdup(f[i]) : 0;
+			f[i][0] == 'E' ? s[4] = ft_strdup(f[i]) : 0;
+			f[i][0] == 'S' && f[i][1] == ' ' ? s[5] = ft_strdup(f[i]) : 0;
+			f[i][0] == 'F' ? s[6] = ft_strdup(f[i]) : 0;
+			f[i][0] == 'C' ? s[7] = ft_strdup(f[i]) : 0;
+		}
 		i++;
 	}
-	lines[i] = 0;
-	//printf("i val : %i\n", i);
-	i = 0;
-	//printf("check line 3 : %s\n", lines[2]);
-	while (lines[i])
-	{
-		printf("\x1b[32mlines : %s\x1b[0m\n", lines[i]);
-		i++;
-	}
-	i = 0;
-	//while (parsed_file[i])
-		//printf("messy file : %s\n", parsed_file[i++]);
-//	free_array(parsed_file);
-	return (lines);
+	s[i] = 0;
+	return (s);
 }
 
 char	**load_map_file(char *path)
 {
 	char	**parsed_file;
+	char	**arranged_file;
 	char	*file;
 	int		file_size;
 	int		i;
@@ -120,7 +101,8 @@ char	**load_map_file(char *path)
 	}
 	while (parsed_file[file_size])
 		file_size++;
-	rearrange_keys(parsed_file, file_size);
+	arranged_file = rearrange_keys(parsed_file, file_size);
 	free(file);
-	return (parsed_file);
+	free_array(parsed_file);
+	return (arranged_file);
 }

@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/16 06:31:50 by dsy               #+#    #+#             */
-/*   Updated: 2020/02/22 15:33:51 by dsy              ###   ########.fr       */
+/*   Updated: 2020/02/23 13:09:35 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ char	*remove_spaces(char *line)
 			i++;
 		j++;
 	}
-	clean_line = (char*)malloc(sizeof(char) * i);
+	clean_line = (char*)malloc(sizeof(char) * (i + 1));
 	i = 0;
 	j = 0;
 	while (line[i])

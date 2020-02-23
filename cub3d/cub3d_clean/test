@@ -1,0 +1,22 @@
+    while (parsed_file[i])
+    {
+        if (parsed_file[i][0] == 'R')
+            lines[0] = ft_strdup(parsed_file[i]);
+        if (parsed_file[i][0] == 'N')
+            lines[1] = ft_strdup(parsed_file[i]);
+        if (parsed_file[i][0] == 'S' && parsed_file[i][1] == 'O')
+            lines[2] = ft_strdup(parsed_file[i]);
+        if (parsed_file[i][0] == 'W')
+            lines[3] = ft_strdup(parsed_file[i]);
+        if (parsed_file[i][0] == 'E')
+            lines[4] = ft_strdup(parsed_file[i]);
+        if (parsed_file[i][0] == 'S' && parsed_file[i][1] == ' ')
+            lines[5] = ft_strdup(parsed_file[i]);
+        if (parsed_file[i][0] == 'F')
+            lines[6] = ft_strdup(parsed_file[i]);
+        if (parsed_file[i][0] == 'C')
+            lines[7] = ft_strdup(parsed_file[i]);
+        if (i > 7)
+            lines[i] = ft_strdup(parsed_file[i]);
+        i++;
+    }

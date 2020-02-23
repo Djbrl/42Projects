@@ -6,7 +6,7 @@
 #    By: dsy <marvin@42.fr>                         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/12 17:08:38 by dsy               #+#    #+#              #
-#    Updated: 2020/02/22 16:10:39 by dsy              ###   ########.fr        #
+#    Updated: 2020/02/23 16:08:34 by dsy              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,10 +18,11 @@ LIBFTPATH = includes/libft
 LIBOBJ = includes/libft/libft.a
 
 libft:
-	@cd $(LIBFTPATH) && make
+	@echo "compiling..."
+	@cd $(LIBFTPATH) && make -j5
 
 all: libft
-	gcc -glldb $(SRCS) main.c -L /usr/local/lib -lmlx -framework OpenGL -framework AppKit $(LIBOBJ) -o Cub3D
+	@gcc $(SRCS) main.c -L /usr/local/lib -lmlx -framework OpenGL -framework AppKit $(LIBOBJ) -o Cub3D
 
 clean:
 	@cd $(LIBFTPATH) && make clean
