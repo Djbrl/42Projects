@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 19:51:13 by dsy               #+#    #+#             */
-/*   Updated: 2020/02/24 15:50:40 by dsy              ###   ########.fr       */
+/*   Updated: 2020/02/24 16:16:48 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,26 +34,19 @@ int testtoggle_minimap(int key, void *params)
 {
 	(void)key;
 	t_game *data = (t_game *)params;
-	int bpp = 1;
-	int sl = 1;
-	int endian = 0;;
+	int bpp = 0;
+	int sl = 0;
+	int endian = 0;
 	int x = 0, y = 0;
-	data->mlx_img = mlx_new_image(data->mlx_ptr, 1500, 1700);
+	data->mlx_img = mlx_new_image(data->mlx_ptr, 300, 300);
 	data->img_addr = (int*)mlx_get_data_addr(data->mlx_img, &bpp, &sl, &endian);
-	while (++y < 100)
+	while (++y < 300)
 	{
 		x = 0;
-		while (++x < 200)
-			data->img_addr[x * 100 + y] = 0xFFFFFF;
+		while (++x < 300)
+			data->img_addr[x + y] = 0xFFFFFF;
 	}
-/*	if (key == KEY_U)
-	{
-		if (data->mlx_img != NULL)
-			mlx_destroy_image(data->mlx_ptr, data->mlx_img);
-	}
-	else*/
-	if (data->mlx_img != NULL)
-		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->mlx_img, 0, 0);
+	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->mlx_img, 0, 0);
 	return (0);
 }
 
@@ -77,7 +70,9 @@ int	testkey_stroke(int key, void *params)
 	if (key == KEY_DOWN)
 		printf("Pressed down.\n");
 	if (key == KEY_M)
-		testtoggle_minimap(key, data);
+		printf("Pressed %i.\n", key);
+		//mlx_pixel_put(data->mlx_ptr, data->win_ptr, 200, key, 0xFFFFFF);
+	//	testtoggle_minimap(key, data);
 	if (key == KEY_U && data->mlx_img != NULL)
 	{
 		mlx_destroy_image(data->mlx_ptr, data->mlx_img);
