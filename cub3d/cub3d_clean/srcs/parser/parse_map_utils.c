@@ -12,39 +12,39 @@
 
 #include "../../includes/cub3d.h"
 
-void	free_map_struct(t_map *map)
+void	free_map_struct(t_game *data)
 {
-	free_array(map->r_key);
-	free_array(map->n_key);
-	free_array(map->so_key);
-	free_array(map->w_key);
-	free_array(map->e_key);
-	free_array(map->s_key);
-	free_array(map->f_key);
-	free_array(map->c_key);
-	free_array(map->map_key);
+	free_array(data->r_key);
+	free_array(data->n_key);
+	free_array(data->so_key);
+	free_array(data->w_key);
+	free_array(data->e_key);
+	free_array(data->s_key);
+	free_array(data->f_key);
+	free_array(data->c_key);
+	free_array(data->map_key);
 }
 
-int		get_rows(t_map *map)
+int		get_rows(t_game *data)
 {
 	int i;
 
 	i = 0;
-	while (map->map_key[i] != 0)
+	while (data->map_key[i] != 0)
 		i++;
 	return (i);
 }
 
-int		get_cols(t_map *map)
+int		get_cols(t_game *data)
 {
 	int i;
 	int j;
 
 	i = 0;
 	j = 0;
-	while (map->map_key[0][i] != 0)
+	while (data->map_key[0][i] != 0)
 	{
-		if (map->map_key[0][i] == '1')
+		if (data->map_key[0][i] == '1')
 			j++;
 		i++;
 	}

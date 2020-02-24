@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:24:47 by dsy               #+#    #+#             */
-/*   Updated: 2020/02/23 18:00:14 by dsy              ###   ########.fr       */
+/*   Updated: 2020/02/24 15:44:02 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,16 +72,13 @@
 **	STRUCTURES
 */
 
-typedef struct	s_mlx
+typedef struct	s_game
 {
 	void		*mlx_ptr;
 	void		*win_ptr;
 	void		*mlx_img;
 	int			*img_addr;
-}				t_mlx;
 
-typedef struct	s_map
-{
 	char		**r_key;
 	char		**n_key;
 	char		**so_key;
@@ -91,10 +88,7 @@ typedef struct	s_map
 	char		**f_key;
 	char		**c_key;
 	char		**map_key;
-}				t_map;
 
-typedef	struct	s_keys
-{
 	int			a:1;
 	int			s:1;
 	int			d:1;
@@ -142,48 +136,45 @@ typedef	struct	s_keys
 	int			right:1;
 	int			down:1;
 	int			up:1;
-}				t_keys;
-
-typedef	struct	s_data
-{
-	t_mlx		mlx;
-	t_map		map;
-}				t_data;
+}				t_game;
 
 /*
 ** PARSING FUNCTIONS
 */
 void			free_array(char **array);
-void			free_map_struct(t_map *map);
-void			free_mlx_struct(t_mlx *mlx);
-void			init_mlx_struct(t_mlx *mlx);
+void			free_map_struct(t_game *game);
+void			free_mlx_struct(t_game *game);
+void			init_game_struct(t_game *game);
 char			**load_map_file(char *path);
 char			*remove_spaces(char *line);
 char			**rearrange_keys(char **parsed_file, int n);
 char			*fetch_file(char *path);
 
-int				fill_map(t_map *map, char **loaded_file);
-int				check_file_keys(char **loaded_file, t_map *map);
-int				parse_map_file(char *path, t_map *map);
+int				fill_map(t_game *game, char **loaded_file);
+int				check_file_keys(char **loaded_file, t_game *game);
+int				parse_map_file(char *path, t_game *game);
 
-int				adjust_resolution(t_map *map);
-int				check_map_borders(t_map *map, int row, int col);
-int				check_map_player(t_map *map);
-int				check_map_values(t_map *map);
-int				check_keys_order(t_map *map, char **loaded_file);
-int				check_keys_content(t_map *map, char **loaded_file);
-int				check_res_key(t_map *map);
-int				check_rgb_keys(t_map *map);
-int				check_rgb_keys_2(t_map *map);
-int				check_rgb_values(t_map *map);
-int				check_map(t_map *map);
+int				adjust_resolution(t_game *game);
+int				check_map_borders(t_game *game, int row, int col);
+int				check_map_player(t_game *game);
+int				check_map_values(t_game *game);
+int				check_keys_order(t_game *game, char **loaded_file);
+int				check_keys_content(t_game *game, char **loaded_file);
+int				check_res_key(t_game *game);
+int				check_rgb_keys(t_game *game);
+int				check_rgb_keys_2(t_game *game);
+int				check_rgb_values(t_game *game);
+int				check_map(t_game *game);
 int				get_file_size(char *path);
-int				get_cols(t_map *map);
-int				get_rows(t_map *map);
+int				get_cols(t_game *game);
+int				get_rows(t_game *game);
 
 /*
 ** MLX FUNCTIONS
 */
-
-int				init_game(t_mlx *mlx, t_map *map);
+int				testinit_game(t_game *game);
+int				init_game(t_game *game);
+int				key_stroke(int key, void *params);
+int				cross_window(int key, void *params);
+int				esc_window(int key, void *params);
 #endif

@@ -12,45 +12,45 @@
 
 #include "../../includes/cub3d.h"
 
-int		adjust_resolution(t_map *map)
+int		adjust_resolution(t_game *data)
 {
 	int res_values[2];
 
-	if (!map->r_key[1] || !map->r_key[2])
+	if (!data->r_key[1] || !data->r_key[2])
 		return (0);
-	res_values[0] = ft_atoi(map->r_key[1]);
-	res_values[1] = ft_atoi(map->r_key[2]);
+	res_values[0] = ft_atoi(data->r_key[1]);
+	res_values[1] = ft_atoi(data->r_key[2]);
 	if (res_values[0] < 200 || res_values[1] < 200)
 	{
-		free(map->r_key[1]);
-		free(map->r_key[2]);
-		map->r_key[1] = ft_strdup("300");
-		map->r_key[2] = ft_strdup("200");
+		free(data->r_key[1]);
+		free(data->r_key[2]);
+		data->r_key[1] = ft_strdup("300");
+		data->r_key[2] = ft_strdup("200");
 	}
 	if (res_values[0] > 2560)
 	{
-		free(map->r_key[1]);
-		map->r_key[1] = ft_strdup("2560");
+		free(data->r_key[1]);
+		data->r_key[1] = ft_strdup("2560");
 	}
 	if (res_values[1] > 1440)
 	{
-		free(map->r_key[2]);
-		map->r_key[2] = ft_strdup("1440");
+		free(data->r_key[2]);
+		data->r_key[2] = ft_strdup("1440");
 	}
 	return (1);
 }
 
-int		check_rgb_values(t_map *map)
+int		check_rgb_values(t_game *data)
 {
 	int rgb_vals1[3];
 	int rgb_vals2[3];
 	int i;
 
 	i = 0;
-	while (map->f_key[i] && map->c_key[i])
+	while (data->f_key[i] && data->c_key[i])
 	{
-		rgb_vals1[i] = ft_atoi(map->f_key[i]);
-		rgb_vals2[i] = ft_atoi(map->c_key[i]);
+		rgb_vals1[i] = ft_atoi(data->f_key[i]);
+		rgb_vals2[i] = ft_atoi(data->c_key[i]);
 		if (rgb_vals1[i] > 255 || rgb_vals2[i] > 255)
 			return (0);
 		i++;
@@ -58,29 +58,29 @@ int		check_rgb_values(t_map *map)
 	return (1);
 }
 
-int		check_rgb_keys_2(t_map *map)
+int		check_rgb_keys_2(t_game *data)
 {
 	int i;
 	int j;
 
 	i = 0;
 	j = 0;
-	while (map->c_key[i])
+	while (data->c_key[i])
 	{
 		j = 0;
 		if (i > 2)
 			return (0);
-		while (map->c_key[i][j])
+		while (data->c_key[i][j])
 		{
 			if (j > 2)
 				return (0);
-			if (map->c_key[i][j] < '0' || map->c_key[i][j] > '9')
+			if (data->c_key[i][j] < '0' || data->c_key[i][j] > '9')
 				return (0);
 			j++;
 		}
 		i++;
 	}
-	if (i != 3 || !(check_rgb_values(map)))
+	if (i != 3 || !(check_rgb_values(data)))
 		return (0);
 	return (1);
 }

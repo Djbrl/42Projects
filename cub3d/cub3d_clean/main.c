@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:15:56 by dsy               #+#    #+#             */
-/*   Updated: 2020/02/23 18:03:14 by dsy              ###   ########.fr       */
+/*   Updated: 2020/02/24 15:47:54 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 
 int main(int ac, char **av)
 {
-	t_map	map;
-	t_mlx	mlx;
+	t_game data;
 	int		ret;
 
 	if (ac != 2)
@@ -23,9 +22,13 @@ int main(int ac, char **av)
 		write(1, "Error\nPlease only input a valid map path.\n", 42);
 		return (0);
 	}
-	ret = parse_map_file(av[1], &map);
+	ret = parse_map_file(av[1], &data);
 	if (ret)
-		init_game(&mlx, &map);
+		if (!(testinit_game(&data)))
+		{
+			write(1, "Error\nConnection to MLX failed.\n", 32);
+			return (0);
+		}
 	//if (ret != 0)
 	//free_map_struct(&map);
 	return (0);
