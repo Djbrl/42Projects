@@ -1,31 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_game.c                                        :+:      :+:    :+:   */
+/*   raycasting_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/24 14:05:23 by dsy               #+#    #+#             */
-/*   Updated: 2020/02/24 16:16:59 by dsy              ###   ########.fr       */
+/*   Created: 2020/02/24 19:06:04 by dsy               #+#    #+#             */
+/*   Updated: 2020/02/24 19:17:09 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-int	init_game(t_game *data)
+int	get_player_data(t_game *data)
 {
-	int x_res;
-	int y_res;
+	int i;
+	int j;
 
-	init_game_struct(data);
-	x_res = ft_atoi(data->r_key[1]);
-	y_res = ft_atoi(data->r_key[2]);
-	if (!(data->mlx_ptr = mlx_init()))
-		return (0);
-	if (!(data->win_ptr = mlx_new_window(data->mlx_ptr, x_res, y_res, "Cub3D")))
-		return (0);
-	mlx_hook(data->win_ptr, 2, 0, key_stroke, data);
-	mlx_hook(data->win_ptr, 17, 0, cross_window, data);
-	mlx_loop(data->mlx_ptr);
+	i = 0;
+	j = 0;
+	while (data->map_key[i])
+	{
+		j = 0;
+		while (data->map_key[i][j])
+		{
+			if (data->map_key[i][j] > 'A'
+					&& data->map_key[i][j] < 'Z')
+			{
+				data->pos_x = i;
+				data->pos_y = j;
+				data->pov = data->map_key[i][j];
+				return (1);
+			}
+			j++;
+		}
+		i++;
+	}
 	return (0);
 }

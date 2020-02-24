@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 14:11:10 by dsy               #+#    #+#             */
-/*   Updated: 2020/02/24 16:17:24 by dsy              ###   ########.fr       */
+/*   Updated: 2020/02/24 18:42:39 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,9 @@ int	key_stroke(int key, void *params)
 		printf("Pressed up.\n");
 	if (key == KEY_DOWN)
 		printf("Pressed down.\n");
-	if (key == KEY_M)
-		printf("Pressed %i.\n", key);
+//	if (key == KEY_M)
+		basic_image(key, data);
+	//		printf("Pressed %i.\n", key);
 	if (key == KEY_ESC)
 		esc_window(key, data);
 	return (0);

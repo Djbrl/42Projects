@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 20:26:32 by dsy               #+#    #+#             */
-/*   Updated: 2020/02/22 15:39:32 by dsy              ###   ########.fr       */
+/*   Updated: 2020/02/24 19:22:14 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	check_map_player(t_game *data)
 		}
 		i++;
 	}
-	return (1);
+	return (player);
 }
 
 int	check_map_values(t_game *data)
@@ -107,7 +107,7 @@ int	check_map(t_game *data)
 	}
 	if (!(check_map_player(data)))
 	{
-		write(1, "Error\n[Invalid map] There is more that one player.\n", 50);
+		write(1, "Error\n[Invalid map] Invalid number of POV in the map.\n", 54);
 		return (0);
 	}
 	if (!(check_map_values(data)))

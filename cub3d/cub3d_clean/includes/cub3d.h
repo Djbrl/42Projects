@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:24:47 by dsy               #+#    #+#             */
-/*   Updated: 2020/02/24 15:44:02 by dsy              ###   ########.fr       */
+/*   Updated: 2020/02/24 19:14:31 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,11 @@ typedef struct	s_game
 	char		**c_key;
 	char		**map_key;
 
+	int			x_res;
+	int			y_res;
+	int			pos_x;
+	int			pos_y;
+	char		pov;
 	int			a:1;
 	int			s:1;
 	int			d:1;
@@ -173,7 +178,9 @@ int				get_rows(t_game *game);
 ** MLX FUNCTIONS
 */
 int				testinit_game(t_game *game);
+int				get_player_data(t_game *game);
 int				init_game(t_game *game);
+int				basic_image(int key, void *params);
 int				key_stroke(int key, void *params);
 int				cross_window(int key, void *params);
 int				esc_window(int key, void *params);
