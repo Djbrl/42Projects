@@ -5,211 +5,126 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/24 18:58:40 by dsy               #+#    #+#             */
-/*   Updated: 2020/02/24 19:22:48 by dsy              ###   ########.fr       */
+/*   Created: 2020/02/25 17:23:12 by dsy               #+#    #+#             */
+/*   Updated: 2020/02/25 21:06:39 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <cmath>
-#include <string>
-#include <vector>
-#include <iostream>
+#include "../../includes/cub3d.h"
 
-#include "quickcg.h"
-using namespace QuickCG;
-
-/*
-g++ *.cpp -lSDL -O3 -W -Wall -ansi -pedantic
-g++ *.cpp -lSDL
-*/
-
-//place the example code below here:
-
-#define screenWidth 640
-#define screenHeight 480
-#define mapWidth 24
-#define mapHeight 24
-
-int worldMap[mapWidth][mapHeight]=
+void	setup_raycasting_var(t_game *data)
 {
-  {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,2,2,2,2,2,0,0,0,0,3,0,3,0,3,0,0,0,1},
-  {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,3,0,0,0,3,0,0,0,1},
-  {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,2,2,0,2,2,0,0,0,0,3,0,3,0,3,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,0,0,0,0,5,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,0,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
-};
+	data->dirX = -1;
+	data->dirY = 0;
+	data->planeX = 0;
+	data->planeY = 0.66;
+	data->time = 0;
+	data->cameraX = 0;
+	data->rayDirX = 0;
+	data->rayDirY = 0;
+	hit = 0;
+}
 
-int main(int argc, char **argv)
+void	calculate_step(t_game *d);
 {
-  double posX = 22, posY = 12;  //x and y start position
-  double dirX = -1, dirY = 0; //initial direction vector
-  double planeX = 0, planeY = 0.66; //the 2d raycaster version of camera plane
+	if (d->rayDirX < 0)
+	{
+		d->stepX = -1;
+		d->sideDistX = (d->pos_x - d->mapX) * d->deltaDistX;
+	}
+	else
+	{
+		d->stepX = 1;
+		d->sideDistX = (d->mapX + 1.0 - d->pos_x) * d->deltaDistX;
+	}
+	if (d->rayDirY < 0)
+	{
+		d->stepY = -1;
+		d->sideDistY = (d->pos_y - d->mapY) * d->deltaDistY;
+	}
+	else
+	{
+		d->stepY = 1;
+		d->sideDistY = (d->mapY + 1.0 - d->pos_y) * d->deltaDistY;
+	}
+}
 
-  double time = 0; //time of current frame
-  double oldTime = 0; //time of previous frame
+void		perform_dda(t_game *d)
+{
+	while (d->hit == 0)
+	{
+		if (d->sideDistX < d->sideDistY)
+		{
+			d->sideDistX += d->deltaDistX;
+			d->mapX += d->stepX;
+			d->side = 0;
+		}
+		else
+		{
+			d->sideDistY += d->deltaDistY;
+			d->mapY += d->stepY;
+			d->side = 1;
+		}
+		if (d->map_key[mapX][mapY] > '0')
+			hit = 1;
+	}
+	if (d->side == 0)
+		d->perpWallDist = (d->mapX - d->pos_x + (1 - d->stepX) / 2) / d->rayDirX;
+	else
+		d->perpWallDist = (d->mapY - d->pos_y + (1 - d->stepY) / 2) / d->rayDirY;
+}
 
-  screen(screenWidth, screenHeight, 0, "Raycaster");
-  while(!done())
-  {
-    for(int x = 0; x < w; x++)
-    {
-      //calculate ray position and direction
-      double cameraX = 2 * x / (double)w - 1; //x-coordinate in camera space
-      double rayDirX = dirX + planeX * cameraX;
-      double rayDirY = dirY + planeY * cameraX;
-      //which box of the map we're in
-      int mapX = int(posX);
-      int mapY = int(posY);
+void	calculate_line_height(t_game *d)
+{
+	d->lineHeight = (int)(d->y_res / d->perpWalldist);
+	d->drawStart = d->lineHeight / 2 + d->y_res / 2;
+	if (d->drawStart < 0)
+		d->drawStart = 0;
+	d->drawEnd = d->lineHeight / 2 + d->y_res / 2;
+	if (d->drawEnd >= y_res)
+		drawEnd = h - 1;
+}
 
-      //length of ray from current position to next x or y-side
-      double sideDistX;
-      double sideDistY;
+void	choose_wall_color(t_game *d)
+{
+	d->red = 0xFF0000;
+	d->green = 0x00FF00;
+	d->blue = 0x0000FF;
+	d->yellow = 0xFFFF00;
+	if (d->map_key[mapX][mapY] == '1')
+		d->color = d->red;
+	if (side == 1)
+		color /= 2;
+	//drawVerLine(x, drawStart, drawEnd, color);
+	//continue here
+}
 
-       //length of ray from one x or y-side to next x or y-side
-      double deltaDistX = std::abs(1 / rayDirX);
-      double deltaDistY = std::abs(1 / rayDirY);
-      double perpWallDist;
+int		raycasting(t_game *d)
+{
+	int done;
+	int i;
 
-      //what direction to step in x or y-direction (either +1 or -1)
-      int stepX;
-      int stepY;
-
-      int hit = 0; //was there a wall hit?
-      int side; //was a NS or a EW wall hit?
-      //calculate step and initial sideDist
-      if(rayDirX < 0)
-      {
-        stepX = -1;
-        sideDistX = (posX - mapX) * deltaDistX;
-      }
-      else
-      {
-        stepX = 1;
-        sideDistX = (mapX + 1.0 - posX) * deltaDistX;
-      }
-      if(rayDirY < 0)
-      {
-        stepY = -1;
-        sideDistY = (posY - mapY) * deltaDistY;
-      }
-      else
-      {
-        stepY = 1;
-        sideDistY = (mapY + 1.0 - posY) * deltaDistY;
-      }
-      //perform DDA
-      while (hit == 0)
-      {
-        //jump to next map square, OR in x-direction, OR in y-direction
-        if(sideDistX < sideDistY)
-        {
-          sideDistX += deltaDistX;
-          mapX += stepX;
-          side = 0;
-        }
-        else
-        {
-          sideDistY += deltaDistY;
-          mapY += stepY;
-          side = 1;
-        }
-        //Check if ray has hit a wall
-        if(worldMap[mapX][mapY] > 0) hit = 1;
-      }
-      //Calculate distance projected on camera direction (Euclidean distance will give fisheye effect!)
-      if(side == 0) perpWallDist = (mapX - posX + (1 - stepX) / 2) / rayDirX;
-      else          perpWallDist = (mapY - posY + (1 - stepY) / 2) / rayDirY;
-
-      //Calculate height of line to draw on screen
-      int lineHeight = (int)(h / perpWallDist);
-
-      //calculate lowest and highest pixel to fill in current stripe
-      int drawStart = -lineHeight / 2 + h / 2;
-      if(drawStart < 0)drawStart = 0;
-      int drawEnd = lineHeight / 2 + h / 2;
-      if(drawEnd >= h)drawEnd = h - 1;
-
-      //choose wall color
-      ColorRGB color;
-      switch(worldMap[mapX][mapY])
-      {
-        case 1:  color = RGB_Red;    break; //red
-        case 2:  color = RGB_Green;  break; //green
-        case 3:  color = RGB_Blue;   break; //blue
-        case 4:  color = RGB_White;  break; //white
-        default: color = RGB_Yellow; break; //yellow
-      }
-
-      //give x and y sides different brightness
-      if(side == 1) {color = color / 2;}
-
-      //draw the pixels of the stripe as a vertical line
-      verLine(x, drawStart, drawEnd, color);
-    }
-    //timing for input and FPS counter
-    oldTime = time;
-    time = getTicks();
-    double frameTime = (time - oldTime) / 1000.0; //frameTime is the time this frame has taken, in seconds
-    print(1.0 / frameTime); //FPS counter
-    redraw();
-    cls();
-
-    //speed modifiers
-    double moveSpeed = frameTime * 5.0; //the constant value is in squares/second
-    double rotSpeed = frameTime * 3.0; //the constant value is in radians/second
-    readKeys();
-    //move forward if no wall in front of you
-    if(keyDown(SDLK_UP))
-    {
-      if(worldMap[int(posX + dirX * moveSpeed)][int(posY)] == false) posX += dirX * moveSpeed;
-      if(worldMap[int(posX)][int(posY + dirY * moveSpeed)] == false) posY += dirY * moveSpeed;
-    }
-    //move backwards if no wall behind you
-    if(keyDown(SDLK_DOWN))
-    {
-      if(worldMap[int(posX - dirX * moveSpeed)][int(posY)] == false) posX -= dirX * moveSpeed;
-      if(worldMap[int(posX)][int(posY - dirY * moveSpeed)] == false) posY -= dirY * moveSpeed;
-    }
-    //rotate to the right
-    if(keyDown(SDLK_RIGHT))
-    {
-      //both camera direction and camera plane must be rotated
-      double oldDirX = dirX;
-      dirX = dirX * cos(-rotSpeed) - dirY * sin(-rotSpeed);
-      dirY = oldDirX * sin(-rotSpeed) + dirY * cos(-rotSpeed);
-      double oldPlaneX = planeX;
-      planeX = planeX * cos(-rotSpeed) - planeY * sin(-rotSpeed);
-      planeY = oldPlaneX * sin(-rotSpeed) + planeY * cos(-rotSpeed);
-    }
-    //rotate to the left
-    if(keyDown(SDLK_LEFT))
-    {
-      //both camera direction and camera plane must be rotated
-      double oldDirX = dirX;
-      dirX = dirX * cos(rotSpeed) - dirY * sin(rotSpeed);
-      dirY = oldDirX * sin(rotSpeed) + dirY * cos(rotSpeed);
-      double oldPlaneX = planeX;
-      planeX = planeX * cos(rotSpeed) - planeY * sin(rotSpeed);
-      planeY = oldPlaneX * sin(rotSpeed) + planeY * cos(rotSpeed);
-    }
-  }
+	done = 0;
+	i = 0;
+	setup_raycasting_var(d);
+	while (!done)
+	{
+		while (i < data->col)
+		{
+			d->cameraX = 2 * i / (double)d->col - 1;
+			d->rayDirX = d->dirX + d->planeX * d->cameraX;
+			d->rayDirY = d->dirY + d->planeY * d->cameraX;
+			d->mapX = (int)d->pos_x;
+			d->mapY = (int)d->pos_y;
+			d->deltaDistX = (d->rayDirY == 0)
+				? 0 : ((d->rayDirX == 0) ? 1 : abs(1 / d->rayDirX));
+			d->deltaDistY = (d->rayDirX == 0)
+				? 0 : ((d->rayDirY == 0) ? 1 : abs(1 / d->rayDirY));
+			calculate_step(d);
+			perform_dda(d);
+			calculate_line_height(t_game *d)
+			i++;
+		}
+	}
+	return (1);
 }

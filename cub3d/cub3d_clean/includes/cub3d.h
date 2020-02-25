@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:24:47 by dsy               #+#    #+#             */
-/*   Updated: 2020/02/24 19:14:31 by dsy              ###   ########.fr       */
+/*   Updated: 2020/02/25 20:49:45 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,8 @@
 
 # include "libft/libft.h"
 # include <stdio.h>
-//# include <mlx.h>
+# include <mlx.h>
+# include <math.h>
 # include <fcntl.h>
 # include <sys/types.h>
 # include <unistd.h>
@@ -88,59 +89,44 @@ typedef struct	s_game
 	char		**f_key;
 	char		**c_key;
 	char		**map_key;
-
 	int			x_res;
 	int			y_res;
-	int			pos_x;
-	int			pos_y;
+	int			row;
+	int			col;
+
 	char		pov;
-	int			a:1;
-	int			s:1;
-	int			d:1;
-	int			f:1;
-	int			h:1;
-	int			g:1;
-	int			z:1;
-	int			x:1;
-	int			c:1;
-	int			v:1;
-	int			b:1;
-	int			q:1;
-	int			w:1;
-	int			e:1;
-	int			r:1;
-	int			y:1;
-	int			t:1;
-	int			one:1;
-	int			two:1;
-	int			three:1;
-	int			four:1;
-	int			six:1;
-	int			five:1;
-	int			nine:1;
-	int			seven:1;
-	int			eight:1;
-	int			zero:1;
-	int			brace_r:1;
-	int			o:1;
-	int			u:1;
-	int			brace_l:1;
-	int			i:1;
-	int			p:1;
-	int			l:1;
-	int			j:1;
-	int			k:1;
-	int			semi:1;
-	int			n:1;
-	int			m:1;
-	int			tab:1;
-	int			esc:1;
-	int			plus:1;
-	int			minus:1;
-	int			left:1;
-	int			right:1;
-	int			down:1;
-	int			up:1;
+	double		pos_x;
+	double		pos_y;
+
+	int			red;
+	int			green;
+	int			yellow;
+	int			blue;
+	int			color;
+
+	int			drawStart;
+	int			drawEnd;
+	int			lineHeight;
+	int			sideDistX;
+	int			sideDistY;
+	int			deltaDistX;
+	int			deltaDistY;
+	int			perpWallDist;
+	int			stepX;
+	int			stepY;
+	int			hit;
+	int			side;
+	int			mapX;
+	int			mapY;
+	double		dirX;
+	double		dirY;
+	double		planeX;
+	double		planeY;
+	double		time;
+	double		oldtime;
+	double		cameraX;
+	double		rayDirX;
+	double		rayDirY;
 }				t_game;
 
 /*

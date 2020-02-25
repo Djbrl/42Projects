@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:13:18 by dsy               #+#    #+#             */
-/*   Updated: 2020/02/24 15:21:45 by dsy              ###   ########.fr       */
+/*   Updated: 2020/02/25 18:03:47 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	parse_map_file(char *path, t_game *data)
 			free_array(loaded_file);
 		return (0);
 	}
-	arrange_map(data);
+//	arrange_map(data); //new
 	free_array(loaded_file);
 	return (1);
 }

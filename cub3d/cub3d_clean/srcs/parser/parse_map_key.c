@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 20:26:32 by dsy               #+#    #+#             */
-/*   Updated: 2020/02/24 19:22:14 by dsy              ###   ########.fr       */
+/*   Updated: 2020/02/25 21:18:41 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,14 +93,12 @@ int	check_map(t_game *data)
 {
 	int i;
 	int j;
-	int row;
-	int col;
 
 	i = 0;
 	j = 0;
-	row = get_rows(data);
-	col = get_cols(data);
-	if (!(check_map_borders(data, row, col)))
+	data->row = get_rows(data);
+	data->col = get_cols(data);
+	if (!(check_map_borders(data, data->row, data->col)))
 	{
 		write(1, "Error\n[Invalid map] Borders not closed.\n", 40);
 		return (0);

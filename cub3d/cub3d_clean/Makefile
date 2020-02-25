@@ -6,13 +6,17 @@
 #    By: dsy <marvin@42.fr>                         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/12 17:08:38 by dsy               #+#    #+#              #
-#    Updated: 2020/02/24 18:27:57 by dsy              ###   ########.fr        #
+#    Updated: 2020/02/25 21:19:03 by dsy              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 #OBJS = srcs/*\
 
-SRCS = srcs/*/*.c
+SRCS = srcs/parser/*.c \
+	   srcs/mlx_functions/*.c \
+	   srcs/utils/*.c \
+	   srcs/raycasting/raycasting_utils.c \
+#	   srcs/raycasting/raycasting.c \
 
 LIBFTPATH = includes/libft 
 LIBOBJ = includes/libft/libft.a
