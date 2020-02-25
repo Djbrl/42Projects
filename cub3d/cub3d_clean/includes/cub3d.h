@@ -63,7 +63,7 @@
 
 # include "libft/libft.h"
 # include <stdio.h>
-# include <mlx.h>
+//# include <mlx.h>
 # include <fcntl.h>
 # include <sys/types.h>
 # include <unistd.h>
@@ -160,6 +160,8 @@ int				check_file_keys(char **loaded_file, t_game *game);
 int				parse_map_file(char *path, t_game *game);
 
 int				adjust_resolution(t_game *game);
+int				arrange_map(t_game *game);
+int				find_longest_row(t_game *game);
 int				check_map_borders(t_game *game, int row, int col);
 int				check_map_player(t_game *game);
 int				check_map_values(t_game *game);

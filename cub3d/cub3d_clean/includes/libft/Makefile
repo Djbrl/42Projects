@@ -40,7 +40,7 @@ $(NAME): $(OBJS)
 	@ar rcs $(NAME) $^
 
 $(OBJS): $(SRCS)
-	@gcc -glldb -Wall -Wextra -Werror $^ -c
+	@gcc -Wall -Wextra -Werror $^ -c
 
 clean:
 	@/bin/rm -f $(OBJS)

@@ -23,12 +23,12 @@ int main(int ac, char **av)
 		return (0);
 	}
 	ret = parse_map_file(av[1], &data);
-	if (ret)
-		if (!(init_game(&data)))
-		{
-			write(1, "Error\nConnection to MLX failed.\n", 32);
-			return (0);
-		}
+//	if (ret)
+//		if (!(init_game(&data)))
+//		{
+//			write(1, "Error\nConnection to MLX failed.\n", 32);
+//			return (0);
+//		}
 	//if (ret != 0)
 	//free_map_struct(&map);
 	return (0);

@@ -69,6 +69,7 @@ int	parse_map_file(char *path, t_game *data)
 			free_array(loaded_file);
 		return (0);
 	}
+	arrange_map(data);
 	free_array(loaded_file);
 	return (1);
 }
