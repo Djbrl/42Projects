@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:15:56 by dsy               #+#    #+#             */
-/*   Updated: 2020/02/25 21:17:08 by dsy              ###   ########.fr       */
+/*   Updated: 2020/02/29 23:07:48 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int main(int ac, char **av)
 		write(1, "Error\nPlease only input a valid map path.\n", 42);
 		return (0);
 	}
+	data.drawStart = 100;
 	data.drawEnd = 1000;
 	ret = parse_map_file(av[1], &data);
 	if (ret)

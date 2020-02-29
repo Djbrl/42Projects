@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:24:47 by dsy               #+#    #+#             */
-/*   Updated: 2020/02/25 20:49:45 by dsy              ###   ########.fr       */
+/*   Updated: 2020/02/29 23:08:30 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,9 @@
 # define KEY_DOWN 125
 # define KEY_UP 126
 
-# include "libft/libft.h"
+# include "../libs/libft/libft.h"
+# include "../libs/minilibx/mlx.h"
 # include <stdio.h>
-# include <mlx.h>
 # include <math.h>
 # include <fcntl.h>
 # include <sys/types.h>
@@ -79,6 +79,9 @@ typedef struct	s_game
 	void		*win_ptr;
 	void		*mlx_img;
 	int			*img_addr;
+	int			bpp;
+	int			sl;
+	int			endian;
 
 	char		**r_key;
 	char		**n_key;
@@ -168,6 +171,7 @@ int				get_rows(t_game *game);
 int				testinit_game(t_game *game);
 int				get_player_data(t_game *game);
 int				init_game(t_game *game);
+int				drawVerline(int key, void *params);
 int				basic_image(int key, void *params);
 int				key_stroke(int key, void *params);
 int				cross_window(int key, void *params);
