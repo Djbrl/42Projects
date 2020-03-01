@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:24:47 by dsy               #+#    #+#             */
-/*   Updated: 2020/02/29 23:08:30 by dsy              ###   ########.fr       */
+/*   Updated: 2020/03/01 18:02:28 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,6 +148,8 @@ int				fill_map(t_game *game, char **loaded_file);
 int				check_file_keys(char **loaded_file, t_game *game);
 int				parse_map_file(char *path, t_game *game);
 
+int				go_through_valid_keys(char **valid_keys, char *key);
+int				check_keys_exist(t_game *file);
 int				adjust_resolution(t_game *game);
 int				arrange_map(t_game *game);
 int				find_longest_row(t_game *game);

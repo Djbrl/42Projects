@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:13:18 by dsy               #+#    #+#             */
-/*   Updated: 2020/02/25 18:03:47 by dsy              ###   ########.fr       */
+/*   Updated: 2020/03/01 18:02:13 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,22 +36,37 @@ int	fill_map(t_game *data, char **loaded_file)
 	return (1);
 }
 
-int	check_file_keys(char **loaded_file, t_game *data)
+int	seek(char *key)
 {
 	int i;
 
 	i = 0;
-	data->r_key = ft_split(loaded_file[0], ' ');
-	data->n_key = ft_split(loaded_file[1], ' ');
-	data->so_key = ft_split(loaded_file[2], ' ');
-	data->w_key = ft_split(loaded_file[3], ' ');
-	data->e_key = ft_split(loaded_file[4], ' ');
-	data->s_key = ft_split(loaded_file[5], ' ');
-	data->f_key = ft_split(loaded_file[6] + 2, ',');
-	data->c_key = ft_split(loaded_file[7] + 2, ',');
-	if (!(fill_map(data, loaded_file)))
+	while (key[i])
+	{
+		if (key[i] >= '0' && key[i] <= '2')
+			return (i);
+		i++;
+	}
+	return (0);
+}
+
+int	check_file_keys(char **lfile, t_game *data)
+{
+	int i;
+
+	i = 0;
+	data->r_key = ft_split(lfile[0], ' ');
+	data->n_key = ft_split(lfile[1], ' ');
+	data->so_key = ft_split(lfile[2], ' ');
+	data->w_key = ft_split(lfile[3], ' ');
+	data->e_key = ft_split(lfile[4], ' ');
+	data->s_key = ft_split(lfile[5], ' ');
+	data->f_key = ft_split(lfile[6] + seek(lfile[6]), ',');
+	data->c_key = ft_split(lfile[7] + seek(lfile[7]), ',');
+	check_keys_exist(data);
+	if (!(fill_map(data, lfile)))
 		return (0);
-	if (!(check_keys_content(data, loaded_file)))
+	if (!(check_keys_content(data, lfile)))
 		write(1, "Error\n[Bad Map Keys] Map Keys are incorrect.\n", 45);
 	if (!(adjust_resolution(data)) || !(check_map(data)))
 		return (0);
@@ -69,7 +84,6 @@ int	parse_map_file(char *path, t_game *data)
 			free_array(loaded_file);
 		return (0);
 	}
-//	arrange_map(data); //new
 	free_array(loaded_file);
 	return (1);
 }

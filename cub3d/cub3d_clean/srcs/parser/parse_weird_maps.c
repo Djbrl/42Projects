@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 20:26:32 by dsy               #+#    #+#             */
-/*   Updated: 2020/02/25 18:03:17 by dsy              ###   ########.fr       */
+/*   Updated: 2020/03/01 17:52:18 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,6 @@ int	arrange_map(t_game *data)
 	i = 0;
 	j = 0;
 	printf("longest row : %i\n", find_longest_row(data));
+	//continue lata
 	return (1);
 }
