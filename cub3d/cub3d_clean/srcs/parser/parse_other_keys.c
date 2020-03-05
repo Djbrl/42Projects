@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 20:35:14 by dsy               #+#    #+#             */
-/*   Updated: 2020/03/05 01:18:14 by dsy              ###   ########.fr       */
+/*   Updated: 2020/03/05 04:34:32 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,10 @@ int	check_keys_order(t_game *data, char **loaded_file)
 	if (loaded_file[7][0] != 'C')
 		return (0);
 	if (loaded_file[8][0] != '1')
+	{
+		data->error = 3;
 		return (0);
+	}
 	return (1);
 }
 
@@ -59,7 +62,10 @@ int	check_res_key(t_game *data)
 		i++;
 	}
 	if (i != 3)
+	{
+		data->error = 1;
 		return (0);
+	}
 	return (1);
 }
 
@@ -86,7 +92,10 @@ int	check_rgb_keys(t_game *data)
 		i++;
 	}
 	if (i != 3 || !(check_rgb_keys_2(data)))
+	{
+		data->error = 1;
 		return (0);
+	}
 	return (1);
 }
 
@@ -104,6 +113,7 @@ int	check_sprite_keys(t_game *data)
 		|| ((fd = open(ft_strjoin("files/", data->s_key[1]), O_RDONLY)) < 0))
 	{
 		close(fd);
+		data->error = 1;
 		return (0);
 	}
 	close(fd);
@@ -118,9 +128,6 @@ int	check_keys_content(t_game *data, char **loaded_file)
 	if (!(check_keys_order(data, loaded_file))
 		|| !(check_res_key(data)) || !(check_sprite_keys(data))
 		|| !(check_rgb_keys(data)))
-	{
-		data->error = 1;
 		return (0);
-	}
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 20:26:32 by dsy               #+#    #+#             */
-/*   Updated: 2020/03/05 01:28:23 by dsy              ###   ########.fr       */
+/*   Updated: 2020/03/05 04:11:04 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,6 @@ int	check_map(t_game *data)
 	}
 	if (!(check_map_values(data)))
 	{
-		write(1, "Error\n[Invalid map] Wrong value inside map.\n", 44);
 		data->error = 5;
 		return (0);
 	}

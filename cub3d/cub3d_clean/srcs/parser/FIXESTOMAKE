@@ -1,2 +1,4 @@
-do weird maps
-fix parsing for spaces in RGB keys ' '
+NEW
+map parsing only takes into account first line and first column
+
+rethink map as STACK of LINEs

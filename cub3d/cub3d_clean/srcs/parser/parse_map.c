@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:13:18 by dsy               #+#    #+#             */
-/*   Updated: 2020/03/05 01:33:10 by dsy              ###   ########.fr       */
+/*   Updated: 2020/03/05 04:07:48 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	check_file_keys(char **lfile, t_game *data)
 	data->s_key = ft_split(lfile[5], ' ');
 	data->f_key = ft_split(lfile[6] + seek(lfile[6]), ',');
 	data->c_key = ft_split(lfile[7] + seek(lfile[7]), ',');
-	if (!(check_keys_exist(data)) && !(fill_map(data, lfile)))
+	if (!(fill_map(data, lfile)))
 		return (0);
 	if (!(check_keys_content(data, lfile)))
 		return (0);
@@ -85,7 +85,7 @@ int	parse_map_file(char *path, t_game *data)
 {
 	char **loaded_file;
 
-	if (!(loaded_file = load_map_file(path))
+	if (!(loaded_file = load_map_file(path, data))
 		|| !(check_file_keys(loaded_file, data)))
 	{
 		if (loaded_file)

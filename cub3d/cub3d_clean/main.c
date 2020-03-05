@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:15:56 by dsy               #+#    #+#             */
-/*   Updated: 2020/03/05 01:09:27 by dsy              ###   ########.fr       */
+/*   Updated: 2020/03/05 04:23:22 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,16 @@ int main(int ac, char **av)
 
 	if (ac != 2)
 	{
-		write(1, "Error\n[Arguments]Please only input a valid map path.\n", 53);
+		write(1, "Error\n[Input]Please only input a valid map path.\n", 49);
 		return (0);
 	}
 	data.drawStart = 100;
 	data.drawEnd = 1000;
+	if (!(check_map_extension(av[1])))
+	{
+		write(1, "Error\n[Input]Bad map extension.\n", 32);
+		return (0);
+	}
 	ret = parse_map_file(av[1], &data);
 	if (ret)
 		if (!(init_game(&data)))
