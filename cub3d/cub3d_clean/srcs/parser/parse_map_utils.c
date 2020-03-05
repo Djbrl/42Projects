@@ -6,11 +6,27 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/16 06:31:50 by dsy               #+#    #+#             */
-/*   Updated: 2020/03/01 16:34:50 by dsy              ###   ########.fr       */
+/*   Updated: 2020/03/05 01:30:11 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
+
+void	report_error(t_game *data)
+{
+	if (data->error == 0)
+		write(1, "Error\n[Path]Couldn't find map file.\n", 36);
+	if (data->error == 1)
+		write(1, "Error\n[Bad Map Keys] Map Keys are incorrect.\n", 45);
+	if (data->error == 2)
+		write(1, "Error\n[Bad Map Keys] Missing or extra keys.\n", 45);
+	if (data->error == 3)
+		write(1, "Error\n[Invalid map] Invalid map borders.\n", 42);
+	if (data->error == 4)
+		write(1, "Error\n[Invalid map] Invalid number of POV in the map.\n", 54);
+	if (data->error == 5)
+		write(1, "Error\n[Invalid map] Wrong value inside map.\n", 44);
+}
 
 void	free_map_struct(t_game *data)
 {

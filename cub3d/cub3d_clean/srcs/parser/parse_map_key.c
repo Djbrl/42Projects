@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 20:26:32 by dsy               #+#    #+#             */
-/*   Updated: 2020/03/01 16:36:10 by dsy              ###   ########.fr       */
+/*   Updated: 2020/03/05 01:28:23 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,19 +98,22 @@ int	check_map(t_game *data)
 	j = 0;
 	data->row = get_rows(data);
 	data->col = get_cols(data);
+	if (data->row < 3 || data->col < 3)
+		return (0);
 	if (!(check_map_borders(data, data->row, data->col)))
 	{
-		write(1, "Error\n[Invalid map] Borders not closed.\n", 40);
+		data->error = 3;
 		return (0);
 	}
 	if (!(check_map_player(data)))
 	{
-		write(1, "Error\n[Invalid map] Invalid number of POV in the map.\n", 54);
+		data->error = 4;
 		return (0);
 	}
 	if (!(check_map_values(data)))
 	{
 		write(1, "Error\n[Invalid map] Wrong value inside map.\n", 44);
+		data->error = 5;
 		return (0);
 	}
 	return (1);

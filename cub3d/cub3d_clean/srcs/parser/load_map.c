@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:13:08 by dsy               #+#    #+#             */
-/*   Updated: 2020/03/01 17:59:56 by dsy              ###   ########.fr       */
+/*   Updated: 2020/03/05 01:31:02 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ char	**rearrange_keys(char **f, int n)
 	return (s);
 }
 
-char	**load_map_file(char *path)
+char	**load_map_file(char *path, t_game *data)
 {
 	char	**parsed_file;
 	char	**arranged_file;
@@ -91,7 +91,7 @@ char	**load_map_file(char *path)
 	file_size = 0;
 	if ((file = fetch_file(path)) == 0)
 	{
-		write(1, "Error\n[Path]Couldn't find map file.\n", 36);
+		data->error = 0;
 		return (NULL);
 	}
 	if ((parsed_file = ft_split(file, '\n')) == 0)

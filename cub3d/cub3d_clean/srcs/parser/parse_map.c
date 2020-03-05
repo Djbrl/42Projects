@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:13:18 by dsy               #+#    #+#             */
-/*   Updated: 2020/03/01 18:02:13 by dsy              ###   ########.fr       */
+/*   Updated: 2020/03/05 01:33:10 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,15 @@ int	check_file_keys(char **lfile, t_game *data)
 	int i;
 
 	i = 0;
+	while (i < 8)
+	{
+		if (!lfile[i])
+		{
+			data->error = 2;
+			return (0);
+		}
+		i++;
+	}
 	data->r_key = ft_split(lfile[0], ' ');
 	data->n_key = ft_split(lfile[1], ' ');
 	data->so_key = ft_split(lfile[2], ' ');
@@ -63,11 +72,10 @@ int	check_file_keys(char **lfile, t_game *data)
 	data->s_key = ft_split(lfile[5], ' ');
 	data->f_key = ft_split(lfile[6] + seek(lfile[6]), ',');
 	data->c_key = ft_split(lfile[7] + seek(lfile[7]), ',');
-	check_keys_exist(data);
-	if (!(fill_map(data, lfile)))
+	if (!(check_keys_exist(data)) && !(fill_map(data, lfile)))
 		return (0);
 	if (!(check_keys_content(data, lfile)))
-		write(1, "Error\n[Bad Map Keys] Map Keys are incorrect.\n", 45);
+		return (0);
 	if (!(adjust_resolution(data)) || !(check_map(data)))
 		return (0);
 	return (1);
@@ -82,6 +90,7 @@ int	parse_map_file(char *path, t_game *data)
 	{
 		if (loaded_file)
 			free_array(loaded_file);
+		report_error(data);
 		return (0);
 	}
 	free_array(loaded_file);

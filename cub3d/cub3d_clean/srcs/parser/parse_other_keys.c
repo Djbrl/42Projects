@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 20:35:14 by dsy               #+#    #+#             */
-/*   Updated: 2020/03/01 17:51:39 by dsy              ###   ########.fr       */
+/*   Updated: 2020/03/05 01:18:14 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,9 @@ int	check_keys_content(t_game *data, char **loaded_file)
 	if (!(check_keys_order(data, loaded_file))
 		|| !(check_res_key(data)) || !(check_sprite_keys(data))
 		|| !(check_rgb_keys(data)))
+	{
+		data->error = 1;
 		return (0);
+	}
 	return (1);
 }

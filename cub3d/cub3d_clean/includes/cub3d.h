@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:24:47 by dsy               #+#    #+#             */
-/*   Updated: 2020/03/01 18:02:28 by dsy              ###   ########.fr       */
+/*   Updated: 2020/03/05 01:31:10 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ typedef struct	s_game
 	int			y_res;
 	int			row;
 	int			col;
+	char		error;
 
 	char		pov;
 	double		pos_x;
@@ -136,10 +137,11 @@ typedef struct	s_game
 ** PARSING FUNCTIONS
 */
 void			free_array(char **array);
+void			report_error(t_game *data);
 void			free_map_struct(t_game *game);
 void			free_mlx_struct(t_game *game);
 void			init_game_struct(t_game *game);
-char			**load_map_file(char *path);
+char			**load_map_file(char *path, t_game *data);
 char			*remove_spaces(char *line);
 char			**rearrange_keys(char **parsed_file, int n);
 char			*fetch_file(char *path);
