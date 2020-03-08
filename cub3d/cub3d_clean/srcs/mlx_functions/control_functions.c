@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 14:11:10 by dsy               #+#    #+#             */
-/*   Updated: 2020/02/29 23:08:48 by dsy              ###   ########.fr       */
+/*   Updated: 2020/03/08 05:09:46 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ int	key_stroke(int key, void *params)
 	if (key == KEY_M)
 {
 	printf("this got called apparently ?\n");
-	drawVerline(key, data);
+	raycasting(key, data);
+	//drawVerline(key, data);
 }
 	if (key == KEY_ESC)
 		esc_window(key, data);
