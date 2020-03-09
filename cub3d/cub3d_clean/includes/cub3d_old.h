@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:24:47 by dsy               #+#    #+#             */
-/*   Updated: 2020/03/09 03:51:54 by dsy              ###   ########.fr       */
+/*   Updated: 2020/03/09 03:41:01 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,76 +70,46 @@
 # include <unistd.h>
 
 /*
- **	STRUCTURES
- */
+**	STRUCTURES
+*/
+
 typedef struct	s_img
 {
 	void		*mlx_img;
 	int			*img_addr;
-	int			width;
-	int			heigth;
-	int			endian;
 	int			bpp;
 	int			sl;
+	int			endian;
+	int			width;
+	int			heigth;
 }				t_img;
 
 typedef struct s_color
 {
-	int R;
-	int G;
-	int B;
-	int set;
+    int R;
+    int G;
+    int B;
+    int set;
 }               t_color;
-
-typedef struct s_sprite
-{
-	float               diff;
-	float               size;
-	float               y_c;
-	float               y_s;
-	double              dst;
-	double              y;
-	double              x;
-	struct  s_sprite    *next;
-}   t_sprite;
-
-typedef struct  s_ray
-{
-	int         wall_height;
-	int         higher_pix;
-	int         lower_pix;
-	int         tex_x;
-	int         map_x;
-	int         map_y;
-	int         step_x;
-	int         step_y;
-	int         side;
-	int         hit;
-	double      dist_x;
-	double      dist_y;
-	double      d_dist_x;
-	double      d_dist_y;
-	double      wall_dist;
-	double      camera_x;
-	double      rdir_x;
-	double      rdir_y;
-	t_sprite    *sprite;
-}               t_ray;
 
 typedef struct	s_game
 {
 	void		*mlx_ptr;
 	void		*win_ptr;
+	void		*mlx_img;
+	int			*img_addr;
+	int			bpp;
+	int			sl;
+	int			endian;
 
 	t_img		so;
 	t_img		no;
 	t_img		ea;
 	t_img		we;
-	t_img		gun;
-	t_img		sprite;
 	t_color		floor;
 	t_color		ceiling;
-
+	t_img		sprite;
+	t_img		gun;
 	char		**r_key;
 	char		**n_key;
 	char		**so_key;
@@ -192,9 +162,45 @@ typedef struct	s_game
 	double		oldDirX;
 	double		oldPlaneX;
 }				t_game;
+
+typedef struct s_sprite
+{
+    double              x;
+    double              y;
+    double              dst;
+    float               diff;
+    float               size;
+    float               y_c;
+    float               y_s;
+    struct  s_sprite    *next;
+}   t_sprite;
+
+typedef struct  s_ray
+{
+    int         map_x;
+    int         map_y;
+    double      dist_x;
+    double      dist_y;
+    double      d_dist_x;
+    double      d_dist_y;
+    int         step_x;
+    int         step_y;
+    int         hit;
+    int         side;
+    double      wall_dist;
+    int         wall_height;
+    t_sprite    *sprite;
+    int         lower_pix;
+    int         higher_pix;
+    double      camera_x;
+    double      rdir_x;
+    double      rdir_y;
+    int         tex_x;;
+}               t_ray;
+
 /*
- ** PARSING FUNCTIONS
- */
+** PARSING FUNCTIONS
+*/
 void			free_array(char **array);
 void			report_error(t_game *data);
 void			free_map_struct(t_game *game);
@@ -229,8 +235,8 @@ int				get_file_size(char *path);
 int				get_cols(t_game *game);
 int				get_rows(t_game *game);
 /*
- ** MLX FUNCTIONS
- */
+** MLX FUNCTIONS
+*/
 int				raycasting(int key, void *params);
 int				testinit_game(t_game *game);
 int				get_player_data(t_game *game);
