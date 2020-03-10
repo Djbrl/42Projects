@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 19:06:04 by dsy               #+#    #+#             */
-/*   Updated: 2020/03/08 02:51:29 by dsy              ###   ########.fr       */
+/*   Updated: 2020/03/10 22:04:24 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	get_player_data(t_game *data)
 				data->pos_x = i;
 				data->pos_y = j;
 				data->pov = data->map_key[i][j];
+				data->map_key[i][j] = '0';
 				return (1);
 			}
 			j++;

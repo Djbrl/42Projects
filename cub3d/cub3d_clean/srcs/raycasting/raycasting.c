@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 17:23:12 by dsy               #+#    #+#             */
-/*   Updated: 2020/03/10 20:32:29 by dsy              ###   ########.fr       */
+/*   Updated: 2020/03/10 22:41:33 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ void		perform_dda(t_game *d)
 
 void	calculate_line_height(t_game *d)
 {
+	if (d->perpWallDist <= 0)
+		d->perpWallDist = 1;
 	d->lineHeight = (int)(d->y_res / d->perpWallDist);
 	d->drawStart = d->lineHeight / 2 + d->y_res / 2;
 	if (d->drawStart < 0)
@@ -95,7 +97,8 @@ void	choose_wall_color(t_game *d)
 		d->color = d->red;
 	if (d->side == 1)
 		d->color /= 2;
-	drawVerLine(d->pos_x, d->drawStart, d->drawEnd, d->color, d);
+	printf("line to draw : x %f, start %i end %i, color %i\n", d->pos_x, d->drawStart, d->drawEnd, d->color);
+	drawVerLine(d->pos_x, 0, d->drawEnd, d->color, d);
 }
 
 void	read_keys(int key, t_game *d)
@@ -151,7 +154,8 @@ int		raycasting(int key, void *params)
 	setup_raycasting_var(d);
 	while (!done)
 	{
-		while (i < d->col)
+		i = 0;
+		while (i < d->y_res)
 		{
 			d->cameraX = 2 * i / (double)d->col - 1;
 			d->rayDirX = d->dirX + d->planeX * d->cameraX;
@@ -161,9 +165,11 @@ int		raycasting(int key, void *params)
 			d->deltaDistX = fabs(1 / d->rayDirX);
 			d->deltaDistY = fabs(1 / d->rayDirY);
 			calculate_step(d);
+			printf("state : \nposx : %f\nposy : %f\ncase : %c\n(mapx-y : %i-%i)\nstepx : %i\nstepy : %i\ncurrent col %i\n\n", d->pos_x, d->pos_y, d->map_key[d->mapX][d->mapY], d->mapX, d->mapY, d->stepX, d->stepY, i);
 			perform_dda(d);
 			calculate_line_height(d);
-			read_keys(key, d);
+			choose_wall_color(d);
+	//		read_keys(key, d);
 			i++;
 		}
 	}
