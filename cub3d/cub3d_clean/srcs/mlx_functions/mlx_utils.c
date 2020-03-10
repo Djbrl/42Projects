@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 20:46:55 by dsy               #+#    #+#             */
-/*   Updated: 2020/03/01 16:33:40 by dsy              ###   ########.fr       */
+/*   Updated: 2020/03/10 20:19:03 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ void	init_game_struct(t_game *data)
 {
 	data->mlx_ptr = NULL;
 	data->win_ptr = NULL;
-	data->mlx_img = NULL;
-	data->img_addr = NULL;
+	data->l.mlx_img = NULL;
+	data->l.img_addr = NULL;
 }
 
 void	free_mlx_struct(t_game *data)
@@ -27,7 +27,7 @@ void	free_mlx_struct(t_game *data)
 	if (data->mlx_ptr != NULL)
 		free(data->win_ptr);
 	if (data->mlx_ptr != NULL)
-		free(data->mlx_img);
+		free(data->l.mlx_img);
 	if (data->mlx_ptr != NULL)
-		free(data->img_addr);
+		free(data->l.img_addr);
 }
