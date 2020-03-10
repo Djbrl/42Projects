@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:24:47 by dsy               #+#    #+#             */
-/*   Updated: 2020/03/09 05:00:14 by dsy              ###   ########.fr       */
+/*   Updated: 2020/03/10 19:28:34 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,77 +92,7 @@ typedef struct s_color
     int set;
 }               t_color;
 
-typedef struct	s_game
-{
-	void		*mlx_ptr;
-	void		*win_ptr;
-	void		*mlx_img;
-	int			*img_addr;
-	int			bpp;
-	int			sl;
-	int			endian;
-
-	t_img		so;
-	t_img		no;
-	t_img		ea;
-	t_img		we;
-	t_color		floor;
-	t_color		ceiling;
-	t_img		sprite;
-	t_img		gun;
-	char		**r_key;
-	char		**n_key;
-	char		**so_key;
-	char		**w_key;
-	char		**e_key;
-	char		**s_key;
-	char		**f_key;
-	char		**c_key;
-	char		**map_key;
-	int			x_res;
-	int			y_res;
-	int			row;
-	int			col;
-	char		error;
-
-	char		pov;
-	double		pos_x;
-	double		pos_y;
-
-	int			red;
-	int			green;
-	int			yellow;
-	int			blue;
-	int			color;
-
-	int			speed;
-	int			drawStart;
-	int			drawEnd;
-	int			lineHeight;
-	int			sideDistX;
-	int			sideDistY;
-	int			deltaDistX;
-	int			deltaDistY;
-	int			perpWallDist;
-	int			stepX;
-	int			stepY;
-	int			hit;
-	int			side;
-	int			mapX;
-	int			mapY;
-	double		dirX;
-	double		dirY;
-	double		planeX;
-	double		planeY;
-	double		time;
-	double		oldtime;
-	double		cameraX;
-	double		rayDirX;
-	double		rayDirY;
-	double		oldDirX;
-	double		oldPlaneX;
-}				t_game;
-
+/*
 typedef struct s_sprite
 {
     double              x;
@@ -197,24 +127,118 @@ typedef struct  s_ray
     double      rdir_y;
     int         tex_x;;
 }               t_ray;
+*/
 
+typedef struct	s_game
+{
+	/*
+	** MLX RELATED
+	*/ 
+	void		*mlx_ptr;
+	void		*win_ptr;
+
+	t_img		so;
+	t_img		no;
+	t_img		ea;
+	t_img		we;
+	t_color		floor;
+	t_color		ceiling;
+	t_img		sprite;
+	t_img		gun;
+	/*
+	** PARSING
+	*/ 
+	char		**r_key;
+	char		**n_key;
+	char		**so_key;
+	char		**w_key;
+	char		**e_key;
+	char		**s_key;
+	char		**f_key;
+	char		**c_key;
+	char		**map_key;
+	int			x_res;
+	int			y_res;
+	int			row;
+	int			col;
+	char		error;
+
+	char		pov;
+	double		pos_x;
+	double		pos_y;
+
+	int			red;
+	int			green;
+	int			yellow;
+	int			blue;
+	int			color;
+	/*
+	** RAYCASTING
+	*/ 
+	int			speed;
+	int			drawStart;
+	int			drawEnd;
+	int			lineHeight;
+	int			sideDistX;
+	int			sideDistY;
+	int			deltaDistX;
+	int			deltaDistY;
+	int			perpWallDist;
+	int			stepX;
+	int			stepY;
+	int			hit;
+	int			side;
+	int			mapX;
+	int			mapY;
+	double		dirX;
+	double		dirY;
+	double		planeX;
+	double		planeY;
+	double		time;
+	double		oldtime;
+	double		cameraX;
+	double		rayDirX;
+	double		rayDirY;
+	double		oldDirX;
+	double		oldPlaneX;
+}				t_game;
+
+typedef struct  s_ray
+{
+    int         map_x;
+    int         map_y;
+    double      dist_x;
+    double      dist_y;
+    double      d_dist_x;
+    double      d_dist_y;
+    int         step_x;
+    int         step_y;
+    int         hit;
+    int         side;
+    double      wall_dist;
+    int         wall_height;
+//  t_sprite    *sprite;
+    int         lower_pix;
+    int         higher_pix;
+    double      camera_x;
+    double      rdir_x;
+    double      rdir_y;
+    int         tex_x;;
+}               t_ray;
 /*
 ** PARSING FUNCTIONS
 */
 void			free_array(char **array);
 void			report_error(t_game *data);
 void			free_map_struct(t_game *game);
-void			free_mlx_struct(t_game *game);
 void			init_game_struct(t_game *game);
 char			**load_map_file(char *path, t_game *data);
 char			*remove_spaces(char *line);
 char			**rearrange_keys(char **parsed_file, int n);
 char			*fetch_file(char *path);
-
 int				fill_map(t_game *game, char **loaded_file);
 int				check_file_keys(char **loaded_file, t_game *game);
 int				parse_map_file(char *path, t_game *game);
-
 int				go_through_valid_keys(char **valid_keys, char *key);
 int				check_map_extension(char *path);
 int				check_keys_exist(t_game *file);
@@ -237,7 +261,7 @@ int				get_rows(t_game *game);
 /*
 ** MLX FUNCTIONS
 */
-int				raycasting(int key, void *params);
+void			free_mlx_struct(t_game *game);
 int				testinit_game(t_game *game);
 int				get_player_data(t_game *game);
 int				init_game(t_game *game);
@@ -246,4 +270,9 @@ int				basic_image(int key, void *params);
 int				key_stroke(int key, void *params);
 int				cross_window(int key, void *params);
 int				esc_window(int key, void *params);
+/*
+** RAYCASTING
+*/
+int				raycasting(int key, void *params);
+int				drawVerLine(double x, int start, int end, int color, t_game *d);
 #endif

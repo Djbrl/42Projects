@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 17:43:27 by dsy               #+#    #+#             */
-/*   Updated: 2020/03/08 04:36:07 by dsy              ###   ########.fr       */
+/*   Updated: 2020/03/10 19:30:59 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	drawVerLine(double x, int start, int end, int color, t_game *d)
 {
     t_game  *mlx = d;
-
+//link to new  img struct
     mlx->mlx_img = mlx_new_image(mlx->mlx_ptr, mlx->y_res, mlx->x_res);
     mlx->img_addr = (int *)mlx_get_data_addr(mlx->mlx_img, &mlx->bpp, &mlx->sl,
         &mlx->endian);
