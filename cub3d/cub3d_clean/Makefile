@@ -6,7 +6,7 @@
 #    By: dsy <marvin@42.fr>                         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/12 17:08:38 by dsy               #+#    #+#              #
-#    Updated: 2020/03/10 22:43:24 by dsy              ###   ########.fr        #
+#    Updated: 2020/03/11 00:03:58 by dsy              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,6 @@ clean:
 
 fclean: clean
 	@cd $(LIBFTPATH) && make fclean
-	@rm Cub3D
 
 re: fclean all
 

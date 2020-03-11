@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:24:47 by dsy               #+#    #+#             */
-/*   Updated: 2020/03/10 20:18:46 by dsy              ###   ########.fr       */
+/*   Updated: 2020/03/11 03:53:32 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ typedef struct	s_img
 	int			sl;
 	int			endian;
 	int			width;
-	int			heigth;
+	int			height;
 }				t_img;
 
 typedef struct s_color
@@ -104,6 +104,7 @@ typedef struct s_sprite
     float               y_s;
     struct  s_sprite    *next;
 }   t_sprite;
+*/
 
 typedef struct  s_ray
 {
@@ -119,7 +120,7 @@ typedef struct  s_ray
     int         side;
     double      wall_dist;
     int         wall_height;
-    t_sprite    *sprite;
+//    t_sprite    *sprite;
     int         lower_pix;
     int         higher_pix;
     double      camera_x;
@@ -127,7 +128,6 @@ typedef struct  s_ray
     double      rdir_y;
     int         tex_x;;
 }               t_ray;
-*/
 
 typedef struct	s_game
 {
@@ -138,6 +138,7 @@ typedef struct	s_game
 	void		*win_ptr;
 
 	t_img		l;
+	t_img		m;
 	t_img		so;
 	t_img		no;
 	t_img		ea;
@@ -158,15 +159,11 @@ typedef struct	s_game
 	char		**f_key;
 	char		**c_key;
 	char		**map_key;
-	int			x_res;
-	int			y_res;
+	int			width;
+	int			height;
 	int			row;
 	int			col;
 	char		error;
-
-	char		pov;
-	double		pos_x;
-	double		pos_y;
 
 	int			red;
 	int			green;
@@ -176,6 +173,10 @@ typedef struct	s_game
 	/*
 	** RAYCASTING
 	*/ 
+	double		pos_y;
+	double		pos_x;
+	char		pov;
+	int			x;
 	int			speed;
 	int			drawStart;
 	int			drawEnd;
@@ -203,29 +204,6 @@ typedef struct	s_game
 	double		oldDirX;
 	double		oldPlaneX;
 }				t_game;
-
-typedef struct  s_ray
-{
-    int         map_x;
-    int         map_y;
-    double      dist_x;
-    double      dist_y;
-    double      d_dist_x;
-    double      d_dist_y;
-    int         step_x;
-    int         step_y;
-    int         hit;
-    int         side;
-    double      wall_dist;
-    int         wall_height;
-//  t_sprite    *sprite;
-    int         lower_pix;
-    int         higher_pix;
-    double      camera_x;
-    double      rdir_x;
-    double      rdir_y;
-    int         tex_x;;
-}               t_ray;
 /*
 ** PARSING FUNCTIONS
 */
@@ -274,6 +252,6 @@ int				esc_window(int key, void *params);
 /*
 ** RAYCASTING
 */
-int				raycasting(int key, void *params);
+int				raycasting(t_game *data);
 int				drawVerLine(double x, int start, int end, int color, t_game *d);
 #endif

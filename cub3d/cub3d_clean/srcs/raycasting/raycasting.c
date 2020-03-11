@@ -5,173 +5,186 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/25 17:23:12 by dsy               #+#    #+#             */
-/*   Updated: 2020/03/10 22:41:33 by dsy              ###   ########.fr       */
+/*   Created: 2020/03/10 23:33:10 by dsy               #+#    #+#             */
+/*   Updated: 2020/03/11 05:10:21 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-void	setup_raycasting_var(t_game *data)
+int     *get_texture(t_game *data, t_ray *ray)
 {
-	data->dirX = -1;
-	data->dirY = 0;
-	data->planeX = 0;
-	data->planeY = 0.66;
-	data->time = 0;
-	data->cameraX = 0;
-	data->rayDirX = 0;
-	data->rayDirY = 0;
-	data->hit = 0;
+	if (ray->side == 0 && ray->rdir_x < 0)
+		return (data->so.img_addr);
+	else if (ray->side == 0 && ray->rdir_x > 0)
+		return (data->no.img_addr);
+	else if (ray->side == 1 && ray->rdir_y > 0)
+		return (data->we.img_addr);
+	else
+		return (data->ea.img_addr);
 }
 
-void	calculate_step(t_game *d)
+int     get_size(t_game *data, t_ray *ray)
 {
-	if (d->rayDirX < 0)
-	{
-		d->stepX = -1;
-		d->sideDistX = (d->pos_x - d->mapX) * d->deltaDistX;
-	}
+	if (ray->side == 0 && ray->rdir_x < 0)
+		return (data->so.height);
+	else if (ray->side == 0 && ray->rdir_x > 0)
+		return (data->no.height);
+	else if (ray->side == 1 && ray->rdir_y > 0)
+		return (data->we.height);
+	else
+		return (data->ea.height);
+}
+
+void    init_ray(t_ray *ray, t_game *data)
+{
+	ray->map_x = (int)data->pos_x;
+	ray->map_y = (int)data->pos_y;
+	ray->camera_x = 2 * data->x / (double)data->width - 1;
+	ray->rdir_x = data->dirX + data->planeX * ray->camera_x;
+	ray->rdir_y = data->dirY + data->planeY * ray->camera_x;
+	ray->d_dist_x = fabs(1 / ray->rdir_x);
+	ray->d_dist_y = fabs(1 / ray->rdir_y);
+	ray->hit = 0;
+	//ray->sprite = 0;
+}
+
+void    init_dist(t_ray *ray, t_game *data)
+{
+	if (ray->rdir_x < 0 && (ray->step_x = -1) == -1)
+		ray->dist_x = (data->pos_x - ray->map_x) * ray->d_dist_x;
 	else
 	{
-		d->stepX = 1;
-		d->sideDistX = (d->mapX + 1.0 - d->pos_x) * d->deltaDistX;
+		ray->dist_x = (-data->pos_x + 1 + ray->map_x) * ray->d_dist_x;
+		ray->step_x = 1;
 	}
-	if (d->rayDirY < 0)
-	{
-		d->stepY = -1;
-		d->sideDistY = (d->pos_y - d->mapY) * d->deltaDistY;
-	}
+	if (ray->rdir_y < 0 && (ray->step_y = -1) == -1)
+		ray->dist_y = (data->pos_y - ray->map_y) * ray->d_dist_y;
 	else
 	{
-		d->stepY = 1;
-		d->sideDistY = (d->mapY + 1.0 - d->pos_y) * d->deltaDistY;
+		ray->dist_y = (-data->pos_y + 1 + ray->map_y) * ray->d_dist_y;
+		ray->step_y = 1;
 	}
 }
 
-void		perform_dda(t_game *d)
+void	draw_background(t_game *data)
 {
-	while (d->hit == 0)
+	int     i;
+
+	i = 0;
+	data->x = -1;
+	//data->to_draw = 0;
+	while (i < (data->height * data->width))
 	{
-		if (d->sideDistX < d->sideDistY)
+		if (i < (data->height * data->width) / 2)
+			data->l.img_addr[i] = (data->floor.R << 16) 
+				+ (data->floor.G << 8) + data->floor.B;
+		else
+			data->l.img_addr[i] = (data->ceiling.R << 16) 
+				+ (data->ceiling.G << 8) + data->ceiling.B;
+		i++;
+	}
+
+}
+
+int     dda(t_ray *ray, t_game *data)
+{
+	while (ray->hit == 0)
+	{
+		if (ray->dist_x < ray->dist_y)
 		{
-			d->sideDistX += d->deltaDistX;
-			d->mapX += d->stepX;
-			d->side = 0;
+			ray->dist_x += ray->d_dist_x;
+			ray->map_x += ray->step_x;
+			ray->side = 0;
 		}
 		else
 		{
-			d->sideDistY += d->deltaDistY;
-			d->mapY += d->stepY;
-			d->side = 1;
+			ray->dist_y += ray->d_dist_y;
+			ray->map_y += ray->step_y;
+			ray->side = 1;
 		}
-		if (d->map_key[d->mapX][d->mapY] > '0')
-			d->hit = 1;
-	}
-	if (d->side == 0)
-		d->perpWallDist = (d->mapX - d->pos_x + (1 - d->stepX) / 2) / d->rayDirX;
-	else
-		d->perpWallDist = (d->mapY - d->pos_y + (1 - d->stepY) / 2) / d->rayDirY;
-}
-
-void	calculate_line_height(t_game *d)
-{
-	if (d->perpWallDist <= 0)
-		d->perpWallDist = 1;
-	d->lineHeight = (int)(d->y_res / d->perpWallDist);
-	d->drawStart = d->lineHeight / 2 + d->y_res / 2;
-	if (d->drawStart < 0)
-		d->drawStart = 0;
-	d->drawEnd = d->lineHeight / 2 + d->y_res / 2;
-	if (d->drawEnd >= d->y_res)
-		d->drawEnd = d->y_res - 1;
-}
-
-void	choose_wall_color(t_game *d)
-{
-	d->red = 0xFF0000;
-	d->green = 0x00FF00;
-	d->blue = 0x0000FF;
-	d->yellow = 0xFFFF00;
-	if (d->map_key[d->mapX][d->mapY] == '1')
-		d->color = d->red;
-	if (d->side == 1)
-		d->color /= 2;
-	printf("line to draw : x %f, start %i end %i, color %i\n", d->pos_x, d->drawStart, d->drawEnd, d->color);
-	drawVerLine(d->pos_x, 0, d->drawEnd, d->color, d);
-}
-
-void	read_keys(int key, t_game *d)
-{
-	if (key == KEY_UP)
-	{
-		if (d->map_key[(int)(d->pos_x + d->dirX)][(int)(d->pos_y)] == '0')
-			d->pos_x += d->dirX;
-		if (d->map_key[(int)(d->pos_x)][(int)(d->pos_y + d->dirY)] == '0')
-			d->pos_y += d->dirY;
-	}
-	//move backwards if no wall behind you
-	if (key == KEY_DOWN)
-	{
-		if (d->map_key[(int)(d->pos_x - d->dirX)][(int)(d->pos_y)] == '0') 
-			d->pos_x -= d->dirX;
-		if (d->map_key[(int)(d->pos_x)][(int)(d->pos_y - d->dirY)] == '0')
-			d->pos_y -= d->dirY;
-	}
-	//rotate to the right
-	if (key == KEY_RIGHT)
-	{
-		//both camera direction and camera plane must be rotated
-		d->oldDirX = d->dirX;
-		d->dirX = d->dirX;
-		d->dirY = d->oldDirX;
-		d->oldPlaneX = d->planeX;
-		d->planeX = d->planeX - d->planeY;
-		d->planeY = d->oldPlaneX + d->planeY;
-	}
-	//rotate to the left
-	if (key == KEY_LEFT)
-	{
-		//both camera direction and camera plane must be rotated
-		d->oldDirX = d->dirX;
-		d->dirX = d->dirX - d->dirY;
-		d->dirY = d->oldDirX + d->dirY;
-		d->oldPlaneX = d->planeX;
-		d->planeX = d->planeX - d->planeY;
-		d->planeY = d->oldPlaneX + d->planeY;
-	}
-}
-
-int		raycasting(int key, void *params)
-{
-	int done;
-	int i;
-	t_game *d;
-
-	d = (t_game *)params;
-	done = 0;
-	i = 0;
-	setup_raycasting_var(d);
-	while (!done)
-	{
-		i = 0;
-		while (i < d->y_res)
-		{
-			d->cameraX = 2 * i / (double)d->col - 1;
-			d->rayDirX = d->dirX + d->planeX * d->cameraX;
-			d->rayDirY = d->dirY + d->planeY * d->cameraX;
-			d->mapX = (int)d->pos_x;
-			d->mapY = (int)d->pos_y;
-			d->deltaDistX = fabs(1 / d->rayDirX);
-			d->deltaDistY = fabs(1 / d->rayDirY);
-			calculate_step(d);
-			printf("state : \nposx : %f\nposy : %f\ncase : %c\n(mapx-y : %i-%i)\nstepx : %i\nstepy : %i\ncurrent col %i\n\n", d->pos_x, d->pos_y, d->map_key[d->mapX][d->mapY], d->mapX, d->mapY, d->stepX, d->stepY, i);
-			perform_dda(d);
-			calculate_line_height(d);
-			choose_wall_color(d);
-	//		read_keys(key, d);
-			i++;
-		}
+		if (data->map_key[ray->map_x][ray->map_y] == '2')
+			return (0);
+		//	if (!(add_sprite(data, ray)))
+		if (data->map_key[ray->map_x][ray->map_y] == '1')
+			ray->hit = 1;
 	}
 	return (1);
+}
+
+void    get_wall_height(t_ray *ray, t_game *data)
+{
+	if (ray->side == 0)
+		ray->wall_dist = (ray->map_x - data->pos_x + (1 -
+					ray->step_x) / 2) / ray->rdir_x;
+	else
+		ray->wall_dist = (ray->map_y - data->pos_y + (1 -
+					ray->step_y) / 2) / ray->rdir_y;
+	ray->wall_height = (int)((float)data->height / (float)ray->wall_dist);
+	ray->lower_pix = (int)(-ray->wall_height / 2 + data->height / 2);
+	if (ray->lower_pix < 0)
+		ray->lower_pix = 0;
+	ray->higher_pix = ray->wall_height / 2 + data->height / 2;
+	if (ray->higher_pix > data->height)
+		ray->higher_pix = data->height - 1;
+}
+
+int         draw_pix_column(t_ray *ray, t_game *data)
+{
+	double  tex_x;
+	double  y;
+	int     size;
+	int     *texture;
+	int     diff;
+
+	diff = 0;
+	if (ray->higher_pix <= ray->wall_height)
+		diff = (ray->wall_height - ray->higher_pix) / 2;
+	texture = get_texture(data, ray);
+	size = get_size(data, ray);
+	y = (double)size / (double)ray->wall_height;
+	tex_x = data->pos_x + ray->wall_dist * ray->rdir_x;
+	if (ray->side == 0)
+		tex_x = data->pos_y + ray->wall_dist * ray->rdir_y;
+	tex_x = tex_x - floor(tex_x);
+	while (ray->lower_pix < ray->higher_pix)
+	{
+		data->l.img_addr[(int)data->x + (ray->lower_pix * data->width)] =
+			texture[(int)(tex_x * (double)size - 1)
+			+ ((int)((ray->higher_pix - ray->lower_pix + diff) * y) * (size))];
+		ray->lower_pix++;
+	}
+	return (1);
+}
+
+void	init (t_ray **ray)
+{
+	ray[0] = malloc(sizeof(t_ray));
+}
+
+void    clear_ray(t_ray **ray)
+{
+    free(*ray);
+}
+
+int		raycasting(t_game *d)
+{
+	t_ray *ray;
+	init(&ray);
+	d->l.mlx_img = mlx_new_image(d->mlx_ptr, d->width, d->height);
+	d->l.img_addr = (int *)mlx_get_data_addr(d->l.mlx_img, &d->l.bpp, &d->l.sl, &d->l.endian);
+	draw_background(d);
+	while (++d->x < d->width)
+	{
+		init_ray(ray, d);
+		init_dist(ray, d);
+		if (!(dda(ray, d)))
+			return (0);
+		get_wall_height(ray, d);
+		draw_pix_column(ray, d);
+	}
+	clear_ray(&ray);
+	mlx_put_image_to_window(d->mlx_ptr, d->win_ptr, d->l.mlx_img, 0, 0);
+	free(d->l.mlx_img);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 14:11:10 by dsy               #+#    #+#             */
-/*   Updated: 2020/03/10 20:44:14 by dsy              ###   ########.fr       */
+/*   Updated: 2020/03/11 04:17:34 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,12 @@ int	key_stroke(int key, void *params)
 		printf("Pressed up.\n");
 	if (key == KEY_DOWN)
 		printf("Pressed down.\n");
-//	if (key == KEY_M)
-//	{
+	if (key == KEY_M)
+	{
 //		drawVerLine(30, 100, 300, 0xFFFFFF, data);
-		raycasting(key, data);
-//		drawVerline(key, data);
-//	}
+		raycasting(data);
+		//		drawVerline(key, data);
+	}
 	if (key == KEY_ESC)
 		esc_window(key, data);
 	return (0);
