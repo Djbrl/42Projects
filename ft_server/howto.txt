@@ -16,4 +16,4 @@ Other useful docker commands :
 build       Build an image from a Dockerfile
 kill        Kill one or more running containers
 restart     Restart one or more containers:Wq
-
+docker system prune to remove deck containers etc

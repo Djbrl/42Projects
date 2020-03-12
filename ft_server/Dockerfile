@@ -6,7 +6,7 @@
 #    By: dsy <marvin@42.fr>                         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/21 20:42:34 by dsy               #+#    #+#              #
-#    Updated: 2020/02/21 16:31:25 by dsy              ###   ########.fr        #
+#    Updated: 2020/03/12 08:01:46 by dsy              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,27 +16,35 @@ FROM debian:buster
 #Installations
 RUN apt-get update -y
 RUN apt-get install -y nginx
-RUN apt-get install -y wget
-RUN apt-get install -y unzip
-RUN  sudo apt install php7.3 php7.3-fpm php7.3-mysql php-common php7.3-cli php7.3-common php7.3-json php7.3-opcache php7.3-readline
 RUN apt-get install -y mariadb-server
 RUN apt-get install -y mariadb-client
+RUN apt-get install -y php7.3-fpm
+RUN apt-get install -y php7.3-mysql
+RUN apt-get install -y wget
+RUN apt-get install -y unzip
+
+COPY srcs/start.sh .
+COPY srcs/ftserver_com /etc/nginx/sites-available/
+#RUN apt-get install php7.3 php7.3-fpm php7.3-mysql php-common php7.3-cli php7.3-common php7.3-json php7.3-opcache php7.3-readline
+#RUN apt-get install -y mariadb-server
+#RUN apt-get install -y mariadb-client
 
 #MariaDB
-RUN systemctl enable mariadb
-RUN sudo mariadb -u root
+#RUN systemctl enable mariadb
+#RUN sudo mariadb -u root
 
-#PHP
-RUN sudo systemctl enable php7.3-fpm
+#PHP & SQL
+#RUN sudo systemctl enable php7.3-fpm
 
 #Nginx
-RUN systemctl enable nginx
-RUN sudo chown www-data:www-data /usr/share/nginx/html/ -R
-RUN sudo rm /etc/nginx/sites-enabled/default
-
+RUN service nginx start
+#RUN chown www-data:www-data /usr/share/nginx/html/ -R
+#RUN rm /etc/nginx/sites-enabled/default
+EXPOSE 80
 
 #Wordpress
-RUN wget https://fr.wordpress.org/wordpress-latest-fr_FR.zip
-RUN unzip wordpress-latest-fr_FR.zip -d /var/www
-RUN chown www-data:www-data /var/www/wordpress -R
-RUN chmod -R -wx,u+rwX,g+rX,o+rX /var/www/wordpress
+#RUN wget https://fr.wordpress.org/wordpress-latest-fr_FR.zip
+#RUN unzip wordpress-latest-fr_FR.zip -d /var/www
+#RUN chown www-data:www-data /var/www/wordpress -R
+#RUN chmod -R -wx,u+rwX,g+rX,o+rX /var/www/wordpress
+CMD bash start.sh
