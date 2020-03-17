@@ -2,6 +2,8 @@
 
 sh generate_certificates.sh
 
+
+
 service mysql start
 echo "creating database for wordpress"
 mysql -e "CREATE DATABASE WordPress CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci";
