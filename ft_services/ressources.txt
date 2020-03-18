@@ -11,5 +11,8 @@ if you get the driver error
 
 connect docker-env to minikub
 	eval "$(minikube docker-env)"
-
+OR, set up a dockerHUB repository, then
+	docker login
+	generate or pull your images
 fill up deployment file then apply changes and launch dahsboard
+expose your service to be able to access it
