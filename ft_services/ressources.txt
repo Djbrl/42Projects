@@ -1,0 +1,15 @@
+https://kubernetes.io/docs/tutorials/kubernetes-basics/create-cluster/cluster-interactive/
+
+https://computingforgeeks.com/how-to-install-minikube-on-ubuntu-18-04/
+
+install all packages needed such as VB, brew etc
+
+install minikube and kubectl, place them in /bin
+some command will require sudo
+if you get the driver error
+	sudo minikube start --vm-driver=none
+
+connect docker-env to minikub
+	eval "$(minikube docker-env)"
+
+fill up deployment file then apply changes and launch dahsboard

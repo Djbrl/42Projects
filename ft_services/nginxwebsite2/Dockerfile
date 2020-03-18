@@ -96,7 +96,7 @@ WORKDIR /
 
 #ADD default /etc/nginx/sites-available/default
 
-EXPOSE 80
+EXPOSE 100
 #EXPOSE 443
 
 CMD bash start.sh && tail -f /dev/null
