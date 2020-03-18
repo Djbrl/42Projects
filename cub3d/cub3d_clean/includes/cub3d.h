@@ -62,7 +62,8 @@
 # define KEY_UP 126
 
 # include "../libs/libft/libft.h"
-# include "../libs/minilibx/mlx.h"
+//# include "../libs/minilibx/mlx.h"
+# include "../libs/minilibx_linux/minilibx/mlx.h"
 # include <stdio.h>
 # include <math.h>
 # include <fcntl.h>

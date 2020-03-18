@@ -26,7 +26,8 @@ libft:
 	cd $(LIBFTPATH) && make -j5
 
 all: libft
-	gcc $(SRCS) main.c -L /usr/local/lib -lmlx -framework OpenGL -framework AppKit $(LIBOBJ) -o Cub3D
+	gcc $(SRCS) main.c libs/minilibx_linux/minilibx/libmlx.a -lm -lX11 -lXext $(LIBOBJ) -o Cub3D
+#	gcc $(SRCS) main.c -L /usr/local/lib -lmlx -framework OpenGL -framework AppKit $(LIBOBJ) -o Cub3D
 
 clean:
 	@cd $(LIBFTPATH) && make clean
