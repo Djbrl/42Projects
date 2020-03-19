@@ -13,20 +13,27 @@
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# define KEY_ESC 53
-# define KEY_A 0
-# define KEY_S 1
-# define KEY_D 2
+//# define KEY_ESC 53 MACOS
+# define KEY_ESC 65307 //Linux
+//# define KEY_A 0 MACOS
+# define KEY_A 97 //Linux
+//# define KEY_S 1 MACOS
+# define KEY_S 115 //Linux
+//# define KEY_D 2 MACOS
+# define KEY_D 100 //Linux
 # define KEY_F 3
 # define KEY_H 4
 # define KEY_G 5
-# define KEY_Z 6
+//# define KEY_Z 6 MACOS
+# define KEY_Z 122 //Linux
 # define KEY_X 7
 # define KEY_C 8
 # define KEY_V 9
 # define KEY_B 11
-# define KEY_Q 12
-# define KEY_W 13
+//# define KEY_Q 12 MACOS
+# define KEY_Q 113 //Linux
+//# define KEY_W 13 MACOS
+# define KEY_W 119 // Linux
 # define KEY_E 14
 # define KEY_R 15
 # define KEY_Y 16
