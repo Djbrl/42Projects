@@ -1,19 +1,19 @@
 apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
 kind: Deployment
 metadata:
-  name: nginx1
+  name: nginxwebsite
 spec:
   selector:
     matchLabels:
-      app: nginx1
+      app: nginxwebsite
   replicas: 2 # tells deployment to run 2 pods matching the template
   template:
     metadata:
       labels:
-        app: nginx1
+        app: nginxwebsite
     spec:
       containers:
-      - name: nginx1
-        image: dsy42/ft_services:test1
+      - name: nginxwebsite
+        image: dsy42/ft-services:latest
         ports:
         - containerPort: 80

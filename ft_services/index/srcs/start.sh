@@ -25,4 +25,7 @@ service nginx start
 
 echo "infinte loop"
 
-read
+while :
+do
+  sleep 1
+done

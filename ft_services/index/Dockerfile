@@ -13,10 +13,7 @@
 FROM debian:buster
 
 RUN apt-get update \
-    && apt-get install -y nginx \
-	&& apt-get clean \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
-	&& echo "daemon off;" >> /etc/nginx/nginx.conf
+    && apt-get install -y nginx
 
 #RUN apt-get update \
 #	&& apt-get install systemd -y \
@@ -47,6 +44,9 @@ RUN apt-get update \
 COPY ./srcs/start.sh .
 #COPY ./srcs/wordpress.conf /etc/nginx/sites-available/
 #COPY ./srcs/mysql_setup.sql /var/
+COPY srcs/nginx.conf /etc/nginx/nginx.conf
+COPY srcs/index.html /var/www/localhost/htdocs/index.html
+RUN echo "daemon off;" >> /etc/nginx/nginx.conf
 
 #RUN apt-get update && apt-get install -y gnupg2
 
@@ -56,7 +56,6 @@ RUN chmod 777 ./start.sh
 
 
 #RUN mkdir /var/www/wordpress /var/www/phpmyadmin
-
 
 RUN nginx -t
 
@@ -92,11 +91,11 @@ RUN nginx -t
 #RUN chmod -R 755 *
 
 
-WORKDIR /
+#WORKDIR /
 
 #ADD default /etc/nginx/sites-available/default
 
 EXPOSE 80
-#EXPOSE 443
+EXPOSE 443
 
 CMD bash start.sh && tail -f /dev/null
