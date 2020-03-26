@@ -94,7 +94,7 @@ RUN chmod -R 755 *
 
 WORKDIR /
 
-#ADD default /etc/nginx/sites-available/default
+ADD default /etc/nginx/sites-available/default
 
 EXPOSE 80
 EXPOSE 443
