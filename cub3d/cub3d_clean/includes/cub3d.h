@@ -59,7 +59,8 @@
 # define KEY_K 40
 # define KEY_SEMI 41
 # define KEY_N 45
-# define KEY_M 46
+//# define KEY_M 46 MAOCS
+# define KEY_M 109 //LINUX
 # define KEY_TAB 48
 # define KEY_PLUS 69
 # define KEY_MINUS 78
@@ -260,6 +261,6 @@ int				esc_window(int key, void *params);
 /*
 ** RAYCASTING
 */
-int				raycasting(t_game *data);
+int				raycasting(t_game *game);
 int				drawVerLine(double x, int start, int end, int color, t_game *d);
 #endif

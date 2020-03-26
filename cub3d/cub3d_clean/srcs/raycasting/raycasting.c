@@ -169,12 +169,16 @@ void    clear_ray(t_ray **ray)
 
 int		raycasting(t_game *d)
 {
+	write(1, "ok", 2);
 	t_ray *ray;
 	init(&ray);
+	write(1, "ok", 2);
 	d->l.mlx_img = mlx_new_image(d->mlx_ptr, d->width, d->height);
+	write(1, "ok", 2);
 	d->l.img_addr = (int *)mlx_get_data_addr(d->l.mlx_img, &d->l.bpp, &d->l.sl, &d->l.endian);
+	write(1, "ok", 2);
 	draw_background(d);
-	while (++d->x < d->width)
+/*	while (++d->x < d->width)
 	{
 		init_ray(ray, d);
 		init_dist(ray, d);
@@ -183,7 +187,7 @@ int		raycasting(t_game *d)
 		get_wall_height(ray, d);
 		draw_pix_column(ray, d);
 	}
-	clear_ray(&ray);
+	clear_ray(&ray);*/
 	mlx_put_image_to_window(d->mlx_ptr, d->win_ptr, d->l.mlx_img, 0, 0);
 	free(d->l.mlx_img);
 	return (0);
