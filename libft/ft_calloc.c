@@ -15,9 +15,7 @@
 void	*ft_calloc(size_t count, size_t size)
 {
 	void	*stock;
-	int		i;
-
-	i = 0;
+	
 	if (!(stock = malloc(count * size)))
 		return (NULL);
 	ft_bzero(stock, count);
