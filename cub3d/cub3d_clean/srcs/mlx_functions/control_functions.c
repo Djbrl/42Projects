@@ -52,10 +52,10 @@ int	key_stroke(int key, void *params)
 		printf("Pressed down.\n");
 	if (key == KEY_M)
 	{
-//		drawVerLine(30, 100, 300, 0xFFFFFF, data);
-		write(1, "ok\n", 3);
-		raycasting(data);
-		//		drawVerline(key, data);
+		drawVerLine(30, 100, 300, 0xFFFFFF, data);
+//		write(1, "ok\n", 3);
+//		raycasting(data);
+//			drawVerline(key, data);
 	}
 	if (key == KEY_ESC)
 		esc_window(key, data);
