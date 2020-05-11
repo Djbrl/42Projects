@@ -6,11 +6,11 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:13:08 by dsy               #+#    #+#             */
-/*   Updated: 2020/03/05 04:07:57 by dsy              ###   ########.fr       */
+/*   Updated: 2020/05/11 18:41:15 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3d.h"
+#include "cub3d.h"
 
 int		get_file_size(char *path)
 {

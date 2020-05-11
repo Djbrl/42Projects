@@ -6,11 +6,11 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/16 06:31:50 by dsy               #+#    #+#             */
-/*   Updated: 2020/03/05 04:29:56 by dsy              ###   ########.fr       */
+/*   Updated: 2020/05/11 18:41:18 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3d.h"
+#include "cub3d.h"
 
 void	report_error(t_game *data)
 {

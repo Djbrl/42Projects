@@ -6,11 +6,11 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 14:11:10 by dsy               #+#    #+#             */
-/*   Updated: 2020/03/11 04:17:34 by dsy              ###   ########.fr       */
+/*   Updated: 2020/05/11 18:42:15 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3d.h"
+#include "cub3d.h"
 
 int	esc_window(int key, void *params)
 {

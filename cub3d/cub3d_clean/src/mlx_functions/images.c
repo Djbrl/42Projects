@@ -6,11 +6,11 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 17:43:27 by dsy               #+#    #+#             */
-/*   Updated: 2020/03/11 00:53:32 by dsy              ###   ########.fr       */
+/*   Updated: 2020/05/11 18:41:13 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3d.h"
+#include "cub3d.h"
 
 int	drawVerLine(double x, int start, int end, int color, t_game *d)
 {

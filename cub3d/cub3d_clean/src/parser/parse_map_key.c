@@ -6,11 +6,11 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 20:26:32 by dsy               #+#    #+#             */
-/*   Updated: 2020/03/05 04:11:04 by dsy              ###   ########.fr       */
+/*   Updated: 2020/05/11 18:41:17 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3d.h"
+#include "cub3d.h"
 
 int	check_map_borders(t_game *data, int row, int col)
 {

@@ -6,11 +6,11 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 17:52:49 by dsy               #+#    #+#             */
-/*   Updated: 2020/03/05 04:29:48 by dsy              ###   ########.fr       */
+/*   Updated: 2020/05/11 18:41:20 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3d.h"
+#include "cub3d.h"
 
 int check_map_extension(char *path)
 {

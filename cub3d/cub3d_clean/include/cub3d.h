@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:24:47 by dsy               #+#    #+#             */
-/*   Updated: 2020/03/11 03:53:32 by dsy              ###   ########.fr       */
+/*   Updated: 2020/05/11 19:10:28 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,9 @@
 # define KEY_DOWN 125
 # define KEY_UP 126
 
-# include "../libs/libft/libft.h"
+# include "libft.h"
 //# include "../libs/minilibx/mlx.h"
-# include "../libs/minilibx_linux/minilibx/mlx.h"
+# include "mlx.h"
 # include <stdio.h>
 # include <math.h>
 # include <fcntl.h>

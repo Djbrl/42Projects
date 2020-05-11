@@ -6,11 +6,11 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:13:18 by dsy               #+#    #+#             */
-/*   Updated: 2020/03/05 04:07:48 by dsy              ###   ########.fr       */
+/*   Updated: 2020/05/11 18:41:16 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3d.h"
+#include "cub3d.h"
 
 int	fill_map(t_game *data, char **loaded_file)
 {

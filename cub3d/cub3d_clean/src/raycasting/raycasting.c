@@ -6,11 +6,11 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 23:33:10 by dsy               #+#    #+#             */
-/*   Updated: 2020/03/11 05:10:21 by dsy              ###   ########.fr       */
+/*   Updated: 2020/05/11 18:41:23 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3d.h"
+#include "cub3d.h"
 
 int     *get_texture(t_game *data, t_ray *ray)
 {

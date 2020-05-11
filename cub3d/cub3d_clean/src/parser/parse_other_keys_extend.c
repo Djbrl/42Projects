@@ -6,11 +6,11 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 17:53:16 by dsy               #+#    #+#             */
-/*   Updated: 2020/02/25 19:05:15 by dsy              ###   ########.fr       */
+/*   Updated: 2020/05/11 18:41:19 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3d.h"
+#include "cub3d.h"
 
 int		adjust_resolution(t_game *data)
 {

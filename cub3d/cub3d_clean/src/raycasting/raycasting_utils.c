@@ -6,11 +6,11 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 19:06:04 by dsy               #+#    #+#             */
-/*   Updated: 2020/03/10 22:04:24 by dsy              ###   ########.fr       */
+/*   Updated: 2020/05/11 18:41:24 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3d.h"
+#include "cub3d.h"
 
 int	get_player_data(t_game *data)
 {

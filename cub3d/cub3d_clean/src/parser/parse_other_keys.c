@@ -6,11 +6,11 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 20:35:14 by dsy               #+#    #+#             */
-/*   Updated: 2020/05/11 19:46:27 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/05/11 19:47:03 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3d.h"
+#include "cub3d.h"
 
 int	check_keys_order(t_game *data, char **loaded_file)
 {
