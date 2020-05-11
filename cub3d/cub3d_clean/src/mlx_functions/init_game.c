@@ -56,7 +56,8 @@ int	init_game(t_game *data)
 		return (0);
 	mlx_key_hook(data->win_ptr, key_stroke, 0); //Linux
 	//mlx_hook(data->win_ptr, 2, 0, key_stroke, data); MACOS
-	//mlx_hook(data->win_ptr, 17, 0, cross_window, data);
+	mlx_hook(data->win_ptr, 17, 0, cross_window, data);
+	mlx_loop_hook(data->mlx_ptr, raycasting, data);
 	mlx_loop(data->mlx_ptr);
 	return (0);
 }
