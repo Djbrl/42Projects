@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 20:35:14 by dsy               #+#    #+#             */
-/*   Updated: 2020/03/05 04:34:32 by dsy              ###   ########.fr       */
+/*   Updated: 2020/05/11 19:46:27 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,11 +106,11 @@ int	check_sprite_keys(t_game *data)
 	if (data->n_key[2] || data->so_key[2] || data->w_key[2]
 			|| data->e_key[2] || data->s_key[2])
 		return (0);
-	if (((fd = open(ft_strjoin("files/", data->n_key[1]), O_RDONLY)) < 0)
-		|| ((fd = open(ft_strjoin("files/", data->so_key[1]), O_RDONLY)) < 0)
-		|| ((fd = open(ft_strjoin("files/", data->w_key[1]), O_RDONLY)) < 0)
-		|| ((fd = open(ft_strjoin("files/", data->e_key[1]), O_RDONLY)) < 0)
-		|| ((fd = open(ft_strjoin("files/", data->s_key[1]), O_RDONLY)) < 0))
+	if (((fd = open(ft_strjoin("data/", data->n_key[1]), O_RDONLY)) < 0)
+		|| ((fd = open(ft_strjoin("data/", data->so_key[1]), O_RDONLY)) < 0)
+		|| ((fd = open(ft_strjoin("data/", data->w_key[1]), O_RDONLY)) < 0)
+		|| ((fd = open(ft_strjoin("data/", data->e_key[1]), O_RDONLY)) < 0)
+		|| ((fd = open(ft_strjoin("data/", data->s_key[1]), O_RDONLY)) < 0))
 	{
 		close(fd);
 		data->error = 1;
