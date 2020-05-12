@@ -51,7 +51,7 @@ int main(int ac, char **av)
 	done = 0;
 	
 	shell_loop();
-//	char **s = ft_split("this is a test nigger", ' ');
+//	char **s = ft_split("this is a test", ' ');
 //	while(s[i])
 //		printf("%s\n", s[i++]);
 	return (0);
