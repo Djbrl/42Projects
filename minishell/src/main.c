@@ -2,7 +2,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
-#include "../libft/libft.h"
+#include "libft.h"
 #include <string.h>
 #define BUF 4096
 
@@ -37,7 +37,6 @@ void evaluate_commands(char **args)
 	pid_t wpid;
 	int status;
 
-	i = 0;
 	pid = fork();
 	if (pid == 0)
 	{
