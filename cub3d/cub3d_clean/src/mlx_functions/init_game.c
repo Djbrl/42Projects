@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 14:05:23 by dsy               #+#    #+#             */
-/*   Updated: 2020/05/11 18:41:14 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/07/08 01:22:50 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,9 @@ int	init_game(t_game *data)
 		return (0);
 	if (!(data->win_ptr = mlx_new_window(data->mlx_ptr, data->width, data->height, "Cub3D")))
 		return (0);
-	mlx_key_hook(data->win_ptr, key_stroke, 0); //Linux
-	//mlx_hook(data->win_ptr, 2, 0, key_stroke, data); MACOS
+	mlx_hook(data->win_ptr, 2, 0, key_stroke, data);
 	mlx_hook(data->win_ptr, 17, 0, cross_window, data);
-	mlx_loop_hook(data->mlx_ptr, raycasting, data);
+	//mlx_loop_hook(data->mlx_ptr, raycasting, data);
 	mlx_loop(data->mlx_ptr);
 	return (0);
 }

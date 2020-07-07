@@ -1,14 +1,14 @@
 NAME := Cub3D
 
 LIB_FT := lib/libft/libft.a
-MLX := lib/minilibx-linux/mlx.a
+MLX := mlx/
 LIBS := $(LIB_FT) $(MLX)
-LDFLAGS = -Llib/libft -Llib/minilibx-linux
-LFLAGS = -lft -lmlx -lX11 -lXext -lm
+LDFLAGS = -Llib/libft
+LFLAGS = -lft -lmlx -framework OpenGL -framework Appkit
 
 CC := clang
 CFLAGS := -Wall -Wextra -ggdb
-PFLAGS := -Iinclude -Ilib/libft -Ilib/minilibx-linux
+PFLAGS := -Iinclude -Ilib/libft
 
 SRC_MLX_FUNC := control_functions.c\
 	images.c\
