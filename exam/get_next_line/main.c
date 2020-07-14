@@ -21,7 +21,7 @@ int main(int ac, char **av)
 		printf("main error\n");
 	//Test normal
 	printf("TEST NORMAL----------------------------------------------------------------\n");
-	while ((ret = get_next_line(fd, &line)) > 0)
+	while ((ret = gnl(fd, &line)) > 0)
 	{
 //		free(line);
 		printf("\n===========================================================\n");	
@@ -38,10 +38,10 @@ int main(int ac, char **av)
 	write(fd, "i put this right after test 1\n", 31);
 	close(dpipe[1]);
 	dup2(out, fd);
-	get_next_line(dpipe[0], &line);
+	gnl(dpipe[0], &line);
 	printf("string compare : %i\n", strcmp("test(01) of pipe input!", line));
 	printf("valeur de line (pipe): \"\x1b[32m%s\x1b[0m\"\n", line);
-	get_next_line(dpipe[0], &line);
+	gnl(dpipe[0], &line);
 	printf("string compare 2 : %i\n", strcmp("i put this right after test 1", line));
 	printf("valeur de line (pipe): \"\x1b[32m%s\x1b[0m\"\n", line);
 //	free(line);
@@ -49,18 +49,18 @@ int main(int ac, char **av)
 	printf("TEST MULTIFD----------------------------------------------------------------\n");
 	if (!(fd2 = open("secondfile", O_RDONLY)))
 		printf("main error\n");
-	ret = get_next_line(fd2, &line);
+	ret = gnl(fd2, &line);
 	printf("retour de gnl : %i\n", ret);	
 	printf("valeur de line : \"\x1b[32m%s\x1b[0m\"\n", line);
-	ret = get_next_line(fd2, &line);
+	ret = gnl(fd2, &line);
 	printf("valeur de line : \"\x1b[32m%s\x1b[0m\"\n", line);
-	ret = get_next_line(fd, &line);
+	ret = gnl(fd, &line);
 	printf("valeur de line : \"\x1b[32m%s\x1b[0m\"\n", line);
 //	free(line);
 	printf("TEST IN----------------------------------------------------------------\n");
 	while (1)
 	{
-		get_next_line(0, &line);
+		gnl(0, &line);
 		printf("valeur de line (in): \"\x1b[32m%s\x1b[0m\"\n", line);
 	}
 }
