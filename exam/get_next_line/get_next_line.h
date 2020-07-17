@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 02:17:42 by dsy               #+#    #+#             */
-/*   Updated: 2020/07/14 19:11:24 by dsy              ###   ########.fr       */
+/*   Updated: 2020/07/17 02:31:08 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-//int			get_next_line(int fd, char **line);
-int			gnl(int fd, char **line);
+int			get_next_line(int fd, char **line);
 char		*ft_strdup(const char *s1);
 char		*ft_substr(char const *s, unsigned int start, size_t len);
 char		*ft_strjoin(char const *s1, char const *s2);

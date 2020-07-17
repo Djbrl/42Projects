@@ -21,7 +21,7 @@ int main(int ac, char **av)
 		printf("main error\n");
 	//Test normal
 	printf("TEST NORMAL----------------------------------------------------------------\n");
-	while ((ret = gnl(fd, &line)) > 0)
+	while ((ret = get_next_line(fd, &line)) > 0)
 	{
 //		free(line);
 		printf("\n===========================================================\n");	
@@ -30,7 +30,7 @@ int main(int ac, char **av)
 	}
 	printf("retour de gnl : %i\n", ret);	
 	printf("valeur de line : \"\x1b[32m%s\x1b[0m\"\n", line);
-	//Test 2 avec sortie standard
+/*	//Test 2 avec sortie standard
 	printf("TEST STDIN----------------------------------------------------------------\n");
 	fd = 1;
 	dup2(dpipe[1], fd);
@@ -62,5 +62,5 @@ int main(int ac, char **av)
 	{
 		gnl(0, &line);
 		printf("valeur de line (in): \"\x1b[32m%s\x1b[0m\"\n", line);
-	}
+	}*/
 }
