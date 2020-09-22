@@ -2,8 +2,10 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <signal.h>
 #include "libft.h"
 #include <string.h>
+#include <limits.h>
 #define BUF 4096
 
 /*
@@ -20,7 +22,7 @@ ou en utilisant un path absolu), comme dans bash
 ◦ export sans aucune option
 ◦ unset sans aucune option
 ◦ env sans aucune option ni argument
-◦ exit sans aucune option
+[DONE ?]◦ exit sans aucune option
 
 • ; dans la ligne de commande doit séparer les commandes
 
@@ -118,17 +120,29 @@ void evaluate_commands(char **args)
 	}
 }
 
+void signalHandler(int sig_n)
+{
+	write(1, "\n> ", 3);
+	//flush_buffer(buffer);
+}
+
 void shell_loop(void)
 {
 	char *line;
 	char **args;
 	int status;
 	char buffer[BUF];
+	char *currentDir;
+	char cwd[PATH_MAX];
 
 	printf("Welcome in minishell.\n");
+	signal(SIGINT, signalHandler);
 	while (1)
 	{
+		currentDir = ft_strdup(getcwd(cwd, sizeof(cwd)));
 		write(1, "> ", 2);
+		ft_putstr(currentDir);
+		write(1, "$ ", 2);
 		read(0, buffer, BUF);
 		if (!(ft_strcmp(buffer, "exit\n")))
 			exit(EXIT_SUCCESS);
