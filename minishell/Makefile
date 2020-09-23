@@ -7,7 +7,7 @@ CC := clang
 CFLAGS :=
 PFLAGS := -Iinclude -Ilibft
 
-SRC_OTHER := main.c
+SRC_OTHER := main.c builtins/builtins_1.c
 
 SRC_PATH := src
 SRC_NAME := $(SRC_OTHER)

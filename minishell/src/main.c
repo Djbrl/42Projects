@@ -33,12 +33,12 @@ bash.
 • ctrl-C, ctrl-D et ctrl-\ doivent afficher le même résultat que dans bash.
 */
 
+//variables to free
 void shell_loop(void)
 {
 	char *line;
 	char **args;
 	int status;
-	char buffer[BUF];
 	char *currentDir;
 	char cwd[PATH_MAX];
 
@@ -46,10 +46,8 @@ void shell_loop(void)
 	signal(SIGINT, signalHandler);
 	while (1)
 	{
-		currentDir = ft_strdup(getcwd(cwd, sizeof(cwd)));
-		write(1, "> ", 2);
-		ft_putstr(currentDir);
-		write(1, "$ ", 2);
+		displayPrompt(MODE_DEFAULT);
+		flush_buffer();
 		read(0, buffer, BUF);
 		if (!(ft_strcmp(buffer, "exit\n")))
 			exit(EXIT_SUCCESS);
