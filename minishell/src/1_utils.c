@@ -6,7 +6,7 @@
 /*   By: dsy <dsy@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/25 11:17:48 by dsy               #+#    #+#             */
-/*   Updated: 2020/09/25 15:49:58 by dsy              ###   ########.fr       */
+/*   Updated: 2020/09/25 16:44:36 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,10 @@ void	init_msh(t_msh *msh)
 {
 	msh->cmd.name[0] = "echo"; 
 	msh->cmd.name[1] = "help";
+	msh->cmd.name[2] = "cd";
 	msh->cmd.ptr[0] = msh_echo;
 	msh->cmd.ptr[1] = msh_help;
+	msh->cmd.ptr[2] = msh_cd;
 }
 
 int		is_builtin(char *s, t_msh *msh)
