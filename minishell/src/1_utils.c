@@ -6,25 +6,25 @@
 /*   By: dsy <dsy@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/25 11:17:48 by dsy               #+#    #+#             */
-/*   Updated: 2020/09/25 12:25:28 by dsy              ###   ########.fr       */
+/*   Updated: 2020/09/25 15:49:58 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void	evaluate_commands(char **args)
+void	evaluate_commands(char **args, t_msh *msh)
 {
 	pid_t	pid;
 	pid_t	wpid;
 	int		status;
+	int		i;
 
 	pid = fork();
+	i = is_builtin(args[0], msh);
 	if (pid == 0)
 	{//this is what the son is up to
-		if (!ft_strcmp(args[0], "echo") && !args[2])
-			echo(args[1]);
-		else if (!ft_strcmp(args[0], "echo") && !ft_strcmp(args[1], "-n"))
-			echo_n(args[2]);
+		if (i >= 0)
+			msh->cmd.ptr[i](args);
 		else
 		{
 			if (execvp(args[0], args) == -1)
@@ -36,15 +36,38 @@ void	evaluate_commands(char **args)
 		perror("fork error");//this is the error case
 	else
 	{//this is what the parent is doing
+		wpid = waitpid(pid, &status, WUNTRACED);
 		while(!WIFEXITED(status) && !WIFSIGNALED(status))
 			wpid = waitpid(pid, &status, WUNTRACED);
 	}
 }
 
-void	exit_shell(int exit_status)
+void	init_msh(t_msh *msh)
 {
-	//FREE STUFF HERE
-	exit(EXIT_SUCCESS);
+	msh->cmd.name[0] = "echo"; 
+	msh->cmd.name[1] = "help";
+	msh->cmd.ptr[0] = msh_echo;
+	msh->cmd.ptr[1] = msh_help;
+}
+
+int		is_builtin(char *s, t_msh *msh)
+{
+	int i;
+
+	i = 0;
+	while (msh->cmd.name[i])
+	{
+		if (!ft_strcmp(msh->cmd.name[i], s))
+			return (i);
+		i++;
+	}
+	return (-1);
+}
+
+void	exit_shell(int status)
+{
+	//FREE RIOT POINTS HERE
+	exit(status);
 }
 
 void	signal_handler(int sig_n)

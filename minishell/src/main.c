@@ -6,7 +6,7 @@
 /*   By: dsy <dsy@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/25 10:56:56 by dsy               #+#    #+#             */
-/*   Updated: 2020/09/25 12:22:57 by dsy              ###   ########.fr       */
+/*   Updated: 2020/09/25 15:41:58 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@
    */
 
 //variables to free
-void	shell_loop(void)
+void	shell_loop(t_msh *msh)
 {
 	char	*line;
 	char	**args;//to free
@@ -71,8 +71,7 @@ void	shell_loop(void)
 			exit_shell(EXIT_SUCCESS);
 		line = strdup(g_buffer);
 		args = ft_split(line, ' ');
-		sanitize_args(args);
-		evaluate_commands(args);
+		evaluate_commands(args, msh);
 		flush_buffer(g_buffer);
 		free(line);
 	}
@@ -82,8 +81,10 @@ int		main(int ac, char **av)
 {
 	int	done;
 	int	i = 0;
+	t_msh msh;
 
 	done = 0;
-	shell_loop();
+	init_msh(&msh);
+	shell_loop(&msh);
 	return (0);
 }

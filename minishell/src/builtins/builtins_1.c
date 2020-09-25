@@ -6,37 +6,62 @@
 /*   By: dsy <dsy@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/25 11:19:12 by dsy               #+#    #+#             */
-/*   Updated: 2020/09/25 11:20:36 by dsy              ###   ########.fr       */
+/*   Updated: 2020/09/25 16:36:05 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	echo(char *s)
+static void	msh_echo_n(char **s)
 {
 	int i;
+	int j;
 
-	i = 0;
-	if (!s)
-		return ;
+	i = 2;
+	j = 0;
 	while (s[i])
 	{
-		write(1, &s[i], 1);
+		if (i > 2)
+			write(1, " ", 1);
+		while (s[i][j])
+		{
+			write(1, &s[i][j], 1);
+			j++;
+		}
+		j = 0;
 		i++;
+		if (s[i + 1])
+			write(1, " ", 1);
 	}
-	write(1, "\n", 1);
 }
 
-void	echo_n(char *s)
+void	msh_echo(char **s)
 {
 	int i;
+	int j;
 
-	i = 0;
-	if (!s)
-		return ;
-	while (s[i])
+	j = 0;
+	i = 1;
+	if (!ft_strcmp(s[1], "-n"))
+		msh_echo_n(s);
+	else
 	{
-		write(1, &s[i], 1);
-		i++;
+		while (s[i])
+		{
+			if (i > 1)
+				write(1, " ", 1);
+			while (s[i][j])
+				write(1, &s[i][j++], 1);
+			j = 0;
+			i++;
+		}
+		write(1, "\n", 1);
 	}
+}
+
+void	msh_help(char **s)
+{
+
+	ft_putstr("\nminishell-4.2 commands: \n\necho\t\t: a clone of bash echo\n");
+	ft_putstr("help\t\t: show this list\n");	
 }
