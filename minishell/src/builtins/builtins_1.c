@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtins_1.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dsy <dsy@student.42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/09/25 11:19:12 by dsy               #+#    #+#             */
+/*   Updated: 2020/09/25 11:20:36 by dsy              ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-void echo(char *s)
+void	echo(char *s)
 {
 	int i;
-	i = 0;
 
+	i = 0;
 	if (!s)
 		return ;
 	while (s[i])
@@ -15,11 +27,11 @@ void echo(char *s)
 	write(1, "\n", 1);
 }
 
-void echo_n(char *s)
+void	echo_n(char *s)
 {
 	int i;
+
 	i = 0;
-	
 	if (!s)
 		return ;
 	while (s[i])

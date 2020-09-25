@@ -6,7 +6,7 @@
 /*   By: dsy <dsy@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/25 10:56:56 by dsy               #+#    #+#             */
-/*   Updated: 2020/09/25 11:12:25 by dsy              ###   ########.fr       */
+/*   Updated: 2020/09/25 12:22:57 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,12 @@
    ◦ unset sans aucune option
    ◦ env sans aucune option ni argument
    [DONE ?]◦ exit sans aucune option
+
+	AUTORISED FUNCTIONS
+	malloc, free, write, open, read, close, fork, wait,
+	waitpid, wait3, wait4, signal, kill, exit, getcwd,
+	chdir, stat, lstat, fstat, execve, dup, dup2, pipe,
+	opendir, readdir, closedir, strerror, errno
 
    • ; dans la ligne de commande doit séparer les commandes
 
@@ -49,9 +55,8 @@
 void	shell_loop(void)
 {
 	char	*line;
-	char	**args;
+	char	**args;//to free
 	int		status;
-	char	*currentDir;
 	char	cwd[PATH_MAX];
 
 	printf("Welcome in minishell.\n");
