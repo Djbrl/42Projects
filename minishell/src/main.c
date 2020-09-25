@@ -43,17 +43,17 @@ void shell_loop(void)
 	char cwd[PATH_MAX];
 
 	printf("Welcome in minishell.\n");
-	signal(SIGINT, signalHandler);
+	//signal(SIGINT, signalHandler);
 	while (1)
 	{
 		displayPrompt(MODE_DEFAULT);
 		flush_buffer();
 		read(0, buffer, BUF);
-		if (!(ft_strcmp(buffer, "exit\n")))
+		buffer[ft_strlen(buffer) - 1] = 0;
+		if (!(ft_strcmp(buffer, "exit")))
 			exit(EXIT_SUCCESS);
 		line = strdup(buffer);
 		args = ft_split(line, ' ');
-	
 		sanitize_args(args);
 		evaluate_commands(args);
 		flush_buffer(buffer);

@@ -6,7 +6,7 @@
 /*   By: dsy <dsy@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:15:31 by dsy               #+#    #+#             */
-/*   Updated: 2020/09/23 15:11:26 by dsy              ###   ########.fr       */
+/*   Updated: 2020/09/25 10:28:35 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ char buffer[BUF];
 
 #define MODE_DEFAULT 1
 #define MODE_DIR 2
-#define CWD_ERROR " :couldn't retrieve current directory.\n"
-#define CMD_ERROR ":command not found\n"
+#define CWD_ERROR " : couldn't retrieve current directory.\n"
+#define CMD_ERROR " : command not found\n"
 
 void flush_buffer();
 void sanitize_args(char **args);
