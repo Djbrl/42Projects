@@ -6,7 +6,7 @@
 /*   By: dsy <dsy@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:15:31 by dsy               #+#    #+#             */
-/*   Updated: 2020/09/25 11:00:49 by dsy              ###   ########.fr       */
+/*   Updated: 2020/09/25 11:13:33 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@
 # include <errno.h>
 # include <limits.h>
 
-# define CWD_ERROR " : couldn't retrieve current directory.\n"
-# define CMD_ERROR " : command not found\n"
+# define CWD_ERROR ": couldn't retrieve current directory.\n"
+# define CMD_ERROR ": command not found\n"
 # define MODE_DEFAULT 1
 # define MODE_DIR 2
 # define BUF 4096
@@ -40,5 +40,6 @@ void	display_prompt(int mode);
 void	display_error(char *error);
 void	echo(char *s);
 void	echo_n(char *s);
+void	exit_shell(int exit_status);
 char	*get_currentdir();
 #endif

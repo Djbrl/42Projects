@@ -6,7 +6,7 @@
 /*   By: dsy <dsy@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/25 10:56:56 by dsy               #+#    #+#             */
-/*   Updated: 2020/09/25 11:01:48 by dsy              ###   ########.fr       */
+/*   Updated: 2020/09/25 11:12:25 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	shell_loop(void)
 	char	cwd[PATH_MAX];
 
 	printf("Welcome in minishell.\n");
-	//signal(SIGINT, signal_handler);
+	signal(SIGINT, signal_handler);
 	while (1)
 	{
 		display_prompt(MODE_DEFAULT);
@@ -63,7 +63,7 @@ void	shell_loop(void)
 		read(0, g_buffer, BUF);
 		g_buffer[ft_strlen(g_buffer) - 1] = 0;
 		if (!(ft_strcmp(g_buffer, "exit")))
-			exit(EXIT_SUCCESS);
+			exit_shell(EXIT_SUCCESS);
 		line = strdup(g_buffer);
 		args = ft_split(line, ' ');
 		sanitize_args(args);

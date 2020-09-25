@@ -26,7 +26,8 @@ all: $(NAME)
 
 
 $(NAME): $(OBJ) $(LIB_FT)
-	$(CC) $(OBJ) $(LIB_FT) $(CFLAGS) -o $(NAME) 
+	$(CC) $(OBJ) $(LIB_FT) $(CFLAGS) -o $(NAME)
+	stty -echoctl 
 
 $(BUILD_PATH)/$(OBJ_PATH)/%.o: $(SRC_PATH)/%.c
 	@mkdir -p $(dir $@) 2>/dev/null || true

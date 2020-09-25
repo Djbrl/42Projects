@@ -31,8 +31,15 @@ void evaluate_commands(char **args)
 	}
 }
 
+void	exit_shell(int exit_status)
+{
+	//FREE STUFF HERE
+	exit(EXIT_SUCCESS);
+}
+
 void signal_handler(int sig_n)
 {
-	write(1, "\n> ", 3);
-	//flush_buffer(buffer);
+	write(1, "\n", 1);
+	display_prompt(MODE_DEFAULT);
+	flush_buffer(g_buffer);
 }
