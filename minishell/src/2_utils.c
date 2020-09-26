@@ -6,7 +6,7 @@
 /*   By: dsy <dsy@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/25 11:17:24 by dsy               #+#    #+#             */
-/*   Updated: 2020/09/27 00:00:32 by dsy              ###   ########.fr       */
+/*   Updated: 2020/09/27 00:57:33 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,11 @@
 void	display_error(char *error)
 {
 	if (!ft_strcmp(error, CWD_ERROR))
-	{
-		ft_putstr("minishell: ");
-		ft_putstr(error);
-	}
+		ft_putnstr("minishell: ", error, NULL, NULL);
 	else if (!(ft_strcmp(error, CMD_ERROR)))
-	{
-		ft_putstr("minishell: ");
-		ft_putstr(g_buffer);
-		ft_putstr(CMD_ERROR);
-	}
+		ft_putnstr("minishell: ", g_buffer, CMD_ERROR, NULL);
 	else
-	{
-		ft_putstr("minishell: ");
-		ft_putstr("unknown error");
-	}
+		ft_putnstr("minishell: ", "unknown error", NULL, NULL);
 	exit_shell(EXIT_FAILURE);
 }
 
@@ -37,10 +27,7 @@ void	display_cmd_error(char *cmd, char *error, char **args)
 {
 	if (!ft_strcmp(error, PATH_ERROR))
 	{
-		ft_putstr("minishell: ");
-		ft_putstr(cmd);
-		ft_putstr(" :");
-		ft_putstr(args[1]);
+		ft_putnstr("minishell: ",cmd, " :", args[1]);
 		ft_putstr(error);
 	}
 	exit_shell(EXIT_FAILURE);
