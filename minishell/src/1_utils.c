@@ -6,7 +6,7 @@
 /*   By: dsy <dsy@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/25 11:17:48 by dsy               #+#    #+#             */
-/*   Updated: 2020/09/25 16:44:36 by dsy              ###   ########.fr       */
+/*   Updated: 2020/09/27 00:01:00 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void	evaluate_commands(char **args, t_msh *msh)
 	int		status;
 	int		i;
 
-	pid = fork();
 	i = is_builtin(args[0], msh);
+	pid = fork();
 	if (pid == 0)
 	{//this is what the son is up to
 		if (i >= 0)
@@ -47,9 +47,11 @@ void	init_msh(t_msh *msh)
 	msh->cmd.name[0] = "echo"; 
 	msh->cmd.name[1] = "help";
 	msh->cmd.name[2] = "cd";
+	msh->cmd.name[3] = "pwd";
 	msh->cmd.ptr[0] = msh_echo;
 	msh->cmd.ptr[1] = msh_help;
 	msh->cmd.ptr[2] = msh_cd;
+	msh->cmd.ptr[3] = msh_pwd;
 }
 
 int		is_builtin(char *s, t_msh *msh)

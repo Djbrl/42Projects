@@ -6,7 +6,7 @@
 /*   By: dsy <dsy@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/25 11:17:24 by dsy               #+#    #+#             */
-/*   Updated: 2020/09/25 15:47:21 by dsy              ###   ########.fr       */
+/*   Updated: 2020/09/27 00:00:32 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,19 @@ void	display_error(char *error)
 	{
 		ft_putstr("minishell: ");
 		ft_putstr("unknown error");
+	}
+	exit_shell(EXIT_FAILURE);
+}
+
+void	display_cmd_error(char *cmd, char *error, char **args)
+{
+	if (!ft_strcmp(error, PATH_ERROR))
+	{
+		ft_putstr("minishell: ");
+		ft_putstr(cmd);
+		ft_putstr(" :");
+		ft_putstr(args[1]);
+		ft_putstr(error);
 	}
 	exit_shell(EXIT_FAILURE);
 }

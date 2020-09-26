@@ -6,7 +6,7 @@
 /*   By: dsy <dsy@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:15:31 by dsy               #+#    #+#             */
-/*   Updated: 2020/09/25 16:45:09 by dsy              ###   ########.fr       */
+/*   Updated: 2020/09/27 00:01:08 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <errno.h>
 # include <limits.h>
 
+# define PATH_ERROR ": No such file or directory\n"
 # define CWD_ERROR ": couldn't retrieve current directory.\n"
 # define CMD_ERROR ": command not found\n"
 # define MODE_DEFAULT 1
@@ -33,8 +34,8 @@
 char	g_buffer[BUF];
 
 typedef struct	s_cmd {
-		void	(*ptr[3])(char **);
-		char	*name[3];
+		void	(*ptr[4])(char **);
+		char	*name[4];
 }		t_cmd;
 
 typedef struct	s_msh{
@@ -48,9 +49,11 @@ void	evaluate_commands(char **args, t_msh *t_msh);
 void	signal_handler(int sig_n);
 void	display_prompt(int mode);
 void	display_error(char *error);
+void	display_cmd_error(char *cmd, char *error, char **args);
 void	msh_echo(char **args);
 void	msh_help(char **args);
 void	msh_cd(char **args);
+void	msh_pwd(char **args);
 void	exit_shell(int status);
 char	*get_currentdir();
 #endif

@@ -6,7 +6,7 @@
 /*   By: dsy <dsy@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/25 11:19:12 by dsy               #+#    #+#             */
-/*   Updated: 2020/09/25 16:58:20 by dsy              ###   ########.fr       */
+/*   Updated: 2020/09/27 00:01:49 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,17 +61,19 @@ void	msh_echo(char **args)
 //FIX THIS
 void	msh_cd(char **args)
 {
-	    char s[100]; 
-  
-    // printing current working directory 
-    printf("before : %s\n", getcwd(s, 100)); 
+	int ret;
 
-	if(chdir(args[1]) == 0)
-		printf("current : %s\n", getcwd(s, 100)); 
-	else
-	{
-		printf("%s\ncurrent directory is : %s\n", strerror(errno), getcwd(s, 100));
-	}
+	ret = chdir(args[1]);
+	if(ret < 0)
+		display_cmd_error("cd", PATH_ERROR, args);
+}
+
+void	msh_pwd(char **args)
+{
+	char cwd[1024];
+
+	ft_putstr(getcwd(cwd, sizeof(cwd)));
+	ft_putstr("\n");
 }
 
 void	msh_help(char **args)
@@ -79,5 +81,6 @@ void	msh_help(char **args)
 
 	ft_putstr("\nminishell-4.2 commands: \n\necho\t\t: a clone of bash echo\n");
 	ft_putstr("cd\t\t: a clone of bash cd\n");	
-	ft_putstr("help\t\t: show this list\n");	
+	ft_putstr("pwd\t\t: a clone of bash pwd\n");
+	ft_putstr("help\t\t: show this list\n");
 }
