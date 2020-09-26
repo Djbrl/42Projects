@@ -1,20 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr.c                                        :+:      :+:    :+:   */
+/*   ft_putnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/27 10:47:08 by dsy               #+#    #+#             */
-/*   Updated: 2020/09/27 00:20:58 by dsy              ###   ########.fr       */
+/*   Created: 2020/09/27 00:11:20 by dsy               #+#    #+#             */
+/*   Updated: 2020/09/27 00:21:13 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putstr(char *str)
+void	ft_putnstr(char *s1, char *s2, char *s3, char *s4)
 {
-	if (!str)
-		return ;
-	write(1, str, ft_strlen(str));
+	ft_putstr(s1);
+	ft_putstr(s2);
+	ft_putstr(s3);
+	ft_putstr(s4);
 }
