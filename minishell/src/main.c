@@ -6,7 +6,7 @@
 /*   By: dsy <dsy@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/25 10:56:56 by dsy               #+#    #+#             */
-/*   Updated: 2020/09/27 03:39:26 by dsy              ###   ########.fr       */
+/*   Updated: 2020/09/27 04:15:34 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void	shell_loop(t_msh *msh)
 	char	cwd[PATH_MAX];
 
 	ft_putstr("Welcome in minishell.\n");
+	init_env(msh);
 	signal(SIGINT, signal_handler);
 	while (1)
 	{

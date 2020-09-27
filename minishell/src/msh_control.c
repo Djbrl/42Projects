@@ -6,7 +6,7 @@
 /*   By: dsy <dsy@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/27 03:15:12 by dsy               #+#    #+#             */
-/*   Updated: 2020/09/27 03:47:17 by dsy              ###   ########.fr       */
+/*   Updated: 2020/09/27 06:55:00 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	evaluate_commands(char **args, t_msh *msh)
 
 	//fuck norminette
 	if (is_builtin(args[0], msh) >= 0)
-		msh->cmd.ptr[is_builtin(args[0], msh)](args);
+		msh->cmd.ptr[is_builtin(args[0], msh)](&msh->env, args);
 	else
 	{
 		pid = fork();
