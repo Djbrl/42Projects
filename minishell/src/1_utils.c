@@ -6,7 +6,7 @@
 /*   By: dsy <dsy@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/25 11:17:48 by dsy               #+#    #+#             */
-/*   Updated: 2020/09/27 00:01:00 by dsy              ###   ########.fr       */
+/*   Updated: 2020/09/27 02:17:59 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,25 +20,30 @@ void	evaluate_commands(char **args, t_msh *msh)
 	int		i;
 
 	i = is_builtin(args[0], msh);
-	pid = fork();
-	if (pid == 0)
-	{//this is what the son is up to
-		if (i >= 0)
-			msh->cmd.ptr[i](args);
-		else
-		{
-			if (execvp(args[0], args) == -1)
-				display_error(CMD_ERROR);
-		}
-		exit(EXIT_FAILURE);
-	}
-	else if (pid < 0)
-		perror("fork error");//this is the error case
+	if (i >= 0)
+		msh->cmd.ptr[i](args);
 	else
-	{//this is what the parent is doing
-		wpid = waitpid(pid, &status, WUNTRACED);
-		while(!WIFEXITED(status) && !WIFSIGNALED(status))
+	{
+		pid = fork();
+		if (pid == 0)
+		{//this is what the son is up to
+			//if (i >= 0)
+			//	msh->cmd.ptr[i](args);
+			//else
+			//{
+				if (execvp(args[0], args) == -1)
+					display_error(CMD_ERROR);
+			//}
+			exit(EXIT_FAILURE);
+		}
+		else if (pid < 0)
+			perror("fork error");//this is the error case
+		else
+		{//this is what the parent is doing
 			wpid = waitpid(pid, &status, WUNTRACED);
+			while(!WIFEXITED(status) && !WIFSIGNALED(status))
+				wpid = waitpid(pid, &status, WUNTRACED);
+		}
 	}
 }
 

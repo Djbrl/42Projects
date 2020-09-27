@@ -6,7 +6,7 @@
 /*   By: dsy <dsy@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/25 11:17:24 by dsy               #+#    #+#             */
-/*   Updated: 2020/09/27 00:57:33 by dsy              ###   ########.fr       */
+/*   Updated: 2020/09/27 01:59:53 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,11 @@ void	display_prompt(int mode)
 	if (mode == MODE_DIR)
 	{
 		path = get_currentdir();
-		write(1, path, ft_strlen(path));
-		write(1, "$ > ", 4);
+		ft_putnstr(path, "$ > ", NULL, NULL);
 		free(path);
 	}
 	else
-	{
-		write(1, "minishell-4.2$ > ", 17);
-	}
+		ft_putstr("minishell-4.2$ > ");
 }
 
 char	*get_currentdir(void)

@@ -6,7 +6,7 @@
 /*   By: dsy <dsy@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/25 10:56:56 by dsy               #+#    #+#             */
-/*   Updated: 2020/09/27 00:07:58 by dsy              ###   ########.fr       */
+/*   Updated: 2020/09/27 02:07:16 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,34 +54,48 @@
 //variables to free
 void	shell_loop(t_msh *msh)
 {
+	pid_t	pid;
+	pid_t	wpid;
 	char	*line;
 	char	**args;//to free
 	int		status;
 	char	cwd[PATH_MAX];
 
-	printf("Welcome in minishell.\n");
-	signal(SIGINT, signal_handler);
-	while (1)
+	ft_putstr("Welcome in minishell.\n");
+	pid = fork();
+	if (pid == 0)
 	{
-		display_prompt(MODE_DEFAULT);
-		flush_buffer();
-		read(0, g_buffer, BUF);
-		g_buffer[ft_strlen(g_buffer) - 1] = 0;
-		if (!(ft_strcmp(g_buffer, "exit")))
-			exit_shell(EXIT_SUCCESS);
-		line = strdup(g_buffer);
-		args = ft_split(line, ' ');
-		evaluate_commands(args, msh);
-		flush_buffer(g_buffer);
-		free(line);
+		signal(SIGINT, signal_handler);
+		while (1)
+		{
+			display_prompt(MODE_DEFAULT);
+			flush_buffer();
+			read(0, g_buffer, BUF);
+			g_buffer[ft_strlen(g_buffer) - 1] = 0;
+			if (!(ft_strcmp(g_buffer, "exit")))
+				exit_shell(EXIT_SUCCESS);
+			line = strdup(g_buffer);
+			args = ft_split(line, ' ');
+			evaluate_commands(args, msh);
+			flush_buffer(g_buffer);
+			free(line);
+		}	
+	}
+	else if (pid < 0)
+		perror("failed fork");
+	else
+	{
+		wpid = waitpid(pid, &status, WUNTRACED);
+		while(!WIFEXITED(status) && !WIFSIGNALED(status))
+			wpid = waitpid(pid, &status, WUNTRACED);	
 	}
 }
 
 int		main(int ac, char **av)
 {
-	int	done;
-	int	i = 0;
-	t_msh msh;
+	int		done;
+	int		i = 0;
+	t_msh	msh;
 
 	done = 0;
 	init_msh(&msh);

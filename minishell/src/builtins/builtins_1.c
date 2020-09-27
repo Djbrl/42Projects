@@ -6,7 +6,7 @@
 /*   By: dsy <dsy@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/25 11:19:12 by dsy               #+#    #+#             */
-/*   Updated: 2020/09/27 00:08:57 by dsy              ###   ########.fr       */
+/*   Updated: 2020/09/27 01:56:03 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,13 +72,11 @@ void	msh_pwd(char **args)
 {
 	char cwd[1024];
 
-	ft_putstr(getcwd(cwd, sizeof(cwd)));
-	ft_putstr("\n");
+	ft_putnstr(getcwd(cwd, sizeof(cwd)), "\n", NULL, NULL);
 }
 
 void	msh_help(char **args)
 {
-
 	ft_putstr("\nminishell-4.2 commands: \n\necho\t\t: a clone of bash echo\n");
 	ft_putstr("cd\t\t: a clone of bash cd\n");	
 	ft_putstr("pwd\t\t: a clone of bash pwd\n");
