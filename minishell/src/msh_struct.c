@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   msh_struct.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
+/*   By: dsy <dsy@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/27 03:10:39 by dsy               #+#    #+#             */
-/*   Updated: 2020/09/27 03:10:40 by dsy              ###   ########.fr       */
+/*   Updated: 2020/09/27 03:42:07 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	init_msh(t_msh *msh)
 {
-	msh->cmd.name[0] = "echo"; 
+	msh->cmd.name[0] = "echo";
 	msh->cmd.name[1] = "help";
 	msh->cmd.name[2] = "cd";
 	msh->cmd.name[3] = "pwd";

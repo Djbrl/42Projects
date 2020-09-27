@@ -6,7 +6,7 @@
 /*   By: dsy <dsy@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/25 10:56:56 by dsy               #+#    #+#             */
-/*   Updated: 2020/09/27 02:23:58 by dsy              ###   ########.fr       */
+/*   Updated: 2020/09/27 03:39:26 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,13 @@
    */
 
 //variables to free
+
 void	shell_loop(t_msh *msh)
 {
 	pid_t	pid;
 	pid_t	wpid;
 	char	*line;
 	char	**args;//to free
-	int		status;
 	char	cwd[PATH_MAX];
 
 	ft_putstr("Welcome in minishell.\n");
@@ -82,9 +82,10 @@ void	shell_loop(t_msh *msh)
 int		main(int ac, char **av)
 {
 	int		done;
-	int		i = 0;
+	int		i;
 	t_msh	msh;
 
+	i = 0;
 	done = 0;
 	init_msh(&msh);
 	shell_loop(&msh);

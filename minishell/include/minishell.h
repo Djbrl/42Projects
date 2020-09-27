@@ -6,7 +6,7 @@
 /*   By: dsy <dsy@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:15:31 by dsy               #+#    #+#             */
-/*   Updated: 2020/09/27 02:32:56 by dsy              ###   ########.fr       */
+/*   Updated: 2020/09/27 03:32:53 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <signal.h>
-# include "libft.h"
+# include "../libft/libft.h"
 # include <string.h>
 # include <errno.h>
 # include <limits.h>

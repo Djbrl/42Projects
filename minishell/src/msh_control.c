@@ -6,7 +6,7 @@
 /*   By: dsy <dsy@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/27 03:15:12 by dsy               #+#    #+#             */
-/*   Updated: 2020/09/27 03:26:41 by dsy              ###   ########.fr       */
+/*   Updated: 2020/09/27 03:47:17 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,10 @@ void	evaluate_commands(char **args, t_msh *msh)
 	pid_t	pid;
 	pid_t	wpid;
 	int		status;
-	int		i;
 
-	i = is_builtin(args[0], msh);
-	if (i >= 0)
-		msh->cmd.ptr[i](args);
+	//fuck norminette
+	if (is_builtin(args[0], msh) >= 0)
+		msh->cmd.ptr[is_builtin(args[0], msh)](args);
 	else
 	{
 		pid = fork();
@@ -49,7 +48,7 @@ void	evaluate_commands(char **args, t_msh *msh)
 		else
 		{//this is what the parent is doing
 			wpid = waitpid(pid, &status, WUNTRACED);
-			while(!WIFEXITED(status) && !WIFSIGNALED(status))
+			while (!WIFEXITED(status) && !WIFSIGNALED(status))
 				wpid = waitpid(pid, &status, WUNTRACED);
 		}
 	}
