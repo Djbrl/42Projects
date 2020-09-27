@@ -1,24 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcmp.c                                        :+:      :+:    :+:   */
+/*   msh_struct.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/15 17:23:39 by dsy               #+#    #+#             */
-/*   Updated: 2020/09/27 02:44:19 by dsy              ###   ########.fr       */
+/*   Created: 2020/09/27 03:10:39 by dsy               #+#    #+#             */
+/*   Updated: 2020/09/27 03:10:40 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-int	ft_strcmp(const char *s1, const char *s2)
+void	init_msh(t_msh *msh)
 {
-	size_t	i;
-
-	i = 0;
-	while (*(s1 + i) && *(s1 + i) == *(s2 + i))
-		i++;
-	return (*((unsigned char *)s1 + i) - *((unsigned char *)s2 + i));
-	return (0);
+	msh->cmd.name[0] = "echo"; 
+	msh->cmd.name[1] = "help";
+	msh->cmd.name[2] = "cd";
+	msh->cmd.name[3] = "pwd";
+	msh->cmd.ptr[0] = msh_echo;
+	msh->cmd.ptr[1] = msh_help;
+	msh->cmd.ptr[2] = msh_cd;
+	msh->cmd.ptr[3] = msh_pwd;
 }

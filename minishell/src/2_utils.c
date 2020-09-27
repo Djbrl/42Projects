@@ -6,46 +6,11 @@
 /*   By: dsy <dsy@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/25 11:17:24 by dsy               #+#    #+#             */
-/*   Updated: 2020/09/27 01:59:53 by dsy              ###   ########.fr       */
+/*   Updated: 2020/09/27 03:20:07 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
-
-void	display_error(char *error)
-{
-	if (!ft_strcmp(error, CWD_ERROR))
-		ft_putnstr("minishell: ", error, NULL, NULL);
-	else if (!(ft_strcmp(error, CMD_ERROR)))
-		ft_putnstr("minishell: ", g_buffer, CMD_ERROR, NULL);
-	else
-		ft_putnstr("minishell: ", "unknown error", NULL, NULL);
-	exit_shell(EXIT_FAILURE);
-}
-
-void	display_cmd_error(char *cmd, char *error, char **args)
-{
-	if (!ft_strcmp(error, PATH_ERROR))
-	{
-		ft_putnstr("minishell: ",cmd, " :", args[1]);
-		ft_putstr(error);
-	}
-	exit_shell(EXIT_FAILURE);
-}
-
-void	display_prompt(int mode)
-{
-	char *path;
-
-	if (mode == MODE_DIR)
-	{
-		path = get_currentdir();
-		ft_putnstr(path, "$ > ", NULL, NULL);
-		free(path);
-	}
-	else
-		ft_putstr("minishell-4.2$ > ");
-}
 
 char	*get_currentdir(void)
 {
@@ -69,6 +34,20 @@ char	*get_currentdir(void)
 		i++;
 	}
 	return (ft_strdup(path + last_slash + 1));
+}
+
+int		is_builtin(char *s, t_msh *msh)
+{
+	int i;
+
+	i = 0;
+	while (msh->cmd.name[i])
+	{
+		if (!ft_strcmp(msh->cmd.name[i], s))
+			return (i);
+		i++;
+	}
+	return (-1);
 }
 
 void	flush_buffer(void)

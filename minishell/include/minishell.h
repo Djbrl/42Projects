@@ -6,7 +6,7 @@
 /*   By: dsy <dsy@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:15:31 by dsy               #+#    #+#             */
-/*   Updated: 2020/09/27 00:01:08 by dsy              ###   ########.fr       */
+/*   Updated: 2020/09/27 02:32:56 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <errno.h>
 # include <limits.h>
 
+# define FORK_ERROR ": Couldn't start process\n"
 # define PATH_ERROR ": No such file or directory\n"
 # define CWD_ERROR ": couldn't retrieve current directory.\n"
 # define CMD_ERROR ": command not found\n"
