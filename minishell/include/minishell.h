@@ -6,7 +6,7 @@
 /*   By: dsy <dsy@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:15:31 by dsy               #+#    #+#             */
-/*   Updated: 2020/10/03 02:10:02 by dsy              ###   ########.fr       */
+/*   Updated: 2020/10/03 05:33:08 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ typedef struct	s_env_var{
 }				t_env_var;
 
 typedef struct	s_cmd{
-				void	(*ptr[6])(t_env_var*, char **);
-				char	*name[6];
+				void	(*ptr[7])(t_env_var*, char **);
+				char	*name[7];
 }				t_cmd;
 
 typedef struct	s_msh{
@@ -66,6 +66,7 @@ void	msh_cd(t_env_var *env, char **args);
 void	msh_pwd(t_env_var *env, char **args);
 void	msh_export(t_env_var *env, char **args);
 void	msh_env(t_env_var *env, char **args);
+void	msh_unset(t_env_var *env, char **args);
 void	exit_shell(int status);
 char	*get_currentdir();
 #endif

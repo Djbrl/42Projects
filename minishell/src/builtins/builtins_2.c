@@ -6,12 +6,12 @@
 /*   By: dsy <dsy@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/27 03:49:17 by dsy               #+#    #+#             */
-/*   Updated: 2020/10/03 02:21:10 by dsy              ###   ########.fr       */
+/*   Updated: 2020/10/03 06:48:47 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-//FIX ENV AND EXPORT
+
 void	msh_export(t_env_var *env, char **args)
 {
 	t_env_var *new ;
@@ -40,4 +40,30 @@ void	msh_env(t_env_var *env, char **args)
 		cur = cur->next;
 	}
 	ft_putnstr(cur->name, "\t", cur->data, "\n");	
+}
+
+//FIX UNSET
+void	msh_unset(t_env_var *env, char **args)
+{
+	t_env_var *tmp;
+	t_env_var *prev;
+
+	tmp = env;
+	if (tmp == NULL)
+		return ;
+	while (tmp->next != NULL && (ft_strcmp(args[1], tmp->name) != 0))
+	{
+		prev = tmp;
+		tmp = tmp->next;
+	}
+	if (!(ft_strcmp(args[1], tmp->name)))
+	{
+		if (tmp->next != NULL)
+			prev->next = tmp->next;
+		else if (tmp->next == NULL)
+			prev->next = NULL;
+		else
+			return ;
+		free(tmp);
+	}
 }

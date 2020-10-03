@@ -6,7 +6,7 @@
 /*   By: dsy <dsy@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/25 11:19:12 by dsy               #+#    #+#             */
-/*   Updated: 2020/09/27 05:53:22 by dsy              ###   ########.fr       */
+/*   Updated: 2020/10/03 05:00:18 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ void		msh_help(t_env_var *env, char **args)
 	ft_putstr("\nminishell-4.2 commands: \n\necho\t\t: a clone of bash echo\n");
 	ft_putstr("cd\t\t: a clone of bash cd\n");
 	ft_putstr("pwd\t\t: a clone of bash pwd\n");
-	ft_putstr("export\t\t: experimental\n");
+	ft_putstr("export\t\t: a clone of bash export\n");
+	ft_putstr("env\t\t: a clone of bash env\n");
+	ft_putstr("unset\t\t: a clone of bash unset\n");
 	ft_putstr("help\t\t: show this list\n");
 }
