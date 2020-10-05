@@ -6,57 +6,19 @@
 /*   By: dsy <dsy@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/25 11:19:12 by dsy               #+#    #+#             */
-/*   Updated: 2020/10/03 05:00:18 by dsy              ###   ########.fr       */
+/*   Updated: 2020/10/05 16:27:49 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	msh_echo_n(t_env_var *env, char **args)
+void		msh_echo(t_env_var *env, char *arg)
 {
 	int i;
-	int j;
 
-	i = 2;
-	j = 0;
-	while (args[i])
-	{
-		if (i > 2)
-			write(1, " ", 1);
-		while (args[i][j])
-		{
-			write(1, &args[i][j], 1);
-			j++;
-		}
-		j = 0;
-		i++;
-		if (args[i + 1])
-			write(1, " ", 1);
-	}
-}
-
-void		msh_echo(t_env_var *env, char **args)
-{
-	int i;
-	int j;
-
-	j = 0;
-	i = 1;
-	if (!ft_strcmp(args[1], "-n"))
-		msh_echo_n(env, args);
-	else
-	{
-		while (args[i])
-		{
-			if (i > 1)
-				write(1, " ", 1);
-			while (args[i][j])
-				write(1, &args[i][j++], 1);
-			j = 0;
-			i++;
-		}
-		write(1, "\n", 1);
-	}
+	i = 0;
+	while (arg[i])
+		write(1, &arg[i++], 1);
 }
 
 void		msh_cd(t_env_var *env, char **args)

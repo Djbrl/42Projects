@@ -6,25 +6,11 @@
 /*   By: dsy <dsy@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/27 03:49:17 by dsy               #+#    #+#             */
-/*   Updated: 2020/10/05 16:07:59 by dsy              ###   ########.fr       */
+/*   Updated: 2020/10/05 16:23:51 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	msh_export_runner(t_env_var *env, char **args)
-{
-	int i = 1;
-
-	if (args[1] == NULL)
-		msh_env(env, args);
-
-	while (args[i])
-	{
-		msh_export(env, args[i]);
-		i++;
-	}
-}
 
 void	msh_export(t_env_var *env, char *arg)
 {
