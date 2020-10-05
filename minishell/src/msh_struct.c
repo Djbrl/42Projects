@@ -6,7 +6,7 @@
 /*   By: dsy <dsy@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/27 03:10:39 by dsy               #+#    #+#             */
-/*   Updated: 2020/10/03 05:00:53 by dsy              ###   ########.fr       */
+/*   Updated: 2020/10/05 15:29:31 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	init_msh(t_msh *msh)
 	msh->cmd.ptr[1] = msh_help;
 	msh->cmd.ptr[2] = msh_cd;
 	msh->cmd.ptr[3] = msh_pwd;
-	msh->cmd.ptr[4] = msh_export;
+	msh->cmd.ptr[4] = msh_export_runner;
 	msh->cmd.ptr[5] = msh_env;
 	msh->cmd.ptr[6] = msh_unset;
 }

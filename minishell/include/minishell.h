@@ -6,7 +6,7 @@
 /*   By: dsy <dsy@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:15:31 by dsy               #+#    #+#             */
-/*   Updated: 2020/10/03 05:33:08 by dsy              ###   ########.fr       */
+/*   Updated: 2020/10/05 15:31:46 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # define ENV_ERROR ": couldn't setup environment\n"
 # define FORK_ERROR ": couldn't start process\n"
 # define PATH_ERROR ": no such file or directory\n"
-# define CWD_ERROR ": couldn't retrieve current directory.\n"
+# define CWD_ERROR ": couldn't retrieve current directory\n"
 # define CMD_ERROR ": command not found\n"
 # define MODE_DEFAULT 1
 # define MODE_DIR 2
@@ -64,7 +64,8 @@ void	msh_echo(t_env_var *env, char **args);
 void	msh_help(t_env_var *env, char **args);
 void	msh_cd(t_env_var *env, char **args);
 void	msh_pwd(t_env_var *env, char **args);
-void	msh_export(t_env_var *env, char **args);
+void	msh_export_runner(t_env_var *env, char **args);
+void	msh_export(t_env_var *env, char *arg);
 void	msh_env(t_env_var *env, char **args);
 void	msh_unset(t_env_var *env, char **args);
 void	exit_shell(int status);
