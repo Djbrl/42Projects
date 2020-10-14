@@ -6,7 +6,7 @@
 /*   By: dsy <dsy@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:15:31 by dsy               #+#    #+#             */
-/*   Updated: 2020/10/05 16:24:05 by dsy              ###   ########.fr       */
+/*   Updated: 2020/10/14 02:44:05 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct	s_msh{
 
 int		is_builtin(char *s, t_msh *msh);
 char	*get_currentdir();
+char	*get_data_from_env(t_env_var *env, char *name);
 void	init_msh(t_msh *msh);
 void	init_env(t_msh *msh);
 void	flush_buffer();

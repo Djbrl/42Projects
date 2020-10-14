@@ -6,12 +6,12 @@
 /*   By: dsy <dsy@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/27 03:49:17 by dsy               #+#    #+#             */
-/*   Updated: 2020/10/05 16:23:51 by dsy              ###   ########.fr       */
+/*   Updated: 2020/10/14 07:01:13 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
+ //FIX EXPORT A without =
 void	msh_export(t_env_var *env, char *arg)
 {
 	t_env_var	*new;
