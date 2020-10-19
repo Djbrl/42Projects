@@ -6,7 +6,7 @@
 /*   By: dsy <dsy@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:15:31 by dsy               #+#    #+#             */
-/*   Updated: 2020/10/14 02:44:05 by dsy              ###   ########.fr       */
+/*   Updated: 2020/10/19 11:19:33 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ typedef struct	s_msh{
 
 int		is_builtin(char *s, t_msh *msh);
 char	*get_currentdir();
-char	*get_data_from_env(t_env_var *env, char *name);
+char	*get_data_from_list(t_env_var *env, char *name);
+int		add_var_to_list(t_env_var *env, char *name, char *data);
 void	init_msh(t_msh *msh);
 void	init_env(t_msh *msh);
 void	flush_buffer();
@@ -61,14 +62,14 @@ void	exit_shell(int status);
 void	evaluate_commands(char **args, t_msh *t_msh);
 void	signal_handler(int sig_n);
 void	display_prompt(int mode);
-void	display_error(char *error);
+int		display_error(char *error);
 void	display_cmd_error(char *cmd, char *error, char **args);
 
 void	msh_echo_runner(t_env_var *env, char **args);
 void	msh_export_runner(t_env_var *env, char **args);
 
 void	msh_echo(t_env_var *env, char *s);
-void	msh_export(t_env_var *env, char *arg);
+int		msh_export(t_env_var *env, char *arg);
 void	msh_help(t_env_var *env, char **args);
 void	msh_cd(t_env_var *env, char **args);
 void	msh_pwd(t_env_var *env, char **args);

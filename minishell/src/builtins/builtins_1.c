@@ -6,7 +6,7 @@
 /*   By: dsy <dsy@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/25 11:19:12 by dsy               #+#    #+#             */
-/*   Updated: 2020/10/14 06:51:29 by dsy              ###   ########.fr       */
+/*   Updated: 2020/10/19 11:06:42 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,18 @@
 
 void		msh_echo(t_env_var *env, char *arg)
 {
-	int i;
-	char *var;
-	char *tmp;
+	int		i;
+	char	*var;
+	char	*tmp;
 
 	i = 0;
-
 	if (arg[0] != '$')
 		while (arg[i])
 			write(1, &arg[i++], 1);
 	else
 	{
 		var = ft_substr(arg, 1, (ft_strlen(arg) - 1));
-		tmp = ft_strdup(get_data_from_env(env, var));
+		tmp = ft_strdup(get_data_from_list(env, var));
 		if (tmp != NULL)
 			while (tmp[i])
 				write(1, &tmp[i++], 1);
@@ -37,7 +36,6 @@ void		msh_echo(t_env_var *env, char *arg)
 		//echo the data
 		/* code */
 	}
-	
 }
 
 void		msh_cd(t_env_var *env, char **args)

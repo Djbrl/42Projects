@@ -6,13 +6,13 @@
 /*   By: dsy <dsy@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/27 02:59:57 by dsy               #+#    #+#             */
-/*   Updated: 2020/09/27 03:42:31 by dsy              ###   ########.fr       */
+/*   Updated: 2020/10/19 11:23:19 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	display_error(char *error)
+int		display_error(char *error)
 {
 	if (!ft_strcmp(error, CWD_ERROR))
 		ft_putnstr("minishell: ", error, NULL, NULL);
@@ -20,8 +20,11 @@ void	display_error(char *error)
 		ft_putnstr("minishell: ", g_buffer, CMD_ERROR, NULL);
 	else if (!(ft_strcmp(error, FORK_ERROR)))
 		ft_putnstr("minishell: ", error, NULL, NULL);
+	else if (!(ft_strcmp(error, ENV_ERROR)))
+		ft_putnstr("minishell: ", error, NULL, NULL);
 	else
 		ft_putnstr("minishell: ", "unknown error", NULL, NULL);
+	return (0);
 }
 
 void	display_cmd_error(char *cmd, char *error, char **args)

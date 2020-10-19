@@ -6,7 +6,7 @@
 /*   By: dsy <dsy@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/27 03:10:39 by dsy               #+#    #+#             */
-/*   Updated: 2020/10/05 16:18:15 by dsy              ###   ########.fr       */
+/*   Updated: 2020/10/19 11:37:47 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,12 @@ void	init_msh(t_msh *msh)
 void	init_env(t_msh *msh)
 {
 	msh->env.next = NULL;
-	if(!(msh->env.next = (t_env_var*)(malloc(sizeof(t_env_var*)))))
+	if (!(msh->env.next = (t_env_var*)(malloc(sizeof(t_env_var*)))))
 	{
 		display_error(ENV_ERROR);
 		free(msh->env.next);
 	}
-	msh->env.name = ft_strdup("ENVIRONMENT");
-	msh->env.data = ft_strdup("VARIABLES");
+	msh->env.name = ft_strdup("init");
+	msh->env.data = ft_strdup("init");
 	msh->env.next = NULL;
 }
