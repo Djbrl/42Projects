@@ -6,13 +6,13 @@
 /*   By: dsy <dsy@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/27 03:49:17 by dsy               #+#    #+#             */
-/*   Updated: 2020/10/19 11:41:19 by dsy              ###   ########.fr       */
+/*   Updated: 2020/10/19 13:59:34 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	msh_export(t_env_var *env, char *arg)
+int		msh_export(t_env_var *env, char *arg)
 {
 	char		*name;
 	char		*tmp;
@@ -55,7 +55,6 @@ void	msh_env(t_env_var *env, char **args)
 		ft_putnstr(cur->name, "=", cur->data, "\n");
 }
 
-//FIX UNSET
 void	msh_unset(t_env_var *env, char **args)
 {
 	t_env_var *tmp;
