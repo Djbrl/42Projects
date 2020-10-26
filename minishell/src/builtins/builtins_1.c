@@ -6,7 +6,7 @@
 /*   By: dsy <dsy@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/25 11:19:12 by dsy               #+#    #+#             */
-/*   Updated: 2020/10/19 13:55:21 by dsy              ###   ########.fr       */
+/*   Updated: 2020/10/26 14:55:24 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int static	var_name_len(char *name)
 	return (i);
 }
 
-void		msh_echo(t_env_var *env, char *arg)
+int		msh_echo(t_env_var *env, char *arg)
 {
 	int		i;
 	char	*var;
@@ -47,26 +47,28 @@ void		msh_echo(t_env_var *env, char *arg)
 		}
 		i++;
 	}
-	return ;
+	return (1);
 }
 
-void		msh_cd(t_env_var *env, char **args)
+int		msh_cd(t_env_var *env, char **args)
 {
 	int ret;
 
 	ret = chdir(args[1]);
 	if (ret < 0)
 		display_cmd_error("cd", PATH_ERROR, args);
+	return (1);
 }
 
-void		msh_pwd(t_env_var *env, char **args)
+int		msh_pwd(t_env_var *env, char **args)
 {
 	char cwd[1024];
 
 	ft_putnstr(getcwd(cwd, sizeof(cwd)), "\n", NULL, NULL);
+	return (1);
 }
 
-void		msh_help(t_env_var *env, char **args)
+int		msh_help(t_env_var *env, char **args)
 {
 	ft_putstr("\nminishell-4.2 commands: \n\necho\t\t: a clone of bash echo\n");
 	ft_putstr("cd\t\t: a clone of bash cd\n");
@@ -75,4 +77,5 @@ void		msh_help(t_env_var *env, char **args)
 	ft_putstr("env\t\t: a clone of bash env\n");
 	ft_putstr("unset\t\t: a clone of bash unset\n");
 	ft_putstr("help\t\t: show this list\n");
+	return (1);
 }

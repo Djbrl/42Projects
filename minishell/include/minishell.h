@@ -6,7 +6,7 @@
 /*   By: dsy <dsy@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:15:31 by dsy               #+#    #+#             */
-/*   Updated: 2020/10/19 11:19:33 by dsy              ###   ########.fr       */
+/*   Updated: 2020/10/26 15:53:16 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ typedef struct	s_env_var{
 }				t_env_var;
 
 typedef struct	s_cmd{
-				void	(*ptr[7])(t_env_var*, char **);
+				int		(*ptr[7])(t_env_var*, char **);
 				char	*name[7];
 }				t_cmd;
 
@@ -65,14 +65,14 @@ void	display_prompt(int mode);
 int		display_error(char *error);
 void	display_cmd_error(char *cmd, char *error, char **args);
 
-void	msh_echo_runner(t_env_var *env, char **args);
-void	msh_export_runner(t_env_var *env, char **args);
+int		msh_echo_runner(t_env_var *env, char **args);
+int		msh_export_runner(t_env_var *env, char **args);
 
-void	msh_echo(t_env_var *env, char *s);
+int		msh_echo(t_env_var *env, char *s);
 int		msh_export(t_env_var *env, char *arg);
-void	msh_help(t_env_var *env, char **args);
-void	msh_cd(t_env_var *env, char **args);
-void	msh_pwd(t_env_var *env, char **args);
-void	msh_env(t_env_var *env, char **args);
-void	msh_unset(t_env_var *env, char **args);
+int		msh_help(t_env_var *env, char **args);
+int		msh_cd(t_env_var *env, char **args);
+int		msh_pwd(t_env_var *env, char **args);
+int		msh_env(t_env_var *env, char **args);
+int		msh_unset(t_env_var *env, char **args);
 #endif

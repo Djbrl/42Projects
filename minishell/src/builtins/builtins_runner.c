@@ -6,13 +6,13 @@
 /*   By: dsy <dsy@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/05 16:13:26 by dsy               #+#    #+#             */
-/*   Updated: 2020/10/13 23:57:40 by dsy              ###   ########.fr       */
+/*   Updated: 2020/10/26 15:52:34 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	msh_echo_runner(t_env_var *env, char **args)
+int	msh_echo_runner(t_env_var *env, char **args)
 {
 	int i;
 
@@ -39,9 +39,10 @@ void	msh_echo_runner(t_env_var *env, char **args)
 		}
 		write(1, "\n", 1);
 	}
+	return (1);
 }
 
-void	msh_export_runner(t_env_var *env, char **args)
+int	msh_export_runner(t_env_var *env, char **args)
 {
 	int i;
 
@@ -53,4 +54,5 @@ void	msh_export_runner(t_env_var *env, char **args)
 		msh_export(env, args[i]);
 		i++;
 	}
+	return (1);
 }

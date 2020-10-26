@@ -6,7 +6,7 @@
 /*   By: dsy <dsy@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/27 03:49:17 by dsy               #+#    #+#             */
-/*   Updated: 2020/10/19 13:59:34 by dsy              ###   ########.fr       */
+/*   Updated: 2020/10/26 15:53:52 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int		msh_export(t_env_var *env, char *arg)
 	return (1);
 }
 
-void	msh_env(t_env_var *env, char **args)
+int	msh_env(t_env_var *env, char **args)
 {
 	t_env_var *cur;
 
@@ -53,16 +53,17 @@ void	msh_env(t_env_var *env, char **args)
 	}
 	if (cur->name && cur->data && (ft_strcmp(cur->name, "init")))
 		ft_putnstr(cur->name, "=", cur->data, "\n");
+	return (1);
 }
 
-void	msh_unset(t_env_var *env, char **args)
+int	msh_unset(t_env_var *env, char **args)
 {
 	t_env_var *tmp;
 	t_env_var *prev;
 
 	tmp = env;
 	if (tmp == NULL || !args[1])
-		return ;
+		return (0);
 	while (tmp->next != NULL && (ft_strcmp(args[1], tmp->name) != 0))
 	{
 		prev = tmp;
@@ -75,7 +76,8 @@ void	msh_unset(t_env_var *env, char **args)
 		else if (tmp->next == NULL)
 			prev->next = NULL;
 		else
-			return ;
+			return (1);
 		free(tmp);
 	}
+	return (1);
 }
