@@ -18,6 +18,7 @@ int		msh_export(t_env_var *env, char *arg)
 	char		*tmp;
 	char		*data;
 	int			i;
+	int			valid;
 
 	i = 0;
 	if (arg == NULL || !ft_isalpha(arg[0]))
@@ -25,6 +26,7 @@ int		msh_export(t_env_var *env, char *arg)
 	while (arg[i++])
 		if (arg[i] == '=')
 		{
+			valid = 1;
 			if (arg[i + 1] == 0)
 				data = ft_strdup("\0");
 			else
@@ -35,7 +37,7 @@ int		msh_export(t_env_var *env, char *arg)
 			free(tmp);
 			break ;
 		}
-	if (!add_var_to_list(env, name, data))
+	if (!valid && !add_var_to_list(env, name, data))
 		return (display_error(ENV_ERROR));
 	return (1);
 }

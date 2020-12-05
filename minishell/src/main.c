@@ -73,10 +73,13 @@ void	shell_loop(t_msh *msh)
 		if (!(ft_strcmp(g_buffer, "exit")))
 			exit_shell(EXIT_SUCCESS);
 		line = strdup(g_buffer);
-		args = ft_split(line, ' ');
-		evaluate_commands(args, msh);
-		flush_buffer(g_buffer);
-		free(line);
+		if (line[0] != 0)
+		{
+			args = ft_split(line, ' ');
+			evaluate_commands(args, msh);
+			flush_buffer(g_buffer);
+			free(line);
+		}
 	}
 }
 
