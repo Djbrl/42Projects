@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_runner.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsy <dsy@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/05 16:13:26 by dsy               #+#    #+#             */
-/*   Updated: 2020/10/26 15:52:34 by dsy              ###   ########.fr       */
+/*   Updated: 2020/12/07 18:10:05 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	msh_echo_runner(t_env_var *env, char **args)
 	return (1);
 }
 
-int	msh_export_runner(t_env_var *env, char **args)
+int	msh_export_runner(t_env_var *env, char **args, t_msh *msh)
 {
 	int i;
 
@@ -51,7 +51,7 @@ int	msh_export_runner(t_env_var *env, char **args)
 		msh_env(env, args);
 	while (args[i])
 	{
-		msh_export(env, args[i]);
+		msh_export(env, args[i], msh);
 		i++;
 	}
 	return (1);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   msh_control.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsy <dsy@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/27 03:15:12 by dsy               #+#    #+#             */
-/*   Updated: 2020/10/26 15:52:10 by dsy              ###   ########.fr       */
+/*   Updated: 2020/12/07 17:54:33 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ void	exit_shell(int status)
 	exit(status);
 }
 
-void	signal_handler(int sig_n)
+void	signal_handler(int sig_n, t_msh *msh)
 {
 	write(1, "\n", 1);
-	display_prompt(MODE_DEFAULT);
-	flush_buffer(g_buffer);
+	display_prompt(MODE_DEFAULT, msh);
+	flush_buffer(msh);
 }
 
 void	evaluate_commands(char **args, t_msh *msh)
@@ -40,11 +40,11 @@ void	evaluate_commands(char **args, t_msh *msh)
 		if (pid == 0) //son
 		{
 			if (execvp(args[0], args) == -1)
-				display_error(CMD_ERROR);
+				display_error(CMD_ERROR, msh);
 			exit(EXIT_FAILURE);
 		}
 		else if (pid < 0)//fork error
-			display_error(FORK_ERROR);
+			display_error(FORK_ERROR, msh);
 		else
 		{//this is what the parent is doing
 			wpid = waitpid(pid, &status, WUNTRACED);

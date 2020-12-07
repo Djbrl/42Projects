@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   msh_struct.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsy <dsy@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/27 03:10:39 by dsy               #+#    #+#             */
-/*   Updated: 2020/10/26 15:53:26 by dsy              ###   ########.fr       */
+/*   Updated: 2020/12/07 17:55:43 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	init_env(t_msh *msh)
 	msh->env.next = NULL;
 	if (!(msh->env.next = (t_env_var*)(malloc(sizeof(t_env_var*)))))
 	{
-		display_error(ENV_ERROR);
+		display_error(ENV_ERROR, msh);
 		free(msh->env.next);
 	}
 	msh->env.name = ft_strdup("init");

@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   display.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsy <dsy@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/27 02:59:57 by dsy               #+#    #+#             */
-/*   Updated: 2020/10/26 15:52:49 by dsy              ###   ########.fr       */
+/*   Updated: 2020/12/07 17:46:55 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		display_error(char *error)
+int		display_error(char *error, t_msh *msh)
 {
 	if (!ft_strcmp(error, CWD_ERROR))
 		ft_putnstr("minishell: ", error, NULL, NULL);
 	else if (!(ft_strcmp(error, CMD_ERROR)))
-		ft_putnstr("minishell: ", g_buffer, CMD_ERROR, NULL);
+		ft_putnstr("minishell: ", msh->g_buffer, CMD_ERROR, NULL);
 	else if (!(ft_strcmp(error, FORK_ERROR)))
 		ft_putnstr("minishell: ", error, NULL, NULL);
 	else if (!(ft_strcmp(error, ENV_ERROR)))
@@ -36,13 +36,13 @@ void	display_cmd_error(char *cmd, char *error, char **args)
 	}
 }
 
-void	display_prompt(int mode)
+void	display_prompt(int mode, t_msh *msh)
 {
 	char *path;
 
 	if (mode == MODE_DIR)
 	{
-		path = get_currentdir();
+		path = get_currentdir(msh);
 		ft_putnstr(path, "$ > ", NULL, NULL);
 		free(path);
 	}

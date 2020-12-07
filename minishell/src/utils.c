@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsy <dsy@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/25 11:17:24 by dsy               #+#    #+#             */
-/*   Updated: 2020/10/26 15:51:16 by dsy              ###   ########.fr       */
+/*   Updated: 2020/12/07 17:48:10 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-char	*get_currentdir(void)
+char	*get_currentdir(t_msh *msh)
 {
 	char	*path;
 	char	cwd[1024];
@@ -24,7 +24,7 @@ char	*get_currentdir(void)
 	path = ft_strdup(getcwd(cwd, sizeof(cwd)));
 	if (!path)
 	{
-		display_error(CWD_ERROR);
+		display_error(CWD_ERROR, msh);
 		return (NULL);
 	}
 	while (path[i])
@@ -50,10 +50,10 @@ int		is_builtin(char *s, t_msh *msh)
 	return (-1);
 }
 
-void	flush_buffer(void)
+void	flush_buffer(t_msh *msh)
 {
 	int i;
 
 	i = 0;
-	ft_memset(g_buffer, 0, BUF);
+	ft_memset(msh->g_buffer, 0, BUF);
 }

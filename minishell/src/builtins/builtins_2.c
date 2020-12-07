@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsy <dsy@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/27 03:49:17 by dsy               #+#    #+#             */
-/*   Updated: 2020/10/26 15:53:52 by dsy              ###   ########.fr       */
+/*   Updated: 2020/12/07 18:00:44 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		msh_export(t_env_var *env, char *arg)
+int		msh_export(t_env_var *env, char *arg, t_msh *msh)
 {
 	char		*name;
 	char		*tmp;
@@ -22,7 +22,7 @@ int		msh_export(t_env_var *env, char *arg)
 
 	i = 0;
 	if (arg == NULL || !ft_isalpha(arg[0]))
-		return (display_error(ENV_ERROR));
+		return (display_error(ENV_ERROR, msh));
 	while (arg[i++])
 		if (arg[i] == '=')
 		{
@@ -38,7 +38,7 @@ int		msh_export(t_env_var *env, char *arg)
 			break ;
 		}
 	if (!valid && !add_var_to_list(env, name, data))
-		return (display_error(ENV_ERROR));
+		return (display_error(ENV_ERROR, msh));
 	return (1);
 }
 
