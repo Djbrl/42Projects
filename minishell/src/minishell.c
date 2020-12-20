@@ -31,8 +31,12 @@ void	shell_loop(t_msh *msh)
 		line = strdup(msh->g_buffer);
 		if (line[0] != 0)
 		{
-			args = ft_split(line, ' ');
-			evaluate_commands(args, msh);
+			args = ft_split(line, ';');
+			msh->input.data = ft_strdup(args[0]);
+			evaluate_commands(ft_split(msh->input.data, ' '), msh);
+			if (args[1]){//PROTOTYPE
+				add_cmd_to_list(&msh->input, args[1]);
+				printf("%s\n", msh->input.next->data);}
 			flush_buffer(msh);
 			free(line);
 		}

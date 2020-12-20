@@ -37,7 +37,7 @@ int		msh_echo(t_env_var *env, char *arg)
 			if (arg[i] == '$' && ft_isalpha(arg[i + 1]))
 			{
 				var = ft_substr(arg, i + 1, var_name_len(arg + i + 1));
-				tmp = ft_strdup(get_data_from_list(env, var));
+				tmp = ft_strdup(get_data_from_env(env, var));
 				if (tmp != NULL)
 					ft_putstr(tmp);
 				else

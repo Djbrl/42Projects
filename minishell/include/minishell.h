@@ -34,6 +34,11 @@
 # define BUF 4096
 
 
+typedef struct	t_cmd_list{
+				char *data;
+				struct s_env_var	*next;
+}				t_cmd_list;
+
 typedef struct	s_env_var{
 				char *name;
 				char *data;
@@ -48,16 +53,19 @@ typedef struct	s_cmd{
 typedef struct	s_msh{
 				t_cmd		cmd;
 				t_env_var	env;
+				t_cmd_list	input;
 				char		g_buffer[BUF];
 }				t_msh;
 
 int		is_builtin(char *s, t_msh *msh);
 char	*get_currentdir();
-char	*get_data_from_list(t_env_var *env, char *name);
-int		add_var_to_list(t_env_var *env, char *name, char *data);
+char	*get_data_from_env(t_env_var *env, char *name);
+int		add_var_to_env(t_env_var *env, char *name, char *data);
+int		add_cmd_to_list(t_cmd_list *input, char *data);
 void	shell_loop(t_msh *msh);
 void	init_msh(t_msh *msh);
 void	init_env(t_msh *msh);
+void	init_cmd(t_msh *msh);
 void	flush_buffer();
 void	exit_shell(int status);
 void	evaluate_commands(char **args, t_msh *t_msh);

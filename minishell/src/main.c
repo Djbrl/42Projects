@@ -59,6 +59,7 @@ int		main(int ac, char **av)
 	t_msh	msh;
 
 	init_msh(&msh);
+   init_cmd(&msh);
 	shell_loop(&msh);
 	return (0);
 }

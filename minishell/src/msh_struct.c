@@ -30,6 +30,18 @@ void	init_msh(t_msh *msh)
 	msh->cmd.ptr[6] = msh_unset;
 }
 
+void	init_cmd(t_msh *msh)
+{
+	msh->input.next = NULL;
+	if (!(msh->input.next = (t_env_var*)(malloc(sizeof(t_env_var*)))))
+	{
+		display_error(ENV_ERROR, msh);
+		free(msh->input.next);
+	}
+	msh->input.data = NULL;
+	msh->input.next = NULL;
+}
+
 void	init_env(t_msh *msh)
 {
 	msh->env.next = NULL;

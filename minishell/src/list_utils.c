@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-char	*get_data_from_list(t_env_var *env, char *name)
+char	*get_data_from_env(t_env_var *env, char *name)
 {
 	t_env_var *cur;
 
@@ -29,7 +29,7 @@ char	*get_data_from_list(t_env_var *env, char *name)
 	return (NULL);
 }
 
-int		add_var_to_list(t_env_var *env, char *name, char *data)
+int		add_var_to_env(t_env_var *env, char *name, char *data)
 {
 	t_env_var *new;
 
@@ -54,5 +54,22 @@ int		add_var_to_list(t_env_var *env, char *name, char *data)
 	new->next->next = NULL;
 	free(data);
 	free(name);
+	return (1);
+}
+
+int		add_cmd_to_list(t_cmd_list *input, char *data)
+{
+	t_cmd_list *new;
+
+	new = input;
+	if (!input || !data)
+		return (0);
+	while (new->next != NULL)
+			new = new->next;
+	if (!(new->next = (t_env_var*)malloc(sizeof(t_env_var))))
+		return (0);
+	new->next->data = ft_strdup(data);
+	new->next->next = NULL;
+	free(data);
 	return (1);
 }
