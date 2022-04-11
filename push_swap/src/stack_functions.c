@@ -1,38 +1,50 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   stack_functions.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 14:01:49 by dsy               #+#    #+#             */
-/*   Updated: 2022/04/11 11:32:43 by dsy              ###   ########.fr       */
+/*   Updated: 2022/04/11 11:04:50 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-//roadmap
-// -do initial conditions for each function
-// implement each operation
-int	main(int ac, char *av[])
+int	push(t_node **head_ref, int new_data)
 {
-	int		i;
-	t_node	*head;
-	t_node	*stack_a;
+	t_node	*new_node;
 
-	head = NULL;
-	i = ac - 1;
-	while (i > 0)
-	{
-		stack_a = (t_node *)malloc(sizeof(t_node));
-		stack_a->data = ft_atoi(av[i]);
-		stack_a->next = head;
-		head = stack_a;
-		i--;
-	}
-	push(&head, 6);
-	merge_sort(&head);
-	print_list(head);
-	return (0);
+	new_node = (t_node *)malloc(sizeof(t_node));
+	new_node->data = new_data;
+	new_node->next = (*head_ref);
+	(*head_ref) = new_node;
+	return (new_data);
+}
+
+int	pop(t_node **root)
+{
+	int		popped;
+	t_node	*temp;
+
+	if (is_empty(*root))
+		return (INT_MIN);
+	temp = *root;
+	*root = (*root)->next;
+	popped = temp->data;
+	free(temp);
+	return (popped);
+}
+
+int	peek(t_node *root)
+{
+	if (is_empty(root))
+		return (0);
+	return (root->data);
+}
+
+int	is_empty(t_node *root)
+{
+	return (!root);
 }

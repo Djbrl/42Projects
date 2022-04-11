@@ -1,38 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   print_functions.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 14:01:49 by dsy               #+#    #+#             */
-/*   Updated: 2022/04/11 11:32:43 by dsy              ###   ########.fr       */
+/*   Updated: 2022/04/11 10:21:41 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-//roadmap
-// -do initial conditions for each function
-// implement each operation
-int	main(int ac, char *av[])
+void	print_stack(t_node *top)
 {
-	int		i;
-	t_node	*head;
-	t_node	*stack_a;
+	t_node	*read;
 
-	head = NULL;
-	i = ac - 1;
-	while (i > 0)
+	read = top;
+	write(1, "-----\n", 6);
+	while (read != NULL)
 	{
-		stack_a = (t_node *)malloc(sizeof(t_node));
-		stack_a->data = ft_atoi(av[i]);
-		stack_a->next = head;
-		head = stack_a;
-		i--;
+		ft_putstr("| ");
+		ft_putnbr(read->data);
+		ft_putstr(" |\n");
+		read = read->next;
 	}
-	push(&head, 6);
-	merge_sort(&head);
-	print_list(head);
-	return (0);
+	write(1, "-----\n", 6);
+}
+
+void	print_list(t_node *node)
+{
+	while (node != NULL)
+	{
+		printf("%d ", node->data);
+		node = node->next;
+	}
 }

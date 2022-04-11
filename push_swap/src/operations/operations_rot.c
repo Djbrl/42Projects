@@ -1,38 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   operations_rot.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/31 14:01:49 by dsy               #+#    #+#             */
-/*   Updated: 2022/04/11 11:32:43 by dsy              ###   ########.fr       */
+/*   Created: 2022/04/11 11:06:08 by dsy               #+#    #+#             */
+/*   Updated: 2022/04/11 11:29:44 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-//roadmap
-// -do initial conditions for each function
-// implement each operation
-int	main(int ac, char *av[])
+void	rot_a(t_node **stack_a)
 {
-	int		i;
-	t_node	*head;
-	t_node	*stack_a;
+	(void)stack_a;
+}
 
-	head = NULL;
-	i = ac - 1;
-	while (i > 0)
-	{
-		stack_a = (t_node *)malloc(sizeof(t_node));
-		stack_a->data = ft_atoi(av[i]);
-		stack_a->next = head;
-		head = stack_a;
-		i--;
-	}
-	push(&head, 6);
-	merge_sort(&head);
-	print_list(head);
-	return (0);
+void	rot_b(t_node **stack_b)
+{
+	(void)stack_b;
+}
+
+void	rev_rot_a(t_node **stack_a)
+{
+	(void)stack_a;
+}
+
+void	rev_rot_b(t_node **stack_b)
+{
+	(void)stack_b;
 }

@@ -20,7 +20,9 @@ CFLAGS := -Wall -Wextra -Werror
 PFLAGS := -Iinclude -Ilib/libft
 
 SRC_PATH := src
-SRC_NAME := main.c
+SRC_NAME := main.c stack_functions.c print_functions.c sorting_functions.c \
+			operations/operations_sim.c operations/operations_rot.c \
+			operations/operations_push_swap.c
 
 OBJ_PATH := obj
 OBJ_NAME := $(SRC_NAME:.c=.o)
