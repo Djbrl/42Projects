@@ -29,7 +29,7 @@ int		push(t_node **head_ref, int new_data);
 int		peek(t_node *root);
 int		is_empty(t_node *root);
 void	print_list(t_node *node);
-void	print_stack(t_node *top);
+void	print_stacks(t_node *a, t_node *b);
 void	free_stack(t_node *node);
 t_node	*newNode(int data);
 
@@ -37,8 +37,8 @@ t_node	*newNode(int data);
 
 void	swap_a(t_node **stack_a);
 void	swap_b(t_node **stack_b);
-void	push_a(t_node **stack_a, int n);
-void	push_b(t_node **stack_b, int n);
+void	push_a(t_node **stack_a, t_node **stack_b);
+void	push_b(t_node **stack_a, t_node **stack_b);
 void	rot_a(t_node **stack_a);
 void	rot_b(t_node **stack_b);
 void	rev_rot_a(t_node **stack_a);

@@ -32,9 +32,20 @@ int	main(int ac, char *av[])
 		head = stack_a;
 		i--;
 	}
-	push(&head, 6);
-	merge_sort(&head);
-	print_list(head);
-	free_stack(head);
+	print_stacks(stack_a, stack_b);
+	push_b(&stack_a, &stack_b);
+	push_b(&stack_a, &stack_b);
+	push_b(&stack_a, &stack_b);
+	push_b(&stack_a, &stack_b);
+	push_a(&stack_a, &stack_b);
+	push(&stack_a, 5);
+	swap_a(&stack_a);
+	swap_a(&stack_a);
+	swap_a(&stack_a);
+	print_stacks(stack_a, stack_b);
+	s_swap(&stack_a, &stack_b);
+	print_stacks(stack_a, stack_b);
+	free_stack(stack_a);
+	free_stack(stack_b);
 	return (0);
 }

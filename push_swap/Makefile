@@ -69,7 +69,7 @@ fclean : libft_fclean
 
 #norminette will return an error/sude code for Makefile ! No need to print
 norm :
-	norminette
+	norminette > /dev/null
 
 leaks : 
 	@valgrind ./${NAME} --full-check=yes

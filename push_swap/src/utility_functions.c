@@ -12,20 +12,29 @@
 
 #include "push_swap.h"
 
-void	print_stack(t_node *top)
+void	print_stacks(t_node *a, t_node *b)
 {
-	t_node	*read;
+	t_node	*read_a;
+	t_node	*read_b;
 
-	read = top;
-	write(1, "-----\n", 6);
-	while (read != NULL)
+	read_a = a;
+	read_b = b;
+	while (read_a != NULL || read_b != NULL)
 	{
-		ft_putstr("| ");
-		ft_putnbr(read->data);
-		ft_putstr(" |\n");
-		read = read->next;
+		if (read_a)
+		{
+			ft_putnbr(read_a->data);
+			read_a = read_a->next;
+		}
+		write(1, "\t|\t", 3);
+		if (read_b)
+		{
+			ft_putnbr(read_b->data);
+			read_b = read_b->next;
+		}
+		write(1, "\n", 1);
 	}
-	write(1, "-----\n", 6);
+	ft_putstr("-------------------\n");
 }
 
 void	print_list(t_node *node)

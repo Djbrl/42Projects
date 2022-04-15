@@ -12,24 +12,54 @@
 
 #include "push_swap.h"
 
+//swap the top 2 elements of a
 void	swap_a(t_node **stack_a)
 {
-	(void)stack_a;
+	int	tmp;
+	int	tmp2;
+
+	if (*stack_a)
+	{
+		tmp = pop(stack_a);
+		tmp2 = pop(stack_a);
+		push(stack_a, tmp);
+		push(stack_a, tmp2);
+	}
+	else
+		return ;
 }
 
+//swap the top 2 elements of b
 void	swap_b(t_node **stack_b)
 {
-	(void)stack_b;
+	int	tmp;
+	int	tmp2;
+
+	if (*stack_b)
+	{
+		tmp = pop(stack_b);
+		tmp2 = pop(stack_b);
+		push(stack_b, tmp);
+		push(stack_b, tmp2);
+	}
+	else
+		return ;
 }
 
-void	push_a(t_node **stack_a, int n)
+//put top of b in a
+void	push_a(t_node **stack_a, t_node **stack_b)
 {
-	(void)stack_a;
-	(void)n;
+	if (*stack_b)
+		push(stack_a, pop(stack_b));
+	else
+		return ;
 }
 
-void	push_b(t_node **stack_b, int n)
+//put top of a in b
+void	push_b(t_node **stack_a, t_node **stack_b)
 {
-	(void)stack_b;
-	(void)n;
+	if (*stack_a)
+		push(stack_b, pop(stack_a));
+	else
+		return ;
 }
