@@ -12,58 +12,34 @@
 
 #include "includes/libftprintf.h"
 #include <stdio.h>
-/*
 char *GRN="\033[0;32m";
 char *RED="\033[0;31m";
 char *YLW="\033[0;33m";
-char *NC="\033[0m";i
-*/
+char *NC="\033[0m";
 
 int main()
 {
-	/*
-	 ft_printf("%d - %i - %u - %x - %X - %c - %s - %%", -5, -5, -5, -5, -5, '\0', NULL);
+
+ft_printf("%sBasic Test : \n%s", YLW, NC);	 
+ft_printf("%s%%d | %%i | %%u | %%x | %%X | %%c | %%s | %%p | %%%%%s\n\n", YLW, NC);
+	 ft_printf("%d | %i | %u | %x | %X | %c | %s | %p | %%", 42, -42, 4294967295, 4294967295, 4294967295, '4', "42", NC);
 printf("\n");
-	 printf("%d - %i - %u - %x - %X - %c - %s - %%", -5, -5, -5, -5, -5, '\0', NULL);
-printf("\n");
-	  ft_printf("%10s", "hello");
-printf("\n");
-	  printf("%10s", "hello");
+	 printf("%s%d | %i | %u | %x | %X | %c | %s | %p | %%%s", GRN, 42, -42, 4294967295, 4294967295, 4294967295, '4', "42", NC, NC);
 printf("\n");
 
-	  ft_printf("%.10s", "hello");
+ft_printf("%sEdge Test : \n%s", YLW, NC);	 
+ft_printf("%s%%d | %%i | %%u | %%x | %%X | %%c | %%s | %%p | %%%%%s\n\n", YLW, NC);
+	 ft_printf("%d | %i | %u | %x | %X | %c | %s | %p | %%", 2147483648, -2147483649, 4294967296, 4294967296, 4294967296, '\0', NULL, NC);
 printf("\n");
-	  printf("%.10s", "hello");
-printf("\n");
-
-	  ft_printf("%15.10s", "hello");
-printf("\n");
-	  printf("%15.10s", "hello");
+	 printf("%s%d | %i | %u | %x | %X | %c | %s | %p | %%%s", GRN, 2147483648, -2147483649, 4294967296, 4294967296, 4294967296, '\0', NULL, NC, NC);
 printf("\n");
 
-	  ft_printf("%s%*.*s%s", GRN, -15, -10, "hello", NC);
+ft_printf("%sFinal Test : \n%s", YLW, NC);	 
+ft_printf("%s%%d | %%i | %%u | %%x | %%X | %%c | %%s | %%p | %%%%%s\n\n", YLW, NC);
+	 ft_printf("%d | %i | %u | %x | %X | %c | %s | %p | %%", 2147483647, -2147483648, 4294967290, 4294967290, 4294967290, '\n', "{\n!#!@#$\b\e%%\r\p\a^&*(\t\n}", NC);
 printf("\n");
-	  printf("%*.*s", -15, -10, "hello");
+	 printf("%s%d | %i | %u | %x | %X | %c | %s | %p | %%%s", GRN, 2147483647, -2147483648, 4294967290, 4294967290, 4294967290, '\n', "{\n!#!@#$\b\e%%\r\p\a^&*(\t\n}", NC, NC);
 printf("\n");
-	  ft_printf("%s%*.*s%s", GRN, 15, 10, "hello", NC);
-printf("\n");
-	  printf("%*.*s", 15, 10, "hello");
-printf("\n");
-	  ft_printf("%s%*.*s%s", GRN, -15, 10, "hello", NC);
-printf("\n");
-	  printf("%*.*s", -15, 10, "hello");
-printf("\n");
-	  ft_printf("%s%*.*s%s", YLW, 15, -10, "hello", NC);
-printf("\n");
-	  printf("%*.*s", 15, -10, "hello");
-printf("\n");
-	
-	 printf("hello ca%----4c %1c%10c%-c ??", '\0', '\n', (char)56, 0);
-printf("\n");
-	 ft_printf("hello ca%----4c %1c%10c%-c ??", '\0', '\n', (char)56, 0);
-printf("\n");*/
-	printf(" --- Return : %d\n", printf("%1.d\n", 0));
-	printf(" --- Return : %d\n", ft_printf("%1.d\n", 0));
 
  	 return (0);
 }
