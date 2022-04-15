@@ -36,3 +36,15 @@ void	print_list(t_node *node)
 		node = node->next;
 	}
 }
+
+void	free_stack(t_node *node)
+{
+	t_node	*tmp;
+
+	while (node != NULL)
+	{
+		tmp = node;
+		node = node->next;
+		free(tmp);
+	}
+}

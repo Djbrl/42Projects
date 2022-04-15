@@ -10,7 +10,9 @@
 #                                                                              #
 # **************************************************************************** #
 #---------------------------------VARIABLES------------------------------------#
-
+GREEN_COLOR = \033[0;32m
+YLW_COLOR = \033[0;33m
+END_COLOR = \033[0m
 NAME := push_swap
 
 LIB_FT := lib/libft/libft.a
@@ -20,7 +22,7 @@ CFLAGS := -Wall -Wextra -Werror
 PFLAGS := -Iinclude -Ilib/libft
 
 SRC_PATH := src
-SRC_NAME := main.c stack_functions.c print_functions.c sorting_functions.c \
+SRC_NAME := main.c stack_functions.c utility_functions.c sorting_functions.c \
 			operations/operations_sim.c operations/operations_rot.c \
 			operations/operations_push_swap.c
 
@@ -36,31 +38,40 @@ OBJ := $(addprefix $(BUILD_PATH)/,$(OBJ))
 
 #---------------------------------VARIABLES------------------------------------#
 
-all: $(NAME)
+all: ${NAME}
+	@echo "Ready : ${GREEN_COLOR}`pwd`/${NAME}${END_COLOR}"
 
 $(NAME): $(OBJ) $(LIB_FT)
-	$(CC) $(OBJ) $(LIB_FT) $(CFLAGS) -o $(NAME)
+	@$(CC) $(OBJ) $(LIB_FT) $(CFLAGS) -o $(NAME)
 
 $(BUILD_PATH)/$(OBJ_PATH)/%.o: $(SRC_PATH)/%.c
-	mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) $(PFLAGS) -c $< -o $@
+	@mkdir -p $(dir $@)
+	@$(CC) $(CFLAGS) $(PFLAGS) -c $< -o $@
 
 $(LIB_FT):
-	make -C lib/libft
+	@echo "${YLW_COLOR}Compiling ${NAME}...${END_COLOR}"
+	@make -C lib/libft
 
 libft_clean:
-	make -C lib/libft clean
+	@make -C lib/libft clean
 
 libft_fclean:
-	make -C lib/libft fclean
+	@make -C lib/libft fclean
 
 re: fclean all
 
 clean: libft_clean
-	rm -rf $(NAME)
+	@rm -rf $(NAME)
 
 fclean : libft_fclean
-	rm -rf $(BUILD_PATH)
-	rm -rf $(NAME)
+	@rm -rf $(BUILD_PATH)
+	@rm -rf $(NAME)
 
-.PHONY: all, clean, fclean, re
+#norminette will return an error/sude code for Makefile ! No need to print
+norm :
+	norminette
+
+leaks : 
+	@valgrind ./${NAME} --full-check=yes
+
+.PHONY: all, clean, fclean, re, leaks, norm

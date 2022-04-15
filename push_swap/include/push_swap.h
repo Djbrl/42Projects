@@ -30,6 +30,7 @@ int		peek(t_node *root);
 int		is_empty(t_node *root);
 void	print_list(t_node *node);
 void	print_stack(t_node *top);
+void	free_stack(t_node *node);
 t_node	*newNode(int data);
 
 //OPERATIONS

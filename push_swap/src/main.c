@@ -20,8 +20,9 @@ int	main(int ac, char *av[])
 	int		i;
 	t_node	*head;
 	t_node	*stack_a;
+	t_node	*stack_b;
 
-	head = NULL;
+	stack_b = NULL;
 	i = ac - 1;
 	while (i > 0)
 	{
@@ -34,5 +35,6 @@ int	main(int ac, char *av[])
 	push(&head, 6);
 	merge_sort(&head);
 	print_list(head);
+	free_stack(head);
 	return (0);
 }
