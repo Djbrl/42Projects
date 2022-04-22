@@ -14,8 +14,8 @@
 
 void	r_rot(t_node **stack_a, t_node **stack_b)
 {
-	(void)stack_a;
-	(void)stack_b;
+	rot_a(stack_a);
+	rot_b(stack_b);
 }
 
 void	s_swap(t_node **stack_a, t_node **stack_b)
@@ -26,6 +26,6 @@ void	s_swap(t_node **stack_a, t_node **stack_b)
 
 void	r_rev_rot(t_node **stack_a, t_node **stack_b)
 {
-	(void)stack_a;
-	(void)stack_b;
+	rev_rot_a(stack_a);
+	rev_rot_b(stack_b);
 }

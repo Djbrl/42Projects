@@ -57,3 +57,35 @@ void	free_stack(t_node *node)
 		free(tmp);
 	}
 }
+
+int	list_len(t_node *node)
+{
+	int	i;
+
+	i = 0;
+	if (!node)
+		return (0);
+	while (node != NULL)
+	{
+		node = node->next;
+		i++;
+	}
+	return (i);
+}
+
+t_node	*new_node(int data)
+{
+	t_node	*head;
+
+	if (data < -2147483648 || data > 2147483647)
+	{
+		head = NULL;
+		return (head);
+	}
+	head = (t_node *)malloc(sizeof(t_node));
+	if (head == NULL)
+		return (0);
+	head->data = data;
+	head->next = NULL;
+	return (head);
+}

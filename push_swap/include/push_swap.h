@@ -17,6 +17,7 @@
 # include "libft.h"
 
 # define INT_MIN -2147483648
+# define INT_MAX 2147483647
 
 typedef struct s_node{
 	int				data;
@@ -27,14 +28,15 @@ typedef struct s_node{
 int		pop(t_node **root);
 int		push(t_node **head_ref, int new_data);
 int		peek(t_node *root);
+int		list_len(t_node *node);
 int		is_empty(t_node *root);
+void	push_end(t_node **head, t_node *new);
 void	print_list(t_node *node);
 void	print_stacks(t_node *a, t_node *b);
 void	free_stack(t_node *node);
-t_node	*newNode(int data);
+t_node	*new_node(int data);
 
 //OPERATIONS
-
 void	swap_a(t_node **stack_a);
 void	swap_b(t_node **stack_b);
 void	push_a(t_node **stack_a, t_node **stack_b);

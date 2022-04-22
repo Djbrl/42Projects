@@ -23,6 +23,21 @@ int	push(t_node **head_ref, int new_data)
 	return (new_data);
 }
 
+void	push_end(t_node **head, t_node *new)
+{
+	t_node	*current;
+
+	if (*head == NULL)
+		*head = new;
+	else
+	{
+		current = *head;
+		while (current->next != NULL)
+			current = current->next;
+		current->next = new;
+	}
+}
+
 int	pop(t_node **root)
 {
 	int		popped;

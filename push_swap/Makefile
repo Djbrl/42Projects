@@ -71,7 +71,8 @@ fclean : libft_fclean
 norm :
 	norminette > /dev/null
 
-leaks : 
+leaks :
+	@make -s
 	@valgrind ./${NAME} --full-check=yes
 
 .PHONY: all, clean, fclean, re, leaks, norm
