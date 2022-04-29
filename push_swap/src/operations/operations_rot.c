@@ -26,6 +26,7 @@ void	rot_a(t_node **stack_a)
 	head->next = *stack_a;
 	*stack_a = first->next;
 	first->next = NULL;
+	write(1, "ra\n", 3);
 }
 
 void	rot_b(t_node **stack_b)
@@ -42,6 +43,7 @@ void	rot_b(t_node **stack_b)
 	head->next = *stack_b;
 	*stack_b = first->next;
 	first->next = NULL;
+	write(1, "rb\n", 3);
 }
 
 void	rev_rot_a(t_node **stack_a)
@@ -60,6 +62,7 @@ void	rev_rot_a(t_node **stack_a)
 	last->next = NULL;
 	push(stack_a, head->data);
 	free(head);
+	write(1, "rra\n", 4);
 }
 
 void	rev_rot_b(t_node **stack_b)
@@ -78,4 +81,5 @@ void	rev_rot_b(t_node **stack_b)
 	last->next = NULL;
 	push(stack_b, head->data);
 	free(head);
+	write(1, "rrb\n", 4);
 }

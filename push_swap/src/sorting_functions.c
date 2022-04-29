@@ -12,60 +12,81 @@
 
 #include "push_swap.h"
 
-void	merge_sort(t_node **headRef)
+int	stack_len(t_node *stack)
 {
-	t_node	*head;
-	t_node	*a;
-	t_node	*b;
+	int		i;
 
-	head = *headRef;
-	if ((head == NULL) || (head->next == NULL))
-		return ;
-	front_back_split(head, &a, &b);
-	merge_sort(&a);
-	merge_sort(&b);
-	*headRef = sorted_merge(a, b);
+	i = 0;
+	while (stack)
+	{
+		stack = stack->next;
+		i++;
+	}
+	return (i);
 }
 
-t_node	*sorted_merge(t_node *a, t_node *b)
+int	find_min(t_node *stack)
 {
-	t_node	*result;
+	int	min;
 
-	result = NULL;
-	if (a == NULL)
-		return (b);
-	else if (b == NULL)
-		return (a);
-	if (a->data <= b->data)
+	if (!stack)
+		return (INT_MIN);
+	min = stack->data;
+	while (stack)
 	{
-		result = a;
-		result->next = sorted_merge(a->next, b);
+		if (min > stack->data)
+			min = stack->data;
+		stack = stack->next;
+	}
+	return (min);
+}
+
+void	move_to_top(t_node **head, int to_move, \
+	void ptr_move_up(t_node **stack), \
+	void ptr_move_down(t_node **stack))
+{
+	t_node	*cur;
+	int		i;
+	int		len;
+	int		move_dist;
+	int		steps;
+
+	i = 1;
+	len = stack_len(*head);
+	cur = *head;
+	if (!cur || cur->data == to_move)
+		return ;
+	while (cur->data != to_move && cur->next != NULL)
+	{
+		cur = cur->next;
+		i++;
+	}
+	if (cur->data != to_move)
+		return ;
+	move_dist = ((len - (len - i)) * 100) / len;
+	if (move_dist > 51)
+	{
+		steps = len - i + 1;
+		while (steps--)
+			ptr_move_down(head);
 	}
 	else
 	{
-		result = b;
-		result->next = sorted_merge(a, b->next);
+		steps = i - 1;
+		while (steps--)
+			ptr_move_up(head);
 	}
-	return (result);
 }
 
-void	front_back_split(t_node *source, t_node **frontRef, t_node **backRef)
+void	sort_desc(t_node **stack_a, t_node **stack_b, \
+	void ptr_move_up(t_node **stack), \
+	void ptr_move_down(t_node **stack))
 {
-	t_node	*fast;
-	t_node	*slow;
+	int		min;
+	t_node	*cur;
 
-	slow = source;
-	fast = source->next;
-	while (fast != NULL)
-	{
-		fast = fast->next;
-		if (fast != NULL)
-		{
-			slow = slow->next;
-			fast = fast->next;
-		}
-	}
-	*frontRef = source;
-	*backRef = slow->next;
-	slow->next = NULL;
+	cur = *stack_a;
+	min = find_min(*stack_a);
+	move_to_top(stack_a, min, ptr_move_up, ptr_move_down);
+	push_b(stack_a, stack_b);
 }

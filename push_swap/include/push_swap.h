@@ -50,8 +50,11 @@ void	s_swap(t_node **stack_a, t_node **stack_b);
 void	r_rev_rot(t_node **stack_a, t_node **stack_b);
 
 //ALGORITHMS
-void	merge_sort(t_node **headRef);
-void	front_back_split(t_node *source, t_node **frontRef, t_node **backRef);
-t_node	*sorted_merge(t_node *a, t_node *b);
+void	move_to_top(t_node **head, int to_move, \
+	void ptr_move_up(t_node **stack), \
+	void ptr_move_down(t_node **stack));
+void	sort_desc(t_node **stack_a, t_node **stack_b, \
+	void ptr_move_up(t_node **stack), \
+	void ptr_move_down(t_node **stack));
 
 #endif

@@ -50,12 +50,16 @@ void	free_stack(t_node *node)
 {
 	t_node	*tmp;
 
-	while (node != NULL)
+	if (!node)
+		return ;
+	while (node->next != NULL)
 	{
 		tmp = node;
 		node = node->next;
 		free(tmp);
 	}
+	if (node)
+		free(node);
 }
 
 int	list_len(t_node *node)
