@@ -18,36 +18,36 @@ char	**sort(char **array, int size)
 	int	j;
 	int	k;
 	char	**sorted;
-	char	*temp;
+	// char	*temp;
 
 	j = 0;
 	k = 0;
 	i = 1;
-
-
-	sorted = (char **)malloc(sizeof(char *) * size);
+	//fix size problem
+	printf("siwe %i\n", size);
+	sorted = (char **)malloc(sizeof(char *) * (size + 1));
 	while (array[i])
 	{
 		sorted[j] = ft_strdup(array[i]);
 		i++;
 		j++;
 	}
-	sorted[i] = 0;
+	sorted[j] = 0;
 	
 	j = 0;
-	while (k < size)
+	while (k < size - 1)
 	{
-		while (sorted[j] && sorted[j+1])
-		{
-			temp = ft_strdup(sorted[j]);
-			if(ft_atoi(sorted[j]) > ft_atoi(sorted[j+1])){
-				strcpy(temp, sorted[j]);
-				strcpy(sorted[j], sorted[j+1]);
-				strcpy(sorted[j+1], temp);
-			}
-			j++;
-			free(temp);
-		}
+		// while (sorted[j] && sorted[j+1])
+		// {
+		// 	temp = ft_strdup(sorted[j]);
+		// 	if(ft_atoi(sorted[j]) > ft_atoi(sorted[j+1])){
+		// 		strcpy(temp, sorted[j]);
+		// 		strcpy(sorted[j], sorted[j+1]);
+		// 		strcpy(sorted[j+1], temp);
+		// 	}
+		// 	j++;
+		// 	free(temp);
+		// }
 		k++;
 		j = 0;
 	}
@@ -63,20 +63,23 @@ int		check_dup(char **av, int size)
 	i = 0;
 	j = 0;
 	sorted = sort(av, size);
-	while (sorted[i] && sorted[i+1])
-		if (!strcmp(sorted[i], sorted[i+1]))
-		{
-			while (sorted[j])
-				free(sorted[j++]);
-			free(sorted);
-			return (1);
-		}
-		else
-			i++;
-	j = 0;
-	while (sorted[j])
-		free(sorted[j++]);
-	free(sorted);
+	int k = 0;
+	while (sorted[k])
+		printf("[%s]\n", sorted[k++]);
+	// while (sorted[i] && sorted[i+1])
+	// 	if (!strcmp(sorted[i], sorted[i+1]))
+	// 	{
+	// 		while (sorted[j])
+	// 			free(sorted[j++]);
+	// 		free(sorted);
+	// 		return (1);
+	// 	}
+	// 	else
+	// 		i++;
+	// j = 0;
+	// while (sorted[j])
+	// 	free(sorted[j++]);
+	// free(sorted);
 	return (0);
 }
 
@@ -105,14 +108,14 @@ int input_checker(int ac, char **av)
 			if (ft_atoi(in[j]) < INT_MIN || ft_atoi(in[j]) > INT_MAX)
 				return (0);
 			j++;
-		}
+		}//make one array of all args
 		j = 0;
 		while (in[j])
 			free(in[j++]);
 		free(in);
 		i++;
 	}
-	check_dup(av, j + i);
+	check_dup(av, j + i - 2);
 
 	return (1);
 }
