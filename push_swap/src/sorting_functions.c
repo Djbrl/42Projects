@@ -41,28 +41,14 @@ int	find_min(t_node *stack)
 	return (min);
 }
 
-void	move_to_top(t_node **head, int to_move, \
+void	move_to_target(int i, int move_dist, t_node **head, \
 	void ptr_move_up(t_node **stack), \
 	void ptr_move_down(t_node **stack))
 {
-	t_node	*cur;
-	int		i;
-	int		len;
-	int		move_dist;
-	int		steps;
+	int	steps;
+	int	len;
 
-	i = 1;
 	len = stack_len(*head);
-	cur = *head;
-	if (!cur || cur->data == to_move)
-		return ;
-	while (cur->data != to_move && cur->next != NULL)
-	{
-		cur = cur->next;
-		i++;
-	}
-	if (cur->data != to_move)
-		return ;
 	move_dist = ((len - (len - i)) * 100) / len;
 	if (move_dist > 51)
 	{
@@ -76,6 +62,31 @@ void	move_to_top(t_node **head, int to_move, \
 		while (steps--)
 			ptr_move_up(head);
 	}
+}
+
+void	move_to_top(t_node **head, int to_move, \
+	void ptr_move_up(t_node **stack), \
+	void ptr_move_down(t_node **stack))
+{
+	t_node	*cur;
+	int		i;
+	int		len;
+	int		move_dist;
+
+	i = 1;
+	move_dist = 0;
+	len = 0;
+	cur = *head;
+	if (!cur || cur->data == to_move)
+		return ;
+	while (cur->data != to_move && cur->next != NULL)
+	{
+		cur = cur->next;
+		i++;
+	}
+	if (cur->data != to_move)
+		return ;
+	move_to_target(i, move_dist, head, ptr_move_up, ptr_move_down);
 }
 
 void	sort_desc(t_node **stack_a, t_node **stack_b, \

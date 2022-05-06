@@ -12,112 +12,146 @@
 
 #include "push_swap.h"
 
-char	**sort(char **array, int size)
+void	compare_sort(int size, char **sorted)
 {
-	int	i;
-	int	j;
-	int	k;
-	char	**sorted;
-	// char	*temp;
+	int		k;
+	int		j;
+	char	*temp;
 
 	j = 0;
 	k = 0;
-	i = 1;
-	//fix size problem
-	printf("siwe %i\n", size);
+	while (k < size - 1)
+	{
+		while (sorted[j] && sorted[j + 1])
+		{
+			temp = ft_strdup(sorted[j]);
+			if (ft_atoi(sorted[j]) > ft_atoi(sorted[j + 1]))
+			{
+				strcpy(temp, sorted[j]);
+				strcpy(sorted[j], sorted[j + 1]);
+				strcpy(sorted[j + 1], temp);
+			}
+			j++;
+			free(temp);
+		}
+		k++;
+		j = 0;
+	}
+}
+
+char	**sort(char **array, int size)
+{
+	int		i;
+	int		j;
+	char	**sorted;
+
+	j = 0;
+	i = 0;
 	sorted = (char **)malloc(sizeof(char *) * (size + 1));
-	while (array[i])
+	while (i < size)
 	{
 		sorted[j] = ft_strdup(array[i]);
 		i++;
 		j++;
 	}
 	sorted[j] = 0;
-	
-	j = 0;
-	while (k < size - 1)
-	{
-		// while (sorted[j] && sorted[j+1])
-		// {
-		// 	temp = ft_strdup(sorted[j]);
-		// 	if(ft_atoi(sorted[j]) > ft_atoi(sorted[j+1])){
-		// 		strcpy(temp, sorted[j]);
-		// 		strcpy(sorted[j], sorted[j+1]);
-		// 		strcpy(sorted[j+1], temp);
-		// 	}
-		// 	j++;
-		// 	free(temp);
-		// }
-		k++;
-		j = 0;
-	}
-	return sorted;
+	i = 0;
+	while (i < size)
+		free(array[i++]);
+	free(array);
+	compare_sort(size, sorted);
+	return (sorted);
 }
 
-int		check_dup(char **av, int size)
+int	check_dup(char **args, int size)
 {
-	char **sorted;
+	char	**sorted;
 	int		i;
 	int		j;
 
 	i = 0;
 	j = 0;
-	sorted = sort(av, size);
-	int k = 0;
-	while (sorted[k])
-		printf("[%s]\n", sorted[k++]);
-	// while (sorted[i] && sorted[i+1])
-	// 	if (!strcmp(sorted[i], sorted[i+1]))
-	// 	{
-	// 		while (sorted[j])
-	// 			free(sorted[j++]);
-	// 		free(sorted);
-	// 		return (1);
-	// 	}
-	// 	else
-	// 		i++;
-	// j = 0;
-	// while (sorted[j])
-	// 	free(sorted[j++]);
-	// free(sorted);
+	sorted = sort(args, size);
+	while (sorted[i] && sorted[i + 1])
+	{
+		if (!strcmp(sorted[i], sorted[i + 1]))
+		{
+			while (sorted[j])
+				free(sorted[j++]);
+			free(sorted);
+			return (1);
+		}
+		else
+			i++;
+	}
+	j = 0;
+	free_split(sorted);
 	return (0);
 }
 
-int input_checker(int ac, char **av)
+int	count_args(char *av, int count)
 {
-	char	**in;
+	int		j;
+	char	**split;
+
+	j = 0;
+	split = ft_split(av, ' ');
+	while (split[j] != 0)
+	{
+		count++;
+		j++;
+	}
+	free_split(split);
+	return (count);
+}
+
+int	get_nb_args(int ac, char **av)
+{
+	int		i;
+	int		j;
+	int		count;
+
+	i = 1;
+	j = 0;
+	count = 0;
+	while (i < ac)
+	{
+		if (((int)ft_strlen(av[i])) > 1)
+		{
+			count = count_args(av[i], count);
+		}
+		else
+			count++;
+		i++;
+		j = 0;
+	}
+	return (count);
+}
+
+int	input_checker(int ac, char **av)
+{
 	int		i;
 	int		j;
 	int		k;
+	char	**in;
+	char	**args;
 
-	k = 0;
 	i = 1;
 	j = 0;
+	k = 0;
+	args = (char **)malloc(sizeof(char *) * get_nb_args(ac, av));
 	while (i < ac)
 	{
 		in = ft_split(av[i], ' ');
 		while (in[j])
-		{
-			while (in[j][k]){
-				if (ft_isdigit(in[j][k] == 0 && in[j][k] != '-'))
-					return 0;
-				k++;
-			}
-			if (!ft_atoi(in[j]) && ft_strcmp(in[j], "0") != 0)
-				return (0);
-			if (ft_atoi(in[j]) < INT_MIN || ft_atoi(in[j]) > INT_MAX)
-				return (0);
-			j++;
-		}//make one array of all args
+			args[k++] = ft_strdup(in[j++]);
+		free_split(in);
 		j = 0;
-		while (in[j])
-			free(in[j++]);
-		free(in);
 		i++;
 	}
-	check_dup(av, j + i - 2);
-
-	return (1);
+	i = 0;
+	check_dup(args, get_nb_args(ac, av));
+	return (get_nb_args(ac, av));
 }
 
 int	main(int ac, char *av[])
@@ -148,14 +182,12 @@ int	main(int ac, char *av[])
 		head = stack_a;
 		i--;
 	}
-	print_stacks(stack_a, stack_b);
 	ptr_move_up = &rot_a;
 	ptr_move_down = &rev_rot_a;
 	while (stack_a)
 		sort_desc(&stack_a, &stack_b, ptr_move_up, ptr_move_down);
 	ptr_move_up = &rot_b;
 	ptr_move_down = &rev_rot_b;
-	print_stacks(stack_a, stack_b);
 	while (stack_b)
 		push_a(&stack_a, &stack_b);
 	print_stacks(stack_a, stack_b);

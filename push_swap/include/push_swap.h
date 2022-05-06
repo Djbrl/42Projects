@@ -34,6 +34,7 @@ void	push_end(t_node **head, t_node *new);
 void	print_list(t_node *node);
 void	print_stacks(t_node *a, t_node *b);
 void	free_stack(t_node *node);
+void	free_split(char **array);
 t_node	*new_node(int data);
 
 //OPERATIONS
