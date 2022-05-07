@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-void	compare_sort(int size, char **sorted)
+char	**compare_sort(int size, char **sorted)
 {
 	int		k;
 	int		j;
@@ -37,6 +37,7 @@ void	compare_sort(int size, char **sorted)
 		k++;
 		j = 0;
 	}
+	return (sorted);
 }
 
 char	**sort(char **array, int size)
@@ -59,8 +60,7 @@ char	**sort(char **array, int size)
 	while (i < size)
 		free(array[i++]);
 	free(array);
-	compare_sort(size, sorted);
-	return (sorted);
+	return (compare_sort(size, sorted));
 }
 
 int	check_dup(char **args, int size)
@@ -128,6 +128,28 @@ int	get_nb_args(int ac, char **av)
 	return (count);
 }
 
+int	check_args(char **args, int size)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (i < size)
+	{
+		if ((ft_atoi(args[i]) == 0 && strcmp(args[i], "0")) \
+			|| (ft_atoi(args[i]) > INT_MAX))
+		{
+			while (j < size)
+				free(args[j++]);
+			free(args);
+			return (0);
+		}
+		i++;
+	}
+	return (1);
+}
+
 int	input_checker(int ac, char **av)
 {
 	int		i;
@@ -149,7 +171,8 @@ int	input_checker(int ac, char **av)
 		j = 0;
 		i++;
 	}
-	i = 0;
+	if (!check_args(args, get_nb_args(ac, av)))
+		return (0);
 	check_dup(args, get_nb_args(ac, av));
 	return (get_nb_args(ac, av));
 }
@@ -190,7 +213,7 @@ int	main(int ac, char *av[])
 	ptr_move_down = &rev_rot_b;
 	while (stack_b)
 		push_a(&stack_a, &stack_b);
-	print_stacks(stack_a, stack_b);
+	//print_stacks(stack_a, stack_b);
 	free_stack(stack_a);
 	free_stack(stack_b);
 	return (0);
