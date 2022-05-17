@@ -51,6 +51,17 @@ int	get_nb_args(int ac, char **av)
 	return (count);
 }
 
+char	**free_norme_mdr(char **args, int size)
+{
+	int	i;
+
+	i = 0;
+	while (i < size - 1)
+		free(args[i++]);
+	free(args);
+	return (NULL);
+}
+
 char	**input_checker(int ac, char **av)
 {
 	int		i;
@@ -65,6 +76,9 @@ char	**input_checker(int ac, char **av)
 	args = (char **)malloc(sizeof(char *) * get_nb_args(ac, av));
 	while (i < ac)
 	{
+		if (((ft_strlen(av[i]) > 9) && (ft_strcmp(av[i], "2147483647") > 0)) \
+		|| ((ft_strlen(av[i]) > 10) && (ft_strcmp(av[i], "-2147483648") > 0)))
+			return (free_norme_mdr(args, get_nb_args(ac, av)));
 		in = ft_split(av[i], ' ');
 		while (in[j])
 			args[k++] = ft_strdup(in[j++]);
