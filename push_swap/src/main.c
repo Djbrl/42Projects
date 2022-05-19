@@ -82,7 +82,8 @@ int	main(int ac, char *av[])
 	mid = find_mid_value(sorted, &last_mid);
 	printf("mid value : %i at index : %i\n", mid, last_mid);
 	mid = find_mid_value(sorted, &last_mid);
-	printf("mid value : %i at index : %i\n", mid, last_mid);
+	if (mid != INT_MIN)
+		printf("mid value : %i at index : %i\n", mid, last_mid);
 	free_stack(stack_a);
 	free_stack(stack_b);
 	free_split(sorted);
