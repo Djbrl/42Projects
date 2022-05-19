@@ -40,20 +40,66 @@ void	init_stacks(char **av, int ac, t_node **head, t_node **stack_a)
 	}
 }
 
-void	sort_stacks(t_node **stack_a, t_node **stack_b)
+void	sort_stacks(t_node **stack_a, t_node **stack_b, char **sorted)
 {
+	int		i;
 	void	(*ptr_move_up)(t_node **);
 	void	(*ptr_move_down)(t_node **);
 
-	ptr_move_up = &rot_a;
-	ptr_move_down = &rev_rot_a;
-	while (*stack_a)
-		sort_desc(stack_a, stack_b, ptr_move_up, ptr_move_down);
-	ptr_move_up = &rot_b;
-	ptr_move_down = &rev_rot_b;
-	while (*stack_b)
-		push_a(stack_a, stack_b);
-	print_stacks(*stack_a, *stack_b);
+	i = 0;
+	while (sorted[i])
+		i++;
+	if (i == 3)
+	{
+		printf("3\n");
+		return ;
+	}
+	else if (i == 5)
+	{
+		printf("5\n");
+		return ;
+	}
+	else if (i == 100)
+	{
+		printf("100\n");
+		return ;
+	}
+	else if (i == 500)
+	{
+		printf("500\n");
+		return ;
+	}
+	else
+	{
+		ptr_move_up = &rot_a;
+		ptr_move_down = &rev_rot_a;
+		while (*stack_a)
+			sort_desc(stack_a, stack_b, ptr_move_up, ptr_move_down);
+		ptr_move_up = &rot_b;
+		ptr_move_down = &rev_rot_b;
+		while (*stack_b)
+			push_a(stack_a, stack_b);
+		(void)sorted;
+
+	}
+
+}
+
+int	is_sorted(t_node *stack_a)
+{
+	while (stack_a->next)
+	{
+		if (stack_a->data > (stack_a->next)->data)
+			return (0);
+		stack_a = stack_a->next;
+	}
+	return (1);
+}
+
+int	exit_message(void)
+{
+	write(1, "Error\n", 6);
+	return (0);
 }
 
 int	main(int ac, char *av[])
@@ -63,26 +109,21 @@ int	main(int ac, char *av[])
 	t_node	*stack_a;
 	t_node	*stack_b;
 
-	if (ac == 1)
+	if (ac < 3)
 		return (0);
 	sorted = input_checker(ac, av);
 	if (sorted == NULL)
-	{
-		write(1, "Error\n", 6);
-		return (0);
-	}
+		return (exit_message());
 	head = NULL;
 	stack_a = NULL;
 	stack_b = NULL;
 	init_stacks(av, ac, &head, &stack_a);
-	sort_stacks(&stack_a, &stack_b);
-	int last_mid = 0;
-	int mid = find_mid_value(sorted, &last_mid);
-	printf("mid value : %i at index : %i\n", mid, last_mid);
-	mid = find_mid_value(sorted, &last_mid);
-	printf("mid value : %i at index : %i\n", mid, last_mid);
-	mid = find_mid_value(sorted, &last_mid);
-	printf("mid value : %i at index : %i\n", mid, last_mid);
+	if (is_sorted(stack_a))
+	{
+		free_split(sorted);
+		return (free_stack(stack_a));
+	}
+	sort_stacks(&stack_a, &stack_b, sorted);
 	free_stack(stack_a);
 	free_stack(stack_b);
 	free_split(sorted);

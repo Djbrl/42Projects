@@ -25,7 +25,7 @@ SRC_PATH := src
 SRC_NAME := main.c stack_functions.c utility_functions.c sorting_functions.c \
 			operations/operations_sim.c operations/operations_rot.c \
 			operations/operations_push_swap.c input_checker.c \
-			input_checker_2.c sorting_functions_2.c
+			input_checker_2.c
 
 OBJ_PATH := obj
 OBJ_NAME := $(SRC_NAME:.c=.o)

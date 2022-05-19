@@ -33,8 +33,8 @@ int		is_empty(t_node *root);
 void	push_end(t_node **head, t_node *new);
 void	print_list(t_node *node);
 void	print_stacks(t_node *a, t_node *b);
-void	free_stack(t_node *node);
-void	free_split(char **array);
+int		free_stack(t_node *node);
+int		free_split(char **array);
 t_node	*new_node(int data);
 
 //OPERATIONS
@@ -57,7 +57,6 @@ void	move_to_top(t_node **head, int to_move, \
 void	sort_desc(t_node **stack_a, t_node **stack_b, \
 	void ptr_move_up(t_node **stack), \
 	void ptr_move_down(t_node **stack));
-int		find_mid_value(char **sorted, int *last_mid);
 
 //LA NORME MDR
 int		check_num(char *str);
