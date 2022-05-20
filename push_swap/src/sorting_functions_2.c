@@ -41,11 +41,8 @@ int	find_mid_value(char **sorted, int *last_mid)
 	mid = 0;
 	index = 0;
 	index = (size(sorted) / 2) + *last_mid / 2;
-	if (size(sorted + index) < 3)
-	{
-		printf("too smol\n");
+	if (size(sorted + *last_mid) + 1 < 3)
 		return (INT_MIN);
-	}	
 	mid = ft_atoi(sorted[index]);
 	*last_mid = index + 1;
 	return (mid);

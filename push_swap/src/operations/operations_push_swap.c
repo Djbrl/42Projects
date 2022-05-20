@@ -52,7 +52,7 @@ void	push_a(t_node **stack_a, t_node **stack_b)
 	if (*stack_b)
 	{
 		push(stack_a, pop(stack_b));
-		write(1, "pa\n", 3);
+		//write(1, "pa\n", 3);
 	}
 	else
 		return ;
@@ -63,7 +63,7 @@ void	push_b(t_node **stack_a, t_node **stack_b)
 {
 	if (*stack_a)
 	{
-		write(1, "pb\n", 3);
+		//write(1, "pb\n", 3);
 		push(stack_b, pop(stack_a));
 	}
 	else

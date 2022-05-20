@@ -58,6 +58,8 @@ void	sort_desc(t_node **stack_a, t_node **stack_b, \
 	void ptr_move_up(t_node **stack), \
 	void ptr_move_down(t_node **stack));
 int		find_mid_value(char **sorted, int *last_mid);
+int		size(char **sorted);
+int		stack_len(t_node *stack);
 
 //LA NORME MDR
 int		check_num(char *str);
