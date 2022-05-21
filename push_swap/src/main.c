@@ -66,7 +66,7 @@ int	count (char **sorted, int *stop)
 	return (i);
 }
 
-void mid_point_algorithm(char **sorted, int *last_mid, \
+int mid_point_algorithm(char **sorted, int *last_mid, \
 	t_node **stack_a, t_node **stack_b)
 {
 	void	(*ptr_move_down)(t_node**);
@@ -78,46 +78,47 @@ void mid_point_algorithm(char **sorted, int *last_mid, \
 	tmp = 0;
 	ptr_move_down = &rot_b;
 	if (*last_mid != 0)
-		tmp = *last_mid * -1;
-	printf("tmp before count %i \n", tmp);
+		tmp += (*last_mid * - 1) + 1;
 	mid = find_mid_value(sorted, last_mid);
 	tmp += count(sorted, last_mid);
-	printf("tmp before count %i \n", tmp);
-	printf("mid value found [%i] at index [%i], size of chunk [%i]\n", mid, *last_mid, tmp);
+	if (stack_len(*stack_a) < 3)
+	  	return (INT_MIN);
 	while (i < tmp)
 	{
-		print_stacks(*stack_a, *stack_b);
-		printf("top element : %i\n", (*stack_a)->data);
-		printf("mid element : %i\n", mid);
-		printf("count : %i\n", tmp);
-		// printf("size of chunk : %i last : %i\n", tmp, *last_mid);
 		if ((*stack_a)->data < mid)
 		{
-			printf("top element is inferior to %i, pushing\n", mid);
-			print_stacks(*stack_a, *stack_b);
 			push_b(stack_a, stack_b);
 			i++;
 		}
 		else
 			ptr_move_down(stack_a);
 	}
+	return tmp;
 }
 
 void	sort_s(t_node **stack_a, t_node **stack_b, \
 	char **sorted, int *last_mid)
 {
+	int	i;
+
+	i = 0;
 	// int		i;
 	// int		tmp;
 	// int		mid;
 	// void	(*ptr_move_up)(t_node**);
 	// void	(*ptr_move_down)(t_node**);
 
-	mid_point_algorithm(sorted, last_mid, stack_a, stack_b);
+	while (i != INT_MIN)
+		i = mid_point_algorithm(sorted, last_mid, stack_a, stack_b);
 	print_stacks(*stack_a, *stack_b);
-	mid_point_algorithm(sorted, last_mid, stack_a, stack_b);
-	print_stacks(*stack_a, *stack_b);
-	//mid_point_algorithm(sorted, last_mid, stack_a, stack_b);
-
+	// mid_point_algorithm(sorted, last_mid, stack_a, stack_b);
+	// print_stacks(*stack_a, *stack_b);
+	// mid_point_algorithm(sorted, last_mid, stack_a, stack_b);
+	// print_stacks(*stack_a, *stack_b);
+	// mid_point_algorithm(sorted, last_mid, stack_a, stack_b);
+	// print_stacks(*stack_a, *stack_b);
+	// mid_point_algorithm(sorted, last_mid, stack_a, stack_b);
+	// print_stacks(*stack_a, *stack_b);
 
 	// i = 0;
 	// ptr_move_up = &rot_a;
