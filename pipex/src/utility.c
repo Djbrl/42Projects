@@ -1,39 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sorting_functions_2.c                              :+:      :+:    :+:   */
+/*   utility.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/17 14:35:14 by dsy               #+#    #+#             */
-/*   Updated: 2022/05/19 14:27:54 by dsy              ###   ########.fr       */
+/*   Created: 2022/05/26 11:50:14 by dsy               #+#    #+#             */
+/*   Updated: 2022/05/26 11:50:19 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "pipex.h"
 
-int	size(char **sorted)
+void	free_split(char **array)
 {
 	int	i;
 
 	i = 0;
-	while (sorted[i])
-		i++;
-	return (i);
-}
-
-int	find_mid_value(char **sorted, int *last_mid)
-{
-	int	mid;
-	int	index;
-
-	mid = 0;
-	index = (size(sorted) / 2) + *last_mid / 2;
-	if (size(sorted + *last_mid) + 1 < 3)
-		return (INT_MIN);
-	if (!sorted[index + 1])
-		return (ft_atoi(sorted[index - 1]));
-	mid = ft_atoi(sorted[index]);
-	*last_mid = index + 1;
-	return (mid);
+	if (!array)
+		return ;
+	while (array[i])
+		free(array[i++]);
+	free(array);
 }

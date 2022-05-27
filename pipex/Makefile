@@ -22,7 +22,7 @@ CFLAGS := -Wall -Wextra -Werror
 PFLAGS := -Iinclude -Ilib/libft
 
 SRC_PATH := src
-SRC_NAME := main.c
+SRC_NAME := main.c utility.c pipex.c
 
 OBJ_PATH := obj
 OBJ_NAME := $(SRC_NAME:.c=.o)

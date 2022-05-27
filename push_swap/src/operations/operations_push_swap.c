@@ -12,7 +12,6 @@
 
 #include "push_swap.h"
 
-//swap the top 2 elements of a
 void	swap_a(t_node **stack_a)
 {
 	int	tmp;
@@ -24,12 +23,12 @@ void	swap_a(t_node **stack_a)
 		tmp2 = pop(stack_a);
 		push(stack_a, tmp);
 		push(stack_a, tmp2);
+		write(1, "sa\n", 3);
 	}
 	else
 		return ;
 }
 
-//swap the top 2 elements of b
 void	swap_b(t_node **stack_b)
 {
 	int	tmp;
@@ -41,6 +40,7 @@ void	swap_b(t_node **stack_b)
 		tmp2 = pop(stack_b);
 		push(stack_b, tmp);
 		push(stack_b, tmp2);
+		write(1, "sb\n", 3);
 	}
 	else
 		return ;
@@ -52,7 +52,7 @@ void	push_a(t_node **stack_a, t_node **stack_b)
 	if (*stack_b)
 	{
 		push(stack_a, pop(stack_b));
-		//write(1, "pa\n", 3);
+		write(1, "pa\n", 3);
 	}
 	else
 		return ;
@@ -63,8 +63,8 @@ void	push_b(t_node **stack_a, t_node **stack_b)
 {
 	if (*stack_a)
 	{
-		//write(1, "pb\n", 3);
 		push(stack_b, pop(stack_a));
+		write(1, "pb\n", 3);
 	}
 	else
 		return ;

@@ -16,15 +16,18 @@
 # include <unistd.h>
 # include <signal.h>
 # include <sys/types.h>
+# include <sys/stat.h>
+# include <sys/wait.h>
+# include <fcntl.h>
 # include "libft.h"
 
 # define INT_MIN -2147483648
 # define INT_MAX 2147483647
 
-//STACK FUNCTIONS
+void	pipex(int f1, int f2, char *cmd1, char *cmd2);
+int		exec_parent(int fd, char *cmd, int tube[2]);
+int		exec_child(int fd, char *cmd, int tube[2]);
 
-//OPERATIONS
-
-//ALGORITHMS
-
+//UTILITY
+void	free_split(char **array);
 #endif
