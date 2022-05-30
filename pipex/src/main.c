@@ -65,7 +65,5 @@ int	main(int ac, char **av)
 		return (0);
 	}
 	pipex(f1, f2, av[2], av[3]);
-	(void)ac;
-	(void)av;
 	return (0);
 }
