@@ -25,8 +25,8 @@
 # define INT_MAX 2147483647
 
 void	pipex(int f1, int f2, char *cmd1, char *cmd2);
-int		exec_parent(int fd, char *cmd, int tube[2]);
-int		exec_child(int fd, char *cmd, int tube[2]);
+// int		exec_parent(int fd, char *cmd);
+// int		exec_child(int fd, char *cmd);
 
 //UTILITY
 void	free_split(char **array);

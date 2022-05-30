@@ -12,53 +12,82 @@
 
 #include "pipex.h"
 
-int	exec_child(int fd, char *cmd, int tube[2])
-{
-	char	**args;
+// int	exec_child(int fd, char *cmd)
+// {
+// 	char	**args;
+// 	(void)fd;
+// 	(void)cmd;
 
-	(void)fd;
-	(void)cmd;
-	dup2(fd, 0);
-	dup2(tube[1], 1);
-	args = ft_split(cmd, ' ');
-	close(tube[0]);
-	close(fd);
-	execvp(args[0], args);
-	free_split(args);
-	(void)cmd;
-	return (0);
-}
+// 	close(tube[0]);
+// 	dup2(tube[1], 1);
+// 	args = ft_split(cmd, ' ');
+// 	close(fd);
+// 	execvp(args[0], args);
+// 	free_split(args);
+// 	(void)cmd;
+// 	(void)tube;
+// 	return (0);
+// }
 
-int	exec_parent(int fd, char *cmd, int tube[2])
-{
-	int		status;
-	char	**args;
+// int	exec_parent(int fd, char *cmd)
+// {
+// 	int		status;
+// 	char	**args;
 
-	waitpid(-1, &status, 0);
-	args = ft_split(cmd, ' ');
-	dup2(fd, 1);
-	dup2(tube[0], 0);
-	close(tube[1]);
-	execvp(args[0], args);
-	free_split(args);
-	close(fd);
-	(void)args;
-	(void)cmd;
-	return (0);
-}
+// 	args = ft_split(cmd, ' ');
+// 	close(tube[1]);
+// 	dup2(tube[0], 0);
+// 	waitpid(-1, &status, 0);
+// 	//close(fd);
+// 	execvp(args[0], args);
+// 	free_split(args);
+// 	(void)args;
+// 	(void)cmd;
+// 	(void)fd;
+// 	return (0);
+// }
 
 void	pipex(int f1, int f2, char *cmd1, char *cmd2)
 {
 	pid_t	parent;
-	int		tube[2];
 
+	dup2(f1, 0);
+	dup2(f2, 1);
+	int	tube[2];
 	pipe(tube);
 	parent = fork();
 	if (parent < 0)
 		return (perror("Fork: "));
 	if (!parent)
-		exec_child(f1, cmd1, tube);
+	{
+		char	**args;
+
+		close(tube[0]);
+		dup2(tube[1], 1);
+		args = ft_split(cmd1, ' ');
+		//close(f1);
+		if (f1 == STDIN_FILENO)
+			exit(1);
+		else
+			execvp(args[0], args);
+		free_split(args);
+		(void)tube;
+
+	}
 	else
-		exec_parent(f2, cmd2, tube);
+	{
+		char	**args;
+
+		args = ft_split(cmd2, ' ');
+		close(tube[1]);
+		dup2(tube[0], 0);
+		waitpid(parent, NULL, 0);
+		//close(f2);
+		//execvp(args[0], args);
+		free_split(args);
+		//(void)args;
+		(void)cmd2;
+
+	}
 	return ;
 }
