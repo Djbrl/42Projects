@@ -21,7 +21,7 @@ int	check_cmd(char *cmd)
 
 	arg = ft_split(cmd, ' ');
 	tmp = ft_strdup(arg[0]);
-	path = ft_strjoin("/bin/", tmp);
+	path = ft_strjoin("/usr/bin/", tmp);
 	status = access(path, X_OK & F_OK);
 	if (status < 0)
 	{
@@ -36,6 +36,14 @@ int	check_cmd(char *cmd)
 	return (1);
 }
 
+int	print_error(char *error)
+{
+	ft_putstr("pipex: ");
+	ft_putstr(error);
+	perror(" \b");
+	return (0);
+}
+
 int	check_args(int *f1, int *f2, int ac, char **av)
 {
 	int	cmd1;
@@ -47,23 +55,29 @@ int	check_args(int *f1, int *f2, int ac, char **av)
 	*f2 = open(av[4], O_WRONLY | O_TRUNC);
 	cmd1 = check_cmd(av[2]);
 	cmd2 = check_cmd(av[3]);
-	if (*f1 < 0 || *f2 < 0 || cmd1 < 0 || cmd2 < 0)
-		return (0);
+	if (*f1 < 0)
+		return (print_error(av[1]));
+	if (*f2 < 0)
+		return (print_error(av[4]));
+	if (!cmd1)
+		return (print_error(av[2]));
+	if (!cmd2)
+		return (print_error(av[3]));
 	return (1);
 }
 
-int	main(int ac, char **av)
+int	main(int ac, char **av, char **env)
 {
-	int	f1;
-	int	f2;
+	int		f1;
+	int		f2;
+	int		fd[2];
 
 	f1 = 0;
 	f2 = 0;
 	if (!check_args(&f1, &f2, ac, av))
-	{
-		write(1, "Error.\n", 7);
 		return (0);
-	}
-	pipex(f1, f2, av[2], av[3]);
+	fd[0] = f1;
+	fd[1] = f2;
+	pipex(fd, av[2], av[3], env);
 	return (0);
 }
