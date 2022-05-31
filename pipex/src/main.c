@@ -36,18 +36,18 @@ int	check_cmd(char *cmd)
 	return (1);
 }
 
-int	check_args(int f1, int f2, int ac, char **av)
+int	check_args(int *f1, int *f2, int ac, char **av)
 {
 	int	cmd1;
 	int	cmd2;
 
 	if (ac != 5)
 		return (0);
-	f1 = open(av[1], O_RDONLY);
-	f2 = open(av[4], O_WRONLY | O_TRUNC);
+	*f1 = open(av[1], O_RDONLY);
+	*f2 = open(av[4], O_WRONLY | O_TRUNC);
 	cmd1 = check_cmd(av[2]);
 	cmd2 = check_cmd(av[3]);
-	if (f1 < 0 || f2 < 0 || cmd1 < 0 || cmd2 < 0)
+	if (*f1 < 0 || *f2 < 0 || cmd1 < 0 || cmd2 < 0)
 		return (0);
 	return (1);
 }
@@ -59,7 +59,7 @@ int	main(int ac, char **av)
 
 	f1 = 0;
 	f2 = 0;
-	if (!check_args(f1, f2, ac, av))
+	if (!check_args(&f1, &f2, ac, av))
 	{
 		write(1, "Error.\n", 7);
 		return (0);
