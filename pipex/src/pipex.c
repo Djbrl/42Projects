@@ -39,6 +39,12 @@ void	exec_child(int tube[2], char *cmd, char **env)
 	perror("execve error");
 }
 
+void	exit_norme_mdr(char *pth)
+{
+	free(path);
+	perror("pipex: execve error");
+}
+
 void	pipex(int fd[2], char *cmd1, char *cmd2, char **env)
 {
 	pid_t	pid;
@@ -63,8 +69,7 @@ void	pipex(int fd[2], char *cmd1, char *cmd2, char **env)
 		pth = path(cmd2);
 		status = execve(pth, args, env);
 		if (status == -1)
-			free(pth);
-		perror("execve error");
+			exit_norme_mdr(pth);
 	}
 	return ;
 }

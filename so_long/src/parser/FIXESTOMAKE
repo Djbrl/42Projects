@@ -1,0 +1,4 @@
+NEW
+map parsing only takes into account first line and first column
+
+rethink map as STACK of LINEs
