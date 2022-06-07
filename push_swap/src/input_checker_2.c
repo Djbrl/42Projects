@@ -31,11 +31,11 @@ int	count_args(char *av, int count)
 int	get_nb_args(int ac, char **av)
 {
 	int		i;
-	int		j;
+//	int		j;
 	int		count;
 
 	i = 1;
-	j = 0;
+//	j = 0;
 	count = 0;
 	while (i < ac)
 	{
@@ -46,7 +46,7 @@ int	get_nb_args(int ac, char **av)
 		else
 			count++;
 		i++;
-		j = 0;
+//		j = 0;
 	}
 	return (count);
 }

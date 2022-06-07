@@ -14,14 +14,17 @@
 
 int	stack_len(t_node *stack)
 {
-	int		i;
+	int	i;
 
 	i = 0;
-	while (stack)
+	if (!stack)
+		return (i);
+	while (stack->next != NULL)
 	{
-		stack = stack->next;
 		i++;
+		stack = stack->next;
 	}
+	i++;
 	return (i);
 }
 
@@ -70,12 +73,12 @@ void	move_to_top(t_node **head, int to_move, \
 {
 	t_node	*cur;
 	int		i;
-	int		len;
+//	int		len;
 	int		move_dist;
 
 	i = 1;
 	move_dist = 0;
-	len = 0;
+//	len = 0;
 	cur = *head;
 	if (!cur || cur->data == to_move)
 		return ;
@@ -94,9 +97,9 @@ void	sort_desc(t_node **stack_a, t_node **stack_b, \
 	void ptr_move_down(t_node **stack))
 {
 	int		min;
-	t_node	*cur;
+//	t_node	*cur;
 
-	cur = *stack_a;
+//	cur = *stack_a;
 	min = find_min(*stack_a);
 	move_to_top(stack_a, min, ptr_move_up, ptr_move_down);
 	push_b(stack_a, stack_b);

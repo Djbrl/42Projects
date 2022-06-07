@@ -21,6 +21,7 @@
 
 typedef struct s_node{
 	int				data;
+	int				index;
 	struct s_node	*next;
 }				t_node;
 
@@ -35,6 +36,8 @@ void	print_list(t_node *node);
 void	print_stacks(t_node *a, t_node *b);
 void	free_stack(t_node *node);
 void	free_split(char **array);
+void    set_stack_index(t_node **stack);
+t_node	*find_element(t_node *stack, int data);
 t_node	*new_node(int data);
 
 //OPERATIONS
@@ -57,6 +60,8 @@ void	move_to_top(t_node **head, int to_move, \
 void	sort_desc(t_node **stack_a, t_node **stack_b, \
 	void ptr_move_up(t_node **stack), \
 	void ptr_move_down(t_node **stack));
+	void	radix_sort(t_node **stack_a, t_node **stack_b);
+
 int		find_mid_value(char **sorted, int *last_mid);
 int		range_mid_value(char **sorted, int start, int stop);
 int		size(char **sorted);

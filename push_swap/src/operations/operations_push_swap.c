@@ -49,23 +49,40 @@ void	swap_b(t_node **stack_b)
 //put top of b in a
 void	push_a(t_node **stack_a, t_node **stack_b)
 {
-	if (*stack_b)
+	t_node	*tmp;
+
+	if (stack_len(*stack_b) > 0)
 	{
-		push(stack_a, pop(stack_b));
-		write(1, "pa\n", 3);
+		tmp = *stack_b;
+		*stack_b = (*stack_b)->next;
+		tmp->next = *stack_a;
+		*stack_a = tmp;
 	}
 	else
 		return ;
+	write(1, "pa\n", 3);
 }
 
 //put top of a in b
 void	push_b(t_node **stack_a, t_node **stack_b)
 {
-	if (*stack_a)
+	t_node	*tmp;
+
+	if (stack_len(*stack_a) > 0)
 	{
-		push(stack_b, pop(stack_a));
-		write(1, "pb\n", 3);
+		if (stack_b == NULL)
+		{
+			stack_b = malloc(sizeof(t_node));
+			if (stack_b == NULL)
+				return ;
+			(*stack_b)->next = NULL;
+		}
+		tmp = *stack_a;
+		*stack_a = (*stack_a)->next;
+		tmp->next = *stack_b;
+		*stack_b = tmp;
 	}
 	else
 		return ;
+	write(1, "pb\n", 3);
 }

@@ -93,11 +93,11 @@ t_node	*new_node(int data)
 {
 	t_node	*head;
 
-	if (data < -2147483648 || data > 2147483647)
-	{
-		head = NULL;
-		return (head);
-	}
+	// if (data < -2147483648 || data > 2147483647)
+	// {
+	// 	head = NULL;
+	// 	return (head);
+	// }
 	head = (t_node *)malloc(sizeof(t_node));
 	if (head == NULL)
 		return (0);
