@@ -15,7 +15,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
-void	init_stacks(char **av, int ac, t_node **head, t_node **stack_a, char **sorted)
+void	init_stacks(char **av, int ac, t_node **head, t_node **stack_a)
 {
 	int		i;
 	int		j;
@@ -42,7 +42,6 @@ void	init_stacks(char **av, int ac, t_node **head, t_node **stack_a, char **sort
 		j = count_args(av[i], k) - 1;
 		i--;
 	}
-	(void)sorted;
 }
 
 void	sort_stacks(t_node **stack_a, t_node **stack_b)
@@ -71,105 +70,6 @@ int	count(char **sorted, int stop)
 	return (i);
 }
 
-int	get_index(int data, char **sorted)
-{
-	int	i;
-
-	i = 0;
-	while (sorted[i])
-	{
-		if (ft_atoi(sorted[i]) == data)
-			return i;
-		i++;
-	}
-	return (-1);
-}
-
-void fill_index(t_node *stack_a, char **sorted)
-{
-	t_node *cur = stack_a;
-
-	while (cur)
-	{
-		cur->index = get_index(cur->data,sorted);
-		cur = cur->next;
-	}
-}
-/*
-int	mid_point_algorithm(char **sorted, int *last_mid, \
-	t_node **stack_a, t_node **stack_b)
-{
-	void	(*ptr_move_down)(t_node**);
-	int		tmp;
-	int		mid;
-	int		i;
-
-	i = 0;
-	tmp = 0;
-	ptr_move_down = &rot_b;
-	if (*last_mid != 0)
-		tmp += (*last_mid * -1) + 1;
-	mid = find_mid_value(sorted, last_mid);
-	tmp += count(sorted, mid);
-	if (stack_len(*stack_a) < 3)
-		return (INT_MIN);
-	while (i < tmp)
-	{
-		if ((*stack_a)->data < mid)
-		{
-			push_b(stack_a, stack_b);
-			i++;
-		}
-		else
-			ptr_move_down(stack_a);
-	}
-	return (tmp);
-}
-
-void	sort_s(t_node **stack_a, t_node **stack_b, \
-	char **sorted, int *last_mid)
-{
-	int	i;
-
-	i = 0;
-	while (i != INT_MIN)
-	{
-		i = mid_point_algorithm(sorted, last_mid, stack_a, stack_b);
-		push(stack_b, -111222333);
-	}
-	if ((*stack_a)->data > ((*stack_a)->next)->data)
-		swap_a(stack_a);
-	*last_mid = 0;
-	print_stacks(*stack_a, *stack_b);
-}
-*/
-
-
-
-
-void	sort_algo(t_node **a_stack, t_node **b_stack, int max_bits, int size)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < max_bits)
-	{
-		j = 0;
-		while (j < size)
-		{
-			if ((((*a_stack)->index >> i) & 1) == 1)				
-				rot_a(a_stack);
-			else
-				push_b(a_stack, b_stack);
-			j++;
-		}
-		while (*b_stack)
-			push_a(a_stack, b_stack);
-		i++;
-	}
-}
-
 void	raditz(t_node **a_stack, t_node **b_stack, char **sorted)
 {
 	int	size;
@@ -184,7 +84,6 @@ void	raditz(t_node **a_stack, t_node **b_stack, char **sorted)
 		max_bits++;
 	sort_algo(a_stack, b_stack, max_bits, size);
 }
-
 
 int	main(int ac, char *av[])
 {
@@ -204,7 +103,7 @@ int	main(int ac, char *av[])
 	head = NULL;
 	stack_a = NULL;
 	stack_b = NULL;
-	init_stacks(av, ac, &head, &stack_a, sorted);
+	init_stacks(av, ac, &head, &stack_a);
 	raditz(&stack_a, &stack_b, sorted);
 	print_stacks(stack_a, stack_b);
 	free_stack(stack_a);

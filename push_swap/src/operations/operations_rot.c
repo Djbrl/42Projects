@@ -17,7 +17,7 @@ void	rot_a(t_node **stack_a)
 	t_node	*first;
 	t_node	*last;
 
-	if (stack_len(*stack_a) < 2 )
+	if (stack_len(*stack_a) < 2)
 		return ;
 	last = *stack_a;
 	first = (*stack_a)->next;

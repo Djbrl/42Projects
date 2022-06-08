@@ -36,7 +36,6 @@ void	print_list(t_node *node);
 void	print_stacks(t_node *a, t_node *b);
 void	free_stack(t_node *node);
 void	free_split(char **array);
-void    set_stack_index(t_node **stack);
 t_node	*find_element(t_node *stack, int data);
 t_node	*new_node(int data);
 
@@ -60,12 +59,15 @@ void	move_to_top(t_node **head, int to_move, \
 void	sort_desc(t_node **stack_a, t_node **stack_b, \
 	void ptr_move_up(t_node **stack), \
 	void ptr_move_down(t_node **stack));
-	void	radix_sort(t_node **stack_a, t_node **stack_b);
-
+void	sort_algo(t_node **a_stack, t_node **b_stack, int max_bits, int size);
+void	fill_index(t_node *stack_a, char **sorted);
+void	radix_sort(t_node **stack_a, t_node **stack_b);
+int		get_index(int data, char **sorted);
 int		find_mid_value(char **sorted, int *last_mid);
 int		range_mid_value(char **sorted, int start, int stop);
 int		size(char **sorted);
 int		stack_len(t_node *stack);
+int		find_stack_min(t_node *stack);
 
 //LA NORME MDR
 int		check_num(char *str);

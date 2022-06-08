@@ -28,7 +28,7 @@ int	stack_len(t_node *stack)
 	return (i);
 }
 
-int	find_min(t_node *stack)
+int	find_stack_min(t_node *stack)
 {
 	int	min;
 
@@ -73,12 +73,10 @@ void	move_to_top(t_node **head, int to_move, \
 {
 	t_node	*cur;
 	int		i;
-//	int		len;
 	int		move_dist;
 
 	i = 1;
 	move_dist = 0;
-//	len = 0;
 	cur = *head;
 	if (!cur || cur->data == to_move)
 		return ;
@@ -97,10 +95,8 @@ void	sort_desc(t_node **stack_a, t_node **stack_b, \
 	void ptr_move_down(t_node **stack))
 {
 	int		min;
-//	t_node	*cur;
 
-//	cur = *stack_a;
-	min = find_min(*stack_a);
+	min = find_stack_min(*stack_a);
 	move_to_top(stack_a, min, ptr_move_up, ptr_move_down);
 	push_b(stack_a, stack_b);
 }
