@@ -15,8 +15,11 @@
 char	*path(char *cmd)
 {
 	char	*str;
+	char	**args;
 
-	str = ft_strjoin("/usr/bin/", cmd);
+	args = ft_split(cmd, ' ');
+	str = ft_strjoin("/usr/bin/", args[0]);
+	free_split(args);
 	return (str);
 }
 
@@ -30,9 +33,16 @@ void	exec_child(int tube[2], char *cmd, char **env)
 	close(tube[0]);
 	dup2(tube[1], STDOUT_FILENO);
 	pth = path(cmd);
-	status = execve(path(cmd), args, env);
+	status = execve(pth, args, env);
 	if (status == -1)
 		free(pth);
+	perror("execve error");
+}
+
+void	exit_norme_mdr(char *pth)
+{
+	free(path);
+	perror("pipex: execve error");
 }
 
 void	pipex(int fd[2], char *cmd1, char *cmd2, char **env)
@@ -56,10 +66,10 @@ void	pipex(int fd[2], char *cmd1, char *cmd2, char **env)
 		close(tube[1]);
 		dup2(tube[0], STDIN_FILENO);
 		waitpid(pid, NULL, 0);
-		pth = path(cmd1);
-		status = execve(path(cmd2), args, env);
+		pth = path(cmd2);
+		status = execve(pth, args, env);
 		if (status == -1)
-			free(pth);
+			exit_norme_mdr(pth);
 	}
 	return ;
 }

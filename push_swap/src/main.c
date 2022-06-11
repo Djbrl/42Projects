@@ -11,6 +11,9 @@
 /* ************************************************************************** */
 
 #include "push_swap.h"
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 
 void	init_stacks(char **av, int ac, t_node **head, t_node **stack_a)
 {
@@ -30,6 +33,7 @@ void	init_stacks(char **av, int ac, t_node **head, t_node **stack_a)
 		{
 			*stack_a = (t_node *)malloc(sizeof(t_node));
 			(*stack_a)->data = ft_atoi(tmp[j--]);
+			(*stack_a)->index = -1;
 			(*stack_a)->next = *head;
 			*head = *stack_a;
 		}
@@ -110,4 +114,3 @@ int	main(int ac, char *av[])
 	else
 		raditz(&stack_a, &stack_b, sorted);
 	return (bye(&stack_a, &stack_b, &sorted, 2));
-}

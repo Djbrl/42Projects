@@ -50,9 +50,12 @@ int	check_args(int *f1, int *f2, int ac, char **av)
 	int	cmd2;
 
 	if (ac != 5)
+	{
+		ft_putstr("pipex: wrong number of arguments\n");
 		return (0);
+	}
 	*f1 = open(av[1], O_RDONLY);
-	*f2 = open(av[4], O_WRONLY | O_TRUNC);
+	*f2 = open(av[4], O_WRONLY | O_TRUNC | O_CREAT);
 	cmd1 = check_cmd(av[2]);
 	cmd2 = check_cmd(av[3]);
 	if (*f1 < 0)
