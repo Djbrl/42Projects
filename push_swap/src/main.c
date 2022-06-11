@@ -56,89 +56,58 @@ void	sort_stacks(t_node **stack_a, t_node **stack_b)
 	print_stacks(*stack_a, *stack_b);
 }
 
-int	count(char **sorted, int stop)
+void	raditz(t_node **stack_a, t_node **stack_b, char **sorted)
 {
-	int	i;
+	int	size;
+	int	max_num;
+	int	max_bits;
 
-	i = 0;
-	while (sorted[i] && ft_atoi(sorted[i]) != stop)
-		i++;
-	return (i);
+	size = stack_len(*stack_a);
+	max_num = size - 1;
+	max_bits = 0;
+	fill_index(*stack_a, sorted);
+	while ((max_num >> max_bits) != 0)
+		max_bits++;
+	sort_algo(stack_a, stack_b, max_bits, size);
 }
 
-/*
-int	mid_point_algorithm(char **sorted, int *last_mid, \
-	t_node **stack_a, t_node **stack_b)
+int	bye(t_node **stack_a, t_node **stack_b, char ***sorted, int mode)
 {
-	void	(*ptr_move_down)(t_node**);
-	int		tmp;
-	int		mid;
-	int		i;
-
-	i = 0;
-	tmp = 0;
-	ptr_move_down = &rot_b;
-	if (*last_mid != 0)
-		tmp += (*last_mid * -1) + 1;
-	mid = find_mid_value(sorted, last_mid);
-	tmp += count(sorted, mid);
-	if (stack_len(*stack_a) < 3)
-		return (INT_MIN);
-	while (i < tmp)
+	if (mode != 3)
 	{
-		if ((*stack_a)->data < mid)
-		{
-			push_b(stack_a, stack_b);
-			i++;
-		}
-		else
-			ptr_move_down(stack_a);
+		free_split(*sorted);
+		free_stack(*stack_a);
+		if (mode == 2)
+			free_stack(*stack_b);
+		return (0);
 	}
-	return (tmp);
+	write(1, "Error\n", 6);
+	return (0);
 }
-
-void	sort_s(t_node **stack_a, t_node **stack_b, \
-	char **sorted, int *last_mid)
-{
-	int	i;
-
-	i = 0;
-	while (i != INT_MIN)
-	{
-		i = mid_point_algorithm(sorted, last_mid, stack_a, stack_b);
-		push(stack_b, -111222333);
-	}
-	if ((*stack_a)->data > ((*stack_a)->next)->data)
-		swap_a(stack_a);
-	*last_mid = 0;
-	print_stacks(*stack_a, *stack_b);
-}
-*/
 
 int	main(int ac, char *av[])
 {
-	int		last_mid;
 	char	**sorted;
 	t_node	*head;
 	t_node	*stack_a;
 	t_node	*stack_b;
 
-	last_mid = 0;
 	if (ac == 1)
 		return (0);
 	sorted = input_checker(ac, av);
-	if (sorted == NULL)
-	{
-		write(1, "Error\n", 6);
-		return (0);
-	}
 	head = NULL;
 	stack_a = NULL;
 	stack_b = NULL;
+	if (sorted == NULL)
+		return (bye(&stack_a, &stack_b, &sorted, 3));
 	init_stacks(av, ac, &head, &stack_a);
-	//sort_s(&stack_a, &stack_b, sorted, &last_mid);
-	free_stack(stack_a);
-	free_stack(stack_b);
-	free_split(sorted);
-	return (0);
+	if (is_stack_sorted(stack_a))
+		return (bye(&stack_a, &stack_b, &sorted, 1));
+	if (stack_len(stack_a) == 3)
+		sort_three(&stack_a);
+	else if (stack_len(stack_a) == 5)
+		sort_five(&stack_a, &stack_b);
+	else
+		raditz(&stack_a, &stack_b, sorted);
+	return (bye(&stack_a, &stack_b, &sorted, 2));
 }

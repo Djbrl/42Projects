@@ -37,15 +37,6 @@ void	print_stacks(t_node *a, t_node *b)
 	ft_putstr("-------------------\n");
 }
 
-// void	print_list(t_node *node)
-// {
-// 	while (node != NULL)
-// 	{
-// 		printf("%d ", node->data);
-// 		node = node->next;
-// 	}
-// }
-
 void	free_split(char **array)
 {
 	int	i;

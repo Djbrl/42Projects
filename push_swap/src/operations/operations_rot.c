@@ -14,18 +14,18 @@
 
 void	rot_a(t_node **stack_a)
 {
-	t_node	*head;
 	t_node	*first;
+	t_node	*last;
 
-	if (list_len(*stack_a) < 2)
+	if (stack_len(*stack_a) < 2)
 		return ;
-	first = *stack_a;
-	head = *stack_a;
-	while (head->next != NULL)
-		head = head->next;
-	head->next = *stack_a;
-	*stack_a = first->next;
-	first->next = NULL;
+	last = *stack_a;
+	first = (*stack_a)->next;
+	while ((*stack_a)->next)
+		*stack_a = (*stack_a)->next;
+	(*stack_a)->next = last;
+	last->next = NULL;
+	*stack_a = first;
 	write(1, "ra\n", 3);
 }
 
