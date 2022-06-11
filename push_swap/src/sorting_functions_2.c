@@ -37,3 +37,14 @@ int	find_mid_value(char **sorted, int *last_mid)
 	*last_mid = index + 1;
 	return (mid);
 }
+
+int	is_stack_sorted(t_node *stack)
+{
+	while (stack->next != NULL)
+	{
+		if (stack->data > (stack->next)->data)
+			return (0);
+		stack = stack->next;
+	}
+	return (1);
+}

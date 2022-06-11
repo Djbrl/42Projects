@@ -60,29 +60,33 @@ void	sort_stacks(t_node **stack_a, t_node **stack_b)
 	print_stacks(*stack_a, *stack_b);
 }
 
-int	count(char **sorted, int stop)
-{
-	int	i;
-
-	i = 0;
-	while (sorted[i] && ft_atoi(sorted[i]) != stop)
-		i++;
-	return (i);
-}
-
-void	raditz(t_node **a_stack, t_node **b_stack, char **sorted)
+void	raditz(t_node **stack_a, t_node **stack_b, char **sorted)
 {
 	int	size;
 	int	max_num;
 	int	max_bits;
 
-	size = stack_len(*a_stack);
+	size = stack_len(*stack_a);
 	max_num = size - 1;
 	max_bits = 0;
-	fill_index(*a_stack, sorted);
+	fill_index(*stack_a, sorted);
 	while ((max_num >> max_bits) != 0)
 		max_bits++;
-	sort_algo(a_stack, b_stack, max_bits, size);
+	sort_algo(stack_a, stack_b, max_bits, size);
+}
+
+int	bye(t_node **stack_a, t_node **stack_b, char ***sorted, int mode)
+{
+	if (mode != 3)
+	{
+		free_split(*sorted);
+		free_stack(*stack_a);
+		if (mode == 2)
+			free_stack(*stack_b);
+		return (0);
+	}
+	write(1, "Error\n", 6);
+	return (0);
 }
 
 int	main(int ac, char *av[])
@@ -95,19 +99,18 @@ int	main(int ac, char *av[])
 	if (ac == 1)
 		return (0);
 	sorted = input_checker(ac, av);
-	if (sorted == NULL)
-	{
-		write(1, "Error\n", 6);
-		return (0);
-	}
 	head = NULL;
 	stack_a = NULL;
 	stack_b = NULL;
+	if (sorted == NULL)
+		return (bye(&stack_a, &stack_b, &sorted, 3));
 	init_stacks(av, ac, &head, &stack_a);
-	raditz(&stack_a, &stack_b, sorted);
-	print_stacks(stack_a, stack_b);
-	free_stack(stack_a);
-	free_stack(stack_b);
-	free_split(sorted);
-	return (0);
-}
+	if (is_stack_sorted(stack_a))
+		return (bye(&stack_a, &stack_b, &sorted, 1));
+	if (stack_len(stack_a) == 3)
+		sort_three(&stack_a);
+	else if (stack_len(stack_a) == 5)
+		sort_five(&stack_a, &stack_b);
+	else
+		raditz(&stack_a, &stack_b, sorted);
+	return (bye(&stack_a, &stack_b, &sorted, 2));
