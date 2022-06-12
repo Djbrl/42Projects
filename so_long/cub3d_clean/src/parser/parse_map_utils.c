@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "so_long.h"
 
 void	report_error(t_game *data)
 {

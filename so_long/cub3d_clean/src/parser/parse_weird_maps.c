@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "so_long.h"
 
 int	find_longest_row(t_game *data)
 {

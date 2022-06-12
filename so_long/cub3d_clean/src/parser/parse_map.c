@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "so_long.h"
 
 int	fill_map(t_game *data, char **loaded_file)
 {

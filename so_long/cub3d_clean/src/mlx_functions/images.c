@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "so_long.h"
 
 int	drawVerLine(double x, int start, int end, int color, t_game *d)
 {

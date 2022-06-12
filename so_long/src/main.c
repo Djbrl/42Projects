@@ -105,23 +105,56 @@ int	key_stroke(int key, void *params)
 	return (0);
 }
 
+int check_map_extension(char *path)
+{
+	int i;
+
+	i = 0;
+	while (path[i] != '.')
+		i++;
+	if (path[i + 1] == 'b' && path[i + 2] == 'e'
+		&& path[i + 3] == 'r' && path[i + 4] == 0)
+		return (1);
+	return (0);
+}
+
+int	exit_error(char *err)
+{
+	ft_putstr(RED_COLOR);
+	ft_putstr(err);
+	ft_putstr(END_COLOR);
+	return (0);
+}
+
+void	init_game_struct(t_game *data)
+{
+	data->mlx_ptr = NULL;
+	data->win_ptr = NULL;
+	data->l.mlx_img = NULL;
+	data->l.img_addr = NULL;
+}
+
+void	free_mlx_struct(t_game *data)
+{
+	if (data->mlx_ptr != NULL)
+		free(data->mlx_ptr);
+	if (data->mlx_ptr != NULL)
+		free(data->win_ptr);
+	if (data->mlx_ptr != NULL)
+		free(data->l.mlx_img);
+	if (data->mlx_ptr != NULL)
+		free(data->l.img_addr);
+}
 
 int main(int ac, char **av)
 {
 	t_game data;
-	// t_game data;
 	// int		ret;
 
-	// if (ac != 2)
-	// {
-	// 	write(1, "Error\n[Input]Please only input a valid map path.\n", 49);
-	// 	return (0);
-	// }
-	// if (!(check_map_extension(av[1])))
-	// {
-	// 	write(1, "Error\n[Input]Bad map extension.\n", 32);
-	// 	return (0);
-	// }
+	if (ac != 2)
+		return (exit_error(ARG_ERR));
+	if (!(check_map_extension(av[1])))
+		return (exit_error(FILE_ERR));
 	// ret = parse_map_file(av[1], &data);
 	// if (ret)
 	// 	if (!(init_game(&data)))
@@ -132,17 +165,16 @@ int main(int ac, char **av)
 	// write(1, "o", 1);
 	//init_game(&data);
 	if (!(data.mlx_ptr = mlx_init()))
-		return (0);
+		return (exit_error(MLX_INIT_ERR));
 	if (!(data.win_ptr = mlx_new_window(data.mlx_ptr, 1080, 640, "The Mighty Quest For The Epic Loot")))
-		return (0);
-	mlx_key_hook(data.win_ptr, key_stroke, &data);
-	mlx_hook(data.win_ptr, 17, 0, cross_window, &data);
-	//mlx_loop_hook(data->mlx_ptr, raycasting, data);
-	mlx_loop(data.mlx_ptr);
-
+		return (exit_error(MLX_WIN_ERR));
+	// mlx_key_hook(data.win_ptr, key_stroke, &data);
+	// mlx_hook(data.win_ptr, 17, 0, cross_window, &data);
+	// //mlx_loop_hook(data->mlx_ptr, raycasting, data);
+	// mlx_loop(data.mlx_ptr);
+	// //if (ret != 0)
+	//free_map_struct(&map);
 	(void)ac;
 	(void)av;
-	//if (ret != 0)
-	//free_map_struct(&map);
 	return (0);
 }

@@ -54,11 +54,9 @@ $(LIB_FT):
 
 libft_clean:
 	@make -C lib/libft clean
-	@make -C lib/mlx clean
 
 libft_fclean:
 	@make -C lib/libft fclean
-	@make -C lib/mlx fclean
 
 re: fclean all
 

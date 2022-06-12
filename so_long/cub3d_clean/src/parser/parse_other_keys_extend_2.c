@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "so_long.h"
 
 int check_map_extension(char *path)
 {
@@ -19,8 +19,8 @@ int check_map_extension(char *path)
 	i = 0;
 	while (path[i] != '.')
 		i++;
-	if (path[i + 1] == 'c' && path[i + 2] == 'u'
-		&& path[i + 3] == 'b' && path[i + 4] == 0)
+	if (path[i + 1] == 'b' && path[i + 2] == 'e'
+		&& path[i + 3] == 'r' && path[i + 4] == 0)
 		return (1);
 	return (0);
 }

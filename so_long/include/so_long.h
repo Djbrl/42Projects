@@ -14,6 +14,15 @@
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
+# define GREEN_COLOR "\033[0;32m"
+# define RED_COLOR "\033[0;31m"
+# define END_COLOR "\033[0m"
+
+# define ARG_ERR "Error\nPlease input a map file.\n"
+# define FILE_ERR "Error\nBad map extension.\n"
+# define MLX_INIT_ERR "Error\nFailed to start MLX.\n"
+# define MLX_WIN_ERR "Error\nFailed to start MLX window.\n"
+
 # define KEY_ESC 65307
 # define KEY_W 119
 # define KEY_A 97
