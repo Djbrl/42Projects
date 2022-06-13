@@ -92,13 +92,6 @@ int	key_stroke(int key, void *params)
 		printf("Pressed A.\n");
 	if (key == KEY_D)
 		printf("Pressed D.\n");
-	// if (key == KEY_M)
-	// {
-	// 		drawVerLine(i, 100, 300, 0xFFFFFF, data);
-//		write(1, "ok\n", 3);
-//		raycasting(data);
-//			drawVerline(key, data);
-//	}
 	if (key == KEY_ESC)
 		esc_window(key, data);
 	printf("key : %i\n", key);
@@ -168,10 +161,16 @@ int main(int ac, char **av)
 		return (exit_error(MLX_INIT_ERR));
 	if (!(data.win_ptr = mlx_new_window(data.mlx_ptr, 1080, 640, "The Mighty Quest For The Epic Loot")))
 		return (exit_error(MLX_WIN_ERR));
-	// mlx_key_hook(data.win_ptr, key_stroke, &data);
-	// mlx_hook(data.win_ptr, 17, 0, cross_window, &data);
+	 mlx_key_hook(data.win_ptr, key_stroke, &data);
+	 mlx_hook(data.win_ptr, 17, 0, cross_window, &data);
 	// //mlx_loop_hook(data->mlx_ptr, raycasting, data);
-	// mlx_loop(data.mlx_ptr);
+	int i = 0;
+	int j = 0;
+	while(i++ < 10)
+		mlx_pixel_put(data.mlx_ptr, data.win_ptr, i, 0, 0xFFFFFF);
+	while(j++ < 10)
+		mlx_pixel_put(data.mlx_ptr, data.win_ptr, 0, j, 0xFFFFFF);
+	mlx_loop(data.mlx_ptr);
 	// //if (ret != 0)
 	//free_map_struct(&map);
 	(void)ac;
