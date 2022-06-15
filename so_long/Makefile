@@ -19,7 +19,8 @@ LIB_FT := lib/libft/libft.a
 MLX := lib/mlx/libmlx_Linux.a
 
 CC := cc
-CFLAGS := -Wall -Wextra -Werror -lX11 -lXext
+CFLAGS := -Wall -Wextra -Werror
+LFLAGS = -lX11 -lXext
 PFLAGS := -Iinclude -Ilib/libft -Ilib/mlx
 
 SRC_PATH := src
@@ -41,7 +42,7 @@ all: ${NAME}
 	@echo "Ready : ${GREEN_COLOR}`pwd`/${NAME}${END_COLOR}"
 
 $(NAME): $(OBJ) $(LIB_FT) $(MLX)
-	@$(CC) $(OBJ) $(LIB_FT) $(MLX) $(CFLAGS) -o $(NAME)
+	@$(CC) $(OBJ) $(LIB_FT) $(LFLAGS) $(MLX) $(CFLAGS) -o $(NAME)
 
 $(BUILD_PATH)/$(OBJ_PATH)/%.o: $(SRC_PATH)/%.c
 	@mkdir -p $(dir $@)
