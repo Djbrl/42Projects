@@ -20,9 +20,7 @@ int	main(int ac, char **av)
 		return (exit_error(ARG_ERR));
 	if (!(check_map_extension(av[1])))
 		return (exit_error(FILE_EXT));
-	int x = parse_map(av[1]);
-	printf("%i\n", x);
-	if (!x)
+	if (!parse_map(av[1]))
 		return (exit_error(FILE_ERR));
 	//ROADMAP
 	// - parse map
@@ -44,14 +42,13 @@ int	main(int ac, char **av)
 		return (exit_error(MLX_WIN_ERR));
 	mlx_key_hook(data.win_ptr, key_stroke, &data);
 	mlx_hook(data.win_ptr, 17, 0, cross_window, &data);
-	// //mlx_loop_hook(data->mlx_ptr, raycasting, data);
-	int i = 0;
-	int j = 0;
-	while(i++ < 10)
-		mlx_pixel_put(data.mlx_ptr, data.win_ptr, i, 0, 0xFFFFFF);
-	while(j++ < 10)
-		mlx_pixel_put(data.mlx_ptr, data.win_ptr, 0, j, 0xFFFFFF);
-	mlx_loop(data.mlx_ptr);
+	// int i = 0;
+	// int j = 0;
+	// while(i++ < 10)
+	// 	mlx_pixel_put(data.mlx_ptr, data.win_ptr, i, 0, 0xFFFFFF);
+	// while(j++ < 10)
+	// 	mlx_pixel_put(data.mlx_ptr, data.win_ptr, 0, j, 0xFFFFFF);
+	// mlx_loop(data.mlx_ptr);
 	// //if (ret != 0)
 	//free_map_struct(&map);
 	(void)ac;

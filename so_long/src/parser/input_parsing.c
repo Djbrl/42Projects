@@ -30,7 +30,7 @@ int	parse_map(char *map)
 	int file;
 
 	file = open(map, O_RDONLY);
-	if (file == -1)
+	if (file < 0)
 		return (0);
 	return (file);
 }
