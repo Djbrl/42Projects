@@ -23,8 +23,27 @@ CFLAGS := -Wall -Wextra -Werror
 LFLAGS = -lX11 -lXext
 PFLAGS := -Iinclude -Ilib/libft -Ilib/mlx
 
+SRC_MLX_FUNC := control_functions.c
+	
+SRC_MLX_FUNC := $(addprefix mlx_functions/,$(SRC_MLX_FUNC))
+
+SRC_PARSER := input_parsing.c \
+	map_parsing.c
+SRC_PARSER := $(addprefix parser/,$(SRC_PARSER))
+
+SRC_RAYCASTING :=
+SRC_RAYCASTING := $(addprefix raycasting/,$(SRC_RAYCASTING))
+
+SRC_UTILS := utils.c
+SRC_UTILS := $(addprefix utils/, $(SRC_UTILS))
+
+
 SRC_PATH := src
-SRC_NAME := main.c
+SRC_NAME := main.c \
+			$(SRC_MLX_FUNC)\
+			$(SRC_PARSER)\
+			$(SRC_UTILS)\
+			$(SRC_RAYCASTING)
 
 OBJ_PATH := obj
 OBJ_NAME := $(SRC_NAME:.c=.o)

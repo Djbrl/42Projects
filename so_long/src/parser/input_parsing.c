@@ -1,26 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_other_keys_extend_2.c                        :+:      :+:    :+:   */
+/*   input_parsing.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/03/01 17:52:49 by dsy               #+#    #+#             */
-/*   Updated: 2020/05/11 18:41:20 by fratajcz         ###   ########.fr       */
+/*   Created: 2022/06/15 17:30:02 by dsy               #+#    #+#             */
+/*   Updated: 2022/06/15 17:30:17 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "so_long.h"
 
-int check_map_extension(char *path)
+int	check_map_extension(char *path)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (path[i] != '.')
 		i++;
-	if (path[i + 1] == 'c' && path[i + 2] == 'u'
-		&& path[i + 3] == 'b' && path[i + 4] == 0)
+	if (path[i + 1] == 'b' && path[i + 2] == 'e'
+		&& path[i + 3] == 'r' && path[i + 4] == 0)
 		return (1);
 	return (0);
+}
+
+int	parse_map(char *map)
+{
+	int file;
+
+	file = open(map, O_RDONLY);
+	if (file == -1)
+		return (0);
+	return (file);
 }

@@ -12,142 +12,23 @@
 
 #include "so_long.h"
 
-// int	init_data(t_game *data)
-// {
-// 	data->pos_x = 0;
-// 	data->pos_y = 0;
-// 	data->dirX = 0;
-// 	data->dirY = 0;
-// 	data->planeX = 0;
-// 	data->planeY = 0;
-// 	//data->map = 0;
-// 	data->so.mlx_img = 0;
-// 	data->no.mlx_img = 0;
-// 	data->ea.mlx_img = 0;
-// 	data->we.mlx_img = 0;
-// 	data->floor.set = 0;
-// 	data->ceiling.set = 0;
-// 	//data->sprite.ptr = 0;
-// 	//data->valid = 1;
-// 	//data->save = 0;
-// 	//data->weapon.ptr = 0;
-// 	//data->speed = 1;
-// 	//data->life = 1;
-// 	return (1);
-// }
-
-// int	init_game(t_game *data)
-// {
-// 	init_game_struct(data);
-// 	init_data(data);
-// 	data->width = ft_atoi(data->r_key[1]);
-// 	data->height = ft_atoi(data->r_key[2]);
-// 	data->floor.R = ft_atoi(data->f_key[0]);
-// 	data->floor.G = ft_atoi(data->f_key[1]);
-// 	data->floor.B = ft_atoi(data->f_key[2]);
-// 	data->ceiling.R = ft_atoi(data->r_key[0]);
-// 	data->ceiling.G = ft_atoi(data->r_key[1]);
-// 	data->ceiling.B = ft_atoi(data->r_key[2]);
-// 	if (!(get_player_data(data)))
-// 		return (0);
-// 	if (!(data->mlx_ptr = mlx_init()))
-// 		return (0);
-// 	if (!(data->win_ptr = mlx_new_window(data->mlx_ptr, data->width, data->height, "Cub3D")))
-// 		return (0);
-// 	mlx_hook(data->win_ptr, 2, 0, key_stroke, data);
-// 	mlx_hook(data->win_ptr, 17, 0, cross_window, data);
-// 	//mlx_loop_hook(data->mlx_ptr, raycasting, data);
-// 	mlx_loop(data->mlx_ptr);
-// 	return (0);
-// }
-
-
-int	esc_window(int key, void *params)
+int	main(int ac, char **av)
 {
-	(void)key;
-	t_game *data = (t_game *)params;
-	if(data->mlx_ptr != NULL && data->win_ptr != NULL)
-		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
-	printf("Exit (esc).\n");
-	exit(EXIT_SUCCESS);
-	return (0);
-}
-
-int	cross_window(int key, void *params)
-{
-	(void)key;
-	(void)params;
-	printf("Exit (cross).\n");
-	exit(EXIT_SUCCESS);
-}
-
-int	key_stroke(int key, void *params)
-{
-	t_game *data = (t_game *)params;
-	if (key == KEY_W)
-		printf("Pressed W.\n");
-	if (key == KEY_S)
-		printf("Pressed S.\n");
-	if (key == KEY_A)
-		printf("Pressed A.\n");
-	if (key == KEY_D)
-		printf("Pressed D.\n");
-	if (key == KEY_ESC)
-		esc_window(key, data);
-	printf("key : %i\n", key);
-	return (0);
-}
-
-int check_map_extension(char *path)
-{
-	int i;
-
-	i = 0;
-	while (path[i] != '.')
-		i++;
-	if (path[i + 1] == 'b' && path[i + 2] == 'e'
-		&& path[i + 3] == 'r' && path[i + 4] == 0)
-		return (1);
-	return (0);
-}
-
-int	exit_error(char *err)
-{
-	ft_putstr(RED_COLOR);
-	ft_putstr(err);
-	ft_putstr(END_COLOR);
-	return (0);
-}
-
-void	init_game_struct(t_game *data)
-{
-	data->mlx_ptr = NULL;
-	data->win_ptr = NULL;
-	data->l.mlx_img = NULL;
-	data->l.img_addr = NULL;
-}
-
-void	free_mlx_struct(t_game *data)
-{
-	if (data->mlx_ptr != NULL)
-		free(data->mlx_ptr);
-	if (data->mlx_ptr != NULL)
-		free(data->win_ptr);
-	if (data->mlx_ptr != NULL)
-		free(data->l.mlx_img);
-	if (data->mlx_ptr != NULL)
-		free(data->l.img_addr);
-}
-
-int main(int ac, char **av)
-{
-	t_game data;
+	t_game	data;
 	// int		ret;
-
 	if (ac != 2)
 		return (exit_error(ARG_ERR));
 	if (!(check_map_extension(av[1])))
+		return (exit_error(FILE_EXT));
+	int x = parse_map(av[1]);
+	printf("%i\n", x);
+	if (!x)
 		return (exit_error(FILE_ERR));
+	//ROADMAP
+	// - parse map
+	// - init structure
+	// - start game window
+
 	// ret = parse_map_file(av[1], &data);
 	// if (ret)
 	// 	if (!(init_game(&data)))
@@ -161,8 +42,8 @@ int main(int ac, char **av)
 		return (exit_error(MLX_INIT_ERR));
 	if (!(data.win_ptr = mlx_new_window(data.mlx_ptr, 1080, 640, "The Mighty Quest For The Epic Loot")))
 		return (exit_error(MLX_WIN_ERR));
-	 mlx_key_hook(data.win_ptr, key_stroke, &data);
-	 mlx_hook(data.win_ptr, 17, 0, cross_window, &data);
+	mlx_key_hook(data.win_ptr, key_stroke, &data);
+	mlx_hook(data.win_ptr, 17, 0, cross_window, &data);
 	// //mlx_loop_hook(data->mlx_ptr, raycasting, data);
 	int i = 0;
 	int j = 0;

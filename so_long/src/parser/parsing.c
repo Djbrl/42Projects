@@ -1,32 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_array.c                                       :+:      :+:    :+:   */
+/*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/16 05:20:02 by dsy               #+#    #+#             */
-/*   Updated: 2020/05/11 18:41:30 by fratajcz         ###   ########.fr       */
+/*   Created: 2022/06/15 17:36:58 by dsy               #+#    #+#             */
+/*   Updated: 2022/06/15 17:37:47 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "so_long.h"
 
-void	free_array(char **array)
-{
-	int i;
 
-	i = 0;
-	if (array != NULL)
-	{
-		while (array[i] != 0 && array[i] != NULL)
-		{
-			free(array[i]);
-			i++;
-		}
-		free(array[i]);
-		free(array);
-	}
-	else
-		return ;
-}

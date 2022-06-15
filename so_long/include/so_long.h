@@ -15,11 +15,13 @@
 # define SO_LONG_H
 
 # define GREEN_COLOR "\033[0;32m"
+# define YLW_COLOR "\033[0;33m"
 # define RED_COLOR "\033[0;31m"
 # define END_COLOR "\033[0m"
 
 # define ARG_ERR "Error\nPlease input a map file.\n"
-# define FILE_ERR "Error\nBad map extension.\n"
+# define FILE_EXT "Error\nBad map extension.\n"
+# define FILE_ERR "Error\nCouldn't open map file.\n"
 # define MLX_INIT_ERR "Error\nFailed to start MLX.\n"
 # define MLX_WIN_ERR "Error\nFailed to start MLX window.\n"
 
@@ -172,15 +174,23 @@ typedef struct	s_game
 	double		oldDirX;
 	double		oldPlaneX;
 }				t_game;
-/*
-** PARSING FUNCTIONS
-*/
 
 /*
-** MLX FUNCTIONS
+MLX FUNCTIONS
 */
+int		esc_window(int key, void *params);
+int		cross_window(int key, void *params);
+int		key_stroke(int key, void *params);
 
 /*
-** RAYCASTING
+PARSING
 */
+int		check_map_extension(char *path);
+int		parse_map(char *map);
+/*
+UTILS
+*/
+int		exit_error(char *err);
+void	init_game_struct(t_game *data);
+void	free_mlx_struct(t_game *data);
 #endif
