@@ -12,11 +12,23 @@
 
 #include "so_long.h"
 
-int	exit_error(char *err)
+int	exit_error(char *err, t_game *data)
 {
 	ft_putstr(RED_COLOR);
 	ft_putstr(err);
 	ft_putstr(END_COLOR);
+	free_mlx_struct(data);
+	exit(EXIT_FAILURE);
+	return (0);
+}
+
+int	exit_game(char *msg, t_game *data)
+{
+	ft_putstr(YLW_COLOR);
+	ft_putstr(msg);
+	ft_putstr(END_COLOR);
+	free_mlx_struct(data);
+	exit(EXIT_SUCCESS);
 	return (0);
 }
 
@@ -30,12 +42,7 @@ void	init_game_struct(t_game *data)
 
 void	free_mlx_struct(t_game *data)
 {
+	(void)data;
 	if (data->mlx_ptr != NULL)
 		free(data->mlx_ptr);
-	if (data->mlx_ptr != NULL)
-		free(data->win_ptr);
-	if (data->mlx_ptr != NULL)
-		free(data->l.mlx_img);
-	if (data->mlx_ptr != NULL)
-		free(data->l.img_addr);
 }

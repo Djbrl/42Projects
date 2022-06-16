@@ -20,21 +20,16 @@ int	esc_window(int key, void *params)
 	data = (t_game *)params;
 	if (data->mlx_ptr != NULL && data->win_ptr != NULL)
 		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
-	ft_putstr(YLW_COLOR);
-	printf("Exit (esc).\n");
-	ft_putstr(END_COLOR);
-	exit(EXIT_SUCCESS);
-	return (0);
+	return (exit_game("Exit (esc).\n", data));
 }
 
 int	cross_window(int key, void *params)
 {
 	(void)key;
-	(void)params;
-	ft_putstr(YLW_COLOR);
-	ft_putstr("Exit (cross).\n");
-	ft_putstr(END_COLOR);
-	exit(EXIT_SUCCESS);
+	t_game	*data;
+
+	data = (t_game *)params;
+	return (exit_game("Exit (cross).\n", data));
 }
 
 int	key_stroke(int key, void *params)

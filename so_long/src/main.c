@@ -16,12 +16,13 @@ int	main(int ac, char **av)
 {
 	t_game	data;
 	// int		ret;
+	init_game_struct(&data);
 	if (ac != 2)
-		return (exit_error(ARG_ERR));
+		return (exit_error(ARG_ERR, &data));
 	if (!(check_map_extension(av[1])))
-		return (exit_error(FILE_EXT));
-	if (!parse_map(av[1]))
-		return (exit_error(FILE_ERR));
+		return (exit_error(FILE_EXT, &data));
+	if (!parse_map(av[1], &data))
+		return (exit_error(FILE_ERR, &data));
 	//ROADMAP
 	// - parse map
 	// - init structure
@@ -37,11 +38,12 @@ int	main(int ac, char **av)
 	// write(1, "o", 1);
 	//init_game(&data);
 	if (!(data.mlx_ptr = mlx_init()))
-		return (exit_error(MLX_INIT_ERR));
+		return (exit_error(MLX_INIT_ERR, &data));
 	if (!(data.win_ptr = mlx_new_window(data.mlx_ptr, 1080, 640, "The Mighty Quest For The Epic Loot")))
-		return (exit_error(MLX_WIN_ERR));
+		return (exit_error(MLX_WIN_ERR, &data));
 	mlx_key_hook(data.win_ptr, key_stroke, &data);
 	mlx_hook(data.win_ptr, 17, 0, cross_window, &data);
+	mlx_loop(data.mlx_ptr);
 	// int i = 0;
 	// int j = 0;
 	// while(i++ < 10)

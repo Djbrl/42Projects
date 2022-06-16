@@ -24,6 +24,7 @@
 # define FILE_ERR "Error\nCouldn't open map file.\n"
 # define MLX_INIT_ERR "Error\nFailed to start MLX.\n"
 # define MLX_WIN_ERR "Error\nFailed to start MLX window.\n"
+# define MAP_INVALID "Error\nPlease input a valid map file.\n"
 
 # define KEY_ESC 65307
 # define KEY_W 119
@@ -186,11 +187,12 @@ int		key_stroke(int key, void *params);
 PARSING
 */
 int		check_map_extension(char *path);
-int		parse_map(char *map);
+int		parse_map(char *map, t_game *data);
 /*
 UTILS
 */
-int		exit_error(char *err);
+int		exit_game(char *msg, t_game *data);
+int		exit_error(char *err, t_game *data);
 void	init_game_struct(t_game *data);
 void	free_mlx_struct(t_game *data);
 #endif

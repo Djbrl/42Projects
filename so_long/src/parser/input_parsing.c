@@ -25,12 +25,37 @@ int	check_map_extension(char *path)
 	return (0);
 }
 
-int	parse_map(char *map)
+int	load_map_data(int file, t_game *data)
+{
+	int		file_size;
+	char	*map;
+	char	tmp[1];
+	int ret;
+
+	file_size = 0;
+	while (read(file, tmp, 1) > 0)
+		file_size++;
+	map = (char *)malloc(sizeof(char) * (file_size + 1));
+	if ((ret = read(file, map, file_size)) == -1)
+	{
+		printf("couldnt load map");
+		free(map);
+		return (0);
+	}
+	printf("map loaded(ret %i) : \n%s\n", ret, map);
+	close(file);
+	(void)data;
+	return (1);
+}
+
+int	parse_map(char *map, t_game *data)
 {
 	int file;
 
 	file = open(map, O_RDONLY);
 	if (file < 0)
 		return (0);
+	if (!load_map_data(file, data))
+		return (exit_error(MAP_INVALID, data));
 	return (file);
 }
