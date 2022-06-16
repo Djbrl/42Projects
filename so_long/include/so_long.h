@@ -195,4 +195,5 @@ int		exit_game(char *msg, t_game *data);
 int		exit_error(char *err, t_game *data);
 void	init_game_struct(t_game *data);
 void	free_mlx_struct(t_game *data);
+void	free_split(char **array);
 #endif
