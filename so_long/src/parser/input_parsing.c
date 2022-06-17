@@ -50,13 +50,15 @@ int	check_map(char *map, t_game *data)
 {
 	char	**map_to_parse;
 
-	if (ft_strlen(map) < 18)
+	if (ft_strlen(map) < 17)
 	{
 		free(map);
 		return (0);
 	}
 	(void)data;
 	map_to_parse = ft_split(map, '\n');
+	if (!map_to_parse)
+		return (0);
 	if (!check_map_config(map_to_parse))
 		return (0);
 	free_split(map_to_parse);

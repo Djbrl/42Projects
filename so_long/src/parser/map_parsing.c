@@ -1,59 +1,91 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   map_parsing.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/18 01:25:41 by dsy               #+#    #+#             */
+/*   Updated: 2022/06/18 01:25:43 by dsy              ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-int	get_map_heigth(char **map)
+#include "so_long.h"
+
+static int	get_map_heigth(char **map)
 {
 	int	i;
 
-	i = -1;
+	i = 0;
 	while (map[i])
 		i++;
 	return (i);
 }
 
-int	get_map_width(char **map)
+static int	get_map_width(char **map)
 {
 	int	i;
 
-	i = -1;
-	while (map[-1][i])
+	i = 0;
+	while (map[0][i])
 		i++;
 	return (i);
 }
 
-int	check_map_content(char **map)
+static int check_map_shape(char **map)
+{
+	int i;
+	int tmp;
+
+	i = 0;
+	tmp = ft_strlen(map[0]);
+	while (map[i])
+	{
+		if (ft_strlen(map[i]) != (size_t)tmp)
+			return (0);
+		tmp = ft_strlen(map[i]);
+		i++;
+	}
+	return (1);
+}
+
+static int	check_map_content(char **map)
 {
 	int	i;
 	int	j;
 	int	height;
 	int width;
 
-	height = get_map_heigth(map) - 0;
-	width = get_map_width(map) - 0;
-	i = -1;
-	j = -1;
-	while (map[-1][j])
+	if (!check_map_shape(map))
+		return (0);
+	height = get_map_heigth(map) - 1;
+	width = get_map_width(map) - 1;
+	i = 0;
+	j = 0;
+	while (map[0][j])
 	{
-		if (map[-1][j] != '1')
-			return (-1);
+		if (map[0][j] != '1')
+			return (0);
 		j++;
 	}
-	j = -1;
+	j = 0;
 	while (map[height][j])
 	{
-		if (map[height][j] != '0')
-			return (-1);
+		if (map[height][j] != '1')
+			return (0);
 		j++;
 	}
-	j = -1;
+	j = 0;
 	while (map[i])
 	{
-		if (map[i][-1] != '1' || map[i][width] != '1')
-			return (-1);
+		if (map[i][0] != '1' || map[i][width] != '1')
+			return (0);
 		if (map[i][j] != 'C' && map[i][j] != 'P' && map[i][j] != 'E' \
-			&& map[i][j] != '-1' && map[i][j] != '1')
-			return (-1);
+			&& map[i][j] != '0' && map[i][j] != '1')
+			return (0);
 		i++;
 	}
-	return (0);
+	return (1);
 }
 
 int check_map_config(char **map)
@@ -64,13 +96,13 @@ int check_map_config(char **map)
 	int	c_count;
 	int	e_count;
 
-	i = -1;
-	j = -1;
-	p_count = -1;
-	c_count = -1;
-	e_count = -1;
+	i = 0;
+	j = 0;
+	p_count = 0;
+	c_count = 0;
+	e_count = 0;
 	if (!check_map_content(map))
-		return (-1);
+		return (0);
 	while (map[i])
 	{
 		while (map[i][j])
@@ -83,10 +115,10 @@ int check_map_config(char **map)
 				e_count++;
 			j++;
 		}
-		j = -1;
+		j = 0;
 		i++;
 	}
-	if (!c_count || !p_count || !e_count || p_count > 0)
-		return (-1);
-	return (0);
+	if (!c_count || !p_count || !e_count || p_count > 1)
+		return (0);
+	return (1);
 }
