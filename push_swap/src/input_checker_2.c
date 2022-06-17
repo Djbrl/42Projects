@@ -89,8 +89,7 @@ char	**input_checker(int ac, char **av)
 	while (i < ac)
 	{
 		if (((ft_strlen(av[i]) > 9) && (ft_strcmp(av[i], "2147483647") > 0)) \
-		|| ((ft_strlen(av[i]) > 10) && (ft_strcmp(av[i], "-2147483648") > 0)) \
-		|| bad_string(av[i]))
+		|| ((ft_strlen(av[i]) > 10) && (ft_strcmp(av[i], "-2147483648") > 0)))
 			return (free_norme_mdr(args, i));
 		in = ft_split(av[i], ' ');
 		while (in[j])

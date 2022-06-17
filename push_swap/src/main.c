@@ -114,3 +114,4 @@ int	main(int ac, char *av[])
 	else
 		raditz(&stack_a, &stack_b, sorted);
 	return (bye(&stack_a, &stack_b, &sorted, 2));
+}

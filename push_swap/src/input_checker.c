@@ -94,7 +94,8 @@ char	**check_dup(char **args, int size)
 	sorted = sort(args, size);
 	while (sorted[i] && sorted[i + 1])
 	{
-		if (ft_strcmp(sorted[i], sorted[i + 1]) == 0)
+		if ((ft_atoi(sorted[i]) == (ft_atoi(sorted[i + 1]))) \
+			|| (ft_atoi(sorted[i]) == 0 && ft_strlen(sorted[i]) > 1))
 		{
 			while (sorted[j])
 				free(sorted[j++]);
