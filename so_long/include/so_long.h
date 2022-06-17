@@ -186,6 +186,7 @@ int		key_stroke(int key, void *params);
 /*
 PARSING
 */
+int		check_map_config(char **map);
 int		check_map_extension(char *path);
 int		parse_map(char *map, t_game *data);
 /*
