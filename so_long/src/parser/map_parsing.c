@@ -12,30 +12,10 @@
 
 #include "so_long.h"
 
-static int	get_map_heigth(char **map)
+static int	check_map_shape(char **map)
 {
 	int	i;
-
-	i = 0;
-	while (map[i])
-		i++;
-	return (i);
-}
-
-static int	get_map_width(char **map)
-{
-	int	i;
-
-	i = 0;
-	while (map[0][i])
-		i++;
-	return (i);
-}
-
-static int check_map_shape(char **map)
-{
-	int i;
-	int tmp;
+	int	tmp;
 
 	i = 0;
 	tmp = ft_strlen(map[0]);
@@ -49,46 +29,67 @@ static int check_map_shape(char **map)
 	return (1);
 }
 
+static inline int	ftn_check_map_content(char **map, int width)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (map[i])
+	{
+		if (map[i][0] != '1' || map[i][width] != '1')
+			return (0);
+		while (map[i][j])
+		{
+			if (map[i][j] != 'C' && map[i][j] != 'P' && map[i][j] != 'E' \
+				&& map[i][j] != '0' && map[i][j] != '1')
+				return (0);
+			j++;
+		}
+		i++;
+	}
+	return (1);
+}
+
 static int	check_map_content(char **map)
 {
 	int	i;
 	int	j;
 	int	height;
-	int width;
+	int	width;
 
 	if (!check_map_shape(map))
 		return (0);
 	height = get_map_heigth(map) - 1;
 	width = get_map_width(map) - 1;
 	i = 0;
-	j = 0;
-	while (map[0][j])
-	{
+	j = -1;
+	while (map[0][++j])
 		if (map[0][j] != '1')
 			return (0);
-		j++;
-	}
-	j = 0;
-	while (map[height][j])
+	while (map[height][i])
 	{
-		if (map[height][j] != '1')
-			return (0);
-		j++;
-	}
-	j = 0;
-	while (map[i])
-	{
-		if (map[i][0] != '1' || map[i][width] != '1')
-			return (0);
-		if (map[i][j] != 'C' && map[i][j] != 'P' && map[i][j] != 'E' \
-			&& map[i][j] != '0' && map[i][j] != '1')
+		if (map[height][i] != '1')
 			return (0);
 		i++;
 	}
+	if (!ftn_check_map_content(map, width))
+		return (0);
 	return (1);
 }
 
-int check_map_config(char **map)
+static inline void	ftn_check_map(char map, int *p, int *c, int *e)
+{
+	if (map == 'P')
+		*p = *p + 1;
+	if (map == 'C')
+		*c = *c + 1;
+	if (map == 'E')
+		*e = *e + 1;
+}
+
+int	check_map_config(char **map)
 {
 	int	i;
 	int	j;
@@ -101,24 +102,18 @@ int check_map_config(char **map)
 	p_count = 0;
 	c_count = 0;
 	e_count = 0;
-	if (!check_map_content(map))
-		return (0);
 	while (map[i])
 	{
 		while (map[i][j])
 		{
-			if (map[i][j] == 'C')
-				c_count++;
-			if (map[i][j] == 'P')
-				p_count++;
-			if (map[i][j] == 'E')
-				e_count++;
+			ftn_check_map(map[i][j], &p_count, &c_count, &e_count);
 			j++;
 		}
 		j = 0;
 		i++;
 	}
-	if (!c_count || !p_count || !e_count || p_count > 1)
+	if (!c_count || !p_count || !e_count || p_count > 1 \
+		|| !check_map_content(map))
 		return (0);
 	return (1);
 }

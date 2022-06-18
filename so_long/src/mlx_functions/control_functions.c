@@ -25,9 +25,9 @@ int	esc_window(int key, void *params)
 
 int	cross_window(int key, void *params)
 {
-	(void)key;
 	t_game	*data;
 
+	(void)key;
 	data = (t_game *)params;
 	return (exit_game("Exit (cross).\n", data));
 }

@@ -189,6 +189,8 @@ PARSING
 int		check_map_config(char **map);
 int		check_map_extension(char *path);
 int		parse_map(char *map, t_game *data);
+int		get_map_width(char **map);
+int		get_map_heigth(char **map);
 /*
 UTILS
 */

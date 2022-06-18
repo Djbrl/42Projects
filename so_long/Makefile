@@ -28,7 +28,7 @@ SRC_MLX_FUNC := control_functions.c
 SRC_MLX_FUNC := $(addprefix mlx_functions/,$(SRC_MLX_FUNC))
 
 SRC_PARSER := input_parsing.c \
-	map_parsing.c
+	map_parsing.c parsing.c
 SRC_PARSER := $(addprefix parser/,$(SRC_PARSER))
 
 SRC_RAYCASTING :=

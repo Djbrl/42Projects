@@ -12,4 +12,22 @@
 
 #include "so_long.h"
 
+int	get_map_heigth(char **map)
+{
+	int	i;
 
+	i = 0;
+	while (map[i])
+		i++;
+	return (i);
+}
+
+int	get_map_width(char **map)
+{
+	int	i;
+
+	i = 0;
+	while (map[0][i])
+		i++;
+	return (i);
+}
