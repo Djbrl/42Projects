@@ -12,9 +12,43 @@
 
 #include "so_long.h"
 
+void	create_image(t_game *data, int height, int width, int position[2])
+{
+	void *image = mlx_new_image(data->mlx_ptr, width, height);
+	int pixel_bits;
+	int line_bytes;
+	int endian;
+	char *buffer = mlx_get_data_addr(image, &pixel_bits, &line_bytes, &endian);
+	int color = 0x444444;
+	if (pixel_bits != 32)
+		color = mlx_get_color_value(data->mlx_ptr, color);
+	for(int y = 0; y < height; ++y)
+		for(int x = 0; x < width; ++x)
+		{
+			int pixel = (y * line_bytes) + (x * 4);
+
+			if (endian == 1)
+			{
+				buffer[pixel + 0] = (color >> 24);
+				buffer[pixel + 1] = (color >> 16) & 0xFF;
+				buffer[pixel + 2] = (color >> 8) & 0xFF;
+				buffer[pixel + 3] = (color) & 0xFF;
+			}
+			else if (endian == 0)
+			{
+				buffer[pixel + 0] = (color) & 0xFF;
+				buffer[pixel + 1] = (color >> 8) & 0xFF;
+				buffer[pixel + 2] = (color >> 16) & 0xFF;
+				buffer[pixel + 3] = (color >> 24);
+			}
+		}
+	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, image, position[0], position[1]);
+}
+
 int	main(int ac, char **av)
 {
 	t_game	data;
+	int		position[2];
 	// int		ret;
 	init_game_struct(&data);
 	if (ac != 2)
@@ -43,6 +77,14 @@ int	main(int ac, char **av)
 		return (exit_error(MLX_WIN_ERR, &data));
 	mlx_key_hook(data.win_ptr, key_stroke, &data);
 	mlx_hook(data.win_ptr, 17, 0, cross_window, &data);
+
+	position[0] = 1080/2 - (1080/20 * 5);
+	position[1] = 640/2 - (1080/20 * 3);
+	create_image(&data, 640 / 20, 1080 / 20, position);
+	position[0] = 1080/2 + (1080/20 * 3);
+	position[1] = 640/2 - (1080/20 * 3) ;
+	create_image(&data, 640 / 20, 1080 / 20, position);
+	//destroy image before quitting
 	mlx_loop(data.mlx_ptr);
 	// int i = 0;
 	// int j = 0;
