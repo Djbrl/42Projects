@@ -37,23 +37,56 @@ int	key_stroke(int key, void *params)
 	t_game	*data;
 
 	data = (t_game *)params;
+	int x = data->player_x;
+	int y = data->player_y;
 	if (key == KEY_W)
 	{
 		printf("Pressed W.\n");
-		int i = 0, j = 0;
-			
+		if (data->map[x - 1][y] != '1' )
+		{
+			data->map[x - 1][y] = 'P';
+			data->map[x][y] = '0';
+			draw_map(data);
+		}
+		else
+			printf("You can't go there!\n");
 	}
 	if (key == KEY_S)
 	{
 		printf("Pressed S.\n");
+		if (data->map[x + 1][y] != '1' )
+		{
+			data->map[x + 1][y] = 'P';
+			data->map[x][y] = '0';
+			draw_map(data);
+		}
+		else
+			printf("You can't go there!\n");
 	}
 	if (key == KEY_A)
 	{
 		printf("Pressed A.\n");
+		if (data->map[x][y - 1] != '1' )
+		{
+			data->map[x][y - 1] = 'P';
+			data->map[x][y] = '0';
+			draw_map(data);
+		}
+		else
+			printf("You can't go there!\n");
+
 	}
 	if (key == KEY_D)
 	{
 		printf("Pressed D.\n");
+		if (data->map[x][y + 1] != '1' )
+		{
+			data->map[x][y + 1] = 'P';
+			data->map[x][y] = '0';
+			draw_map(data);
+		}
+		else
+			printf("You can't go there!\n");
 	}
 	if (key == KEY_ESC)
 	{

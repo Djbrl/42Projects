@@ -138,6 +138,11 @@ typedef struct	s_game
 	int			blue;
 	int			color;
 	/*
+	** MAP
+	*/
+	int			player_x;
+	int			player_y;
+	/*
 	** RAYCASTING
 	*/ 
 	double		pos_y;
@@ -178,7 +183,7 @@ MLX FUNCTIONS
 int		esc_window(int key, void *params);
 int		cross_window(int key, void *params);
 int		key_stroke(int key, void *params);
-
+void	draw_map(t_game *data);
 /*
 PARSING
 */

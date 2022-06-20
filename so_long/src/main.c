@@ -60,7 +60,11 @@ void	draw_map(t_game *data)
 			if (data->map[i][j] == 'C')
 			 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->item, j * 1080/data->width, i * 640/data->height);
 			if (data->map[i][j] == 'P')
-			 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->player, j * 1080/data->width, i * 640/data->height);
+			{
+				data->player_x = i;
+				data->player_y = j;
+				mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->player, j * 1080/data->width, i * 640/data->height);
+			}
 			if (data->map[i][j] == 'E')
 			 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->exit, j * 1080/data->width, i * 640/data->height);
 			j++;
