@@ -26,6 +26,12 @@
 # define MLX_WIN_ERR "Error\nFailed to start MLX window.\n"
 # define MAP_INVALID "Error\nPlease input a valid map file.\n"
 
+# define PLAYER_XPM "data/textures/player.xpm"
+# define TILE_XPM "data/textures/tile.xpm"
+# define WALL_XPM "data/textures/wall.xpm"
+# define LOOT_XPM "data/textures/loot.xpm"
+# define DOOR_XPM "data/textures/door.xpm"
+
 # define KEY_ESC 65307
 # define KEY_W 119
 # define KEY_A 97
