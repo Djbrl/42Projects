@@ -107,7 +107,7 @@ typedef struct	s_game
 	*/ 
 	void		*mlx_ptr;
 	void		*win_ptr;
-
+	void		*image;
 	t_img		l;
 	t_img		m;
 	t_img		so;
@@ -121,15 +121,7 @@ typedef struct	s_game
 	/*
 	** PARSING
 	*/ 
-	char		**r_key;
-	char		**n_key;
-	char		**so_key;
-	char		**w_key;
-	char		**e_key;
-	char		**s_key;
-	char		**f_key;
-	char		**c_key;
-	char		**map_key;
+	char		**map;
 	int			width;
 	int			height;
 	int			row;

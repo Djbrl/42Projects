@@ -19,7 +19,7 @@ LIB_FT := lib/libft/libft.a
 MLX := lib/mlx/libmlx_Linux.a
 
 CC := cc
-CFLAGS := -Wall -Wextra -Werror -lX11 -lXext
+CFLAGS := -Wall -Wextra -Werror #-lX11 -lXext
 LFLAGS = -lX11 -lXext
 PFLAGS := -Iinclude -Ilib/libft -Ilib/mlx
 
@@ -81,7 +81,7 @@ libft_fclean:
 re: fclean all
 
 clean: libft_clean
-	@rm -rf $(NAME)
+	@rm -rf $(BUILD_PATH)
 
 fclean : libft_fclean
 	@rm -rf $(BUILD_PATH)

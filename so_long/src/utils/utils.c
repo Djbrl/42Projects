@@ -45,6 +45,10 @@ void	free_mlx_struct(t_game *data)
 	(void)data;
 	if (data->mlx_ptr != NULL)
 		free(data->mlx_ptr);
+	if (data->map != NULL)
+		free_split(data->map);
+	if (data->image != NULL)
+		free(data->image);
 }
 
 void	free_split(char **array)

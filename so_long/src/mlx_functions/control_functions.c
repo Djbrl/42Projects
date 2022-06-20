@@ -47,6 +47,5 @@ int	key_stroke(int key, void *params)
 		printf("Pressed D.\n");
 	if (key == KEY_ESC)
 		esc_window(key, data);
-	printf("key : %i\n", key);
 	return (0);
 }

@@ -12,7 +12,7 @@
 
 #include "so_long.h"
 
-void	create_image(t_game *data, int height, int width, int position[2])
+void	create_image(t_game *data, int height, int width)
 {
 	void *image = mlx_new_image(data->mlx_ptr, width, height);
 	int pixel_bits;
@@ -42,7 +42,7 @@ void	create_image(t_game *data, int height, int width, int position[2])
 				buffer[pixel + 3] = (color >> 24);
 			}
 		}
-	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, image, position[0], position[1]);
+	data->image = image;
 }
 
 int	main(int ac, char **av)
@@ -77,13 +77,45 @@ int	main(int ac, char **av)
 		return (exit_error(MLX_WIN_ERR, &data));
 	mlx_key_hook(data.win_ptr, key_stroke, &data);
 	mlx_hook(data.win_ptr, 17, 0, cross_window, &data);
-
-	position[0] = 1080/2 - (1080/20 * 5);
-	position[1] = 640/2 - (1080/20 * 3);
-	create_image(&data, 640 / 20, 1080 / 20, position);
-	position[0] = 1080/2 + (1080/20 * 3);
-	position[1] = 640/2 - (1080/20 * 3) ;
-	create_image(&data, 640 / 20, 1080 / 20, position);
+	position[0] = 0;
+	position[1] = 0;
+	int padding = 20;
+	create_image(&data, (640 - padding) / data.height, (1080 - padding) / data.width);
+	int i = 0;
+	int j = 0;
+	while (data.map[i])
+	{
+		while (data.map[i][j])
+			printf("%c\n", data.map[i][j++]);
+		j = 0;
+		i++;
+	}
+	// while(i < data.width)
+	// {
+	// 	while (j < data.height)
+	// 	{
+	// 		printf("%c\n", data.map[i][j]);
+	// 		j++;
+	// 	}
+	// 	i++;
+	// 	j = 0;
+	// }
+	i = 0;
+	j = 0;
+	while (data.map[i])
+	{
+		while (data.map[i][j])
+		{
+			if (data.map[i][j] == '1')
+				mlx_put_image_to_window(data.mlx_ptr, data.win_ptr, data.image, i * 1080/data.width, j * 640/data.height);
+			j++;
+		}
+		j = 0;
+		i++;
+	}
+	// position[0] = 1080/2 + (1080/20 * 3);
+	// position[1] = 640/2 - (1080/20 * 3) ;
+	// create_image(&data, 640 / 20, 1080 / 20, position);
 	//destroy image before quitting
 	mlx_loop(data.mlx_ptr);
 	// int i = 0;

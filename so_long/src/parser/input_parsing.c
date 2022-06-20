@@ -42,6 +42,7 @@ char	*read_map_data(int file, char *path)
 		free(map);
 		return (NULL);
 	}
+	map[file_size] = 0;
 	close(file);
 	return (map);
 }
@@ -61,7 +62,9 @@ int	check_map(char *map, t_game *data)
 		return (0);
 	if (!check_map_config(map_to_parse))
 		return (0);
-	free_split(map_to_parse);
+	data->map = map_to_parse;
+	data->width = get_map_width(map_to_parse);
+	data->height = get_map_heigth(map_to_parse);
 	free(map);
 	return (1);
 }
