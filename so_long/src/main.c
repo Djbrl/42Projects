@@ -72,7 +72,29 @@ void	draw_map(t_game *data)
 		j = 0;
 		i++;
 	}
+}
 
+int	get_items(t_game *data)
+{
+	int i;
+	int j;
+	int items;
+
+	i = 0;
+	j = 0;
+	items = 0;
+	while (i < data->height)
+	{
+		while (j < data->width)
+		{
+			if (data->map[i][j] == 'C')
+				items++;
+			j++;
+		}
+		j = 0;
+		i++;
+	}
+	return (items);
 }
 
 int	main(int ac, char **av)
@@ -90,11 +112,13 @@ int	main(int ac, char **av)
 	if (!(data.win_ptr = mlx_new_window(data.mlx_ptr, 1080, 640, "The Mighty Quest For The Epic Loot")))
 		return (exit_error(MLX_WIN_ERR, &data));
 	int padding = 20;
+	data.items_left = get_items(&data);
+	data.score = 0;
 	data.wall = create_image(&data, (640 - padding) / data.height, (1080 - padding) / data.width, 0x444);
 	data.player = create_image(&data, (640 - padding) / data.height, (1080 - padding) / data.width, 0x880808);
 	data.path = create_image(&data, (640 - padding) / data.height, (1080 - padding) / data.width, 0x0);
 	data.item = create_image(&data, (640 - padding) / data.height, (1080 - padding) / data.width, 0x777);
-	data.exit = create_image(&data, (640 - padding) / data.height, (1080 - padding) / data.width, 0x888);
+	data.exit = create_image(&data, (640 - padding) / data.height, (1080 - padding) / data.width, 0x888666);
 	// INIT GAME
 	draw_map(&data);
 	mlx_key_hook(data.win_ptr, key_stroke, &data);

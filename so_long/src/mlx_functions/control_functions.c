@@ -39,51 +39,85 @@ int	key_stroke(int key, void *params)
 	data = (t_game *)params;
 	int x = data->player_x;
 	int y = data->player_y;
-	if (key == KEY_W)
+	if (key == KEY_W || key == KEY_UP)
 	{
-		printf("Pressed W.\n");
-		if (data->map[x - 1][y] != '1' )
+		if (data->map[x - 1][y] != '1')
 		{
-			data->map[x - 1][y] = 'P';
-			data->map[x][y] = '0';
-			draw_map(data);
+			data->score++;
+			if (data->map[x - 1][y] == 'E' && data->items_left < 1)
+				exit_game("you win bruv", data);
+			else if (data->map[x - 1][y] == 'E' && data->items_left > 0)
+				printf("not so fast cowboy\n");
+			else
+			{
+				data->map[x - 1][y] = 'P';
+				data->map[x][y] = '0';
+				draw_map(data);
+			}
 		}
 		else
 			printf("You can't go there!\n");
 	}
-	if (key == KEY_S)
+	if (key == KEY_S || key == KEY_DOWN)
 	{
-		printf("Pressed S.\n");
 		if (data->map[x + 1][y] != '1' )
 		{
-			data->map[x + 1][y] = 'P';
-			data->map[x][y] = '0';
-			draw_map(data);
+			data->score++;
+			if (data->map[x + 1][y] == 'C')
+				data->items_left--;
+			if (data->map[x + 1][y] == 'E' && data->items_left < 1)
+				exit_game("you win bruv", data);
+			else if (data->map[x + 1][y] == 'E' && data->items_left > 0)
+				printf("not so fast cowboy\n");
+			else
+			{
+				data->map[x + 1][y] = 'P';
+				data->map[x][y] = '0';
+				draw_map(data);
+			}
 		}
 		else
 			printf("You can't go there!\n");
 	}
-	if (key == KEY_A)
+	if (key == KEY_A || key == KEY_LEFT)
 	{
-		printf("Pressed A.\n");
 		if (data->map[x][y - 1] != '1' )
 		{
-			data->map[x][y - 1] = 'P';
-			data->map[x][y] = '0';
-			draw_map(data);
+			data->score++;
+			if (data->map[x][y - 1] == 'C')
+				data->items_left--;
+			if (data->map[x][y - 1] == 'E' && data->items_left < 1)
+				exit_game("you win bruv", data);
+			else if (data->map[x][y - 1] == 'E' && data->items_left > 0)
+				printf("not so fast cowboy\n");
+			else
+			{
+				data->map[x][y - 1] = 'P';
+				data->map[x][y] = '0';
+				draw_map(data);
+			}
 		}
 		else
 			printf("You can't go there!\n");
 
 	}
-	if (key == KEY_D)
+	if (key == KEY_D || key == KEY_RIGHT)
 	{
-		printf("Pressed D.\n");
 		if (data->map[x][y + 1] != '1' )
 		{
-			data->map[x][y + 1] = 'P';
-			data->map[x][y] = '0';
-			draw_map(data);
+			data->score++;
+			if (data->map[x][y + 1] == 'C')
+				data->items_left--;
+			if (data->map[x][y + 1] == 'E' && data->items_left < 1)
+				exit_game("you win bruv", data);
+			else if (data->map[x][y + 1] == 'E' && data->items_left > 0)
+				printf("not so fast cowboy\n");
+			else
+			{
+				data->map[x][y + 1] = 'P';
+				data->map[x][y] = '0';
+				draw_map(data);
+			}
 		}
 		else
 			printf("You can't go there!\n");
