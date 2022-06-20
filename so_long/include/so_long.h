@@ -107,7 +107,11 @@ typedef struct	s_game
 	*/ 
 	void		*mlx_ptr;
 	void		*win_ptr;
-	void		*image;
+	void		*wall;
+	void		*path;
+	void		*player;
+	void		*item;
+	void		*exit;
 	t_img		l;
 	t_img		m;
 	t_img		so;

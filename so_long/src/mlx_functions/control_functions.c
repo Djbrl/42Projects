@@ -38,14 +38,26 @@ int	key_stroke(int key, void *params)
 
 	data = (t_game *)params;
 	if (key == KEY_W)
+	{
 		printf("Pressed W.\n");
+		int i = 0, j = 0;
+			
+	}
 	if (key == KEY_S)
+	{
 		printf("Pressed S.\n");
+	}
 	if (key == KEY_A)
+	{
 		printf("Pressed A.\n");
+	}
 	if (key == KEY_D)
+	{
 		printf("Pressed D.\n");
+	}
 	if (key == KEY_ESC)
+	{
 		esc_window(key, data);
+	}
 	return (0);
 }
