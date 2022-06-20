@@ -123,8 +123,6 @@ int	key_stroke(int key, void *params)
 			printf("You can't go there!\n");
 	}
 	if (key == KEY_ESC)
-	{
-		esc_window(key, data);
-	}
+		esc_window(key, data); //fix segfasult
 	return (0);
 }
