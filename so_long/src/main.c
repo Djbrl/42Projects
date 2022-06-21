@@ -14,12 +14,16 @@
 
 void	*create_image(t_game *data, int height, int width, int casecolor)
 {
-	void *image = mlx_new_image(data->mlx_ptr, width, height);
-	int pixel_bits;
-	int line_bytes;
-	int endian;
-	char *buffer = mlx_get_data_addr(image, &pixel_bits, &line_bytes, &endian);
-	int color = casecolor;
+	void	*image;
+	int		pixel_bits;
+	int		line_bytes;
+	int		endian;
+	char	*buffer;
+	int 	color;
+
+	color = casecolor;
+	image = mlx_new_image(data->mlx_ptr, width, height);
+	buffer = mlx_get_data_addr(image, &pixel_bits, &line_bytes, &endian);
 	if (pixel_bits != 32)
 		color = mlx_get_color_value(data->mlx_ptr, color);
 	for(int y = 0; y < height; ++y)
@@ -47,8 +51,11 @@ void	*create_image(t_game *data, int height, int width, int casecolor)
 
 void	draw_map(t_game *data)
 {
-	int j = 0;
-	int i = 0;
+	int	j;
+	int	i;
+
+	i = 0;
+	j = 0;
 	while (i < data->height)
 	{
 		while (j < data->width)
@@ -100,6 +107,9 @@ int	get_items(t_game *data)
 int	main(int ac, char **av)
 {
 	t_game	data;
+	int		padding;
+
+	padding = 20;
 	init_game_struct(&data);
 	if (ac != 2)
 		return (exit_error(ARG_ERR, &data));
@@ -111,7 +121,6 @@ int	main(int ac, char **av)
 		return (exit_error(MLX_INIT_ERR, &data));
 	if (!(data.win_ptr = mlx_new_window(data.mlx_ptr, 1080, 640, "The Mighty Quest For The Epic Loot")))
 		return (exit_error(MLX_WIN_ERR, &data));
-	int padding = 20;
 	data.items_left = get_items(&data);
 	data.score = 0;
 	data.wall = create_image(&data, (640 - padding) / data.height, (1080 - padding) / data.width, 0x444);
@@ -119,12 +128,9 @@ int	main(int ac, char **av)
 	data.path = create_image(&data, (640 - padding) / data.height, (1080 - padding) / data.width, 0x0);
 	data.item = create_image(&data, (640 - padding) / data.height, (1080 - padding) / data.width, 0x777);
 	data.exit = create_image(&data, (640 - padding) / data.height, (1080 - padding) / data.width, 0x888666);
-	// INIT GAME
 	draw_map(&data);
 	mlx_key_hook(data.win_ptr, key_stroke, &data);
-	mlx_hook(data.win_ptr, 17, 0, cross_window, &data); //FIX segfault when crossing window
+	mlx_hook(data.win_ptr, MLX_ON_DESTROY, 0, cross_window, &data);
 	mlx_loop(data.mlx_ptr);
-	(void)ac;
-	(void)av;
 	return (0);
 }

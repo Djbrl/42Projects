@@ -19,7 +19,7 @@ LIB_FT := lib/libft/libft.a
 MLX := lib/mlx/libmlx_Linux.a
 
 CC := cc
-CFLAGS := -Wall -Wextra -Werror -lX11 -lXext
+CFLAGS := -Wall -Wextra -Werror #-lX11 -lXext
 LFLAGS = -lX11 -lXext
 PFLAGS := -Iinclude -Ilib/libft -Ilib/mlx
 

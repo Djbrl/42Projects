@@ -36,19 +36,25 @@ void	init_game_struct(t_game *data)
 {
 	data->mlx_ptr = NULL;
 	data->win_ptr = NULL;
-	data->l.mlx_img = NULL;
-	data->l.img_addr = NULL;
 }
 
 void	free_mlx_struct(t_game *data)
 {
 	(void)data;
-	if (data->mlx_ptr != NULL)
-		free(data->mlx_ptr);
 	if (data->map != NULL)
 		free_split(data->map);
 	if (data->wall != NULL)
-		free(data->wall);
+		mlx_destroy_image(data->mlx_ptr, data->wall);
+	if (data->path != NULL)
+		mlx_destroy_image(data->mlx_ptr, data->path);
+	if (data->player != NULL)
+		mlx_destroy_image(data->mlx_ptr, data->player);
+	if (data->exit != NULL)
+		mlx_destroy_image(data->mlx_ptr, data->exit);
+	if (data->item != NULL)
+		mlx_destroy_image(data->mlx_ptr, data->item);
+	mlx_destroy_window(data->mlx_ptr, data->win_ptr);
+	free(data->mlx_ptr);
 }
 
 void	free_split(char **array)

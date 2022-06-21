@@ -12,117 +12,76 @@
 
 #include "so_long.h"
 
-int	esc_window(int key, void *params)
+int	esc_window(t_game *data)
 {
-	t_game	*data;
-
-	(void)key;
-	data = (t_game *)params;
-	if (data->mlx_ptr != NULL && data->win_ptr != NULL)
-		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
 	return (exit_game("Exit (esc).\n", data));
 }
 
-int	cross_window(int key, void *params)
+int	cross_window(t_game *data)
 {
-	t_game	*data;
-
-	(void)key;
-	data = (t_game *)params;
 	return (exit_game("Exit (cross).\n", data));
 }
 
-int	key_stroke(int key, void *params)
+static void	show_score(int score, int mode)
 {
-	t_game	*data;
+	if (mode == 1)
+	{
+		ft_putstr(GREEN_COLOR);
+		ft_putstr("Score : ");
+		ft_putnbr(score);
+		ft_putstr("\n");
+		ft_putstr(END_COLOR);
+	}
+	else
+	{
+		ft_putstr(YLW_COLOR);
+		ft_putstr("Final Score : ");
+		ft_putnbr(score);
+		ft_putstr("\n");
+		ft_putstr(END_COLOR);
+	}
+}
 
-	data = (t_game *)params;
+void	input_interpreter(t_game *data, int x, int y)
+{
+
+	if (data->map[x][y] != '1')
+		{
+			if (data->map[x][y] == 'E' && data->items_left < 1)
+			{
+				show_score(data->score, 2);
+				exit_game("gg!\n", data);
+			}
+			else if (data->map[x][y] == 'E' && data->items_left > 0)
+				ft_putstr("you can't exit yet!\n");
+			else
+			{	
+				show_score(data->score, 1);
+				data->score++;
+				if (data->map[x][y] == 'C')
+					data->items_left--;
+				data->map[x][y] = 'P';
+				data->map[data->player_x][data->player_y] = '0';
+				draw_map(data);
+			}
+		}
+		else
+			ft_putstr("you can't go there!\n");
+}
+
+int	key_stroke(int key, t_game *data)
+{
 	int x = data->player_x;
 	int y = data->player_y;
 	if (key == KEY_W || key == KEY_UP)
-	{
-		if (data->map[x - 1][y] != '1')
-		{
-			data->score++;
-			if (data->map[x - 1][y] == 'E' && data->items_left < 1)
-				exit_game("you win bruv", data);
-			else if (data->map[x - 1][y] == 'E' && data->items_left > 0)
-				printf("not so fast cowboy\n");
-			else
-			{
-				data->map[x - 1][y] = 'P';
-				data->map[x][y] = '0';
-				draw_map(data);
-			}
-		}
-		else
-			printf("You can't go there!\n");
-	}
+		input_interpreter(data, x - 1, y);
 	if (key == KEY_S || key == KEY_DOWN)
-	{
-		if (data->map[x + 1][y] != '1' )
-		{
-			data->score++;
-			if (data->map[x + 1][y] == 'C')
-				data->items_left--;
-			if (data->map[x + 1][y] == 'E' && data->items_left < 1)
-				exit_game("you win bruv", data);
-			else if (data->map[x + 1][y] == 'E' && data->items_left > 0)
-				printf("not so fast cowboy\n");
-			else
-			{
-				data->map[x + 1][y] = 'P';
-				data->map[x][y] = '0';
-				draw_map(data);
-			}
-		}
-		else
-			printf("You can't go there!\n");
-	}
+		input_interpreter(data, x + 1, y);
 	if (key == KEY_A || key == KEY_LEFT)
-	{
-		if (data->map[x][y - 1] != '1' )
-		{
-			data->score++;
-			if (data->map[x][y - 1] == 'C')
-				data->items_left--;
-			if (data->map[x][y - 1] == 'E' && data->items_left < 1)
-				exit_game("you win bruv", data);
-			else if (data->map[x][y - 1] == 'E' && data->items_left > 0)
-				printf("not so fast cowboy\n");
-			else
-			{
-				data->map[x][y - 1] = 'P';
-				data->map[x][y] = '0';
-				draw_map(data);
-			}
-		}
-		else
-			printf("You can't go there!\n");
-
-	}
+		input_interpreter(data, x, y - 1);
 	if (key == KEY_D || key == KEY_RIGHT)
-	{
-		if (data->map[x][y + 1] != '1' )
-		{
-			data->score++;
-			if (data->map[x][y + 1] == 'C')
-				data->items_left--;
-			if (data->map[x][y + 1] == 'E' && data->items_left < 1)
-				exit_game("you win bruv", data);
-			else if (data->map[x][y + 1] == 'E' && data->items_left > 0)
-				printf("not so fast cowboy\n");
-			else
-			{
-				data->map[x][y + 1] = 'P';
-				data->map[x][y] = '0';
-				draw_map(data);
-			}
-		}
-		else
-			printf("You can't go there!\n");
-	}
+		input_interpreter(data, x, y + 1);
 	if (key == KEY_ESC)
-		esc_window(key, data); //fix segfasult
+		esc_window(data);
 	return (0);
 }

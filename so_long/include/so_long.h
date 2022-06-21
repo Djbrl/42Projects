@@ -19,6 +19,8 @@
 # define RED_COLOR "\033[0;31m"
 # define END_COLOR "\033[0m"
 
+# define MLX_ON_DESTROY 17
+
 # define ARG_ERR "Error\nPlease input a map file.\n"
 # define FILE_EXT "Error\nBad map extension.\n"
 # define FILE_ERR "Error\nCouldn't open map file.\n"
@@ -66,51 +68,6 @@ typedef struct	s_img
 	int			height;
 }				t_img;
 
-typedef struct s_color
-{
-    int R;
-    int G;
-    int B;
-    int set;
-}               t_color;
-
-/*
-typedef struct s_sprite
-{
-    double              x;
-    double              y;
-    double              dst;
-    float               diff;
-    float               size;
-    float               y_c;
-    float               y_s;
-    struct  s_sprite    *next;
-}   t_sprite;
-*/
-
-typedef struct  s_ray
-{
-    int         map_x;
-    int         map_y;
-    double      dist_x;
-    double      dist_y;
-    double      d_dist_x;
-    double      d_dist_y;
-    int         step_x;
-    int         step_y;
-    int         hit;
-    int         side;
-    double      wall_dist;
-    int         wall_height;
-//    t_sprite    *sprite;
-    int         lower_pix;
-    int         higher_pix;
-    double      camera_x;
-    double      rdir_x;
-    double      rdir_y;
-    int         tex_x;;
-}               t_ray;
-
 typedef struct	s_game
 {
 	/*
@@ -123,15 +80,6 @@ typedef struct	s_game
 	void		*player;
 	void		*item;
 	void		*exit;
-	t_img		l;
-	t_img		m;
-	t_img		so;
-	t_img		no;
-	t_img		ea;
-	t_img		we;
-	t_color		floor;
-	t_color		ceiling;
-	t_img		sprite;
 	t_img		gun;
 	/*
 	** PARSING
@@ -139,15 +87,6 @@ typedef struct	s_game
 	char		**map;
 	int			width;
 	int			height;
-	int			row;
-	int			col;
-	char		error;
-
-	int			red;
-	int			green;
-	int			yellow;
-	int			blue;
-	int			color;
 	/*
 	** GAME
 	*/
@@ -155,47 +94,14 @@ typedef struct	s_game
 	int			items_left;
 	int			player_x;
 	int			player_y;
-	/*
-	** RAYCASTING
-	*/ 
-	double		pos_y;
-	double		pos_x;
-	char		pov;
-	int			x;
-	int			speed;
-	int			drawStart;
-	int			drawEnd;
-	int			lineHeight;
-	int			sideDistX;
-	int			sideDistY;
-	int			deltaDistX;
-	int			deltaDistY;
-	int			perpWallDist;
-	int			stepX;
-	int			stepY;
-	int			hit;
-	int			side;
-	int			mapX;
-	int			mapY;
-	double		dirX;
-	double		dirY;
-	double		planeX;
-	double		planeY;
-	double		time;
-	double		oldtime;
-	double		cameraX;
-	double		rayDirX;
-	double		rayDirY;
-	double		oldDirX;
-	double		oldPlaneX;
 }				t_game;
 
 /*
 MLX FUNCTIONS
 */
-int		esc_window(int key, void *params);
-int		cross_window(int key, void *params);
-int		key_stroke(int key, void *params);
+int		esc_window(t_game *data);
+int		cross_window(t_game *data);
+int		key_stroke(int key, t_game *data);
 void	draw_map(t_game *data);
 /*
 PARSING
