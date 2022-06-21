@@ -44,35 +44,37 @@ static void	show_score(int score, int mode)
 
 void	input_interpreter(t_game *data, int x, int y)
 {
-
 	if (data->map[x][y] != '1')
+	{
+		if (data->map[x][y] == 'E' && data->items_left < 1)
 		{
-			if (data->map[x][y] == 'E' && data->items_left < 1)
-			{
-				show_score(data->score, 2);
-				exit_game("gg!\n", data);
-			}
-			else if (data->map[x][y] == 'E' && data->items_left > 0)
-				ft_putstr("you can't exit yet!\n");
-			else
-			{	
-				show_score(data->score, 1);
-				data->score++;
-				if (data->map[x][y] == 'C')
-					data->items_left--;
-				data->map[x][y] = 'P';
-				data->map[data->player_x][data->player_y] = '0';
-				draw_map(data);
-			}
+			show_score(data->score, 2);
+			exit_game("gg!\n", data);
 		}
+		else if (data->map[x][y] == 'E' && data->items_left > 0)
+			ft_putstr("you can't exit yet!\n");
 		else
-			ft_putstr("you can't go there!\n");
+		{	
+			show_score(data->score, 1);
+			data->score++;
+			if (data->map[x][y] == 'C')
+				data->items_left--;
+			data->map[x][y] = 'P';
+			data->map[data->player_x][data->player_y] = '0';
+			draw_map(data);
+		}
+	}
+	else
+		ft_putstr("you can't go there!\n");
 }
 
 int	key_stroke(int key, t_game *data)
 {
-	int x = data->player_x;
-	int y = data->player_y;
+	int	x;
+	int	y;
+
+	x = data->player_x;
+	y = data->player_y;
 	if (key == KEY_W || key == KEY_UP)
 		input_interpreter(data, x - 1, y);
 	if (key == KEY_S || key == KEY_DOWN)
