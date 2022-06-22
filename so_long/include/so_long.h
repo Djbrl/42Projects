@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
@@ -44,7 +43,6 @@
 # define KEY_LEFT 65361
 # define KEY_RIGHT 65363
 
-
 # include "libft.h"
 # include "../lib/mlx/mlx.h"
 # include <stdio.h>
@@ -57,7 +55,7 @@
 **	STRUCTURES
 */
 
-typedef struct	s_img
+typedef struct s_img
 {
 	void		*mlx_img;
 	int			*img_addr;
@@ -67,35 +65,28 @@ typedef struct	s_img
 	int			width;
 	int			height;
 }				t_img;
-
-typedef struct	s_game
+/*
+** MLX RELATED
+*/
+typedef struct s_game
 {
-	/*
-	** MLX RELATED
-	*/ 
 	void		*mlx_ptr;
 	void		*win_ptr;
-	void		*wall;
-	void		*path;
-	void		*player;
-	void		*item;
-	void		*exit;
-	t_img		gun;
-	/*
-	** PARSING
-	*/ 
+	t_img		wall;
+	t_img		path;
+	t_img		player;
+	t_img		item;
+	t_img		exit;
+
 	char		**map;
 	int			width;
 	int			height;
-	/*
-	** GAME
-	*/
+
 	int			score;
 	int			items_left;
 	int			player_x;
 	int			player_y;
 }				t_game;
-
 /*
 MLX FUNCTIONS
 */
@@ -103,6 +94,7 @@ int		esc_window(t_game *data);
 int		cross_window(t_game *data);
 int		key_stroke(int key, t_game *data);
 void	draw_map(t_game *data);
+void	*create_image(t_game *data, int height, int width, int casecolor);
 /*
 PARSING
 */

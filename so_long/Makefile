@@ -19,11 +19,11 @@ LIB_FT := lib/libft/libft.a
 MLX := lib/mlx/libmlx_Linux.a
 
 CC := cc
-CFLAGS := -Wall -Wextra -Werror -lX11 -lXext
+CFLAGS := -Wall -Wextra -Werror #-lX11 -lXext
 LFLAGS = -lX11 -lXext
 PFLAGS := -Iinclude -Ilib/libft -Ilib/mlx
 
-SRC_MLX_FUNC := control_functions.c
+SRC_MLX_FUNC := control_functions.c images.c
 	
 SRC_MLX_FUNC := $(addprefix mlx_functions/,$(SRC_MLX_FUNC))
 

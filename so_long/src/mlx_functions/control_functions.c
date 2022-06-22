@@ -85,5 +85,6 @@ int	key_stroke(int key, t_game *data)
 		input_interpreter(data, x, y + 1);
 	if (key == KEY_ESC)
 		esc_window(data);
+	draw_map(data);
 	return (0);
 }
