@@ -42,15 +42,15 @@ static void	init_game(t_game *data)
 	padding = 20;
 	data->items_left = count_items(data);
 	data->score = 0;
-	create_image(data, (640 - padding) / data->height, \
+	create_image(&data->wall, data, (640 - padding) / data->height, \
 		(1080 - padding) / data->width, 0x444);
-	create_image(data, (640 - padding) / data->height, \
+	create_image(&data->player, data, (640 - padding) / data->height, \
 		(1080 - padding) / data->width, 0x880808);
-	create_image(data, (640 - padding) / data->height, \
+	create_image(&data->path, data, (640 - padding) / data->height, \
 		(1080 - padding) / data->width, 0x0);
-	create_image(data, (640 - padding) / data->height, \
+	create_image(&data->item, data, (640 - padding) / data->height, \
 		(1080 - padding) / data->width, 0x777);
-	create_image(data, (640 - padding) / data->height, \
+	create_image(&data->exit, data, (640 - padding) / data->height, \
 		(1080 - padding) / data->width, 0x888666);
 	draw_map(data);
 }

@@ -36,6 +36,16 @@ void	init_game_struct(t_game *data)
 {
 	data->mlx_ptr = NULL;
 	data->win_ptr = NULL;
+	data->wall.mlx_img = NULL;
+	data->player.mlx_img = NULL;
+	data->path.mlx_img = NULL;
+	data->item.mlx_img = NULL;
+	data->exit.mlx_img = NULL;
+	data->wall.img_addr = NULL;
+	data->player.img_addr = NULL;
+	data->exit.img_addr = NULL;
+	data->path.img_addr = NULL;
+	data->item.img_addr = NULL;
 }
 
 void	free_mlx_struct(t_game *data)
@@ -43,16 +53,16 @@ void	free_mlx_struct(t_game *data)
 	(void)data;
 	if (data->map != NULL)
 		free_split(data->map);
-	if (data->wall != NULL)
-		mlx_destroy_image(data->mlx_ptr, data->wall);
-	if (data->path != NULL)
-		mlx_destroy_image(data->mlx_ptr, data->path);
-	if (data->player != NULL)
-		mlx_destroy_image(data->mlx_ptr, data->player);
-	if (data->exit != NULL)
-		mlx_destroy_image(data->mlx_ptr, data->exit);
-	if (data->item != NULL)
-		mlx_destroy_image(data->mlx_ptr, data->item);
+	if (data->wall.mlx_img != NULL)
+		mlx_destroy_image(data->mlx_ptr, data->wall.mlx_img);
+	if (data->path.mlx_img != NULL)
+		mlx_destroy_image(data->mlx_ptr, data->path.mlx_img);
+	if (data->player.mlx_img != NULL)
+		mlx_destroy_image(data->mlx_ptr, data->player.mlx_img);
+	if (data->exit.mlx_img != NULL)
+		mlx_destroy_image(data->mlx_ptr, data->exit.mlx_img);
+	if (data->item.mlx_img != NULL)
+		mlx_destroy_image(data->mlx_ptr, data->item.mlx_img);
 	mlx_destroy_window(data->mlx_ptr, data->win_ptr);
 	free(data->mlx_ptr);
 }

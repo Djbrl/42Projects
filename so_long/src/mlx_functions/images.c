@@ -12,13 +12,13 @@
 
 #include "so_long.h"
 
-void	*create_image(t_game *d, int height, int width, int casecolor)
+void	create_image(t_img *img, t_game *d, int height, int width, int casecolor)
 {
-	void	*image;
+	//void	*image;
 	int		pixel_bits;
 	int		line_bytes;
 	int		endian;
-	char	*buffer;
+	// /char	*buffer;
 	int		color;
 	int		x;
 	int		y;
@@ -27,8 +27,8 @@ void	*create_image(t_game *d, int height, int width, int casecolor)
 	x = 0;
 	y = 0;
 	color = casecolor;
-	image = mlx_new_image(d->mlx_ptr, width, height);
-	buffer = mlx_get_data_addr(image, &pixel_bits, &line_bytes, &endian);
+	img->mlx_img = mlx_new_image(d->mlx_ptr, width, height);
+	img->img_addr = mlx_get_data_addr(img->mlx_img, &pixel_bits, &line_bytes, &endian);
 	if (pixel_bits != 32)
 		color = mlx_get_color_value(d->mlx_ptr, color);
 	while (y < height)
@@ -38,46 +38,48 @@ void	*create_image(t_game *d, int height, int width, int casecolor)
 			pixel = (y * line_bytes) + (x * 4);
 			if (endian == 1)
 			{
-				buffer[pixel + 0] = (color >> 24);
-				buffer[pixel + 1] = (color >> 16) & 0xFF;
-				buffer[pixel + 2] = (color >> 8) & 0xFF;
-				buffer[pixel + 3] = (color) & 0xFF;
+				img->img_addr[pixel + 0] = (color >> 24);
+				img->img_addr[pixel + 1] = (color >> 16) & 0xFF;
+				img->img_addr[pixel + 2] = (color >> 8) & 0xFF;
+				img->img_addr[pixel + 3] = (color) & 0xFF;
 			}
 			else if (endian == 0)
 			{
-				buffer[pixel + 0] = (color) & 0xFF;
-				buffer[pixel + 1] = (color >> 8) & 0xFF;
-				buffer[pixel + 2] = (color >> 16) & 0xFF;
-				buffer[pixel + 3] = (color >> 24);
+				img->img_addr[pixel + 0] = (color) & 0xFF;
+				img->img_addr[pixel + 1] = (color >> 8) & 0xFF;
+				img->img_addr[pixel + 2] = (color >> 16) & 0xFF;
+				img->img_addr[pixel + 3] = (color >> 24);
 			}
 			x++;
 		}
 		x = 0;
 		y++;
 	}
-	return (image);
 }
 
 static void	choose_texture(t_game *d, int i, int j)
 {
+	printf("%p\n", d->wall.mlx_img);
+	int l = 0;
+	scanf("%i", &l);
 	if (d->map[i][j] == '1')
-		mlx_put_image_to_window(d->mlx_ptr, d->win_ptr, d->wall, \
+		mlx_put_image_to_window(d->mlx_ptr, d->win_ptr, d->wall.mlx_img, \
 			j * 1080 / d->width, i * 640 / d->height);
 	if (d->map[i][j] == '0')
-		mlx_put_image_to_window(d->mlx_ptr, d->win_ptr, d->path, \
+		mlx_put_image_to_window(d->mlx_ptr, d->win_ptr, d->path.mlx_img, \
 			j * 1080 / d->width, i * 640 / d->height);
 	if (d->map[i][j] == 'C')
-		mlx_put_image_to_window(d->mlx_ptr, d->win_ptr, d->item, \
+		mlx_put_image_to_window(d->mlx_ptr, d->win_ptr, d->item.mlx_img, \
 			j * 1080 / d->width, i * 640 / d->height);
 	if (d->map[i][j] == 'P')
 	{
 		d->player_x = i;
 		d->player_y = j;
-		mlx_put_image_to_window(d->mlx_ptr, d->win_ptr, d->player, \
+		mlx_put_image_to_window(d->mlx_ptr, d->win_ptr, d->player.mlx_img, \
 			j * 1080 / d->width, i * 640 / d->height);
 	}
 	if (d->map[i][j] == 'E')
-		mlx_put_image_to_window(d->mlx_ptr, d->win_ptr, d->exit, j \
+		mlx_put_image_to_window(d->mlx_ptr, d->win_ptr, d->exit.mlx_img, j \
 			* 1080 / d->width, i * 640 / d->height);
 }
 

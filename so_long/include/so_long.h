@@ -58,7 +58,7 @@
 typedef struct s_img
 {
 	void		*mlx_img;
-	int			*img_addr;
+	char		*img_addr;
 	int			bpp;
 	int			sl;
 	int			endian;
@@ -94,7 +94,7 @@ int		esc_window(t_game *data);
 int		cross_window(t_game *data);
 int		key_stroke(int key, t_game *data);
 void	draw_map(t_game *data);
-void	*create_image(t_game *data, int height, int width, int casecolor);
+void	create_image(t_img *img, t_game *data, int height, int width, int casecolor);
 /*
 PARSING
 */
