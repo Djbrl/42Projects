@@ -58,10 +58,11 @@ int	check_map(char *map, t_game *data)
 	}
 	(void)data;
 	map_to_parse = ft_split(map, '\n');
-	if (!map_to_parse)
+	if (!map_to_parse || !check_map_config(map_to_parse))
+	{
+		free_split(map_to_parse);
 		return (0);
-	if (!check_map_config(map_to_parse))
-		return (0);
+	}
 	data->map = map_to_parse;
 	data->width = get_map_width(map_to_parse);
 	data->height = get_map_heigth(map_to_parse);
@@ -73,11 +74,22 @@ int	parse_map(char *path, t_game *data)
 {
 	int		file;
 	char	*map;
+	int		i;
 
+	i = 0;
 	file = open(path, O_RDONLY);
 	if (file < 0)
 		return (0);
 	map = read_map_data(file, path);
+	if (map != NULL)
+	{
+		while (map[i] && map[i + 1])
+		{
+			if ((map[i] == map[i + 1]) && map[i] == '\n')
+				return (exit_error(MAP_INVALID, data));
+			i++;
+		}
+	}
 	if (!map || !check_map(map, data))
 		return (exit_error(MAP_INVALID, data));
 	return (file);

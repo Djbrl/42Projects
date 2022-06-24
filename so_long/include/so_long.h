@@ -94,7 +94,8 @@ int		esc_window(t_game *data);
 int		cross_window(t_game *data);
 int		key_stroke(int key, t_game *data);
 void	draw_map(t_game *data);
-void	create_image(t_img *img, t_game *data, int height, int width, int casecolor);
+void	create_image(t_img *img, t_game *data, \
+	int resolution[2], int casecolor);
 /*
 PARSING
 */

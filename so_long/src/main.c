@@ -37,21 +37,19 @@ static int	count_items(t_game *data)
 
 static void	init_game(t_game *data)
 {
-	int		padding;
+	int	padding;
+	int	resolution[2];
 
 	padding = 20;
+	resolution[0] = (640 - padding) / data->height;
+	resolution[1] = (1080 - padding) / data->width;
 	data->items_left = count_items(data);
 	data->score = 0;
-	create_image(&data->wall, data, (640 - padding) / data->height, \
-		(1080 - padding) / data->width, 0x444);
-	create_image(&data->player, data, (640 - padding) / data->height, \
-		(1080 - padding) / data->width, 0x880808);
-	create_image(&data->path, data, (640 - padding) / data->height, \
-		(1080 - padding) / data->width, 0x0);
-	create_image(&data->item, data, (640 - padding) / data->height, \
-		(1080 - padding) / data->width, 0x777);
-	create_image(&data->exit, data, (640 - padding) / data->height, \
-		(1080 - padding) / data->width, 0x888666);
+	create_image(&data->wall, data, resolution, 0x444);
+	create_image(&data->player, data, resolution, 0x880808);
+	create_image(&data->path, data, resolution, 0x0);
+	create_image(&data->item, data, resolution, 0x777);
+	create_image(&data->exit, data, resolution, 0x888666);
 	draw_map(data);
 }
 
