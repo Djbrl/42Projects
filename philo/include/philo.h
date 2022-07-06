@@ -14,9 +14,22 @@
 # define PHILO_H
 
 # include <unistd.h>
-# include "libft.h"
+# include <stdio.h>
+# include <pthread.h>
 
 # define INT_MIN -2147483648
 # define INT_MAX 2147483647
+# define GREEN_COLOR "\033[0;32m"
+# define YLW_COLOR "\033[0;33m"
+# define RED_COLOR "\033[0;31m"
+# define END_COLOR "\033[0m"
+# define PCREAT_ERR "Error : Failed to create thread.\n"
+# define PJOIN_ERR "Error : Failed to terminate thread.\n"
+
+/*
+UTILS
+*/
+
+int	exit_err(char *err);
 
 #endif

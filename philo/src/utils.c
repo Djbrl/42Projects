@@ -1,30 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memchr.c                                        :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/10 19:11:52 by dsy               #+#    #+#             */
-/*   Updated: 2022/04/05 16:11:05 by dsy              ###   ########.fr       */
+/*   Created: 2022/07/06 04:32:57 by dsy               #+#    #+#             */
+/*   Updated: 2022/07/06 04:33:01 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "philo.h"
 
-void	*ft_memchr(const void *s, int c, size_t n)
+int	exit_err(char *err)
 {
-	size_t		i;
-	const char	*src;
-
-	i = 0;
-	src = s;
-	while (i < (unsigned char)n)
-	{
-		if (src[i] == c)
-			return ((void *)src + i);
-		else
-			i++;
-	}
-	return (NULL);
+	printf("%s", RED_COLOR);
+	printf("%s", err);
+	printf("%s", END_COLOR);
+	return (0);
 }

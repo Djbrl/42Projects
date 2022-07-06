@@ -16,14 +16,14 @@ YLW_COLOR = \033[0;33m
 END_COLOR = \033[0m
 NAME := philo
 
-LIB_FT := lib/libft/libft.a
+LIB_FT := 
 
 CC := cc
-CFLAGS := -Wall -Wextra -Werror
+CFLAGS := -Wall -Wextra -Werror -pthread
 PFLAGS := -Iinclude -Ilib/libft
 
 SRC_PATH := src
-SRC_NAME := main.c
+SRC_NAME := main.c utils.c
 
 OBJ_PATH := obj
 OBJ_NAME := $(SRC_NAME:.c=.o)
@@ -49,13 +49,13 @@ $(BUILD_PATH)/$(OBJ_PATH)/%.o: $(SRC_PATH)/%.c
 
 $(LIB_FT):
 	@echo "${YLW_COLOR}Compiling ${NAME}...${END_COLOR}"
-	@make -C lib/libft
+#	@make -C lib/libft
 
 libft_clean:
-	@make -C lib/libft clean
+#	@make -C lib/libft clean
 
 libft_fclean:
-	@make -C lib/libft fclean
+#	@make -C lib/libft fclean
 
 re: fclean all
 
