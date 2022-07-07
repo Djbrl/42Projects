@@ -27,6 +27,30 @@
 # define PJOIN_ERR "Error : Failed to terminate thread.\n"
 
 /*
+STRUCTURES
+*/
+
+typedef struct s_philo
+{
+	pthread_t	t;
+	int			timer;
+}				t_philo;
+
+typedef struct s_fork
+{
+	pthread_mutex_t	m;
+	int				status;
+}					t_fork;
+
+typedef struct s_data
+{
+	t_philo			philos;
+	t_fork			forks;
+	void			*job_data;
+	void			*job_res;
+}					t_data;
+
+/*
 UTILS
 */
 
