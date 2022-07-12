@@ -15,11 +15,14 @@
 
 void	*job(void *arg)
 {
-	// t_data *data = (t_data *)arg;
-	// int value = (rand() % 6) + 1;
-	// data->job_data = &value;
-	// return ((void *)data->job_data);
-	return(arg);
+	t_data *data = (t_data *)arg;
+	pthread_mutex_lock(&data->forks[1].m);
+	int value = (rand() % 6) + 1;
+	// pthread_mutex_lock(&data->forks[0].m);
+	data->job_data = &value;
+	// pthread_mutex_unlock(&data->forks[0].m);
+	pthread_mutex_unlock(&data->forks[1].m);
+	return ((void *)data->job_data);
 }
 
 int		init_threads(t_data *data)
@@ -42,7 +45,6 @@ int		end_threads(t_data *data)
 		if (pthread_join(data->philos[i].t, (void **)&data->job_data) != 0)
 			return (exit_err(PJOIN_ERR, data));
 		i++;
-		printf("%p\n", data->job_data);
 	}
 	return (1);
 }
@@ -81,14 +83,10 @@ int	main(int ac, char **av)
 	(void)ac;
 	(void)av;
 	init_struct(&data);
-	init_threads(&data);
 	init_mutexs(&data);
+	init_threads(&data);
 	end_threads(&data);
 	end_mutexs(&data);
 	destroy_struct(&data);
-	// if (pthread_mutex_init(&data.forks.m, NULL))
-	// 	return(exit_err(MUTEX_INIT));
-	// if (pthread_mutex_destroy(&data.forks.m))
-	// 	return(exit_err(MUTEX_KILL));
 	return (0);
 }

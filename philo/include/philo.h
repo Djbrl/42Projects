@@ -18,8 +18,8 @@
 # include <stdlib.h>
 # include <pthread.h>
 
-# define N_PHILO 5
-# define N_FORK 5
+# define N_PHILO 2
+# define N_FORK 2
 # define INT_MIN -2147483648
 # define INT_MAX 2147483647
 # define GREEN_COLOR "\033[0;32m"
