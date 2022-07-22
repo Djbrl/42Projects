@@ -23,7 +23,7 @@ CFLAGS := -Wall -Wextra -Werror -pthread -g
 PFLAGS := -Iinclude -Ilib/libft
 
 SRC_PATH := src
-SRC_NAME := main.c utils.c
+SRC_NAME := main.c utils.c init.c
 
 OBJ_PATH := obj
 OBJ_NAME := $(SRC_NAME:.c=.o)

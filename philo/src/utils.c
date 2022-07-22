@@ -16,12 +16,12 @@ void	init_struct(t_data *data)
 {
 	data->philos = NULL;
 	data->forks = NULL;
-	data->job_res = NULL;
-	data->job_data = NULL;
+	// data->job_res = NULL;
+	// data->job_data = NULL;
 	data->philos = malloc(sizeof(t_philo) * (N_PHILO));
 	if (!data->philos)
 		exit_err(MALLOC_ERR, data);
-	data->forks = malloc(sizeof(t_fork) * (N_FORK));
+	data->forks = malloc(sizeof(pthread_mutex_t) * (N_FORK));
 	if (!data->forks)
 		exit_err(MALLOC_ERR, data);
 }
