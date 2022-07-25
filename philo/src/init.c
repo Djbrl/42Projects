@@ -19,7 +19,13 @@ int	init_threads(t_data *data)
 	i = 0;
 	while (i < N_PHILO)
 	{
-		if (pthread_create(&data->philos[i].t, NULL, &job, (void *)data) != 0)
+		data->philos[i].id = i;
+		data->philos[i].meal_done = 0;
+		data->philos[i].last_meal = 0;
+		data->philos[i].fourchette = i;
+		data->philos[i].couteau = (i + 1);
+		data->philos[i].info = data;
+		if (pthread_create(&data->philos[i].thread, NULL, &job, (void *)&data->philos[i]) != 0)
 			return (exit_err(PCREAT_ERR, data));
 		i++;
 	}
@@ -33,7 +39,7 @@ int	end_threads(t_data *data)
 	i = 0;
 	while (i < N_PHILO)
 	{
-		if (pthread_join(data->philos[i].t, NULL))
+		if (pthread_join(data->philos[i].thread, NULL))
 			return (exit_err(PJOIN_ERR, data));
 		i++;
 	}
@@ -51,6 +57,11 @@ int	init_mutexs(t_data *data)
 			return (exit_err(MUTEX_INIT, data));
 		i++;
 	}
+	if (pthread_mutex_init(&data->write, NULL))
+			return (exit_err(MUTEX_INIT, data));
+	if (pthread_mutex_init(&data->meal, NULL))
+		return (exit_err(MUTEX_INIT, data));
+
 	return (1);
 }
 
@@ -65,5 +76,9 @@ int	end_mutexs(t_data *data)
 			return (exit_err(MUTEX_KILL, data));
 		i++;
 	}
+	if (pthread_mutex_destroy(&data->write))
+		return (exit_err(MUTEX_KILL, data));
+	if (pthread_mutex_destroy(&data->meal))
+		return (exit_err(MUTEX_KILL, data));
 	return (1);
 }

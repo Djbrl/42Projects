@@ -17,9 +17,10 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <pthread.h>
+# include <sys/time.h>
 
-# define N_PHILO 2
-# define N_FORK 2
+# define N_PHILO 100
+# define N_FORK N_PHILO
 # define INT_MIN -2147483648
 # define INT_MAX 2147483647
 # define GREEN_COLOR "\033[0;32m"
@@ -40,9 +41,11 @@ typedef struct s_philo
 {
 	int				id;
 	int				meal_done;
-	pthread_t		t;
+	int				fourchette;
+	int				couteau;
+	pthread_t		thread;
 	long long		last_meal;
-	struct s_data	*data;
+	struct s_data	*info;
 }				t_philo;
 
 typedef struct s_data
@@ -58,13 +61,17 @@ typedef struct s_data
 	int				eat_time;
 	t_philo			*philos;
 	pthread_mutex_t write;
-	pthread_mutex_t	meal_status;
+	pthread_mutex_t	meal;
 	pthread_mutex_t	*forks;
 }					t_data;
 
 /*
 UTILS
 */
+long long	timestamp(void);
+long long	time_diff(long long prev, long long cur);
+void	eat_message(t_philo *philo);
+void	fork_message(t_philo *philo, char *msg, int id);
 void	*job(void *arg);
 int		init_threads(t_data *data);
 int		end_threads(t_data *data);

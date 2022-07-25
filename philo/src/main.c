@@ -11,15 +11,26 @@
 /* ************************************************************************** */
 
 #include "philo.h"
-#include <time.h>
 
 void	*job(void *arg)
 {
+	t_philo *philo;
 	t_data	*data;
 
-	data = (t_data *)arg;
-	// pthread_mutex_lock(&data->forks[1].m);
-	// pthread_mutex_unlock(&data->forks[1].m);
+	philo = (t_philo*)arg;
+	data = philo->info;
+	pthread_mutex_lock(&data->forks[philo->fourchette]);
+	fork_message(philo, "has taken Fourchette", philo->fourchette);
+	pthread_mutex_lock(&data->forks[philo->couteau]);
+	fork_message(philo, "has taken Couteau", philo->couteau);
+	eat_message(philo);
+	philo->last_meal = timestamp();
+	pthread_mutex_lock(&data->meal);
+	usleep(1000);
+	printf("time stamp [%lld]\n", timestamp() - philo->last_meal);
+	pthread_mutex_unlock(&data->meal);
+	pthread_mutex_unlock(&data->forks[philo->fourchette]);
+	pthread_mutex_unlock(&data->forks[philo->couteau]);
 	return ((void *) NULL);
 }
 

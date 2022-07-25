@@ -16,8 +16,6 @@ void	init_struct(t_data *data)
 {
 	data->philos = NULL;
 	data->forks = NULL;
-	// data->job_res = NULL;
-	// data->job_data = NULL;
 	data->philos = malloc(sizeof(t_philo) * (N_PHILO));
 	if (!data->philos)
 		exit_err(MALLOC_ERR, data);
@@ -34,6 +32,29 @@ void	destroy_struct(t_data *data)
 		free(data->forks);
 }
 
+void	fork_message(t_philo *philo, char *msg, int id)
+{
+	pthread_mutex_lock(&philo->info->write);
+	printf("%s", YLW_COLOR);
+	printf("Guest n.%d", philo->id);
+	printf("%s", END_COLOR);
+	printf(" %s\t", msg);
+	printf("%s", YLW_COLOR);
+	printf("n.%d.\n", id);
+	printf("%s", END_COLOR);
+	pthread_mutex_unlock(&philo->info->write);
+}
+
+void	eat_message(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->info->write);
+	printf("%s", GREEN_COLOR);
+	printf("Guest n.%d", philo->id);
+	printf(" %s", "is enjoying his meal.\n");
+	printf("%s", END_COLOR);
+	pthread_mutex_unlock(&philo->info->write);
+}
+
 int	exit_err(char *err, t_data *data)
 {
 	printf("%s", RED_COLOR);
@@ -41,4 +62,17 @@ int	exit_err(char *err, t_data *data)
 	printf("%s", END_COLOR);
 	destroy_struct(data);
 	return (0);
+}
+
+long long	timestamp(void)
+{
+	struct timeval	t;
+
+	gettimeofday(&t, NULL);
+	return ((t.tv_sec * 1000) + (t.tv_usec / 1000));
+}
+
+long long	time_diff(long long past, long long pres)
+{
+	return (pres - past);
 }
