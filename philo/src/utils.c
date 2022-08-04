@@ -16,10 +16,10 @@ void	init_struct(t_data *data)
 {
 	data->philos = NULL;
 	data->forks = NULL;
-	data->philos = malloc(sizeof(t_philo) * (N_PHILO));
+	data->philos = malloc(sizeof(t_philo) * (N_PHILO + 1));
 	if (!data->philos)
 		exit_err(MALLOC_ERR, data);
-	data->forks = malloc(sizeof(pthread_mutex_t) * (N_FORK));
+	data->forks = malloc(sizeof(pthread_mutex_t) * (N_FORK + 1));
 	if (!data->forks)
 		exit_err(MALLOC_ERR, data);
 }
@@ -35,6 +35,7 @@ void	destroy_struct(t_data *data)
 void	fork_message(t_philo *philo, char *msg, int id)
 {
 	pthread_mutex_lock(&philo->info->write);
+	printf("[%lld] ", timestamp() - philo->info->start_time);
 	printf("%s", YLW_COLOR);
 	printf("Guest n.%d", philo->id);
 	printf("%s", END_COLOR);
@@ -48,12 +49,45 @@ void	fork_message(t_philo *philo, char *msg, int id)
 void	eat_message(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->info->write);
-	printf("%s", GREEN_COLOR);
+	printf("[%lld] ", timestamp() - philo->info->start_time);
+	printf("%s", YLW_COLOR);
 	printf("Guest n.%d", philo->id);
-	printf(" %s", "is enjoying his meal.\n");
+	printf("%s", END_COLOR);
+	printf(" %s", "is enjoying his ");
+	printf("%s", GREEN_COLOR);
+	printf("\tmeal.\n");
 	printf("%s", END_COLOR);
 	pthread_mutex_unlock(&philo->info->write);
 }
+
+void	sleep_message(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->info->write);
+	printf("[%lld] ", timestamp() - philo->info->start_time);
+	printf("%s", YLW_COLOR);
+	printf("Guest n.%d", philo->id);
+	printf("%s", END_COLOR);
+	printf(" %s", "is enjoying his ");
+	printf("%s", GREEN_COLOR);
+	printf("\tnap.\n");
+	printf("%s", END_COLOR);
+	pthread_mutex_unlock(&philo->info->write);
+}
+
+void	death_message(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->info->write);
+	printf("[%lld] ", timestamp() - philo->info->start_time);
+	printf("%s", RED_COLOR);
+	printf("Guest n.%d", philo->id);
+	printf("%s", END_COLOR);
+	printf(" %s", "is ");
+	printf("%s", RED_COLOR);
+	printf("\tdead.\n");
+	printf("%s", END_COLOR);
+	pthread_mutex_unlock(&philo->info->write);
+}
+
 
 int	exit_err(char *err, t_data *data)
 {
