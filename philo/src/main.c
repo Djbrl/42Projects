@@ -40,7 +40,7 @@ static int	input_parsing(char **av, t_data *data)
 	data->nb_meals = 0;
 	data->nb_philo = ft_atoi(av[1]);
 	data->nb_fork = data->nb_philo;
-	data->death_time = ft_atoi(av[2]) * 1000;
+	data->death_time = ft_atoi(av[2]);
 	data->sleep_time = ft_atoi(av[3]) * 1000;
 	data->eat_time = ft_atoi(av[4]) * 1000;
 	if (av[5])
@@ -58,6 +58,11 @@ void	dinner(t_philo *philo)
 	if (philo->couteau < data->nb_fork)
 		pthread_mutex_lock(&data->forks[philo->couteau]);
 	fork_message(philo, "has taken a fork", philo->fourchette);
+	//DEBUG PRINT
+	pthread_mutex_lock(&data->write);
+	printf("GUEST %i is about to eat! They've been waiting for %lli ms\n", philo->id, timestamp() - philo->last_meal);
+	pthread_mutex_unlock(&data->write);
+	//DEBUG PRINT
 	eat_message(philo);
 	pthread_mutex_lock(&data->write);
 	philo->last_meal = timestamp();
@@ -79,7 +84,7 @@ void	*job(void *arg)
 	philo = (t_philo *)arg;
 	data = philo->info;
 	if (philo->id % 2 == 0)
-		usleep(300000);
+		usleep(10000);
 	while (!data->death_status)
 	{
 		if (i == data->nb_meals && data->nb_meals != 0)
@@ -104,6 +109,20 @@ int	main(int ac, char **av)
 	init_struct(&data);
 	init_mutexs(&data);
 	init_threads(&data);
+	//DATA RACE
+	// int i = 0;
+	// while (i < data.nb_philo)
+	// {
+	// 	if (timestamp() - data.philos[i].last_meal > data.death_time)
+	// 	{
+	// 		printf("%i dead\n", i);
+	// 		break;
+	// 	}
+	// 	i++;
+	// 	if (i == data.nb_philo)
+	// 		i = 0;
+	// }
+	//DATA RACE
 	end_threads(&data);
 	end_mutexs(&data);
 	destroy_struct(&data);
