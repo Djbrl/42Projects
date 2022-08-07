@@ -19,14 +19,13 @@
 # include <pthread.h>
 # include <sys/time.h>
 
-# define N_PHILO 2
-# define N_FORK N_PHILO
 # define INT_MIN -2147483648
 # define INT_MAX 2147483647
 # define GREEN_COLOR "\033[0;32m"
 # define YLW_COLOR "\033[0;33m"
 # define RED_COLOR "\033[0;31m"
 # define END_COLOR "\033[0m"
+# define ARG_ERR "Error : Invalid arguments.\n"
 # define MALLOC_ERR "Error : Failed to allocate memory.\n"
 # define PCREAT_ERR "Error : Failed to create thread.\n"
 # define PJOIN_ERR "Error : Failed to terminate thread.\n"
@@ -51,37 +50,44 @@ typedef struct s_philo
 typedef struct s_data
 {
 	long long		start_time;
+	int				all_ate;
+	int				nb_philo;
+	int				nb_fork;
 	int				dinner_status;
 	int				death_status;
-	int				nb_philo;
-	int				nb_meals;
 	int				meals_done;
+	int				nb_meals;
 	int				death_time;
 	int				sleep_time;
 	int				eat_time;
 	t_philo			*philos;
-	pthread_mutex_t write;
+	pthread_mutex_t	write;
 	pthread_mutex_t	meal;
-	pthread_mutex_t read;
+	pthread_mutex_t	read;
 	pthread_mutex_t	*forks;
-	pthread_mutex_t death;
+	pthread_mutex_t	death;
 }					t_data;
 
 /*
 UTILS
 */
 long long	timestamp(void);
-long long	time_diff(long long prev, long long cur);
-void	eat_message(t_philo *philo);
-void	fork_message(t_philo *philo, char *msg, int id);
-void	sleep_message(t_philo *philo);
-void	death_message(t_philo *philo);
-void	*job(void *arg);
-int		init_threads(t_data *data);
-int		end_threads(t_data *data);
-int		init_mutexs(t_data *data);
-int		end_mutexs(t_data *data);
-int		exit_err(char *err, t_data *data);
-void	init_struct(t_data *data);
-void	destroy_struct(t_data *data);
+void		eat_message(t_philo *philo);
+void		think_message(t_philo *philo);
+void		fork_message(t_philo *philo, char *msg, int id);
+void		sleep_message(t_philo *philo);
+void		death_message(t_philo *philo);
+int			exit_err(char *err, t_data *data);
+int			ft_atoi(char *str);
+
+/*
+PHILO
+*/
+void		*job(void *arg);
+void		destroy_struct(t_data *data);
+void		init_struct(t_data *data);
+int			init_threads(t_data *data);
+int			init_mutexs(t_data *data);
+int			end_threads(t_data *data);
+int			end_mutexs(t_data *data);
 #endif

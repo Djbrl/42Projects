@@ -17,10 +17,7 @@ int	init_threads(t_data *data)
 	int	i;
 
 	i = 0;
-	data->nb_meals = 0;
-	data->start_time = timestamp();
-	data->death_status = 0;
-	while (i < N_PHILO)
+	while (i < data->nb_philo)
 	{
 		data->philos[i].id = i;
 		data->philos[i].meal_done = 0;
@@ -28,7 +25,8 @@ int	init_threads(t_data *data)
 		data->philos[i].fourchette = i;
 		data->philos[i].couteau = (i + 1);
 		data->philos[i].info = data;
-		if (pthread_create(&data->philos[i].thread, NULL, &job, (void *)&data->philos[i]) != 0)
+		if (pthread_create(&data->philos[i].thread, NULL, \
+				&job, (void *)&data->philos[i]) != 0)
 			return (exit_err(PCREAT_ERR, data));
 		i++;
 	}
@@ -40,7 +38,7 @@ int	end_threads(t_data *data)
 	int	i;
 
 	i = 0;
-	while (i < N_PHILO)
+	while (i < data->nb_philo)
 	{
 		if (pthread_join(data->philos[i].thread, NULL))
 			return (exit_err(PJOIN_ERR, data));
@@ -54,14 +52,14 @@ int	init_mutexs(t_data *data)
 	int	i;
 
 	i = 0;
-	while (i < N_FORK)
+	while (i < data->nb_fork)
 	{
 		if (pthread_mutex_init(&data->forks[i], NULL))
 			return (exit_err(MUTEX_INIT, data));
 		i++;
 	}
 	if (pthread_mutex_init(&data->write, NULL))
-			return (exit_err(MUTEX_INIT, data));
+		return (exit_err(MUTEX_INIT, data));
 	if (pthread_mutex_init(&data->read, NULL))
 		return (exit_err(MUTEX_INIT, data));
 	if (pthread_mutex_init(&data->meal, NULL))
@@ -76,7 +74,7 @@ int	end_mutexs(t_data *data)
 	int	i;
 
 	i = 0;
-	while (i < N_FORK)
+	while (i < data->nb_fork)
 	{
 		if (pthread_mutex_destroy(&data->forks[i]))
 			return (exit_err(MUTEX_KILL, data));
