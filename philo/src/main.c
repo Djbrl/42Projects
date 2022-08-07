@@ -110,18 +110,19 @@ int	main(int ac, char **av)
 	init_mutexs(&data);
 	init_threads(&data);
 	//DATA RACE
-	// int i = 0;
-	// while (i < data.nb_philo)
-	// {
-	// 	if (timestamp() - data.philos[i].last_meal > data.death_time)
-	// 	{
-	// 		printf("%i dead\n", i);
-	// 		break;
-	// 	}
-	// 	i++;
-	// 	if (i == data.nb_philo)
-	// 		i = 0;
-	// }
+	int i = 0;
+	while (i < data.nb_philo)
+	{
+		if (timestamp() - data.philos[i].last_meal > data.death_time)
+		{
+			printf("%i dead\n", i);
+			data.death_status = 1;
+			break;
+		}
+		i++;
+		if (i == data.nb_philo)
+			i = 0;
+	}
 	//DATA RACE
 	end_threads(&data);
 	end_mutexs(&data);
