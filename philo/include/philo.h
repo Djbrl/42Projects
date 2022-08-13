@@ -66,6 +66,7 @@ typedef struct s_data
 	pthread_mutex_t	read;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	death;
+	pthread_mutex_t timer;
 }					t_data;
 
 /*

@@ -66,6 +66,8 @@ int	init_mutexs(t_data *data)
 		return (exit_err(MUTEX_INIT, data));
 	if (pthread_mutex_init(&data->death, NULL))
 		return (exit_err(MUTEX_INIT, data));
+	if (pthread_mutex_init(&data->timer, NULL))
+		return (exit_err(MUTEX_INIT, data));
 	return (1);
 }
 
@@ -87,6 +89,8 @@ int	end_mutexs(t_data *data)
 	if (pthread_mutex_destroy(&data->meal))
 		return (exit_err(MUTEX_KILL, data));
 	if (pthread_mutex_destroy(&data->death))
+		return (exit_err(MUTEX_KILL, data));
+	if (pthread_mutex_destroy(&data->timer))
 		return (exit_err(MUTEX_KILL, data));
 	return (1);
 }

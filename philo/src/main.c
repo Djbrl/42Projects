@@ -48,27 +48,55 @@ static int	input_parsing(char **av, t_data *data)
 	return (1);
 }
 
+void		smart_sleep(long long time, t_data *data)
+{
+	long long i;
+
+	i = timestamp();
+	//pthread_mutex_lock(&data->death);
+	while (!(data->death_status))
+	{
+		if ((timestamp() - i) >= time)
+		{	
+			pthread_mutex_unlock(&data->death);
+			break ;
+		}
+		usleep(50);
+	}
+	//pthread_mutex_unlock(&data->death);
+}
+
+
 void	dinner(t_philo *philo)
 {
 	t_data	*data;
 
 	data = philo->info;
+	pthread_mutex_lock(&data->death);
+	if (data->death_status)
+	{
+		pthread_mutex_unlock(&data->death);
+		return;
+	}
+	pthread_mutex_unlock(&data->death);
+
 	pthread_mutex_lock(&data->forks[philo->fourchette]);
 	fork_message(philo, "has taken a fork", philo->couteau);
 	if (philo->couteau < data->nb_fork)
 		pthread_mutex_lock(&data->forks[philo->couteau]);
 	fork_message(philo, "has taken a fork", philo->fourchette);
 	//DEBUG PRINT
-	pthread_mutex_lock(&data->write);
-	printf("GUEST %i is about to eat! They've been waiting for %lli ms\n", philo->id, timestamp() - philo->last_meal);
-	pthread_mutex_unlock(&data->write);
+	// pthread_mutex_lock(&data->write);
+	// // printf("GUEST %i is about to eat! They've been waiting for %lli ms\n", philo->id, timestamp() - philo->last_meal);
+	// pthread_mutex_unlock(&data->write);
 	//DEBUG PRINT
+	pthread_mutex_lock(&data->read);
 	eat_message(philo);
-	pthread_mutex_lock(&data->write);
 	philo->last_meal = timestamp();
+	pthread_mutex_unlock(&data->read);
 	usleep(data->eat_time);
+	//smart_sleep(data->eat_time, data);
 	philo->meal_done++;
-	pthread_mutex_unlock(&data->write);
 	pthread_mutex_unlock(&data->forks[philo->fourchette]);
 	if (philo->couteau < data->nb_fork)
 		pthread_mutex_unlock(&data->forks[philo->couteau]);
@@ -87,11 +115,30 @@ void	*job(void *arg)
 		usleep(10000);
 	while (!data->death_status)
 	{
-		if (i == data->nb_meals && data->nb_meals != 0)
+		if ((i == data->nb_meals && data->nb_meals != 0))
 			break ;
+		pthread_mutex_lock(&data->death);
+		if (data->death_status){
+			pthread_mutex_unlock(&data->death);
+			break;
+		}
+		pthread_mutex_unlock(&data->death);
 		dinner(philo);
+		pthread_mutex_lock(&data->death);
+		if (data->death_status){
+			pthread_mutex_unlock(&data->death);
+			break;
+		}
+		pthread_mutex_unlock(&data->death);
 		sleep_message(philo);
-		usleep(data->sleep_time);
+		usleep(data->eat_time);
+		// smart_sleep(data->sleep_time, data);
+		pthread_mutex_lock(&data->death);
+		if (data->death_status){
+			pthread_mutex_unlock(&data->death);
+			break;
+		}
+		pthread_mutex_unlock(&data->death);
 		think_message(philo);
 		i++;
 	}
@@ -109,21 +156,25 @@ int	main(int ac, char **av)
 	init_struct(&data);
 	init_mutexs(&data);
 	init_threads(&data);
-	//DATA RACE
 	int i = 0;
 	while (i < data.nb_philo)
 	{
+		
+		pthread_mutex_lock(&data.read);
 		if (timestamp() - data.philos[i].last_meal > data.death_time)
 		{
-			printf("%i dead\n", i);
+			death_message(&data.philos[i]);
+			pthread_mutex_lock(&data.death);
 			data.death_status = 1;
+			pthread_mutex_unlock(&data.death);
+			pthread_mutex_unlock(&data.read);
 			break;
 		}
+		pthread_mutex_unlock(&data.read);
 		i++;
 		if (i == data.nb_philo)
 			i = 0;
 	}
-	//DATA RACE
 	end_threads(&data);
 	end_mutexs(&data);
 	destroy_struct(&data);
