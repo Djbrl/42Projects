@@ -12,72 +12,92 @@
 
 #include "philo.h"
 
-void	fork_message(t_philo *philo, char *msg, int id)
+int	fork_message(t_philo *philo, char *msg)
 {
 	pthread_mutex_lock(&philo->info->write);
-	printf("[%lld] ", timestamp() - philo->info->start_time);
-	printf("%s", YLW_COLOR);
-	printf("%d", philo->id);
-	printf("%s", END_COLOR);
-	printf(" %s", msg);
-	printf("%s", YLW_COLOR);
-	printf(" (%d)\n", id);
-	printf("%s", END_COLOR);
+	pthread_mutex_lock(&philo->info->death);
+	if (philo->info->death_status)
+	{
+		pthread_mutex_unlock(&philo->info->death);
+		pthread_mutex_unlock(&philo->info->write);
+		return (1);
+	}
+	pthread_mutex_unlock(&philo->info->death);
 	pthread_mutex_unlock(&philo->info->write);
+	pthread_mutex_lock(&philo->info->write);
+	printf("[%lld] %d %s\n", timestamp() - philo->info->start_time, philo->id, msg);
+	pthread_mutex_unlock(&philo->info->write);
+	return (0);
 }
 
-void	think_message(t_philo *philo)
+int	think_message(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->info->write);
-	printf("[%lld] ", timestamp() - philo->info->start_time);
-	printf("%s", YLW_COLOR);
-	printf("%d", philo->id);
-	printf("%s", END_COLOR);
-	printf(" %s", "is ");
-	printf("%s", GREEN_COLOR);
-	printf("thinking\n");
-	printf("%s", END_COLOR);
+	pthread_mutex_lock(&philo->info->death);
+	if (philo->info->death_status)
+	{
+		pthread_mutex_unlock(&philo->info->death);
+		pthread_mutex_unlock(&philo->info->write);
+		return (1);
+	}
+	pthread_mutex_unlock(&philo->info->death);
 	pthread_mutex_unlock(&philo->info->write);
+	pthread_mutex_lock(&philo->info->write);
+	printf("[%lld] %d %s\n", timestamp() - philo->info->start_time, philo->id, "is thinking");
+	pthread_mutex_unlock(&philo->info->write);
+	return (0);
 }
 
-void	eat_message(t_philo *philo)
+int	eat_message(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->info->write);
-	printf("[%lld] ", timestamp() - philo->info->start_time);
-	printf("%s", YLW_COLOR);
-	printf("%d", philo->id);
-	printf("%s", END_COLOR);
-	printf(" %s", "is ");
-	printf("%s", GREEN_COLOR);
-	printf("eating\n");
-	printf("%s", END_COLOR);
+	pthread_mutex_lock(&philo->info->death);
+	if (philo->info->death_status)
+	{
+		pthread_mutex_unlock(&philo->info->death);
+		pthread_mutex_unlock(&philo->info->write);
+		return (1);
+	}
+	pthread_mutex_unlock(&philo->info->death);
 	pthread_mutex_unlock(&philo->info->write);
+	pthread_mutex_lock(&philo->info->write);
+	printf("[%lld] %d %s\n", timestamp() - philo->info->start_time, philo->id, "is eating");
+	pthread_mutex_unlock(&philo->info->write);
+	return (0);
 }
 
-void	sleep_message(t_philo *philo)
+int	sleep_message(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->info->write);
-	printf("[%lld] ", timestamp() - philo->info->start_time);
-	printf("%s", YLW_COLOR);
-	printf("%d", philo->id);
-	printf("%s", END_COLOR);
-	printf(" %s", "is ");
-	printf("%s", GREEN_COLOR);
-	printf("sleeping\n");
-	printf("%s", END_COLOR);
+	pthread_mutex_lock(&philo->info->death);
+	if (philo->info->death_status)
+	{
+		pthread_mutex_unlock(&philo->info->death);
+		pthread_mutex_unlock(&philo->info->write);
+		return (1);
+	}
+	pthread_mutex_unlock(&philo->info->death);
 	pthread_mutex_unlock(&philo->info->write);
+	pthread_mutex_lock(&philo->info->write);
+	printf("[%lld] %d %s\n", timestamp() - philo->info->start_time, philo->id, "is sleeping");
+	pthread_mutex_unlock(&philo->info->write);
+	return (0);
 }
 
-void	death_message(t_philo *philo)
+int	death_message(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->info->write);
-	printf("[%lld] ", timestamp() - philo->info->start_time);
-	printf("%s", RED_COLOR);
-	printf("%d", philo->id);
-	printf("%s", END_COLOR);
-	printf(" %s", "is ");
-	printf("%s", RED_COLOR);
-	printf("dead\n");
-	printf("%s", END_COLOR);
+	pthread_mutex_lock(&philo->info->death);
+	if (philo->info->death_status)
+	{
+		pthread_mutex_unlock(&philo->info->death);
+		pthread_mutex_unlock(&philo->info->write);
+		return (1);
+	}
+	pthread_mutex_unlock(&philo->info->death);
 	pthread_mutex_unlock(&philo->info->write);
+	pthread_mutex_lock(&philo->info->write);
+	printf("[%lld] %d %s\n", timestamp() - philo->info->start_time, philo->id, "is dead");
+	pthread_mutex_unlock(&philo->info->write);
+	return (0);
 }

@@ -53,7 +53,7 @@ void		smart_sleep(long long time, t_data *data)
 	long long i;
 
 	i = timestamp();
-	//pthread_mutex_lock(&data->death);
+	pthread_mutex_lock(&data->death);
 	while (!(data->death_status))
 	{
 		if ((timestamp() - i) >= time)
@@ -63,35 +63,41 @@ void		smart_sleep(long long time, t_data *data)
 		}
 		usleep(50);
 	}
-	//pthread_mutex_unlock(&data->death);
+	pthread_mutex_unlock(&data->death);
 }
 
 
-void	dinner(t_philo *philo)
+int	dinner(t_philo *philo)
 {
 	t_data	*data;
+	int		ret;
 
-	data = philo->info;
-	pthread_mutex_lock(&data->death);
-	if (data->death_status)
-	{
-		pthread_mutex_unlock(&data->death);
-		return;
-	}
-	pthread_mutex_unlock(&data->death);
-
+	data = philo->info;	
 	pthread_mutex_lock(&data->forks[philo->fourchette]);
-	fork_message(philo, "has taken a fork", philo->couteau);
+	ret = fork_message(philo, "has taken a fork");
+	if (ret)
+	{
+		pthread_mutex_unlock(&data->forks[philo->fourchette]);
+		return (1);
+	}
 	if (philo->couteau < data->nb_fork)
 		pthread_mutex_lock(&data->forks[philo->couteau]);
-	fork_message(philo, "has taken a fork", philo->fourchette);
-	//DEBUG PRINT
-	// pthread_mutex_lock(&data->write);
-	// // printf("GUEST %i is about to eat! They've been waiting for %lli ms\n", philo->id, timestamp() - philo->last_meal);
-	// pthread_mutex_unlock(&data->write);
-	//DEBUG PRINT
+	ret = fork_message(philo, "has taken a fork");
+	if (ret)
+	{
+		pthread_mutex_unlock(&data->forks[philo->fourchette]);
+		pthread_mutex_unlock(&data->forks[philo->couteau]);
+		return (1);
+	}
 	pthread_mutex_lock(&data->read);
-	eat_message(philo);
+	ret = eat_message(philo);
+	if (ret)
+	{
+		pthread_mutex_unlock(&data->forks[philo->fourchette]);
+		pthread_mutex_unlock(&data->forks[philo->couteau]);
+		pthread_mutex_unlock(&data->read);
+		return (1);
+	}
 	philo->last_meal = timestamp();
 	pthread_mutex_unlock(&data->read);
 	usleep(data->eat_time);
@@ -100,6 +106,7 @@ void	dinner(t_philo *philo)
 	pthread_mutex_unlock(&data->forks[philo->fourchette]);
 	if (philo->couteau < data->nb_fork)
 		pthread_mutex_unlock(&data->forks[philo->couteau]);
+	return (0);
 }
 
 void	*job(void *arg)
@@ -107,39 +114,47 @@ void	*job(void *arg)
 	t_philo	*philo;
 	t_data	*data;
 	int		i;
+	int		ret;
 
+	ret = 0;
 	i = 0;
 	philo = (t_philo *)arg;
 	data = philo->info;
 	if (philo->id % 2 == 0)
 		usleep(10000);
-	while (!data->death_status)
+	while (1)
 	{
 		if ((i == data->nb_meals && data->nb_meals != 0))
 			break ;
-		pthread_mutex_lock(&data->death);
-		if (data->death_status){
-			pthread_mutex_unlock(&data->death);
+		// pthread_mutex_lock(&data->death);
+		// if (data->death_status){
+		// 	pthread_mutex_unlock(&data->death);
+		// 	break;
+		// }
+		// pthread_mutex_unlock(&data->death);
+		ret = dinner(philo);
+		if (ret)
 			break;
-		}
-		pthread_mutex_unlock(&data->death);
-		dinner(philo);
-		pthread_mutex_lock(&data->death);
-		if (data->death_status){
-			pthread_mutex_unlock(&data->death);
+		// pthread_mutex_lock(&data->death);
+		// if (data->death_status){
+		// 	pthread_mutex_unlock(&data->death);
+		// 	break;
+		// }
+		// pthread_mutex_unlock(&data->death);
+		ret = sleep_message(philo);
+		if (ret)
 			break;
-		}
-		pthread_mutex_unlock(&data->death);
-		sleep_message(philo);
 		usleep(data->eat_time);
 		// smart_sleep(data->sleep_time, data);
-		pthread_mutex_lock(&data->death);
-		if (data->death_status){
-			pthread_mutex_unlock(&data->death);
+		// pthread_mutex_lock(&data->death);
+		// if (data->death_status){
+		// 	pthread_mutex_unlock(&data->death);
+		// 	break;
+		// }
+		// pthread_mutex_unlock(&data->death);
+		ret = think_message(philo);
+		if (ret)
 			break;
-		}
-		pthread_mutex_unlock(&data->death);
-		think_message(philo);
 		i++;
 	}
 	return ((void *) NULL);

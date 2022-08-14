@@ -73,11 +73,11 @@ typedef struct s_data
 UTILS
 */
 long long	timestamp(void);
-void		eat_message(t_philo *philo);
-void		think_message(t_philo *philo);
-void		fork_message(t_philo *philo, char *msg, int id);
-void		sleep_message(t_philo *philo);
-void		death_message(t_philo *philo);
+int			eat_message(t_philo *philo);
+int			think_message(t_philo *philo);
+int			fork_message(t_philo *philo, char *msg);
+int			sleep_message(t_philo *philo);
+int			death_message(t_philo *philo);
 int			exit_err(char *err, t_data *data);
 int			ft_atoi(char *str);
 
