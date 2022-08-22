@@ -12,25 +12,6 @@
 
 #include "philo.h"
 
-static int ft_usleep(int time, t_data *data)
-{
-	int i;
-
-	i = 0;
-	while (i < time)
-	{
-		pthread_mutex_lock(&data->read);
-		if (data->death_status)
-		{
-			pthread_mutex_unlock(&data->read);
-			return (1);
-		}
-		pthread_mutex_unlock(&data->read);
-		usleep(1);
-	}
-	return (0);
-}
-
 static int	dinner(t_philo *philo)
 {
 	t_data	*data;
@@ -51,14 +32,7 @@ static int	dinner(t_philo *philo)
 	ret = eat_message(philo);
 	philo->last_meal = timestamp();
 	pthread_mutex_unlock(&data->read);
-	ft_usleep(data->eat_time, data);
-	if (ret)
-	{
-		pthread_mutex_unlock(&data->forks[philo->fourchette]);
-		if (philo->id != data->nb_philo - 1)
-			pthread_mutex_unlock(&data->forks[philo->couteau]);
-		return (1);
-	}
+	usleep(data->eat_time);
 	pthread_mutex_lock(&data->write);
 	philo->ate++;
 	pthread_mutex_unlock(&data->write);
@@ -83,9 +57,10 @@ void	*job(void *arg)
 		pthread_mutex_lock(&data->read);
 		if (data->nb_philo == 1 || data->nb_meals == 0 || \
 			data->nb_meals == data->meals_ate)
-			{pthread_mutex_unlock(&data->read);
+		{
+			pthread_mutex_unlock(&data->read);
 			break ;
-			}
+		}
 		pthread_mutex_unlock(&data->read);
 		ret = dinner(philo);
 		if (ret)
@@ -94,13 +69,20 @@ void	*job(void *arg)
 		if (ret)
 			break ;
 		usleep(data->sleep_time);
-		// if (ret)
-		// 	break ;
 		ret = think_message(philo);
 		if (ret)
 			break ;
 	}
 	return ((void *) NULL);
+}
+
+void	death(t_data *data, int id)
+{
+	death_message(&data->philos[id]);
+	pthread_mutex_lock(&data->death);
+	data->death_status = 1;
+	pthread_mutex_unlock(&data->death);
+	pthread_mutex_unlock(&data->read);
 }
 
 void	deathloop(t_data *data)
@@ -113,11 +95,7 @@ void	deathloop(t_data *data)
 		pthread_mutex_lock(&data->read);
 		if (timestamp() - data->philos[i].last_meal > data->death_time)
 		{
-			death_message(&data->philos[i]);
-			pthread_mutex_lock(&data->death);
-			data->death_status = 1;
-			pthread_mutex_unlock(&data->death);
-			pthread_mutex_unlock(&data->read);
+			death(data, i);
 			break ;
 		}
 		pthread_mutex_lock(&data->write);

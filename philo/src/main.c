@@ -41,9 +41,8 @@ static int	input_parsing(char **av, t_data *data)
 	data->nb_philo = ft_atoi(av[1]);
 	data->nb_fork = data->nb_philo;
 	data->death_time = ft_atoi(av[2]);
-	// * 1000/ 1
-	data->sleep_time = ft_atoi(av[3]) * 1;
-	data->eat_time = ft_atoi(av[4]) * 1;
+	data->sleep_time = ft_atoi(av[3]) * 1000;
+	data->eat_time = ft_atoi(av[4]) * 1000;
 	if (av[5])
 	{
 		if (ft_atoi(av[5]) < 0)
