@@ -20,7 +20,7 @@ int	init_threads(t_data *data)
 	while (i < data->nb_philo)
 	{
 		data->philos[i].id = i;
-		data->philos[i].meal_done = 0;
+		data->philos[i].ate = 0;
 		data->philos[i].last_meal = timestamp();
 		data->philos[i].fourchette = i;
 		data->philos[i].couteau = (i + 1);
@@ -52,7 +52,7 @@ int	init_mutexs(t_data *data)
 	int	i;
 
 	i = 0;
-	while (i < data->nb_fork)
+	while (i <= data->nb_fork)
 	{
 		if (pthread_mutex_init(&data->forks[i], NULL))
 			return (exit_err(MUTEX_INIT, data));

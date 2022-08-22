@@ -39,7 +39,7 @@ STRUCTURES
 typedef struct s_philo
 {
 	int				id;
-	int				meal_done;
+	int				ate;
 	int				fourchette;
 	int				couteau;
 	pthread_t		thread;
@@ -50,7 +50,7 @@ typedef struct s_philo
 typedef struct s_data
 {
 	long long		start_time;
-	int				all_ate;
+	int				meals_ate;
 	int				nb_philo;
 	int				nb_fork;
 	int				dinner_status;
@@ -66,7 +66,7 @@ typedef struct s_data
 	pthread_mutex_t	read;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	death;
-	pthread_mutex_t timer;
+	pthread_mutex_t	timer;
 }					t_data;
 
 /*
@@ -91,4 +91,6 @@ int			init_threads(t_data *data);
 int			init_mutexs(t_data *data);
 int			end_threads(t_data *data);
 int			end_mutexs(t_data *data);
+void		deathloop(t_data *data);
+
 #endif
