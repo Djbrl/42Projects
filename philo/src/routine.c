@@ -21,10 +21,7 @@ static int	dinner(t_philo *philo)
 	pthread_mutex_lock(&data->forks[philo->fourchette]);
 	ret = fork_message(philo, "has taken a fork");
 	if (ret)
-	{
-		pthread_mutex_unlock(&data->forks[philo->fourchette]);
-		return (1);
-	}
+		return (pthread_mutex_unlock(&data->forks[philo->fourchette]) + 1);
 	if (philo->couteau < data->nb_fork)
 		pthread_mutex_lock(&data->forks[philo->couteau]);
 	ret = fork_message(philo, "has taken a fork");
@@ -42,16 +39,34 @@ static int	dinner(t_philo *philo)
 	return (0);
 }
 
+static int	ftn_stop(t_philo *philo)
+{
+	int		ret;
+	t_data	*data;
+
+	data = philo->info;
+	ret = dinner(philo);
+	if (ret)
+		return (1);
+	ret = sleep_message(philo);
+	if (ret)
+		return (1);
+	usleep(data->sleep_time);
+	ret = think_message(philo);
+	if (ret)
+		return (1);
+	return (0);
+}
+
 void	*job(void *arg)
 {
 	t_philo	*philo;
 	t_data	*data;
-	int		i;
-	int		ret;
 
-	i = 0;
 	philo = (t_philo *)arg;
 	data = philo->info;
+	if (philo->id % 2 == 0)
+		usleep(5000);
 	while (1)
 	{
 		pthread_mutex_lock(&data->read);
@@ -62,15 +77,7 @@ void	*job(void *arg)
 			break ;
 		}
 		pthread_mutex_unlock(&data->read);
-		ret = dinner(philo);
-		if (ret)
-			break ;
-		ret = sleep_message(philo);
-		if (ret)
-			break ;
-		usleep(data->sleep_time);
-		ret = think_message(philo);
-		if (ret)
+		if (ftn_stop(philo))
 			break ;
 	}
 	return ((void *) NULL);

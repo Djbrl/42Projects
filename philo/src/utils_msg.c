@@ -25,7 +25,7 @@ int	fork_message(t_philo *philo, char *msg)
 	pthread_mutex_unlock(&philo->info->death);
 	pthread_mutex_unlock(&philo->info->write);
 	pthread_mutex_lock(&philo->info->write);
-	printf("[%lld] %d %s\n", timestamp() - philo->info->start_time, \
+	printf("%lld %d %s\n", timestamp() - philo->info->start_time, \
 		philo->id, msg);
 	pthread_mutex_unlock(&philo->info->write);
 	return (0);
@@ -44,7 +44,7 @@ int	think_message(t_philo *philo)
 	pthread_mutex_unlock(&philo->info->death);
 	pthread_mutex_unlock(&philo->info->write);
 	pthread_mutex_lock(&philo->info->write);
-	printf("[%lld] %d %s\n", timestamp() - philo->info->start_time, philo->id, \
+	printf("%lld %d %s\n", timestamp() - philo->info->start_time, philo->id, \
 		"is thinking");
 	pthread_mutex_unlock(&philo->info->write);
 	return (0);
@@ -63,7 +63,7 @@ int	eat_message(t_philo *philo)
 	pthread_mutex_unlock(&philo->info->death);
 	pthread_mutex_unlock(&philo->info->write);
 	pthread_mutex_lock(&philo->info->write);
-	printf("[%lld] %d %s\n", timestamp() - philo->info->start_time, philo->id, \
+	printf("%lld %d %s\n", timestamp() - philo->info->start_time, philo->id, \
 		"is eating");
 	pthread_mutex_unlock(&philo->info->write);
 	return (0);
@@ -82,7 +82,7 @@ int	sleep_message(t_philo *philo)
 	pthread_mutex_unlock(&philo->info->death);
 	pthread_mutex_unlock(&philo->info->write);
 	pthread_mutex_lock(&philo->info->write);
-	printf("[%lld] %d %s\n", timestamp() - philo->info->start_time, philo->id, \
+	printf("%lld %d %s\n", timestamp() - philo->info->start_time, philo->id, \
 		"is sleeping");
 	pthread_mutex_unlock(&philo->info->write);
 	return (0);
@@ -101,7 +101,7 @@ int	death_message(t_philo *philo)
 	pthread_mutex_unlock(&philo->info->death);
 	pthread_mutex_unlock(&philo->info->write);
 	pthread_mutex_lock(&philo->info->write);
-	printf("[%lld] %d %s\n", timestamp() - philo->info->start_time, philo->id, \
+	printf("%lld %d %s\n", timestamp() - philo->info->start_time, philo->id, \
 		"died");
 	pthread_mutex_unlock(&philo->info->write);
 	return (0);
