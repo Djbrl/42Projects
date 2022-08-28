@@ -17,17 +17,23 @@ int	init_threads(t_data *data)
 	int	i;
 
 	i = 0;
+	data->start_time = timestamp();
 	while (i < data->nb_philo)
 	{
-		data->philos[i].id = i;
+		data->philos[i].id = i + 1;
 		data->philos[i].ate = 0;
 		data->philos[i].last_meal = timestamp();
 		data->philos[i].fourchette = i;
-		data->philos[i].couteau = (i + 1);
+		if (i < data->nb_philo - 1)
+			data->philos[i].couteau = (i + 1);
+		else
+			data->philos[i].couteau = 0;
 		data->philos[i].info = data;
+			// printf("philo %i before start time : %lld\n", data->philos[i].id, timestamp() - data->start_time);
 		if (pthread_create(&data->philos[i].thread, NULL, \
 				&job, (void *)&data->philos[i]) != 0)
 			return (exit_err(PCREAT_ERR, data));
+		// printf("philo %i after start time : %lld\n", data->philos[i].id, timestamp() - data->start_time);
 		i++;
 	}
 	return (1);
@@ -52,7 +58,7 @@ int	init_mutexs(t_data *data)
 	int	i;
 
 	i = 0;
-	while (i <= data->nb_fork)
+	while (i < data->nb_fork)
 	{
 		if (pthread_mutex_init(&data->forks[i], NULL))
 			return (exit_err(MUTEX_INIT, data));

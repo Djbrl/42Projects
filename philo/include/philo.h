@@ -80,6 +80,8 @@ int			sleep_message(t_philo *philo);
 int			death_message(t_philo *philo);
 int			exit_err(char *err, t_data *data);
 int			ft_atoi(char *str);
+char		*ft_itoa(int n);
+int			ft_strlen(char *s);
 
 /*
 PHILO
