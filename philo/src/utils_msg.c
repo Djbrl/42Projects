@@ -14,120 +14,96 @@
 
 int	fork_message(t_philo *philo, char *msg)
 {
-	// pthread_mutex_lock(&philo->info->write);
 	pthread_mutex_lock(&philo->info->death);
 	if (philo->info->death_status)
 	{
 		pthread_mutex_unlock(&philo->info->death);
-		// pthread_mutex_unlock(&philo->info->write);
 		return (1);
 	}
 	pthread_mutex_unlock(&philo->info->death);
-	// pthread_mutex_unlock(&philo->info->write);
 	pthread_mutex_lock(&philo->info->write);
-	// printf("%lld %d %s\n", timestamp() - philo->info->start_time, philo->id, msg);
-			write(1, ft_itoa((int)(timestamp() - philo->info->start_time)), ft_strlen(ft_itoa((int)(timestamp() - philo->info->start_time))));
+	write(1, ft_itoa((int)(timestamp() - philo->info->start_time)), ft_strlen(ft_itoa((int)(timestamp() - philo->info->start_time))));
 	write(1, " ", 1);
 	write(1, ft_itoa(philo->id), ft_strlen(ft_itoa(philo->id)));
 	write(1, " ", 1);
 	write(1, msg, ft_strlen(msg));
 	write(1, "\n", 1);
-
 	pthread_mutex_unlock(&philo->info->write);
 	return (0);
 }
 
 int	think_message(t_philo *philo)
 {
-	// pthread_mutex_lock(&philo->info->write);
 	pthread_mutex_lock(&philo->info->death);
 	if (philo->info->death_status)
 	{
 		pthread_mutex_unlock(&philo->info->death);
-		// pthread_mutex_unlock(&philo->info->write);
 		return (1);
 	}
 	pthread_mutex_unlock(&philo->info->death);
-	// pthread_mutex_unlock(&philo->info->write);
 	pthread_mutex_lock(&philo->info->write);
-	// printf("%lld %d %s\n", timestamp() - philo->info->start_time, philo->id, "is thinking");
-			write(1, ft_itoa((int)(timestamp() - philo->info->start_time)), ft_strlen(ft_itoa((int)(timestamp() - philo->info->start_time))));
+	write(1, ft_itoa((int)(timestamp() - philo->info->start_time)), ft_strlen(ft_itoa((int)(timestamp() - philo->info->start_time))));
 	write(1, " ", 1);
 	write(1, ft_itoa(philo->id), ft_strlen(ft_itoa(philo->id)));
 	write(1, " ", 1);
 	write(1, "thinking\n", 9);
-
 	pthread_mutex_unlock(&philo->info->write);
 	return (0);
 }
 
 int	eat_message(t_philo *philo)
 {
-	// pthread_mutex_lock(&philo->info->write);
 	pthread_mutex_lock(&philo->info->death);
 	if (philo->info->death_status)
 	{
 		pthread_mutex_unlock(&philo->info->death);
-		// pthread_mutex_unlock(&philo->info->write);
 		return (1);
 	}
 	pthread_mutex_unlock(&philo->info->death);
-	// pthread_mutex_unlock(&philo->info->write);
 	pthread_mutex_lock(&philo->info->write);
-	// printf("%lld %d %s\n", timestamp() - philo->info->start_time, philo->id, "is eating");
-			write(1, ft_itoa((int)(timestamp() - philo->info->start_time)), ft_strlen(ft_itoa((int)(timestamp() - philo->info->start_time))));
+	write(1, ft_itoa((int)(timestamp() - philo->info->start_time)), ft_strlen(ft_itoa((int)(timestamp() - philo->info->start_time))));
 	write(1, " ", 1);
 	write(1, ft_itoa(philo->id), ft_strlen(ft_itoa(philo->id)));
 	write(1, " ", 1);
 	write(1, "eat\n", 4);
-
 	pthread_mutex_unlock(&philo->info->write);
 	return (0);
 }
 
 int	sleep_message(t_philo *philo)
 {
-	// pthread_mutex_lock(&philo->info->write);
 	pthread_mutex_lock(&philo->info->death);
 	if (philo->info->death_status)
 	{
 		pthread_mutex_unlock(&philo->info->death);
-		// pthread_mutex_unlock(&philo->info->write);
 		return (1);
 	}
 	pthread_mutex_unlock(&philo->info->death);
-	// pthread_mutex_unlock(&philo->info->write);
 	pthread_mutex_lock(&philo->info->write);
-	// printf("%lld %d %s\n", timestamp() - philo->info->start_time, philo->id, "is sleeping");
-		write(1, ft_itoa((int)(timestamp() - philo->info->start_time)), ft_strlen(ft_itoa((int)(timestamp() - philo->info->start_time))));
+	write(1, ft_itoa((int)(timestamp() - philo->info->start_time)), ft_strlen(ft_itoa((int)(timestamp() - philo->info->start_time))));
 	write(1, " ", 1);
 	write(1, ft_itoa(philo->id), ft_strlen(ft_itoa(philo->id)));
 	write(1, " ", 1);
 	write(1, "sleep\n", 6);
-	
 	pthread_mutex_unlock(&philo->info->write);
 	return (0);
 }
 
 int	death_message(t_philo *philo)
 {
-	// pthread_mutex_lock(&philo->info->write);
 	pthread_mutex_lock(&philo->info->death);
 	if (philo->info->death_status)
 	{
 		pthread_mutex_unlock(&philo->info->death);
-		// pthread_mutex_unlock(&philo->info->write);
 		return (1);
 	}
 	pthread_mutex_unlock(&philo->info->death);
-	// pthread_mutex_unlock(&philo->info->write);
 	pthread_mutex_lock(&philo->info->write);
 	write(1, ft_itoa((int)(timestamp() - philo->info->start_time)), ft_strlen(ft_itoa((int)(timestamp() - philo->info->start_time))));
 	write(1, " ", 1);
 	write(1, ft_itoa(philo->id), ft_strlen(ft_itoa(philo->id)));
 	write(1, " ", 1);
 	write(1, "died\n", 5);
-	// printf("%lld %d %s\n", timestamp() - philo->info->start_time, philo->id, "died");
 	pthread_mutex_unlock(&philo->info->write);
 	return (0);
 }
