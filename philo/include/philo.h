@@ -62,6 +62,9 @@ typedef struct s_data
 	int				eat_time;
 	t_philo			*philos;
 	pthread_mutex_t	write;
+	pthread_mutex_t	death_write;
+	pthread_mutex_t	death_read;
+	pthread_mutex_t	status;
 	pthread_mutex_t	meal;
 	pthread_mutex_t	read;
 	pthread_mutex_t	*forks;

@@ -39,15 +39,15 @@ static int	dinner(t_philo *philo)
 	// if (philo->couteau < data->nb_fork)
 	pthread_mutex_lock(&data->forks[philo->couteau]);
 	ret = fork_message(philo, "has taken a fork");
-	// pthread_mutex_lock(&data->read);
+	pthread_mutex_lock(&data->read);
 	ret = eat_message(philo);
 	philo->last_meal = timestamp();
-	// pthread_mutex_unlock(&data->read);
+	pthread_mutex_unlock(&data->read);
 	// ft_usleep(data->eat_time, data);
 	usleep(data->eat_time);
-	// pthread_mutex_lock(&data->write);
+	pthread_mutex_lock(&data->write);
 	philo->ate++;
-	// pthread_mutex_unlock(&data->write);
+	pthread_mutex_unlock(&data->write);
 	pthread_mutex_unlock(&data->forks[philo->fourchette]);
 	// if (philo->couteau < data->nb_fork)
 		pthread_mutex_unlock(&data->forks[philo->couteau]);
@@ -106,7 +106,7 @@ void	death(t_data *data, int id)
 	pthread_mutex_lock(&data->death);
 	data->death_status = 1;
 	pthread_mutex_unlock(&data->death);
-	// pthread_mutex_unlock(&data->read);
+	pthread_mutex_unlock(&data->death_read);
 }
 
 void	deathloop(t_data *data)
@@ -116,17 +116,17 @@ void	deathloop(t_data *data)
 	i = 0;
 	while (i < data->nb_philo)
 	{
-		// pthread_mutex_lock(&data->read);
+		pthread_mutex_lock(&data->death_read);
 		if (timestamp() - data->philos[i].last_meal > data->death_time)
 		{
 			death(data, i);
 			break ;
 		}
-		// pthread_mutex_lock(&data->write);
+		pthread_mutex_lock(&data->death_write);
 		if (data->philos[i].ate >= data->nb_meals)
 			data->meals_ate++;
-		// pthread_mutex_unlock(&data->write);
-		// pthread_mutex_unlock(&data->read);
+		pthread_mutex_unlock(&data->death_write);
+		pthread_mutex_unlock(&data->death_read);
 		i++;
 		if (i == data->nb_philo)
 			i = 0;
