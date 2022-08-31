@@ -54,6 +54,7 @@ int		msh_cd(t_env_var *env, char **args)
 {
 	int ret;
 
+	(void)env;
 	ret = chdir(args[1]);
 	if (ret < 0)
 		display_cmd_error("cd", PATH_ERROR, args);
@@ -64,12 +65,16 @@ int		msh_pwd(t_env_var *env, char **args)
 {
 	char cwd[1024];
 
+	(void)env;
+	(void)args;
 	ft_putnstr(getcwd(cwd, sizeof(cwd)), "\n", NULL, NULL);
 	return (1);
 }
 
 int		msh_help(t_env_var *env, char **args)
 {
+	(void)env;
+	(void)args;
 	ft_putstr("\nminishell-4.2 commands: \n\necho\t\t: a clone of bash echo\n");
 	ft_putstr("cd\t\t: a clone of bash cd\n");
 	ft_putstr("pwd\t\t: a clone of bash pwd\n");

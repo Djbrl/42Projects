@@ -20,6 +20,7 @@ void	exit_shell(int status)
 
 void	signal_handler(int sig_n, t_msh *msh)
 {
+	(void)sig_n;
 	write(1, "\n", 1);
 	display_prompt(MODE_DEFAULT, msh);
 	flush_buffer(msh);
