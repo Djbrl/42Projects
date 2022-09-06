@@ -20,13 +20,12 @@ int	init_threads(t_data *data)
 	data->start_time = timestamp();
 	while (i < data->nb_philo)
 	{
-		data->philos[i].id = i + 1;
+		data->philos[i].id = i;
 		data->philos[i].ate = 0;
 		data->philos[i].last_meal = timestamp();
 		data->philos[i].fourchette = i;
-		if (i < data->nb_philo - 1)
-			data->philos[i].couteau = (i + 1);
-		else
+		data->philos[i].couteau = (i + 1);
+		if (i == data->nb_philo - 1)
 			data->philos[i].couteau = 0;
 		data->philos[i].info = data;
 		if (pthread_create(&data->philos[i].thread, NULL, \
@@ -64,12 +63,6 @@ int	init_mutexs(t_data *data)
 	}
 	if (pthread_mutex_init(&data->write, NULL))
 		return (exit_err(MUTEX_INIT, data));
-	if (pthread_mutex_init(&data->death_write, NULL))
-		return (exit_err(MUTEX_INIT, data));
-	if (pthread_mutex_init(&data->death_read, NULL))
-		return (exit_err(MUTEX_INIT, data));
-	if (pthread_mutex_init(&data->status, NULL))
-		return (exit_err(MUTEX_INIT, data));
 	if (pthread_mutex_init(&data->read, NULL))
 		return (exit_err(MUTEX_INIT, data));
 	if (pthread_mutex_init(&data->meal, NULL))
@@ -93,12 +86,6 @@ int	end_mutexs(t_data *data)
 		i++;
 	}
 	if (pthread_mutex_destroy(&data->write))
-		return (exit_err(MUTEX_KILL, data));
-	if (pthread_mutex_destroy(&data->death_write))
-		return (exit_err(MUTEX_KILL, data));
-	if (pthread_mutex_destroy(&data->death_read))
-		return (exit_err(MUTEX_KILL, data));
-	if (pthread_mutex_destroy(&data->status))
 		return (exit_err(MUTEX_KILL, data));
 	if (pthread_mutex_destroy(&data->read))
 		return (exit_err(MUTEX_KILL, data));

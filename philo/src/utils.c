@@ -14,7 +14,7 @@
 
 void	init_struct(t_data *data)
 {
-	data->start_time = 0;
+	data->start_time = timestamp();
 	data->death_status = 0;
 	data->philos = NULL;
 	data->forks = NULL;
@@ -79,76 +79,4 @@ int	ft_atoi(char *str)
 		i++;
 	}
 	return (res * neg);
-}
-
-int		ft_strlen(char *s)
-{
-	int i;
-
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
-}
-
-char	*ft_strdup(char *str)
-{
-	int	i;
-	char	*newstr;
-
-	i = 0;
-	if (!(newstr = (char *)malloc(sizeof(char) * ft_strlen(str) + 1)))
-		return (NULL);
-	while (i < ft_strlen(str))
-	{
-		newstr[i] = str[i];
-		i++;
-	}
-	newstr[i] = '\0';
-	return (newstr);
-}
-
-
-int		ft_nbrlen(int nbr)
-{
-	int	len;
-
-	len = 0;
-	if (nbr == 0)
-		return (1);
-	if (nbr < 0)
-		len += 1;
-	while (nbr)
-	{
-		nbr /= 10;
-		len += 1;
-	}
-	return (len);
-}
-
-char		*ft_itoa(int n)
-{
-	int	i;
-	int	n_size;
-	char	*str;
-
-	i = 0;
-	if (n == -2147483648)
-		return (ft_strdup("-2147483648"));
-	n_size = ft_nbrlen(n);
-	if (!(str = (char *)malloc(sizeof(char) * (n_size + 1))))
-		return (NULL);
-	str[n_size] = 0;
-	if (n < 0)
-	{
-		str[0] = '-';
-		n *= -1;
-		i += 1;
-	}
-	while (i < n_size--)
-	{
-		str[n_size] = (n % 10) + '0';
-		n /= 10;
-	}
-	return (str);
 }

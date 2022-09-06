@@ -19,7 +19,7 @@ NAME := philo
 LIB_FT := 
 
 CC := cc
-CFLAGS := -pthread -g
+CFLAGS := -Wall -Wextra -Werror -pthread -g
 PFLAGS := -Iinclude -Ilib/libft
 
 SRC_PATH := src
