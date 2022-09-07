@@ -12,15 +12,17 @@
 
 #include "minishell.h"
 
-int		msh_export(t_env_var *env, char *arg, t_msh *msh)
+int		msh_export(t_env_var *env, char **s, t_msh *msh)
 {
 	char		*name;
 	char		*tmp;
 	char		*data;
 	int			i;
 	int			valid;
+	char		*arg;
 
 	i = 0;
+	arg = *s;
 	if (arg == NULL || !ft_isalpha(arg[0]))
 		return (display_error(ENV_ERROR, msh));
 	while (arg[i++])

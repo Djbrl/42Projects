@@ -21,13 +21,15 @@ int static	var_name_len(char *name)
 	return (i);
 }
 
-int		msh_echo(t_env_var *env, char *arg)
+int		msh_echo(t_env_var *env, char **s)
 {
 	int		i;
 	char	*var;
 	char	*tmp;
-	
+	char	*arg;
+
 	i = 0;
+	arg = *s;
 	while (arg[i])
 	{
 		if (arg[i] == '$' && arg[i + 1] == '$')

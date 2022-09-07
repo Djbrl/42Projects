@@ -77,8 +77,8 @@ void	display_cmd_error(char *cmd, char *error, char **args);
 int		msh_echo_runner(t_env_var *env, char **args);
 int		msh_export_runner(t_env_var *env, char **args, t_msh *msh);
 
-int		msh_echo(t_env_var *env, char *s);
-int		msh_export(t_env_var *env, char *arg, t_msh *msh);
+int		msh_echo(t_env_var *env, char **s);
+int		msh_export(t_env_var *env, char **arg, t_msh *msh);
 int		msh_help(t_env_var *env, char **args);
 int		msh_cd(t_env_var *env, char **args);
 int		msh_pwd(t_env_var *env, char **args);
