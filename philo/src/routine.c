@@ -12,12 +12,41 @@
 
 #include "philo.h"
 
+static int	last_dinner(t_philo *philo)
+{
+	t_data	*data;
+	int		ret;
+
+	data = philo->info;
+	pthread_mutex_lock(&data->forks[philo->couteau]);
+	ret = fork_message(philo, "has taken a fork");
+	if (ret)
+		return (pthread_mutex_unlock(&data->forks[philo->couteau]) + 1);
+	if (philo->couteau < data->nb_fork)
+		pthread_mutex_lock(&data->forks[philo->fourchette]);
+	ret = fork_message(philo, "has taken a fork");
+	pthread_mutex_lock(&data->read);
+	ret = eat_message(philo);
+	philo->last_meal = timestamp();
+	pthread_mutex_unlock(&data->read);
+	usleep(data->eat_time);
+	pthread_mutex_lock(&data->write);
+	philo->ate++;
+	pthread_mutex_unlock(&data->write);
+	pthread_mutex_unlock(&data->forks[philo->couteau]);
+	if (philo->couteau < data->nb_fork)
+		pthread_mutex_unlock(&data->forks[philo->fourchette]);
+	return (0);
+}
+
 static int	dinner(t_philo *philo)
 {
 	t_data	*data;
 	int		ret;
 
 	data = philo->info;
+	if (philo->id == data->nb_philo - 1)
+		return (last_dinner(philo));
 	pthread_mutex_lock(&data->forks[philo->fourchette]);
 	ret = fork_message(philo, "has taken a fork");
 	if (ret)
@@ -71,7 +100,7 @@ void	*job(void *arg)
 	{
 		pthread_mutex_lock(&data->read);
 		if (data->nb_philo == 1 || data->nb_meals == 0 || \
-			data->nb_meals == data->meals_ate)
+			data->all_done)
 		{
 			pthread_mutex_unlock(&data->read);
 			break ;
@@ -83,37 +112,22 @@ void	*job(void *arg)
 	return ((void *) NULL);
 }
 
-void	death(t_data *data, int id)
-{
-	death_message(&data->philos[id]);
-	pthread_mutex_lock(&data->death);
-	data->death_status = 1;
-	pthread_mutex_unlock(&data->death);
-	pthread_mutex_unlock(&data->read);
-}
-
-void	deathloop(t_data *data)
+int	all_done(t_data *data)
 {
 	int	i;
 
 	i = 0;
+	pthread_mutex_lock(&data->read);
 	while (i < data->nb_philo)
 	{
-		pthread_mutex_lock(&data->read);
-		if (timestamp() - data->philos[i].last_meal > data->death_time)
+		if (data->philos[i].done == 0)
 		{
-			death(data, i);
-			break ;
+			pthread_mutex_unlock(&data->read);
+			return (0);
 		}
-		pthread_mutex_lock(&data->write);
-		if (data->philos[i].ate >= data->nb_meals)
-			data->meals_ate++;
-		pthread_mutex_unlock(&data->write);
-		pthread_mutex_unlock(&data->read);
 		i++;
-		if (i == data->nb_philo)
-			i = 0;
-		if (data->meals_ate == data->nb_meals)
-			break ;
 	}
+	data->all_done = 1;
+	pthread_mutex_unlock(&data->read);
+	return (1);
 }

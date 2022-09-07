@@ -22,6 +22,7 @@ int	init_threads(t_data *data)
 	{
 		data->philos[i].id = i;
 		data->philos[i].ate = 0;
+		data->philos[i].done = 0;
 		data->philos[i].last_meal = timestamp();
 		data->philos[i].fourchette = i;
 		data->philos[i].couteau = (i + 1);

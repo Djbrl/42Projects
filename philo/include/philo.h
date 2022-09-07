@@ -40,6 +40,7 @@ typedef struct s_philo
 {
 	int				id;
 	int				ate;
+	int				done;
 	int				fourchette;
 	int				couteau;
 	pthread_t		thread;
@@ -53,6 +54,7 @@ typedef struct s_data
 	int				meals_ate;
 	int				nb_philo;
 	int				nb_fork;
+	int				all_done;
 	int				dinner_status;
 	int				death_status;
 	int				meals_done;
@@ -91,6 +93,7 @@ int			init_threads(t_data *data);
 int			init_mutexs(t_data *data);
 int			end_threads(t_data *data);
 int			end_mutexs(t_data *data);
+int			all_done(t_data *data);
 void		deathloop(t_data *data);
 
 #endif

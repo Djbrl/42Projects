@@ -33,7 +33,7 @@ static int	input_parsing(char **av, t_data *data)
 	i = 1;
 	while (av[i])
 	{
-		if (!is_num(av[i]))
+		if (!is_num(av[i]) || ft_atoi(av[i]) < 0 || ft_atoi(av[i]) == 0)
 			return (0);
 		i++;
 	}

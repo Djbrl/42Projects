@@ -19,6 +19,7 @@ void	init_struct(t_data *data)
 	data->philos = NULL;
 	data->forks = NULL;
 	data->meals_ate = 0;
+	data->all_done = 0;
 	data->philos = malloc(sizeof(t_philo) * (data->nb_philo + 1));
 	if (!data->philos)
 		exit_err(MALLOC_ERR, data);

@@ -47,7 +47,7 @@ int	think_message(t_philo *philo)
 int	eat_message(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->info->death);
-	if (philo->info->death_status)
+	if (philo->info->death_status || philo->done)
 	{
 		pthread_mutex_unlock(&philo->info->death);
 		return (1);
