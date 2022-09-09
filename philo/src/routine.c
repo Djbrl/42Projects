@@ -18,12 +18,12 @@ static int	last_dinner(t_philo *philo)
 	int		ret;
 
 	data = philo->info;
-	pthread_mutex_lock(&data->forks[philo->couteau]);
+	pthread_mutex_lock(&data->forks[data->nb_fork]);
 	ret = fork_message(philo, "has taken a fork");
 	if (ret)
-		return (pthread_mutex_unlock(&data->forks[philo->couteau]) + 1);
+		return (pthread_mutex_unlock(&data->forks[data->nb_fork]) + 1);
 	if (philo->couteau < data->nb_fork)
-		pthread_mutex_lock(&data->forks[philo->fourchette]);
+		pthread_mutex_lock(&data->forks[0]);
 	ret = fork_message(philo, "has taken a fork");
 	pthread_mutex_lock(&data->read);
 	ret = eat_message(philo);
@@ -33,9 +33,9 @@ static int	last_dinner(t_philo *philo)
 	pthread_mutex_lock(&data->write);
 	philo->ate++;
 	pthread_mutex_unlock(&data->write);
-	pthread_mutex_unlock(&data->forks[philo->couteau]);
+	pthread_mutex_unlock(&data->forks[0]);
 	if (philo->couteau < data->nb_fork)
-		pthread_mutex_unlock(&data->forks[philo->fourchette]);
+		pthread_mutex_unlock(&data->forks[data->nb_fork]);
 	return (0);
 }
 
