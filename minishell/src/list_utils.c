@@ -48,7 +48,7 @@ int		add_var_to_env(t_env_var *env, char *name, char *data)
 			new = new->next;
 	}
 	if (!(new->next = (t_env_var*)malloc(sizeof(t_env_var))))
-		return (0);
+			return (0);
 	new->next->data = ft_strdup(data);
 	new->next->name = ft_strdup(name);
 	new->next->next = NULL;
@@ -66,7 +66,7 @@ int		add_cmd_to_list(t_cmd_list *input, char *data)
 		return (0);
 	while (new->next != NULL)
 			new = new->next;
-	if (!(new->next = (t_env_var*)malloc(sizeof(t_env_var))))
+	if (!(new->next = (t_cmd_list*)malloc(sizeof(t_cmd_list))))
 		return (0);
 	new->next->data = ft_strdup(data);
 	new->next->next = NULL;

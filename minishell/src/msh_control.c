@@ -18,12 +18,10 @@ void	exit_shell(int status)
 	exit(status);
 }
 
-void	signal_handler(int sig_n, t_msh *msh)
+void	signal_handler(int sig_n)
 {
-	(void)sig_n;
 	write(1, "\n", 1);
-	display_prompt(MODE_DEFAULT, msh);
-	flush_buffer(msh);
+	write(1, "minishell-4.2$ > ", 17);
 }
 
 void	evaluate_commands(char **args, t_msh *msh)

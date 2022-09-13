@@ -34,9 +34,9 @@
 # define BUF 4096
 
 
-typedef struct	t_cmd_list{
+typedef struct	s_cmd_list{
 				char *data;
-				struct s_env_var	*next;
+				struct s_cmd_list	*next;
 }				t_cmd_list;
 
 typedef struct	s_env_var{
@@ -69,7 +69,7 @@ void	init_cmd(t_msh *msh);
 void	flush_buffer();
 void	exit_shell(int status);
 void	evaluate_commands(char **args, t_msh *t_msh);
-void	signal_handler(int sig_n, t_msh *msh);
+void	signal_handler(int sig_n);
 void	display_prompt(int mode, t_msh *msh);
 int		display_error(char *error, t_msh *msh);
 void	display_cmd_error(char *cmd, char *error, char **args);
@@ -77,8 +77,8 @@ void	display_cmd_error(char *cmd, char *error, char **args);
 int		msh_echo_runner(t_env_var *env, char **args);
 int		msh_export_runner(t_env_var *env, char **args, t_msh *msh);
 
-int		msh_echo(t_env_var *env, char **s);
-int		msh_export(t_env_var *env, char **arg, t_msh *msh);
+int		msh_echo(t_env_var *env, char *s);
+int		msh_export(t_env_var *env, char *arg, t_msh *msh);
 int		msh_help(t_env_var *env, char **args);
 int		msh_cd(t_env_var *env, char **args);
 int		msh_pwd(t_env_var *env, char **args);

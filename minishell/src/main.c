@@ -54,7 +54,7 @@
 //variables to free
 
 
-int		main()
+int		main(int ac, char **av)
 {
 	t_msh	msh;
 
