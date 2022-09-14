@@ -14,13 +14,13 @@
 
 int		display_error(char *error, t_msh *msh)
 {
-	if (!ft_strcmp(error, CWD_ERROR))
+	if (!ft_strncmp(error, CWD_ERROR, ft_strlen(error)))
 		ft_putnstr("minishell: ", error, NULL, NULL);
-	else if (!(ft_strcmp(error, CMD_ERROR)))
+	else if (!(ft_strncmp(error, CMD_ERROR, ft_strlen(error))))
 		ft_putnstr("minishell: ", msh->g_buffer, CMD_ERROR, NULL);
-	else if (!(ft_strcmp(error, FORK_ERROR)))
+	else if (!(ft_strncmp(error, FORK_ERROR, ft_strlen(error))))
 		ft_putnstr("minishell: ", error, NULL, NULL);
-	else if (!(ft_strcmp(error, ENV_ERROR)))
+	else if (!(ft_strncmp(error, ENV_ERROR, ft_strlen(error))))
 		ft_putnstr("minishell: ", error, NULL, NULL);
 	else
 		ft_putnstr("minishell: ", "unknown error", NULL, NULL);
@@ -29,7 +29,7 @@ int		display_error(char *error, t_msh *msh)
 
 void	display_cmd_error(char *cmd, char *error, char **args)
 {
-	if (!ft_strcmp(error, PATH_ERROR))
+	if (!ft_strncmp(error, PATH_ERROR, ft_strlen(error)))
 	{
 		ft_putnstr("minishell: ", cmd, " :", args[1]);
 		ft_putstr(error);

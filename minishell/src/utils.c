@@ -43,7 +43,7 @@ int		is_builtin(char *s, t_msh *msh)
 	i = 0;
 	while (msh->cmd.name[i])
 	{
-		if (!ft_strcmp(msh->cmd.name[i], s))
+		if (!ft_strncmp(msh->cmd.name[i], s, ft_strlen(msh->cmd.name[i])))
 			return (i);
 		i++;
 	}

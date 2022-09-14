@@ -12,21 +12,22 @@
 
 #include "minishell.h"
 
-int	msh_echo_runner(t_env_var *env, char **args)
+int	msh_echo_runner(t_env_var *env, char **args, t_msh *msh)
 {
 	int i;
 
 	i = 1;
+	(void)msh;
 	if (!args[1])
 		write(1, "\n", 1);
-	else if (!ft_strcmp(args[1], "-n"))
+	else if (!ft_strncmp(args[1], "-n", ft_strlen(args[1])))
 	{
 		i = 2;
 		while (args[i])
 		{
 			if (i > 2)
 				write(1, " ", 1);
-			msh_echo(env, args[i++]);
+			msh_echo(env, args[i++], msh);
 		}
 	}
 	else
@@ -35,7 +36,7 @@ int	msh_echo_runner(t_env_var *env, char **args)
 		{
 			if (i > 1)
 				write(1, " ", 1);
-			msh_echo(env, args[i++]);
+			msh_echo(env, args[i++], msh);
 		}
 		write(1, "\n", 1);
 	}
@@ -47,8 +48,9 @@ int	msh_export_runner(t_env_var *env, char **args, t_msh *msh)
 	int i;
 
 	i = 1;
+	(void)msh;
 	if (args[1] == NULL)
-		msh_env(env, args);
+		msh_env(env, args, msh);
 	while (args[i])
 	{
 		msh_export(env, args[i], msh);

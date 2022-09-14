@@ -6,13 +6,13 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 17:33:27 by dsy               #+#    #+#             */
-/*   Updated: 2019/10/23 17:34:37 by dsy              ###   ########.fr       */
+/*   Updated: 2022/04/05 16:19:54 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t		ft_nbrlen(int nbr)
+size_t	ft_nbrlen(int nbr)
 {
 	size_t	len;
 

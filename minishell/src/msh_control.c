@@ -32,7 +32,7 @@ void	evaluate_commands(char **args, t_msh *msh)
 
 	//fuck norminette
 	if (is_builtin(args[0], msh) >= 0)
-		msh->cmd.ptr[is_builtin(args[0], msh)](&msh->env, args);
+		msh->cmd.ptr[is_builtin(args[0], msh)](&msh->env, args, msh);
 	else
 	{
 		pid = fork();

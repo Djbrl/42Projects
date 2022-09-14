@@ -21,14 +21,14 @@ int static	var_name_len(char *name)
 	return (i);
 }
 
-int		msh_echo(t_env_var *env, char *arg)
+int		msh_echo(t_env_var *env, char *arg, t_msh *msh)
 {
 	int		i;
 	char	*var;
 	char	*tmp;
 	
 	i = 0;
-
+	(void)msh;
 	if (arg[0] =='$')
 		while (arg[i])
 		{
@@ -54,26 +54,29 @@ int		msh_echo(t_env_var *env, char *arg)
 	return (1);
 }
 
-int		msh_cd(t_env_var *env, char **args)
+int		msh_cd(t_env_var *env, char **args, t_msh *msh)
 {
 	int ret;
 
+	(void)msh;
 	ret = chdir(args[1]);
 	if (ret < 0)
 		display_cmd_error("cd", PATH_ERROR, args);
 	return (1);
 }
 
-int		msh_pwd(t_env_var *env, char **args)
+int		msh_pwd(t_env_var *env, char **args, t_msh *msh)
 {
 	char cwd[1024];
 
+	(void)msh;
 	ft_putnstr(getcwd(cwd, sizeof(cwd)), "\n", NULL, NULL);
 	return (1);
 }
 
-int		msh_help(t_env_var *env, char **args)
+int		msh_help(t_env_var *env, char **args, t_msh *msh)
 {
+	(void)msh;
 	ft_putstr("\nminishell-4.2 commands: \n\necho\t\t: a clone of bash echo\n");
 	ft_putstr("cd\t\t: a clone of bash cd\n");
 	ft_putstr("pwd\t\t: a clone of bash pwd\n");

@@ -6,15 +6,15 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/24 14:59:40 by dsy               #+#    #+#             */
-/*   Updated: 2019/10/24 15:28:59 by dsy              ###   ########.fr       */
+/*   Updated: 2022/04/05 16:29:34 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		isinset(char const str, char const *charset)
+int	isinset(char const str, char const *charset)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (charset[i])
@@ -26,10 +26,10 @@ int		isinset(char const str, char const *charset)
 	return (0);
 }
 
-int		findsubstr(char const *s1, char const *set)
+int	findsubstr(char const *s1, char const *set)
 {
-	int i;
-	int y;
+	int	i;
+	int	y;
 
 	i = ft_strlen(s1);
 	y = 0;
@@ -44,7 +44,7 @@ int		findsubstr(char const *s1, char const *set)
 
 char	*copysubstr(int d, int x, char *str, char const *s1)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (d--)
@@ -69,13 +69,15 @@ char	*ft_strtrim(char const *s1, char const *set)
 		x++;
 	if (x == ft_strlen(s1))
 	{
-		if ((str = malloc(sizeof(char) * 1)) == NULL)
+		str = malloc(sizeof(char) * 1);
+		if (str == NULL)
 			return (0);
 		str[0] = '\0';
 		return (str);
 	}
 	d = ft_strlen(s1) - findsubstr(s1, set) - x;
-	if ((str = malloc(sizeof(char) * d + 1)) == NULL)
+	str = malloc(sizeof(char) * d + 1);
+	if (str == NULL)
 		return (0);
 	str = copysubstr(d, x, str, s1);
 	return (str);

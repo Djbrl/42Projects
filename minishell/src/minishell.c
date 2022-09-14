@@ -26,7 +26,7 @@ void	shell_loop(t_msh *msh)
 		flush_buffer(msh);
 		read(0, msh->g_buffer, BUF);
 		msh->g_buffer[ft_strlen(msh->g_buffer) - 1] = 0;
-		if (!(ft_strcmp(msh->g_buffer, "exit")))
+		if (!(ft_strncmp(msh->g_buffer, "exit", ft_strlen(msh->g_buffer))))
 			exit_shell(EXIT_SUCCESS);
 		line = strdup(msh->g_buffer);
 		if (line[0] != 0)

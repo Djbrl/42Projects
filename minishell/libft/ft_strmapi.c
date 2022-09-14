@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 16:52:14 by dsy               #+#    #+#             */
-/*   Updated: 2019/10/23 18:12:07 by dsy              ###   ########.fr       */
+/*   Updated: 2022/04/05 16:25:44 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 
 	if (!s)
 		return (NULL);
-	if (!(stock = ft_strdup(s)))
+	stock = ft_strdup(s);
+	if (!stock)
 		return (NULL);
 	i = 0;
 	while (stock[i])

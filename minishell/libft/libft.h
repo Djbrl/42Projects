@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/12 17:14:11 by dsy               #+#    #+#             */
-/*   Updated: 2020/09/27 00:23:07 by dsy              ###   ########.fr       */
+/*   Updated: 2022/04/11 08:22:05 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
-# include "get_next_line.h"
 
 void			*ft_memset(void *str, int c, size_t n);
 void			ft_bzero(void *s, size_t n);
@@ -46,7 +45,7 @@ int				ft_strcmp(const char *str1, const char *str2);
 size_t			ft_strlcpy(char *dest, const char *src, size_t dstsize);
 size_t			ft_strlcat(char *dest, const char *src, size_t size);
 char			*ft_strnstr(char const *haystack,
-				const char *needle, size_t len);
+					const char *needle, size_t len);
 int				ft_atoi(const char *str);
 char			*ft_itoa(int n);
 void			*ft_calloc(size_t nitems, size_t size);

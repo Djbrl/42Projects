@@ -3,7 +3,7 @@ NAME := minishell
 LIB_FT := libft/libft.a
 
 CC := cc
-#CFLAGS := -Wall -Wextra -ggdb
+CFLAGS := -Wall -Wextra -Werror
 CFLAGS :=
 PFLAGS := -Iinclude -Ilibft
 

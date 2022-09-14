@@ -43,36 +43,38 @@ int		msh_export(t_env_var *env, char *arg, t_msh *msh)
 	return (1);
 }
 
-int	msh_env(t_env_var *env, char **args)
+int	msh_env(t_env_var *env, char **args, t_msh *msh)
 {
 	t_env_var *cur;
 
+	(void)msh;
 	cur = env;
 	while (cur->next != NULL)
 	{
-		if (cur->name && cur->data && (ft_strcmp(cur->name, "init")))
+		if (cur->name && cur->data && (ft_strncmp(cur->name, "init", ft_strlen(cur->name))))
 			ft_putnstr(cur->name, "=", cur->data, "\n");
 		cur = cur->next;
 	}
-	if (cur->name && cur->data && (ft_strcmp(cur->name, "init")))
+	if (cur->name && cur->data && (ft_strncmp(cur->name, "init", ft_strlen(cur->name))))
 		ft_putnstr(cur->name, "=", cur->data, "\n");
 	return (1);
 }
 
-int	msh_unset(t_env_var *env, char **args)
+int	msh_unset(t_env_var *env, char **args, t_msh *msh)
 {
 	t_env_var *tmp;
 	t_env_var *prev;
 
+	(void)msh;
 	tmp = env;
 	if (tmp == NULL || !args[1])
 		return (0);
-	while (tmp->next != NULL && (ft_strcmp(args[1], tmp->name) != 0))
+	while (tmp->next != NULL && (ft_strncmp(args[1], tmp->name, ft_strlen(args[1])) != 0))
 	{
 		prev = tmp;
 		tmp = tmp->next;
 	}
-	if (!(ft_strcmp(args[1], tmp->name)))
+	if (!(ft_strncmp(args[1], tmp->name, ft_strlen(args[1]))))
 	{
 		if (tmp->next != NULL)
 			prev->next = tmp->next;
