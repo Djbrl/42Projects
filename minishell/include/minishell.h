@@ -32,6 +32,8 @@
 # define MODE_DEFAULT 1
 # define MODE_DIR 2
 # define BUF 4096
+# define RUNNING 1
+# define PROMPTLINE "minishell-4.2$ > "
 
 typedef struct s_msh	t_msh;
 typedef struct s_cmd_list
@@ -56,8 +58,8 @@ typedef struct s_cmd
 typedef struct s_msh
 {
 	t_cmd		cmd;
-	t_env_var	env;
-	t_cmd_list	input;
+	t_env_var	*env;
+	t_cmd_list	*input;
 	char		g_buffer[BUF];
 }				t_msh;
 
@@ -66,12 +68,12 @@ char	*get_currentdir(t_msh *msh);
 char	*get_data_from_env(t_env_var *env, char *name);
 int		add_var_to_env(t_env_var *env, char *name, char *data);
 int		add_cmd_to_list(t_cmd_list *input, char *data);
-void	shell_loop(t_msh *msh);
 void	init_msh(t_msh *msh);
 void	init_env(t_msh *msh);
 void	init_cmd(t_msh *msh);
 void	flush_buffer(t_msh *msh);
-void	exit_shell(int status);
+void	read_buffer(t_msh *msh);
+void	exit_shell(int status, t_msh *msh);
 void	evaluate_commands(char **args, t_msh *t_msh);
 void	signal_handler(int sig_n);
 void	display_prompt(int mode, t_msh *msh);
@@ -88,4 +90,9 @@ int		msh_cd(t_env_var *env, char **args, t_msh *msh);
 int		msh_pwd(t_env_var *env, char **args, t_msh *msh);
 int		msh_env(t_env_var *env, char **args, t_msh *msh);
 int		msh_unset(t_env_var *env, char **args, t_msh *msh);
+
+/*
+** UTILS
+*/
+void	free_split(char **array);
 #endif

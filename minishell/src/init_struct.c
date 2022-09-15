@@ -32,25 +32,15 @@ void	init_msh(t_msh *msh)
 
 void	init_cmd(t_msh *msh)
 {
-	msh->input.next = NULL;
-	if (!(msh->input.next = (t_cmd_list*)(malloc(sizeof(t_cmd_list*)))))
-	{
-		display_error(ENV_ERROR, msh);
-		free(msh->input.next);
-	}
-	msh->input.data = NULL;
-	msh->input.next = NULL;
+	msh->input = (malloc(sizeof(t_cmd_list)));
+	msh->input->data = NULL;
+	msh->input->next = NULL;
 }
 
 void	init_env(t_msh *msh)
 {
-	msh->env.next = NULL;
-	if (!(msh->env.next = (t_env_var*)(malloc(sizeof(t_env_var*)))))
-	{
-		display_error(ENV_ERROR, msh);
-		free(msh->env.next);
-	}
-	msh->env.name = ft_strdup("init");
-	msh->env.data = ft_strdup("init");
-	msh->env.next = NULL;
+	msh->env = (malloc(sizeof(t_env_var)));
+	msh->env->name = ft_strdup("init");
+	msh->env->data = ft_strdup("init");
+	msh->env->next = NULL;
 }

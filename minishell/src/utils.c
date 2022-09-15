@@ -52,8 +52,11 @@ int		is_builtin(char *s, t_msh *msh)
 
 void	flush_buffer(t_msh *msh)
 {
-	int i;
-
-	i = 0;
 	ft_memset(msh->g_buffer, 0, BUF);
+}
+
+void	read_buffer(t_msh *msh)
+{
+	read(0, msh->g_buffer, BUF);
+	msh->g_buffer[ft_strlen(msh->g_buffer) - 1] = 0;
 }

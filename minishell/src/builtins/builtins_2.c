@@ -39,7 +39,6 @@ int		msh_export(t_env_var *env, char *arg, t_msh *msh)
 		}
 	if (!valid || !add_var_to_env(env, name, data))
 		return (display_error(ENV_ERROR, msh));
-	add_var_to_env(env, name, data);
 	return (1);
 }
 

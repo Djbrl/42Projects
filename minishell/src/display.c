@@ -47,5 +47,5 @@ void	display_prompt(int mode, t_msh *msh)
 		free(path);
 	}
 	else
-		ft_putstr("minishell-4.2$ > ");
+		ft_putstr(PROMPTLINE);
 }

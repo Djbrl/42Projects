@@ -12,16 +12,10 @@
 
 #include "minishell.h"
 
-void	exit_shell(int status)
-{
-	//FREE RIOT POINTS HERE
-	exit(status);
-}
-
 void	signal_handler(int sig_n)
 {
 	write(1, "\n", 1);
-	write(1, "minishell-4.2$ > ", 17);
+	write(1, PROMPTLINE, ft_strlen(PROMPTLINE));
 }
 
 void	evaluate_commands(char **args, t_msh *msh)
@@ -32,7 +26,7 @@ void	evaluate_commands(char **args, t_msh *msh)
 
 	//fuck norminette
 	if (is_builtin(args[0], msh) >= 0)
-		msh->cmd.ptr[is_builtin(args[0], msh)](&msh->env, args, msh);
+		msh->cmd.ptr[is_builtin(args[0], msh)](msh->env, args, msh);
 	else
 	{
 		pid = fork();
