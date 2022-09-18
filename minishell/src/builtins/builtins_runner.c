@@ -40,6 +40,7 @@ int	msh_echo_runner(t_env_var *env, char **args, t_msh *msh)
 		}
 		write(1, "\n", 1);
 	}
+	exit_cmd(msh);
 	return (1);
 }
 
@@ -56,5 +57,6 @@ int	msh_export_runner(t_env_var *env, char **args, t_msh *msh)
 		msh_export(env, args[i], msh);
 		i++;
 	}
+	exit_cmd(msh);
 	return (1);
 }

@@ -33,6 +33,7 @@ char	*get_currentdir(t_msh *msh)
 			last_slash = i;
 		i++;
 	}
+	free(path);
 	return (ft_strdup(path + last_slash + 1));
 }
 
@@ -41,7 +42,7 @@ int		is_builtin(char *s, t_msh *msh)
 	int i;
 
 	i = 0;
-	while (msh->cmd.name[i])
+	while (i < 8)
 	{
 		if (!ft_strncmp(msh->cmd.name[i], s, ft_strlen(msh->cmd.name[i])))
 			return (i);

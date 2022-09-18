@@ -14,19 +14,20 @@
 
 int static	var_name_len(char *name)
 {
-	int i = 0;
+	int	i;
 
+	i = 0;
 	while (name[i] != '$' && name[i])
 		i++;
 	return (i);
 }
 
-int		msh_echo(t_env_var *env, char *arg, t_msh *msh)
+int	msh_echo(t_env_var *env, char *arg, t_msh *msh)
 {
 	int		i;
 	char	*var;
 	char	*tmp;
-	
+
 	i = 0;
 	(void)msh;
 	if (arg[0] =='$')
@@ -54,7 +55,7 @@ int		msh_echo(t_env_var *env, char *arg, t_msh *msh)
 	return (1);
 }
 
-int		msh_cd(t_env_var *env, char **args, t_msh *msh)
+int	msh_cd(t_env_var *env, char **args, t_msh *msh)
 {
 	int ret;
 
@@ -62,19 +63,21 @@ int		msh_cd(t_env_var *env, char **args, t_msh *msh)
 	ret = chdir(args[1]);
 	if (ret < 0)
 		display_cmd_error("cd", PATH_ERROR, args);
+	exit_cmd(msh);
 	return (1);
 }
 
-int		msh_pwd(t_env_var *env, char **args, t_msh *msh)
+int	msh_pwd(t_env_var *env, char **args, t_msh *msh)
 {
 	char cwd[1024];
 
 	(void)msh;
 	ft_putnstr(getcwd(cwd, sizeof(cwd)), "\n", NULL, NULL);
+	exit_cmd(msh);
 	return (1);
 }
 
-int		msh_help(t_env_var *env, char **args, t_msh *msh)
+int	msh_help(t_env_var *env, char **args, t_msh *msh)
 {
 	(void)msh;
 	ft_putstr("\nminishell-4.2 commands: \n\necho\t\t: a clone of bash echo\n");
@@ -84,5 +87,6 @@ int		msh_help(t_env_var *env, char **args, t_msh *msh)
 	ft_putstr("env\t\t: a clone of bash env\n");
 	ft_putstr("unset\t\t: a clone of bash unset\n");
 	ft_putstr("help\t\t: show this list\n");
+	exit_cmd(msh);
 	return (1);
 }

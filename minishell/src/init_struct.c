@@ -21,6 +21,7 @@ void	init_msh(t_msh *msh)
 	msh->cmd.name[4] = "export";
 	msh->cmd.name[5] = "env";
 	msh->cmd.name[6] = "unset";
+	msh->cmd.name[7] = "exit";
 	msh->cmd.ptr[0] = msh_echo_runner;
 	msh->cmd.ptr[1] = msh_help;
 	msh->cmd.ptr[2] = msh_cd;
@@ -28,6 +29,9 @@ void	init_msh(t_msh *msh)
 	msh->cmd.ptr[4] = msh_export_runner;
 	msh->cmd.ptr[5] = msh_env;
 	msh->cmd.ptr[6] = msh_unset;
+	msh->cmd.ptr[7] = msh_exit;
+	msh->prompt = NULL;
+	msh->tokens = NULL;
 }
 
 void	init_cmd(t_msh *msh)

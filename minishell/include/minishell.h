@@ -51,13 +51,15 @@ typedef struct s_env_var
 
 typedef struct s_cmd
 {
-	int			(*ptr[7])(t_env_var*, char **, t_msh *msh);
-	char		*name[7];
+	int			(*ptr[8])(t_env_var*, char **, t_msh *msh);
+	char		*name[8];
 }				t_cmd;
 
 typedef struct s_msh
 {
 	t_cmd		cmd;
+	char		*prompt;
+	char		**tokens;
 	t_env_var	*env;
 	t_cmd_list	*input;
 	char		g_buffer[BUF];
@@ -74,6 +76,7 @@ void	init_cmd(t_msh *msh);
 void	flush_buffer(t_msh *msh);
 void	read_buffer(t_msh *msh);
 void	exit_shell(int status, t_msh *msh);
+void	exit_cmd(t_msh *msh);
 void	evaluate_commands(char **args, t_msh *t_msh);
 void	signal_handler(int sig_n);
 void	display_prompt(int mode, t_msh *msh);
@@ -90,6 +93,7 @@ int		msh_cd(t_env_var *env, char **args, t_msh *msh);
 int		msh_pwd(t_env_var *env, char **args, t_msh *msh);
 int		msh_env(t_env_var *env, char **args, t_msh *msh);
 int		msh_unset(t_env_var *env, char **args, t_msh *msh);
+int		msh_exit(t_env_var *env, char **args, t_msh *msh);
 
 /*
 ** UTILS

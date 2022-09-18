@@ -22,7 +22,10 @@ int		msh_export(t_env_var *env, char *arg, t_msh *msh)
 
 	i = 0;
 	if (arg == NULL || !ft_isalpha(arg[0]))
+	{
+		// exit_cmd(msh);
 		return (display_error(ENV_ERROR, msh));
+	}
 	while (arg[i++])
 		if (arg[i] == '=')
 		{
@@ -38,7 +41,11 @@ int		msh_export(t_env_var *env, char *arg, t_msh *msh)
 			break ;
 		}
 	if (!valid || !add_var_to_env(env, name, data))
+	{
+		// exit_cmd(msh);
 		return (display_error(ENV_ERROR, msh));
+	}
+	// exit_cmd(msh);
 	return (1);
 }
 
@@ -56,6 +63,7 @@ int	msh_env(t_env_var *env, char **args, t_msh *msh)
 	}
 	if (cur->name && cur->data && (ft_strncmp(cur->name, "init", ft_strlen(cur->name))))
 		ft_putnstr(cur->name, "=", cur->data, "\n");
+	exit_cmd(msh);
 	return (1);
 }
 
@@ -67,7 +75,10 @@ int	msh_unset(t_env_var *env, char **args, t_msh *msh)
 	(void)msh;
 	tmp = env;
 	if (tmp == NULL || !args[1])
+	{
+		exit_cmd(msh);
 		return (0);
+	}
 	while (tmp->next != NULL && (ft_strncmp(args[1], tmp->name, ft_strlen(args[1])) != 0))
 	{
 		prev = tmp;
@@ -80,8 +91,20 @@ int	msh_unset(t_env_var *env, char **args, t_msh *msh)
 		else if (tmp->next == NULL)
 			prev->next = NULL;
 		else
+		{
+			exit_cmd(msh);
 			return (1);
+		}
 		free(tmp);
 	}
+	exit_cmd(msh);
+	return (1);
+}
+
+int	msh_exit(t_env_var *env, char **args, t_msh *msh)
+{
+	(void)env;
+	exit_cmd(msh);
+	exit_shell(EXIT_SUCCESS, msh);
 	return (1);
 }
