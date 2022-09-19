@@ -48,8 +48,9 @@ int		add_var_to_env(t_env_var *env, char *name, char *data)
 		if (!ft_strncmp(new->next->name, name, ft_strlen(new->next->name)))
 		{
 			free(new->next->data);
-			free(name);
 			new->next->data = ft_strdup(data);
+			free(name);
+			free(data);
 			return (1);
 		}
 		else
@@ -58,6 +59,7 @@ int		add_var_to_env(t_env_var *env, char *name, char *data)
 	if (!(new->next = (t_env_var*)malloc(sizeof(t_env_var))))
 	{
 		free(name);
+		free(data);
 		return (0);
 	}
 	new->next->data = ft_strdup(data);

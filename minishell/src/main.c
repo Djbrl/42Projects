@@ -126,6 +126,7 @@ static void	shell_loop(t_msh *msh)
 		{
 			msh->tokens = ft_split(msh->prompt, ' ');
 			evaluate_commands(msh->tokens, msh);
+			exit_cmd(msh);
 			flush_buffer(msh);
 		}
 		else

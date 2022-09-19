@@ -33,6 +33,7 @@
 # define MODE_DIR 2
 # define BUF 4096
 # define RUNNING 1
+# define HOME "/mnt/nfs/homes/dsy"
 # define PROMPTLINE "minishell-4.2$ > "
 
 typedef struct s_msh	t_msh;

@@ -69,8 +69,10 @@ void	free_split(char **array)
 
 void	exit_cmd(t_msh *msh)
 {
-	free(msh->prompt);
-	free_split(msh->tokens);
+	if (msh->prompt != NULL)
+		free(msh->prompt);
+	if (msh->tokens != NULL)
+		free_split(msh->tokens);
 }
 
 void	exit_shell(int status, t_msh *msh)

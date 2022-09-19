@@ -59,10 +59,12 @@ int	msh_cd(t_env_var *env, char **args, t_msh *msh)
 {
 	int ret;
 
-	(void)msh;
-	ret = chdir(args[1]);
+	if (!msh->tokens[1])
+		ret = chdir(HOME);
+	else
+		ret = chdir(msh->tokens[1]);
 	if (ret < 0)
-		display_cmd_error("cd", PATH_ERROR, args);
+		display_cmd_error("cd", PATH_ERROR, msh->tokens);
 	exit_cmd(msh);
 	return (1);
 }

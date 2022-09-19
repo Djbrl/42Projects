@@ -1,0 +1,2 @@
+add environment to execvp
+change args to take msh instead of args
