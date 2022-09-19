@@ -59,45 +59,59 @@ typedef struct s_cmd
 typedef struct s_msh
 {
 	t_cmd		cmd;
-	char		*prompt;
-	char		**tokens;
 	t_env_var	*env;
 	t_cmd_list	*input;
+	char		*prompt;
+	char		**tokens;
 	char		g_buffer[BUF];
 }				t_msh;
 
-int		is_builtin(char *s, t_msh *msh);
+/*
+** INIT
+*/
+void	init_env(t_msh *msh);
+void	init_msh(t_msh *msh);
+void	init_cmd(t_msh *msh);
+
+/*
+** BUILTINS
+*/
+int		msh_cd(t_env_var *env, char **args, t_msh *msh);
+int		msh_pwd(t_env_var *env, char **args, t_msh *msh);
+int		msh_env(t_env_var *env, char **args, t_msh *msh);
+int		msh_echo(t_env_var *env, char *s, t_msh *msh);
+int		msh_help(t_env_var *env, char **args, t_msh *msh);
+int		msh_exit(t_env_var *env, char **args, t_msh *msh);
+int		msh_unset(t_env_var *env, char **args, t_msh *msh);
+int		msh_export(t_env_var *env, char *arg, t_msh *msh);
+int		msh_echo_runner(t_env_var *env, char **args, t_msh *msh);
+int		msh_export_runner(t_env_var *env, char **args, t_msh *msh);
+
+/*
+** DISPLAY
+*/
+int		display_error(char *error, t_msh *msh);
+void	display_prompt(int mode, t_msh *msh);
+void	display_cmd_error(char *cmd, char *error, char **args);
+
+
+/*
+** CONTROL
+*/
 char	*get_currentdir(t_msh *msh);
 char	*get_data_from_env(t_env_var *env, char *name);
 int		add_var_to_env(t_env_var *env, char *name, char *data);
 int		add_cmd_to_list(t_cmd_list *input, char *data);
-void	init_msh(t_msh *msh);
-void	init_env(t_msh *msh);
-void	init_cmd(t_msh *msh);
-void	flush_buffer(t_msh *msh);
-void	read_buffer(t_msh *msh);
-void	exit_shell(int status, t_msh *msh);
-void	exit_cmd(t_msh *msh);
 void	evaluate_commands(char **args, t_msh *t_msh);
 void	signal_handler(int sig_n);
-void	display_prompt(int mode, t_msh *msh);
-int		display_error(char *error, t_msh *msh);
-void	display_cmd_error(char *cmd, char *error, char **args);
-
-int		msh_echo_runner(t_env_var *env, char **args, t_msh *msh);
-int		msh_export_runner(t_env_var *env, char **args, t_msh *msh);
-
-int		msh_echo(t_env_var *env, char *s, t_msh *msh);
-int		msh_export(t_env_var *env, char *arg, t_msh *msh);
-int		msh_help(t_env_var *env, char **args, t_msh *msh);
-int		msh_cd(t_env_var *env, char **args, t_msh *msh);
-int		msh_pwd(t_env_var *env, char **args, t_msh *msh);
-int		msh_env(t_env_var *env, char **args, t_msh *msh);
-int		msh_unset(t_env_var *env, char **args, t_msh *msh);
-int		msh_exit(t_env_var *env, char **args, t_msh *msh);
+void	read_buffer(t_msh *msh);
+void	exit_cmd(t_msh *msh);
+void	exit_shell(int status, t_msh *msh);
 
 /*
 ** UTILS
 */
 void	free_split(char **array);
+void	flush_buffer(t_msh *msh);
+int		is_builtin(char *s, t_msh *msh);
 #endif
