@@ -25,7 +25,7 @@ void	evaluate_commands(char **args, t_msh *msh)
 	int		status;
 
 	if (is_builtin(args[0], msh) >= 0)
-		msh->cmd.ptr[is_builtin(args[0], msh)](msh->env, args, msh);
+		msh->cmd.ptr[is_builtin(args[0], msh)](msh->env, msh);
 	else
 	{
 		pid = fork();

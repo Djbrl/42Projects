@@ -57,7 +57,7 @@ int	msh_echo(t_env_var *env, char *arg, t_msh *msh)
 	return (1);
 }
 
-int	msh_cd(t_env_var *env, char **args, t_msh *msh)
+int	msh_cd(t_env_var *env, t_msh *msh)
 {
 	int	ret;
 
@@ -71,7 +71,7 @@ int	msh_cd(t_env_var *env, char **args, t_msh *msh)
 	return (1);
 }
 
-int	msh_pwd(t_env_var *env, char **args, t_msh *msh)
+int	msh_pwd(t_env_var *env, t_msh *msh)
 {
 	char	cwd[1024];
 
@@ -81,7 +81,7 @@ int	msh_pwd(t_env_var *env, char **args, t_msh *msh)
 	return (1);
 }
 
-int	msh_help(t_env_var *env, char **args, t_msh *msh)
+int	msh_help(t_env_var *env, t_msh *msh)
 {
 	(void)msh;
 	ft_putstr("\nminishell-4.2 commands: \n\necho\t\t: a clone of bash echo\n");

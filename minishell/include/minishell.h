@@ -52,7 +52,7 @@ typedef struct s_env_var
 
 typedef struct s_cmd
 {
-	int			(*ptr[8])(t_env_var*, char **, t_msh *msh);
+	int			(*ptr[8])(t_env_var*, t_msh *msh);
 	char		*name[8];
 }				t_cmd;
 
@@ -76,16 +76,16 @@ void	init_cmd(t_msh *msh);
 /*
 ** BUILTINS
 */
-int		msh_cd(t_env_var *env, char **args, t_msh *msh);
-int		msh_pwd(t_env_var *env, char **args, t_msh *msh);
-int		msh_env(t_env_var *env, char **args, t_msh *msh);
+int		msh_cd(t_env_var *env, t_msh *msh);
+int		msh_pwd(t_env_var *env, t_msh *msh);
+int		msh_env(t_env_var *env, t_msh *msh);
 int		msh_echo(t_env_var *env, char *s, t_msh *msh);
-int		msh_help(t_env_var *env, char **args, t_msh *msh);
-int		msh_exit(t_env_var *env, char **args, t_msh *msh);
-int		msh_unset(t_env_var *env, char **args, t_msh *msh);
+int		msh_help(t_env_var *env, t_msh *msh);
+int		msh_exit(t_env_var *env, t_msh *msh);
+int		msh_unset(t_env_var *env, t_msh *msh);
 int		msh_export(t_env_var *env, char *arg, t_msh *msh);
-int		msh_echo_runner(t_env_var *env, char **args, t_msh *msh);
-int		msh_export_runner(t_env_var *env, char **args, t_msh *msh);
+int		msh_echo_runner(t_env_var *env, t_msh *msh);
+int		msh_export_runner(t_env_var *env, t_msh *msh);
 
 /*
 ** DISPLAY
