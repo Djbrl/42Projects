@@ -37,9 +37,9 @@ char	*get_currentdir(t_msh *msh)
 	return (ft_strdup(path + last_slash + 1));
 }
 
-int		is_builtin(char *s, t_msh *msh)
+int	is_builtin(char *s, t_msh *msh)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < 8)

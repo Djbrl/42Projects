@@ -24,22 +24,21 @@ void	evaluate_commands(char **args, t_msh *msh)
 	pid_t	wpid;
 	int		status;
 
-	//fuck norminette
 	if (is_builtin(args[0], msh) >= 0)
 		msh->cmd.ptr[is_builtin(args[0], msh)](msh->env, args, msh);
 	else
 	{
 		pid = fork();
-		if (pid == 0) //son
+		if (pid == 0)
 		{
 			if (execvp(args[0], args) == -1)
 				display_error(CMD_ERROR, msh);
 			exit(EXIT_FAILURE);
 		}
-		else if (pid < 0)//fork error
+		else if (pid < 0)
 			display_error(FORK_ERROR, msh);
 		else
-		{//this is what the parent is doing
+		{
 			wpid = waitpid(pid, &status, WUNTRACED);
 			while (!WIFEXITED(status) && !WIFSIGNALED(status))
 				wpid = waitpid(pid, &status, WUNTRACED);

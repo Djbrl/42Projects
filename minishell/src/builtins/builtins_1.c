@@ -30,7 +30,8 @@ int	msh_echo(t_env_var *env, char *arg, t_msh *msh)
 
 	i = 0;
 	(void)msh;
-	if (arg[0] =='$')
+	if (arg[0] == '$')
+	{
 		while (arg[i])
 		{
 			if (arg[i] == '$' && arg[i + 1] == '$')
@@ -50,6 +51,7 @@ int	msh_echo(t_env_var *env, char *arg, t_msh *msh)
 			}
 			i++;
 		}
+	}
 	else
 		ft_putstr(arg);
 	return (1);
@@ -57,7 +59,7 @@ int	msh_echo(t_env_var *env, char *arg, t_msh *msh)
 
 int	msh_cd(t_env_var *env, char **args, t_msh *msh)
 {
-	int ret;
+	int	ret;
 
 	if (!msh->tokens[1])
 		ret = chdir(HOME);
@@ -71,7 +73,7 @@ int	msh_cd(t_env_var *env, char **args, t_msh *msh)
 
 int	msh_pwd(t_env_var *env, char **args, t_msh *msh)
 {
-	char cwd[1024];
+	char	cwd[1024];
 
 	(void)msh;
 	ft_putnstr(getcwd(cwd, sizeof(cwd)), "\n", NULL, NULL);

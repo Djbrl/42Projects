@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int		display_error(char *error, t_msh *msh)
+int	display_error(char *error, t_msh *msh)
 {
 	if (!ft_strncmp(error, CWD_ERROR, ft_strlen(error)))
 		ft_putnstr("minishell: ", error, NULL, NULL);
@@ -38,7 +38,7 @@ void	display_cmd_error(char *cmd, char *error, char **args)
 
 void	display_prompt(int mode, t_msh *msh)
 {
-	char *path;
+	char	*path;
 
 	if (mode == MODE_DIR)
 	{

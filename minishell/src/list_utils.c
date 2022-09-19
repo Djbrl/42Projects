@@ -14,7 +14,7 @@
 
 char	*get_data_from_env(t_env_var *env, char *name)
 {
-	t_env_var *cur;
+	t_env_var	*cur;
 
 	cur = env;
 	while (cur->next != NULL)
@@ -28,17 +28,17 @@ char	*get_data_from_env(t_env_var *env, char *name)
 			cur = cur->next;
 	}
 	if (!ft_strncmp(cur->name, name, ft_strlen(cur->name)))
-		{
-			free(name);
-			return (cur->data);
-		}
+	{
+		free(name);
+		return (cur->data);
+	}
 	free(name);
 	return (NULL);
 }
 
-int		add_var_to_env(t_env_var *env, char *name, char *data)
+int	add_var_to_env(t_env_var *env, char *name, char *data)
 {
-	t_env_var *new;
+	t_env_var	*new;
 
 	new = env;
 	if (!env || !name || !data)
@@ -56,12 +56,7 @@ int		add_var_to_env(t_env_var *env, char *name, char *data)
 		else
 			new = new->next;
 	}
-	if (!(new->next = (t_env_var*)malloc(sizeof(t_env_var))))
-	{
-		free(name);
-		free(data);
-		return (0);
-	}
+	new->next = malloc(sizeof(t_env_var));
 	new->next->data = ft_strdup(data);
 	new->next->name = ft_strdup(name);
 	new->next->next = NULL;
@@ -70,17 +65,16 @@ int		add_var_to_env(t_env_var *env, char *name, char *data)
 	return (1);
 }
 
-int		add_cmd_to_list(t_cmd_list *input, char *data)
+int	add_cmd_to_list(t_cmd_list *input, char *data)
 {
-	t_cmd_list *new;
+	t_cmd_list	*new;
 
 	new = input;
 	if (!input || !data)
 		return (0);
 	while (new->next != NULL)
 			new = new->next;
-	if (!(new->next = (t_cmd_list*)malloc(sizeof(t_cmd_list))))
-		return (0);
+	new->next = malloc(sizeof(t_cmd_list));
 	new->next->data = ft_strdup(data);
 	new->next->next = NULL;
 	free(data);

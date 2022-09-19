@@ -12,9 +12,9 @@
 
 #include "minishell.h"
 
-static void     free_struct(t_msh *msh)
+static void	free_struct(t_msh *msh)
 {
-	t_cmd_list *cur;
+	t_cmd_list	*cur;
 
 	if (!msh->input)
 		return ;
@@ -27,14 +27,14 @@ static void     free_struct(t_msh *msh)
 	}
 	if (msh->input)
 	{
-		free(msh->input->data);	
+		free(msh->input->data);
 		free(msh->input);
 	}
 }
 
-static void     free_env(t_msh *msh)
+static void	free_env(t_msh *msh)
 {
-	t_env_var *cur;
+	t_env_var	*cur;
 
 	if (!msh->env)
 		return ;
@@ -48,12 +48,11 @@ static void     free_env(t_msh *msh)
 	}
 	if (msh->env)
 	{
-		free(msh->env->data);	
-		free(msh->env->name);	
+		free(msh->env->data);
+		free(msh->env->name);
 		free(msh->env);
 	}
 }
-
 
 void	free_split(char **array)
 {

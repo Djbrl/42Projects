@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int		msh_export(t_env_var *env, char *arg, t_msh *msh)
+int	msh_export(t_env_var *env, char *arg, t_msh *msh)
 {
 	char		*name;
 	char		*tmp;
@@ -22,11 +22,9 @@ int		msh_export(t_env_var *env, char *arg, t_msh *msh)
 
 	i = 0;
 	if (arg == NULL || !ft_isalpha(arg[0]))
-	{
-		// exit_cmd(msh);
 		return (display_error(ENV_ERROR, msh));
-	}
 	while (arg[i++])
+	{
 		if (arg[i] == '=')
 		{
 			valid = 1;
@@ -40,28 +38,27 @@ int		msh_export(t_env_var *env, char *arg, t_msh *msh)
 			free(tmp);
 			break ;
 		}
-	if (!valid || !add_var_to_env(env, name, data))
-	{
-		// exit_cmd(msh);
-		return (display_error(ENV_ERROR, msh));
 	}
-	// exit_cmd(msh);
+	if (!valid || !add_var_to_env(env, name, data))
+		return (display_error(ENV_ERROR, msh));
 	return (1);
 }
 
 int	msh_env(t_env_var *env, char **args, t_msh *msh)
 {
-	t_env_var *cur;
+	t_env_var	*cur;
 
 	(void)msh;
 	cur = env;
 	while (cur->next != NULL)
 	{
-		if (cur->name && cur->data && (ft_strncmp(cur->name, "init", ft_strlen(cur->name))))
+		if (cur->name && cur->data && \
+			(ft_strncmp(cur->name, "init", ft_strlen(cur->name))))
 			ft_putnstr(cur->name, "=", cur->data, "\n");
 		cur = cur->next;
 	}
-	if (cur->name && cur->data && (ft_strncmp(cur->name, "init", ft_strlen(cur->name))))
+	if (cur->name && cur->data && \
+		(ft_strncmp(cur->name, "init", ft_strlen(cur->name))))
 		ft_putnstr(cur->name, "=", cur->data, "\n");
 	exit_cmd(msh);
 	return (1);
@@ -69,8 +66,8 @@ int	msh_env(t_env_var *env, char **args, t_msh *msh)
 
 int	msh_unset(t_env_var *env, char **args, t_msh *msh)
 {
-	t_env_var *tmp;
-	t_env_var *prev;
+	t_env_var	*tmp;
+	t_env_var	*prev;
 
 	(void)msh;
 	tmp = env;
@@ -79,7 +76,8 @@ int	msh_unset(t_env_var *env, char **args, t_msh *msh)
 		exit_cmd(msh);
 		return (0);
 	}
-	while (tmp->next != NULL && (ft_strncmp(args[1], tmp->name, ft_strlen(args[1])) != 0))
+	while (tmp->next != NULL && \
+		(ft_strncmp(args[1], tmp->name, ft_strlen(args[1])) != 0))
 	{
 		prev = tmp;
 		tmp = tmp->next;

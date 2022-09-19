@@ -14,7 +14,7 @@
 
 int	msh_echo_runner(t_env_var *env, char **args, t_msh *msh)
 {
-	int i;
+	int	i;
 
 	i = 1;
 	(void)msh;
@@ -46,7 +46,7 @@ int	msh_echo_runner(t_env_var *env, char **args, t_msh *msh)
 
 int	msh_export_runner(t_env_var *env, char **args, t_msh *msh)
 {
-	int i;
+	int	i;
 
 	i = 1;
 	(void)msh;
