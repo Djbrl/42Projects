@@ -62,7 +62,12 @@ int	msh_cd(t_env_var *env, t_msh *msh)
 	int	ret;
 
 	if (!msh->tokens[1])
-		ret = chdir(HOME);
+	{
+		if (msh->home)
+			ret = chdir(msh->home);
+		else
+			ret = chdir("/");
+	}
 	else
 		ret = chdir(msh->tokens[1]);
 	if (ret < 0)

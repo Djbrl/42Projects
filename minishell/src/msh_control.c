@@ -14,24 +14,29 @@
 
 void	signal_handler(int sig_n)
 {
-	write(1, "\n", 1);
-	write(1, PROMPTLINE, ft_strlen(PROMPTLINE));
+	if (sig_n == SIGINT)
+	{
+		write(1, "\n", 1);
+		write(1, PROMPTLINE, ft_strlen(PROMPTLINE));
+	}
+	else
+		return ;
 }
 
-void	evaluate_commands(char **args, t_msh *msh)
+void	evaluate_commands(t_msh *msh)
 {
 	pid_t	pid;
 	pid_t	wpid;
 	int		status;
 
-	if (is_builtin(args[0], msh) >= 0)
-		msh->cmd.ptr[is_builtin(args[0], msh)](msh->env, msh);
+	if (is_builtin(msh->tokens[0], msh) >= 0)
+		msh->cmd.ptr[is_builtin(msh->tokens[0], msh)](msh->env, msh);
 	else
 	{
 		pid = fork();
 		if (pid == 0)
 		{
-			if (execvp(args[0], args) == -1)
+			if (execvp(msh->tokens[0], msh->tokens) == -1)
 				display_error(CMD_ERROR, msh);
 			exit(EXIT_FAILURE);
 		}

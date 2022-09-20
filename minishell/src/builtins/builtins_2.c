@@ -21,9 +21,10 @@ int	msh_export(t_env_var *env, char *arg, t_msh *msh)
 	int			valid;
 
 	i = 0;
+	valid = 0;
 	if (arg == NULL || !ft_isalpha(arg[0]))
 		return (display_error(ENV_ERROR, msh));
-	while (arg[i++])
+	while (i < ft_strlen(arg))
 	{
 		if (arg[i] == '=')
 		{
@@ -38,9 +39,13 @@ int	msh_export(t_env_var *env, char *arg, t_msh *msh)
 			free(tmp);
 			break ;
 		}
+		i++;
 	}
-	if (!valid || !add_var_to_env(env, name, data))
+	if (!valid || !env)
 		return (display_error(ENV_ERROR, msh));
+	add_var_to_env(env, name, data);
+	free(name);
+	free(data);
 	return (1);
 }
 
@@ -66,35 +71,39 @@ int	msh_env(t_env_var *env, t_msh *msh)
 
 int	msh_unset(t_env_var *env, t_msh *msh)
 {
-	t_env_var	*tmp;
 	t_env_var	*prev;
 
-	(void)msh;
-	tmp = env;
-	if (tmp == NULL || !msh->tokens[1])
+	if (env == NULL || !msh->tokens[1])
 	{
 		exit_cmd(msh);
 		return (0);
 	}
-	while (tmp->next != NULL && \
-		(ft_strncmp(msh->tokens[1], tmp->name, ft_strlen(msh->tokens[1])) != 0))
+
+	while (env->next != NULL && \
+		(ft_strncmp(msh->tokens[1], env->name, ft_strlen(msh->tokens[1])) != 0))
 	{
-		prev = tmp;
-		tmp = tmp->next;
+		prev = env;
+		env = env->next;
 	}
-	if (!(ft_strncmp(msh->tokens[1], tmp->name, ft_strlen(msh->tokens[1]))))
+
+	if ((ft_strncmp(msh->tokens[1], env->name, ft_strlen(msh->tokens[1]))) == 0)
 	{
-		if (tmp->next != NULL)
-			prev->next = tmp->next;
-		else if (tmp->next == NULL)
-			prev->next = NULL;
+		if (env->next != NULL)
+		{
+			free(env->name);
+			free(env->data);
+			free(env);
+			prev->next = env->next;
+		}
 		else
 		{
-			exit_cmd(msh);
-			return (1);
+			free(env->name);
+			free(env->data);
+			free(env);
+			prev->next = NULL;
 		}
-		free(tmp);
 	}
+
 	exit_cmd(msh);
 	return (1);
 }

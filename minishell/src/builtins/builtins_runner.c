@@ -50,10 +50,11 @@ int	msh_export_runner(t_env_var *env, t_msh *msh)
 
 	i = 1;
 	(void)msh;
-	if (!msh->tokens[1])
+	if (msh->tokens[1] == NULL)
 	{
+		msh_env(env, msh);
 		exit_cmd(msh);
-		return (0);
+		return (1);
 	}
 	while (msh->tokens[i])
 	{

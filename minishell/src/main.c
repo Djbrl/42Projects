@@ -106,16 +106,12 @@ Description
 ** -Signal : definit la fonction a appeler lorsqu'on recoit 
 **		un signal (CTRL+C, CTRL+D, CTRL+\)
 ** -Flush buffer : efface tout les caracteres(4096) present dans le buffer
-**		en les remplacent par '0' avec ft_memset. 
-** 
-** 
-** 
-** 
-** 
+**		en les remplacent par '0' avec ft_memset.
 */
 static void	shell_loop(t_msh *msh)
 {
 	signal(SIGINT, signal_handler);
+	signal(SIGQUIT, signal_handler);
 	while (RUNNING)
 	{
 		display_prompt(MODE_DEFAULT, msh);
@@ -125,7 +121,7 @@ static void	shell_loop(t_msh *msh)
 		if (msh->prompt != NULL && ft_strlen(msh->prompt) != 0)
 		{
 			msh->tokens = ft_split(msh->prompt, ' ');
-			evaluate_commands(msh->tokens, msh);
+			evaluate_commands(msh);
 			exit_cmd(msh);
 			flush_buffer(msh);
 		}
@@ -134,13 +130,12 @@ static void	shell_loop(t_msh *msh)
 	}
 }
 
-int	main(int ac, char **av)
+int	main(int ac, char **av, char **envp)
 {
 	t_msh	msh;
-
-	init_msh(&msh);
-	init_cmd(&msh);
 	init_env(&msh);
+	init_cmd(&msh);
+	init_msh(&msh, envp);
 	shell_loop(&msh);
 	return (0);
 }

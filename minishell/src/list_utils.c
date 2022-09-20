@@ -49,8 +49,6 @@ int	add_var_to_env(t_env_var *env, char *name, char *data)
 		{
 			free(new->next->data);
 			new->next->data = ft_strdup(data);
-			free(name);
-			free(data);
 			return (1);
 		}
 		else
@@ -60,8 +58,6 @@ int	add_var_to_env(t_env_var *env, char *name, char *data)
 	new->next->data = ft_strdup(data);
 	new->next->name = ft_strdup(name);
 	new->next->next = NULL;
-	free(data);
-	free(name);
 	return (1);
 }
 

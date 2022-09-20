@@ -33,8 +33,10 @@
 # define MODE_DIR 2
 # define BUF 4096
 # define RUNNING 1
-# define HOME "/mnt/nfs/homes/dsy"
 # define PROMPTLINE "minishell-4.2$ > "
+# define SUCCESS 1
+# define FAILURE 0
+# define CTRL_D_SIGNAL 0
 
 typedef struct s_msh	t_msh;
 typedef struct s_cmd_list
@@ -61,8 +63,13 @@ typedef struct s_msh
 	t_cmd		cmd;
 	t_env_var	*env;
 	t_cmd_list	*input;
+	char		*home;
+	char		*user;
+	char		*full_path;
+	char		*default_path;
 	char		*prompt;
 	char		**tokens;
+	char		**envp;
 	char		g_buffer[BUF];
 }				t_msh;
 
@@ -70,7 +77,7 @@ typedef struct s_msh
 ** INIT
 */
 void	init_env(t_msh *msh);
-void	init_msh(t_msh *msh);
+void	init_msh(t_msh *msh, char **envp);
 void	init_cmd(t_msh *msh);
 
 /*
@@ -102,9 +109,10 @@ char	*get_currentdir(t_msh *msh);
 char	*get_data_from_env(t_env_var *env, char *name);
 int		add_var_to_env(t_env_var *env, char *name, char *data);
 int		add_cmd_to_list(t_cmd_list *input, char *data);
-void	evaluate_commands(char **args, t_msh *t_msh);
+void	evaluate_commands(t_msh *t_msh);
 void	signal_handler(int sig_n);
 void	read_buffer(t_msh *msh);
+void	parse_envp(t_msh *msh);
 void	exit_cmd(t_msh *msh);
 void	exit_shell(int status, t_msh *msh);
 

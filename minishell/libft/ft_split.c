@@ -12,7 +12,7 @@
 
 #include "../libft/libft.h"
 
-static int	count_words(char const *s, char c)
+static int	count_words(char *s, char c)
 {
 	int		i;
 	int		words;
@@ -28,7 +28,7 @@ static int	count_words(char const *s, char c)
 	return (words);
 }
 
-static int	words_len(char const *s, char c)
+static int	words_len(char *s, char c)
 {
 	int		i;
 	int		len;
@@ -57,7 +57,7 @@ static void	*leak(char **splitted, int words)
 	return (NULL);
 }
 
-static char	**fill(char const *s, int words, char c, char **splitted)
+static char	**fill(char *s, int words, char c, char **splitted)
 {
 	int		i;
 	int		j;
@@ -81,7 +81,7 @@ static char	**fill(char const *s, int words, char c, char **splitted)
 	return (splitted);
 }
 
-char	**ft_split(char	const *s, char c)
+char	**ft_split(char *s, char c)
 {
 	char	**splitted;
 	int		words;

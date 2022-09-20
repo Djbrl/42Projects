@@ -58,6 +58,14 @@ void	flush_buffer(t_msh *msh)
 
 void	read_buffer(t_msh *msh)
 {
-	read(0, msh->g_buffer, BUF);
+	int	signal;
+
+	signal = read(0, msh->g_buffer, BUF);
+	if (signal == CTRL_D_SIGNAL)
+	{
+		flush_buffer(msh);
+		exit_cmd(msh);
+		exit_shell(SUCCESS, msh);
+	}
 	msh->g_buffer[ft_strlen(msh->g_buffer) - 1] = 0;
 }

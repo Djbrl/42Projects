@@ -52,6 +52,14 @@ static void	free_env(t_msh *msh)
 		free(msh->env->name);
 		free(msh->env);
 	}
+	if (msh->home != NULL)
+		free(msh->home);
+	if (msh->user != NULL)
+		free(msh->user);
+	if (msh->full_path != NULL)
+		free(msh->full_path);
+	if (msh->default_path != NULL)
+		free(msh->default_path);
 }
 
 void	free_split(char **array)
