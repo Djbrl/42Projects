@@ -28,14 +28,32 @@ static int	find_char(char *str, char c)
 	return (i);
 }
 
+//put paths into list
+//put all paths into a double array
+//try execute command with all paths available
+//if none is available, show error
+static void parse_paths(char *path, t_msh *msh)
+{
+	char	**paths;
+	char	*tmp;
+
+	tmp = "/";
+	paths = ft_split(path, ':');
+	if (!paths)
+		return ;
+	else
+		msh->paths = paths;
+	return ;
+}
+
 void parse_envp(t_msh *msh)
 {
 	int		i;
 	int		j;
 	char	*var;
+	char	*data;
 
 	i = 0;
-	j = 0;
 	if (msh->envp == NULL)
 		return ;
 	while (msh->envp[i])
@@ -43,27 +61,15 @@ void parse_envp(t_msh *msh)
 		var = ft_substr(msh->envp[i], 0, find_char(msh->envp[i], '='));
 		if (!var)
 			return ;
-		if (ft_strncmp(var, "HOME", ft_strlen(var)) == 0)
-		{
-			msh->home = ft_substr(msh->envp[i], \
-				find_char(msh->envp[i], '=') + 1, find_char(msh->envp[i], '0'));
-			add_var_to_env(msh->env, "HOME", msh->home);
-		}
-		if (ft_strncmp(var, "USER", ft_strlen(var)) == 0)
-		{
-			msh->user = ft_substr(msh->envp[i], \
-				find_char(msh->envp[i], '=') + 1, find_char(msh->envp[i], '0'));
-			add_var_to_env(msh->env, "USER", msh->user);
-		}
+		data = ft_substr(msh->envp[i], find_char(msh->envp[i], '=') + 1\
+			, find_char(msh->envp[i], '0'));
+		add_var_to_env(msh->env, var, data);
 		if (ft_strncmp(var, "PATH", ft_strlen(var)) == 0)
-		{
-			msh->full_path = ft_substr(msh->envp[i], \
-				find_char(msh->envp[i], '=') + 1, find_char(msh->envp[i], '0'));
-			msh->default_path = ft_substr(msh->envp[i], \
-				find_char(msh->envp[i], '=') + 1, find_char(msh->full_path, ':'));
-			add_var_to_env(msh->env, "HOME", msh->full_path);
-		}
+			parse_paths(data, msh);
+		if (ft_strncmp(var, "HOME", ft_strlen(var)) == 0)
+			msh->home = ft_strdup(data);
 		free(var);
+		free(data);
 		i++;
 	}
 	return ;

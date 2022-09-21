@@ -60,6 +60,8 @@ static void	free_env(t_msh *msh)
 		free(msh->full_path);
 	if (msh->default_path != NULL)
 		free(msh->default_path);
+	if (msh->paths != NULL)
+		free_split(msh->paths);
 }
 
 void	free_split(char **array)

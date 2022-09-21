@@ -12,6 +12,26 @@
 
 #include "minishell.h"
 
+static int	exec_env(t_msh *msh)
+{
+	int		i;
+	char	*tmp;
+	char	*cmd;
+
+	i = 0;
+	tmp = "/";
+	if (!msh->paths)
+		return (-1);
+	while (msh->paths[i])
+	{
+		cmd = ft_strjoin(msh->paths[i], tmp);
+		execve(ft_strjoin(cmd, msh->tokens[0]), msh->tokens, msh->envp);
+		free(cmd);
+		i++;
+	}
+	return(-1);
+}
+
 void	signal_handler(int sig_n)
 {
 	if (sig_n == SIGINT)
@@ -36,7 +56,7 @@ void	evaluate_commands(t_msh *msh)
 		pid = fork();
 		if (pid == 0)
 		{
-			if (execvp(msh->tokens[0], msh->tokens) == -1)
+			if (exec_env(msh) == -1)
 				display_error(CMD_ERROR, msh);
 			exit(EXIT_FAILURE);
 		}

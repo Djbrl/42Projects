@@ -35,6 +35,7 @@ void	init_msh(t_msh *msh, char **envp)
 	if (!envp)
 		msh->envp = NULL;
 	msh->envp = envp;
+	msh->paths = NULL;
 	msh->home = NULL;
 	msh->user = NULL;
 	msh->default_path = NULL;

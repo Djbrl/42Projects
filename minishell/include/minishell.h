@@ -70,7 +70,9 @@ typedef struct s_msh
 	char		*prompt;
 	char		**tokens;
 	char		**envp;
+	char		**paths;
 	char		g_buffer[BUF];
+	int			fd;
 }				t_msh;
 
 /*
