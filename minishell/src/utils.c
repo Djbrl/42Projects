@@ -37,6 +37,9 @@ char	*get_currentdir(t_msh *msh)
 	return (ft_strdup(path + last_slash + 1));
 }
 
+/*
+** The 'ft_strlen() + 1' is meant to check if there are any extra characters after the builtin name string
+*/
 int	is_builtin(char *s, t_msh *msh)
 {
 	int	i;
@@ -44,7 +47,7 @@ int	is_builtin(char *s, t_msh *msh)
 	i = 0;
 	while (i < 8)
 	{
-		if (!ft_strncmp(msh->cmd.name[i], s, ft_strlen(msh->cmd.name[i])))
+		if (!ft_strncmp(msh->cmd.name[i], s, ft_strlen(msh->cmd.name[i]) + 1))
 			return (i);
 		i++;
 	}

@@ -85,15 +85,14 @@ int	msh_unset(t_env_var *env, t_msh *msh)
 		prev = env;
 		env = env->next;
 	}
-
 	if ((ft_strncmp(msh->tokens[1], env->name, ft_strlen(msh->tokens[1]))) == 0)
-	{
+	{	
 		if (env->next != NULL)
 		{
 			free(env->name);
 			free(env->data);
-			free(env);
 			prev->next = env->next;
+			free(env);
 		}
 		else
 		{
@@ -103,7 +102,6 @@ int	msh_unset(t_env_var *env, t_msh *msh)
 			prev->next = NULL;
 		}
 	}
-
 	exit_cmd(msh);
 	return (1);
 }
