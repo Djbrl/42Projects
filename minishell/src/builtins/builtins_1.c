@@ -60,7 +60,16 @@ int	msh_echo(t_env_var *env, char *arg, t_msh *msh)
 int	msh_cd(t_env_var *env, t_msh *msh)
 {
 	int	ret;
+	char	*path;
 
+	path = NULL;
+	if (msh->tokens[1])
+	{
+		if (msh->tokens[1][0] == '$')
+			path = expand_var(msh, msh->tokens[1]);
+		else
+			path = ft_strdup(msh->tokens[1]);
+	}
 	if (!msh->tokens[1])
 	{
 		if (msh->home != NULL)
@@ -69,9 +78,11 @@ int	msh_cd(t_env_var *env, t_msh *msh)
 			ret = chdir("/");
 	}
 	else
-		ret = chdir(msh->tokens[1]);
+		ret = chdir(path);
 	if (ret < 0)
 		display_cmd_error("cd", PATH_ERROR, msh->tokens);
+	if (path)
+		free(path);
 	exit_cmd(msh);
 	return (1);
 }

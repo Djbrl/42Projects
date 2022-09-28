@@ -108,6 +108,17 @@ Description
 ** -Flush buffer : efface tout les caracteres(4096) present dans le buffer
 **		en les remplacent par '0' avec ft_memset.
 */
+
+static int	get_nb_tokens(char **tokens)
+{
+	int	i;
+
+	i = 0;
+	while (tokens[i] != NULL)
+		i++;
+	return (i);
+}
+
 static void	shell_loop(t_msh *msh)
 {
 	signal(SIGINT, signal_handler);
@@ -121,6 +132,7 @@ static void	shell_loop(t_msh *msh)
 		if (msh->prompt != NULL && ft_strlen(msh->prompt) != 0)
 		{
 			msh->tokens = ft_split(msh->prompt, ' ');
+			msh->nb_tokens = get_nb_tokens(msh->tokens);
 			evaluate_commands(msh);
 			exit_cmd(msh);
 			flush_buffer(msh);

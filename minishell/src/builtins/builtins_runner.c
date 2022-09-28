@@ -64,3 +64,20 @@ int	msh_export_runner(t_env_var *env, t_msh *msh)
 	exit_cmd(msh);
 	return (1);
 }
+
+int	msh_cd_runner(t_env_var *env, t_msh *msh)
+{
+	int	i;
+
+	i = 1;
+	(void)msh;
+	if (msh->nb_tokens > 2)
+	{
+		printf("Too many args for cd command\n");
+		exit_cmd(msh);
+		return (1);
+	}
+	else
+		msh_cd(env, msh);
+	return (1);
+}

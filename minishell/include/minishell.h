@@ -15,6 +15,8 @@
 # include <sys/stat.h>
 # include <fcntl.h>
 # include <stdio.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 # include <unistd.h>
 # include <sys/types.h>
 # include <sys/wait.h>
@@ -72,7 +74,7 @@ typedef struct s_msh
 	char		**envp;
 	char		**paths;
 	char		g_buffer[BUF];
-	int			fd;
+	int			nb_tokens;
 }				t_msh;
 
 /*
@@ -93,6 +95,7 @@ int		msh_help(t_env_var *env, t_msh *msh);
 int		msh_exit(t_env_var *env, t_msh *msh);
 int		msh_unset(t_env_var *env, t_msh *msh);
 int		msh_export(t_env_var *env, char *arg, t_msh *msh);
+int		msh_cd_runner(t_env_var *env, t_msh *msh);
 int		msh_echo_runner(t_env_var *env, t_msh *msh);
 int		msh_export_runner(t_env_var *env, t_msh *msh);
 
@@ -121,6 +124,7 @@ void	exit_shell(int status, t_msh *msh);
 /*
 ** UTILS
 */
+char	*expand_var(t_msh *msh, char *var);
 void	free_split(char **array);
 void	flush_buffer(t_msh *msh);
 int		is_builtin(char *s, t_msh *msh);

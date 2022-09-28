@@ -54,6 +54,19 @@ int	is_builtin(char *s, t_msh *msh)
 	return (-1);
 }
 
+char	*expand_var(t_msh *msh, char *var)
+{
+	char	*ret;
+	char	*find;
+
+	find = ft_substr(var, 1, ft_strlen(var) - 1);
+	ret = get_data_from_env(msh->env, find);
+	if (ret == NULL)
+		return (ft_strdup(var));
+	else
+		return (ft_strdup(ret));
+}
+
 void	flush_buffer(t_msh *msh)
 {
 	ft_memset(msh->g_buffer, 0, BUF);
