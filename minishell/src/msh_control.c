@@ -17,6 +17,7 @@ static int	exec_env(t_msh *msh)
 	int		i;
 	char	*tmp;
 	char	*cmd;
+	char	*path;
 
 	i = 0;
 	tmp = "/";
@@ -25,8 +26,10 @@ static int	exec_env(t_msh *msh)
 	while (msh->paths[i])
 	{
 		cmd = ft_strjoin(msh->paths[i], tmp);
-		execve(ft_strjoin(cmd, msh->tokens[0]), msh->tokens, msh->envp);
+		path = ft_strjoin(cmd, msh->tokens[0]);
+		execve(path, msh->tokens, msh->envp);
 		free(cmd);
+		free(path);
 		i++;
 	}
 	return(-1);

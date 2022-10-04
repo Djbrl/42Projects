@@ -125,7 +125,7 @@ static void	shell_loop(t_msh *msh)
 	signal(SIGQUIT, signal_handler);
 	while (RUNNING)
 	{
-		display_prompt(MODE_DEFAULT, msh);
+		//display_prompt(MODE_DEFAULT, msh);
 		flush_buffer(msh);
 		read_buffer(msh);
 		msh->prompt = ft_strdup(msh->g_buffer);

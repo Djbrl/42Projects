@@ -3,8 +3,8 @@ NAME := minishell
 LIB_FT := libft/libft.a
 
 CC := cc
-CFLAGS := -Wall -Wextra -Werror -g3 -MMD -lreadline
-CFLAGS :=
+CFLAGS := -Wall -Wextra -Werror
+CFLAGS := -g3 -MMD #-lreadline
 PFLAGS := -Iinclude -Ilibft
 
 SRC_OTHER := main.c display.c msh_control.c utils.c builtins/builtins_1.c \
@@ -28,7 +28,7 @@ all: $(NAME)
 
 
 $(NAME): $(OBJ) $(LIB_FT)
-	$(CC) $(OBJ) $(LIB_FT) $(CFLAGS) -o $(NAME)
+	$(CC) $(OBJ) $(LIB_FT) $(CFLAGS) -o $(NAME) -lreadline
 	stty -echoctl 
 
 $(BUILD_PATH)/$(OBJ_PATH)/%.o: $(SRC_PATH)/%.c

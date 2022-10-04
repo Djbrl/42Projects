@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#include "minishell.h"
 
 char	*get_currentdir(t_msh *msh)
 {
@@ -72,16 +72,51 @@ void	flush_buffer(t_msh *msh)
 	ft_memset(msh->g_buffer, 0, BUF);
 }
 
+/*
+**	LEAKLESS READ - NO HISTORY
+**	int	signal;
+**
+**	signal = read(0, msh->g_buffer, BUF);
+**	if (signal == CTRL_D_SIGNAL)
+**	{
+**		flush_buffer(msh);
+**		exit_cmd(msh);
+**		exit_shell(SUCCESS, msh);
+**	}
+**	msh->g_buffer[ft_strlen(msh->g_buffer) - 1] = 0;
+*/
+
 void	read_buffer(t_msh *msh)
 {
-	int	signal;
+	// int	signal;
+	char	*s;
+	int		i;
 
-	signal = read(0, msh->g_buffer, BUF);
-	if (signal == CTRL_D_SIGNAL)
+	i = 0;
+	s = readline(PROMPTLINE);
+	if (s != NULL)
+	{
+		add_history(s);
+		if (ft_strlen(s) == 0)
+		{
+		//	write(1, "\n", 1);
+			return ;
+		}
+		else
+		{
+			while (s[i] && s[i] != '\n')
+			{
+				msh->g_buffer[i] = s[i];
+				i++;
+			}
+		}
+	}
+	else
 	{
 		flush_buffer(msh);
 		exit_cmd(msh);
 		exit_shell(SUCCESS, msh);
+		return ;
 	}
-	msh->g_buffer[ft_strlen(msh->g_buffer) - 1] = 0;
+	free(s);
 }
