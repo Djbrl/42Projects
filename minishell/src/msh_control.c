@@ -32,7 +32,7 @@ static int	exec_env(t_msh *msh)
 		free(path);
 		i++;
 	}
-	return(-1);
+	return (-1);
 }
 
 void	signal_handler(int sig_n)

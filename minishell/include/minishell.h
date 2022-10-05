@@ -41,11 +41,12 @@
 # define CTRL_D_SIGNAL 0
 
 typedef struct s_msh	t_msh;
-typedef struct s_cmd_list
-{
-	char				*data;
-	struct s_cmd_list	*next;
-}						t_cmd_list;
+
+typedef struct s_ast{
+	char			*data;
+	struct s_ast	*left;
+	struct s_ast	*right;
+}					t_ast;
 
 typedef struct s_env_var
 {
@@ -63,8 +64,8 @@ typedef struct s_cmd
 typedef struct s_msh
 {
 	t_cmd		cmd;
+	t_ast		*ast;
 	t_env_var	*env;
-	t_cmd_list	*input;
 	char		*home;
 	char		*user;
 	char		*full_path;
@@ -82,7 +83,7 @@ typedef struct s_msh
 */
 void	init_env(t_msh *msh);
 void	init_msh(t_msh *msh, char **envp);
-void	init_cmd(t_msh *msh);
+void	init_ast(t_msh *msh);
 
 /*
 ** BUILTINS
@@ -106,14 +107,13 @@ int		display_error(char *error, t_msh *msh);
 void	display_prompt(int mode, t_msh *msh);
 void	display_cmd_error(char *cmd, char *error, char **args);
 
-
 /*
 ** CONTROL
 */
 char	*get_currentdir(t_msh *msh);
 char	*get_data_from_env(t_env_var *env, char *name);
+int		add_left_to_ast(t_msh *msh, char *data);
 int		add_var_to_env(t_env_var *env, char *name, char *data);
-int		add_cmd_to_list(t_cmd_list *input, char *data);
 void	evaluate_commands(t_msh *t_msh);
 void	signal_handler(int sig_n);
 void	read_buffer(t_msh *msh);

@@ -12,6 +12,22 @@
 
 #include "minishell.h"
 
+static void	ftn_echo_runner(t_msh **msh, t_env_var **var, int i)
+{
+	t_msh		*m;
+	t_env_var	*v;
+
+	m = *msh;
+	v = *var;
+	while (m->tokens[i])
+	{
+		if (i > 1)
+			write(1, " ", 1);
+		msh_echo(v, m->tokens[i++], m);
+	}
+	write(1, "\n", 1);
+}
+
 int	msh_echo_runner(t_env_var *env, t_msh *msh)
 {
 	int	i;
@@ -31,15 +47,7 @@ int	msh_echo_runner(t_env_var *env, t_msh *msh)
 		}
 	}
 	else
-	{
-		while (msh->tokens[i])
-		{
-			if (i > 1)
-				write(1, " ", 1);
-			msh_echo(env, msh->tokens[i++], msh);
-		}
-		write(1, "\n", 1);
-	}
+		ftn_echo_runner(&msh, &env, i);
 	exit_cmd(msh);
 	return (1);
 }

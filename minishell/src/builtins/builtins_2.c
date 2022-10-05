@@ -12,35 +12,45 @@
 
 #include "minishell.h"
 
-int	msh_export(t_env_var *env, char *arg, t_msh *msh)
+static int	ftn_msh_export(int valid, char **arg, char **data, char **name)
 {
-	char		*name;
-	char		*tmp;
-	char		*data;
-	int			i;
-	int			valid;
+	int		i;
+	char	*tmp;
+	char	*s;
 
+	s = *arg;
 	i = 0;
-	valid = 0;
-	if (arg == NULL || !ft_isalpha(arg[0]))
-		return (display_error(ENV_ERROR, msh));
-	while (i < ft_strlen(arg))
+	while (i < ft_strlen(s))
 	{
-		if (arg[i] == '=')
+		if (s[i] == '=')
 		{
 			valid = 1;
-			if (arg[i + 1] == 0)
-				data = ft_strdup("\0");
+			if (s[i + 1] == 0)
+				*data = ft_strdup("\0");
 			else
-				data = ft_strdup(arg + i + 1);
-			tmp = ft_strdup(arg);
+				*data = ft_strdup(s + i + 1);
+			tmp = ft_strdup(s);
 			tmp[i] = 0;
-			name = ft_strdup(tmp);
+			*name = ft_strdup(tmp);
 			free(tmp);
 			break ;
 		}
 		i++;
 	}
+	return (valid);
+}
+
+int	msh_export(t_env_var *env, char *arg, t_msh *msh)
+{
+	char		*name;
+	char		*tmp;
+	char		*data;
+	int			valid;
+
+	valid = 0;
+	if (arg == NULL || !ft_isalpha(arg[0]))
+		return (display_error(ENV_ERROR, msh));
+	valid = ftn_msh_export(valid, &arg, &data, &name);
 	if (!valid || !env)
 		return (display_error(ENV_ERROR, msh));
 	add_var_to_env(env, name, data);
@@ -49,24 +59,27 @@ int	msh_export(t_env_var *env, char *arg, t_msh *msh)
 	return (1);
 }
 
-int	msh_env(t_env_var *env, t_msh *msh)
+static void	ftn_msh_unset(t_env_var **env, t_env_var **prev)
 {
-	t_env_var	*cur;
+	t_env_var	*e;
+	t_env_var	*p;
 
-	(void)msh;
-	cur = env;
-	while (cur->next != NULL)
+	e = *env;
+	p = *prev;
+	if (e->next != NULL)
 	{
-		if (cur->name && cur->data && \
-			(ft_strncmp(cur->name, "init", ft_strlen(cur->name))))
-			ft_putnstr(cur->name, "=", cur->data, "\n");
-		cur = cur->next;
+		free(e->name);
+		free(e->data);
+		p->next = e->next;
+		free(e);
 	}
-	if (cur->name && cur->data && \
-		(ft_strncmp(cur->name, "init", ft_strlen(cur->name))))
-		ft_putnstr(cur->name, "=", cur->data, "\n");
-	exit_cmd(msh);
-	return (1);
+	else
+	{
+		free(e->name);
+		free(e->data);
+		free(e);
+		p->next = NULL;
+	}
 }
 
 int	msh_unset(t_env_var *env, t_msh *msh)
@@ -78,7 +91,6 @@ int	msh_unset(t_env_var *env, t_msh *msh)
 		exit_cmd(msh);
 		return (0);
 	}
-
 	while (env->next != NULL && \
 		(ft_strncmp(msh->tokens[1], env->name, ft_strlen(msh->tokens[1])) != 0))
 	{
@@ -86,30 +98,7 @@ int	msh_unset(t_env_var *env, t_msh *msh)
 		env = env->next;
 	}
 	if ((ft_strncmp(msh->tokens[1], env->name, ft_strlen(msh->tokens[1]))) == 0)
-	{	
-		if (env->next != NULL)
-		{
-			free(env->name);
-			free(env->data);
-			prev->next = env->next;
-			free(env);
-		}
-		else
-		{
-			free(env->name);
-			free(env->data);
-			free(env);
-			prev->next = NULL;
-		}
-	}
+		ftn_msh_unset(&env, &prev);
 	exit_cmd(msh);
-	return (1);
-}
-
-int	msh_exit(t_env_var *env, t_msh *msh)
-{
-	(void)env;
-	exit_cmd(msh);
-	exit_shell(EXIT_SUCCESS, msh);
 	return (1);
 }

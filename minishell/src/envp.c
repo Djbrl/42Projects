@@ -28,11 +28,7 @@ static int	find_char(char *str, char c)
 	return (i);
 }
 
-//put paths into list
-//put all paths into a double array
-//try execute command with all paths available
-//if none is available, show error
-static void parse_paths(char *path, t_msh *msh)
+static void	parse_paths(char *path, t_msh *msh)
 {
 	char	**paths;
 	char	*tmp;
@@ -46,7 +42,7 @@ static void parse_paths(char *path, t_msh *msh)
 	return ;
 }
 
-void parse_envp(t_msh *msh)
+void	parse_envp(t_msh *msh)
 {
 	int		i;
 	int		j;
@@ -61,7 +57,7 @@ void parse_envp(t_msh *msh)
 		var = ft_substr(msh->envp[i], 0, find_char(msh->envp[i], '='));
 		if (!var)
 			return ;
-		data = ft_substr(msh->envp[i], find_char(msh->envp[i], '=') + 1\
+		data = ft_substr(msh->envp[i], find_char(msh->envp[i], '=') + 1 \
 			, find_char(msh->envp[i], '0'));
 		add_var_to_env(msh->env, var, data);
 		if (ft_strncmp(var, "PATH", ft_strlen(var)) == 0)

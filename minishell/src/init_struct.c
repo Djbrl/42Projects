@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-void	init_msh(t_msh *msh, char **envp)
+static void	init_fn_ptr(t_msh *msh)
 {
 	msh->cmd.name[0] = "echo";
 	msh->cmd.name[1] = "help";
@@ -30,6 +30,11 @@ void	init_msh(t_msh *msh, char **envp)
 	msh->cmd.ptr[5] = msh_env;
 	msh->cmd.ptr[6] = msh_unset;
 	msh->cmd.ptr[7] = msh_exit;
+}
+
+void	init_msh(t_msh *msh, char **envp)
+{
+	init_fn_ptr(msh);
 	msh->prompt = NULL;
 	msh->tokens = NULL;
 	if (!envp)
@@ -43,11 +48,12 @@ void	init_msh(t_msh *msh, char **envp)
 	parse_envp(msh);
 }
 
-void	init_cmd(t_msh *msh)
+void	init_ast(t_msh *msh)
 {
-	msh->input = (malloc(sizeof(t_cmd_list)));
-	msh->input->data = NULL;
-	msh->input->next = NULL;
+	msh->ast = (malloc(sizeof(t_ast)));
+	msh->ast->data = NULL;
+	msh->ast->left = NULL;
+	msh->ast->right = NULL;
 }
 
 void	init_env(t_msh *msh)

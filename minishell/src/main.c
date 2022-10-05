@@ -119,22 +119,67 @@ static int	get_nb_tokens(char **tokens)
 	return (i);
 }
 
+static void	free_ast(t_ast *ast)
+{
+	if (ast == NULL)
+		return ;
+	free_ast(ast->left);
+	free_ast(ast->right);
+	if (ast->data != NULL)
+		free(ast->data);
+	if (ast->left != NULL)
+		free(ast->left);
+	if (ast->right != NULL)
+		free(ast->right);
+}
+
+static void	load_ast(t_msh *msh)
+{
+	int		i;
+	t_ast	*expr;
+	char	*tmp;
+
+	i = 0;
+	expr = msh->ast;
+	while (msh->prompt[i])
+	{
+		if (msh->prompt[i] == '|')
+		{
+			expr->data = ft_strdup("|");
+			expr->left = malloc(sizeof(t_ast));
+			expr->right = malloc(sizeof(t_ast));
+			tmp = ft_substr(msh->prompt, 0, i);
+			(expr->left)->data = ft_strdup(tmp);
+			(expr->left)->left = NULL;
+			(expr->left)->right = NULL;
+			free(tmp);
+			(expr->right)->data = ft_strdup(msh->prompt + i + 1);
+			(expr->right)->left = NULL;
+			(expr->right)->right = NULL;
+			printf("%s + %s + %s\n", (expr->left)->data, \
+			expr->data, (expr->right)->data);
+		}
+		i++;
+	}
+}
+
 static void	shell_loop(t_msh *msh)
 {
 	signal(SIGINT, signal_handler);
 	signal(SIGQUIT, signal_handler);
 	while (RUNNING)
 	{
-		//display_prompt(MODE_DEFAULT, msh);
 		flush_buffer(msh);
 		read_buffer(msh);
 		msh->prompt = ft_strdup(msh->g_buffer);
 		if (msh->prompt != NULL && ft_strlen(msh->prompt) != 0)
 		{
+			load_ast(msh);
 			msh->tokens = ft_split(msh->prompt, ' ');
 			msh->nb_tokens = get_nb_tokens(msh->tokens);
 			evaluate_commands(msh);
 			exit_cmd(msh);
+			free_ast(msh->ast);
 			flush_buffer(msh);
 		}
 		else
@@ -145,9 +190,10 @@ static void	shell_loop(t_msh *msh)
 int	main(int ac, char **av, char **envp)
 {
 	t_msh	msh;
+
 	init_env(&msh);
-	init_cmd(&msh);
 	init_msh(&msh, envp);
+	init_ast(&msh);
 	shell_loop(&msh);
 	return (0);
 }

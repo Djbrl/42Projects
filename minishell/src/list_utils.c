@@ -60,19 +60,3 @@ int	add_var_to_env(t_env_var *env, char *name, char *data)
 	new->next->next = NULL;
 	return (1);
 }
-
-int	add_cmd_to_list(t_cmd_list *input, char *data)
-{
-	t_cmd_list	*new;
-
-	new = input;
-	if (!input || !data)
-		return (0);
-	while (new->next != NULL)
-			new = new->next;
-	new->next = malloc(sizeof(t_cmd_list));
-	new->next->data = ft_strdup(data);
-	new->next->next = NULL;
-	free(data);
-	return (1);
-}

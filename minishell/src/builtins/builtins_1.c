@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int static	var_name_len(char *name)
+static int	var_name_len(char *name)
 {
 	int	i;
 
@@ -22,11 +22,29 @@ int static	var_name_len(char *name)
 	return (i);
 }
 
+static void	ftn_msh_echo(char **var, char **arg, t_env_var **env, int i)
+{
+	char		*t;
+	char		*v;
+	char		*a;
+	t_env_var	*e;
+
+	a = *arg;
+	v = *var;
+	e = *env;
+	v = ft_substr(a, i + 1, var_name_len(a + i + 1));
+	t = ft_strdup(get_data_from_env(e, v));
+	if (t != NULL)
+		ft_putstr(t);
+	else
+		write(1, "\n", 1);
+	free(t);
+}
+
 int	msh_echo(t_env_var *env, char *arg, t_msh *msh)
 {
 	int		i;
 	char	*var;
-	char	*tmp;
 
 	i = 0;
 	(void)msh;
@@ -39,15 +57,7 @@ int	msh_echo(t_env_var *env, char *arg, t_msh *msh)
 			else
 			{
 				if (arg[i] == '$' && ft_isalpha(arg[i + 1]))
-				{
-					var = ft_substr(arg, i + 1, var_name_len(arg + i + 1));
-					tmp = ft_strdup(get_data_from_env(env, var));
-					if (tmp != NULL)
-						ft_putstr(tmp);
-					else
-						write(1, "\n", 1);
-					free(tmp);
-				}
+					ftn_msh_echo(&var, &arg, &env, i);
 			}
 			i++;
 		}
@@ -57,56 +67,42 @@ int	msh_echo(t_env_var *env, char *arg, t_msh *msh)
 	return (1);
 }
 
-int	msh_cd(t_env_var *env, t_msh *msh)
+static int	ftn_msh_cd(t_msh **msh, char **path, int ret)
 {
-	int	ret;
-	char	*path;
+	char	*p;
+	t_msh	*m;
 
-	path = NULL;
-	if (msh->tokens[1])
+	m = *msh;
+	p = *path;
+	if (m->tokens[1])
 	{
-		if (msh->tokens[1][0] == '$')
-			path = expand_var(msh, msh->tokens[1]);
+		if (m->tokens[1][0] == '$')
+			p = expand_var(m, m->tokens[1]);
 		else
-			path = ft_strdup(msh->tokens[1]);
+			p = ft_strdup(m->tokens[1]);
 	}
-	if (!msh->tokens[1])
+	if (!m->tokens[1])
 	{
-		if (msh->home != NULL)
-			ret = chdir(msh->home);
+		if (m->home != NULL)
+			ret = chdir(m->home);
 		else
 			ret = chdir("/");
 	}
 	else
-		ret = chdir(path);
+		ret = chdir(p);
+	free(p);
+	return (ret);
+}
+
+int	msh_cd(t_env_var *env, t_msh *msh)
+{
+	int		ret;
+	char	*path;
+
+	path = NULL;
+	ret = ftn_msh_cd(&msh, &path, ret);
 	if (ret < 0)
 		display_cmd_error("cd", PATH_ERROR, msh->tokens);
-	if (path)
-		free(path);
-	exit_cmd(msh);
-	return (1);
-}
-
-int	msh_pwd(t_env_var *env, t_msh *msh)
-{
-	char	cwd[1024];
-
-	(void)msh;
-	ft_putnstr(getcwd(cwd, sizeof(cwd)), "\n", NULL, NULL);
-	exit_cmd(msh);
-	return (1);
-}
-
-int	msh_help(t_env_var *env, t_msh *msh)
-{
-	(void)msh;
-	ft_putstr("\nminishell-4.2 commands: \n\necho\t\t: a clone of bash echo\n");
-	ft_putstr("cd\t\t: a clone of bash cd\n");
-	ft_putstr("pwd\t\t: a clone of bash pwd\n");
-	ft_putstr("export\t\t: a clone of bash export\n");
-	ft_putstr("env\t\t: a clone of bash env\n");
-	ft_putstr("unset\t\t: a clone of bash unset\n");
-	ft_putstr("help\t\t: show this list\n");
 	exit_cmd(msh);
 	return (1);
 }

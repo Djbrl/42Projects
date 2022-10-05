@@ -12,24 +12,18 @@
 
 #include "minishell.h"
 
-static void	free_struct(t_msh *msh)
+static void	free_envar(t_msh *msh)
 {
-	t_cmd_list	*cur;
-
-	if (!msh->input)
-		return ;
-	while (msh->input->next != NULL)
-	{
-		cur = msh->input;
-		free(msh->input->data);
-		msh->input = msh->input->next;
-		free(cur);
-	}
-	if (msh->input)
-	{
-		free(msh->input->data);
-		free(msh->input);
-	}
+	if (msh->home != NULL)
+		free(msh->home);
+	if (msh->user != NULL)
+		free(msh->user);
+	if (msh->full_path != NULL)
+		free(msh->full_path);
+	if (msh->default_path != NULL)
+		free(msh->default_path);
+	if (msh->paths != NULL)
+		free_split(msh->paths);
 }
 
 static void	free_env(t_msh *msh)
@@ -52,16 +46,7 @@ static void	free_env(t_msh *msh)
 		free(msh->env->name);
 		free(msh->env);
 	}
-	if (msh->home != NULL)
-		free(msh->home);
-	if (msh->user != NULL)
-		free(msh->user);
-	if (msh->full_path != NULL)
-		free(msh->full_path);
-	if (msh->default_path != NULL)
-		free(msh->default_path);
-	if (msh->paths != NULL)
-		free_split(msh->paths);
+	free_envar(msh);
 }
 
 void	free_split(char **array)
@@ -92,7 +77,8 @@ void	exit_cmd(t_msh *msh)
 
 void	exit_shell(int status, t_msh *msh)
 {
-	free_struct(msh);
 	free_env(msh);
+	if (msh->ast)
+		free(msh->ast);
 	exit(status);
 }

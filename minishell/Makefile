@@ -9,7 +9,7 @@ PFLAGS := -Iinclude -Ilibft
 
 SRC_OTHER := main.c display.c msh_control.c utils.c builtins/builtins_1.c \
 			 init_struct.c builtins/builtins_2.c builtins/builtins_runner.c \
-			 list_utils.c free.c envp.c\
+			 list_utils.c free.c envp.c ast.c ast_utils.c builtins/ftn_builtins.c \
 
 SRC_PATH := src
 SRC_NAME := $(SRC_OTHER)
