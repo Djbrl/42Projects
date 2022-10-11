@@ -42,11 +42,12 @@
 
 typedef struct s_msh	t_msh;
 
-typedef struct s_ast{
+typedef struct s_expr{
 	char			*data;
-	struct s_ast	*left;
-	struct s_ast	*right;
-}					t_ast;
+	int				fd_in;
+	int				fd_out;
+	struct s_expr	*next;
+}					t_expr;
 
 typedef struct s_env_var
 {
@@ -64,7 +65,7 @@ typedef struct s_cmd
 typedef struct s_msh
 {
 	t_cmd		cmd;
-	t_ast		*ast;
+	t_expr		*expr;
 	t_env_var	*env;
 	char		*home;
 	char		*user;
@@ -83,7 +84,7 @@ typedef struct s_msh
 */
 void	init_env(t_msh *msh);
 void	init_msh(t_msh *msh, char **envp);
-void	init_ast(t_msh *msh);
+void	init_expr(t_msh *msh);
 
 /*
 ** BUILTINS
@@ -112,7 +113,6 @@ void	display_cmd_error(char *cmd, char *error, char **args);
 */
 char	*get_currentdir(t_msh *msh);
 char	*get_data_from_env(t_env_var *env, char *name);
-int		add_left_to_ast(t_msh *msh, char *data);
 int		add_var_to_env(t_env_var *env, char *name, char *data);
 void	evaluate_commands(t_msh *t_msh);
 void	signal_handler(int sig_n);
@@ -127,5 +127,7 @@ void	exit_shell(int status, t_msh *msh);
 char	*expand_var(t_msh *msh, char *var);
 void	free_split(char **array);
 void	flush_buffer(t_msh *msh);
+int 	expr_len(t_expr *expr);
 int		is_builtin(char *s, t_msh *msh);
+int		add_var_to_expr(t_expr *expr, char *data);
 #endif

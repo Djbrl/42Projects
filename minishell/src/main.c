@@ -33,7 +33,7 @@ Fonctions externes autorisées
 		getcwd, chdir, stat, lstat, fstat, unlink, execve,
 		dup, dup2, pipe, opendir, readdir, closedir,
 		strerror, perror, isatty, ttyname, ttyslot, ioctl,
-		getenv, tcsetattr, tcgetattr, tgetent, tgetflag,
+		getexpr, tcsetattr, tcgetattr, tgetent, tgetflag,
 		tgetnum, tgetstr, tgoto, tputs
 	-  Libft autorisée Oui
 
@@ -42,7 +42,7 @@ Description
 	• Afficher un prompt en l’attente d’une nouvelle commande.
 	• Posséder un historique fonctionnel.
 	• Chercher et lancer le bon exécutable (en se basant sur 
-		la variable d’environnement
+		la variable d’exprironnement
 	PATH, ou sur un chemin relatif ou absolu).
 	• Ne pas utiliser plus d’une variable globale. 
 		Réfléchissez-y car vous devrez justifier son utilisation.
@@ -69,7 +69,7 @@ Description
 	• Implémenter les pipes (caractère |). La sortie de 
 		chaque commande de la pipeline
 	est connectée à l’entrée de la commande suivante grâce à un pipe.
-	• Gérer les variables d’environnement (un $ suivi 
+	• Gérer les variables d’exprironnement (un $ suivi 
 		d’une séquence de caractères)
 	qui doivent être substituées par leur contenu.
 	• Gérer $? qui doit être substitué par le statut de 
@@ -87,7 +87,7 @@ Description
 	◦ pwd sans aucune option
 	◦ export sans aucune option
 	◦ unset sans aucune option
-	◦ env sans aucune option ni argument
+	◦ expr sans aucune option ni argument
 	◦ exit sans aucune option
 	La fonction readline() peut causer des fuites de mémoire. 
 		Vous n’avez pas à les
@@ -119,45 +119,53 @@ static int	get_nb_tokens(char **tokens)
 	return (i);
 }
 
-static void	free_ast(t_ast *ast)
+static void	free_expr(t_msh *msh)
 {
-	if (ast == NULL)
+	t_expr	*cur;
+
+	if (!msh->expr)
 		return ;
-	free_ast(ast->left);
-	free_ast(ast->right);
-	if (ast->data != NULL)
-		free(ast->data);
-	if (ast->left != NULL)
-		free(ast->left);
-	if (ast->right != NULL)
-		free(ast->right);
+	while (msh->expr)
+	{
+		cur = msh->expr;
+		free(msh->expr->data);
+		msh->expr = msh->expr->next;
+		free(cur);
+	}
+	free(msh->expr);
 }
 
-static void	load_ast(t_msh *msh)
+static void	load_expr(t_msh *msh)
 {
 	int		i;
-	t_ast	*expr;
+	t_expr	*expr;
 	char	*tmp;
 
 	i = 0;
-	expr = msh->ast;
+	expr = msh->expr;
+	tmp = NULL;
 	while (msh->prompt[i])
 	{
 		if (msh->prompt[i] == '|')
 		{
-			expr->data = ft_strdup("|");
-			expr->left = malloc(sizeof(t_ast));
-			expr->right = malloc(sizeof(t_ast));
 			tmp = ft_substr(msh->prompt, 0, i);
-			(expr->left)->data = ft_strdup(tmp);
-			(expr->left)->left = NULL;
-			(expr->left)->right = NULL;
+			add_var_to_expr(expr, tmp);
 			free(tmp);
-			(expr->right)->data = ft_strdup(msh->prompt + i + 1);
-			(expr->right)->left = NULL;
-			(expr->right)->right = NULL;
-			printf("%s + %s + %s\n", (expr->left)->data, \
-			expr->data, (expr->right)->data);
+			// tmp = ft_strdup(msh->prompt + i + 1);
+			add_var_to_expr(expr, "hu");
+			// free(tmp);
+			// tmp = ft_substr(msh->prompt, 0, i);
+			// if (tmp != NULL)
+			// {
+			// 	add_var_to_expr(expr, "hi");
+			// 	free(tmp);
+			// }
+			// tmp = ft_strdup(msh->prompt + i + 1);
+			// if (tmp != NULL)
+			// {
+			// 	add_var_to_expr(expr, "hu");
+			// 	free(tmp);
+			// }
 		}
 		i++;
 	}
@@ -174,12 +182,12 @@ static void	shell_loop(t_msh *msh)
 		msh->prompt = ft_strdup(msh->g_buffer);
 		if (msh->prompt != NULL && ft_strlen(msh->prompt) != 0)
 		{
-			load_ast(msh);
+			load_expr(msh);
 			msh->tokens = ft_split(msh->prompt, ' ');
 			msh->nb_tokens = get_nb_tokens(msh->tokens);
 			evaluate_commands(msh);
+			free_expr(msh);
 			exit_cmd(msh);
-			free_ast(msh->ast);
 			flush_buffer(msh);
 		}
 		else
@@ -193,7 +201,7 @@ int	main(int ac, char **av, char **envp)
 
 	init_env(&msh);
 	init_msh(&msh, envp);
-	init_ast(&msh);
+	init_expr(&msh);
 	shell_loop(&msh);
 	return (0);
 }

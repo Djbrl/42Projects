@@ -78,7 +78,5 @@ void	exit_cmd(t_msh *msh)
 void	exit_shell(int status, t_msh *msh)
 {
 	free_env(msh);
-	if (msh->ast)
-		free(msh->ast);
 	exit(status);
 }

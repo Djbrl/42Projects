@@ -43,17 +43,19 @@ void	init_msh(t_msh *msh, char **envp)
 	msh->paths = NULL;
 	msh->home = NULL;
 	msh->user = NULL;
+	msh->expr = NULL;
 	msh->default_path = NULL;
 	msh->full_path = NULL;
 	parse_envp(msh);
 }
 
-void	init_ast(t_msh *msh)
+void	init_expr(t_msh *msh)
 {
-	msh->ast = (malloc(sizeof(t_ast)));
-	msh->ast->data = NULL;
-	msh->ast->left = NULL;
-	msh->ast->right = NULL;
+	msh->expr = (malloc(sizeof(t_expr)));
+	msh->expr->data = ft_strdup("init");
+	msh->expr->next = NULL;
+	msh->expr->fd_in = -1;
+	msh->expr->fd_out = -1;
 }
 
 void	init_env(t_msh *msh)
