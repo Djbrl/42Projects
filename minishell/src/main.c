@@ -119,60 +119,11 @@ static int	get_nb_tokens(char **tokens)
 	return (i);
 }
 
-static void	free_expr(t_msh *msh)
-{
-	t_expr	*cur;
-
-	if (!msh->expr)
-		return ;
-	while (msh->expr)
-	{
-		cur = msh->expr;
-		free(msh->expr->data);
-		msh->expr = msh->expr->next;
-		free(cur);
-	}
-	free(msh->expr);
-}
-
-static void	load_expr(t_msh *msh)
-{
-	int		i;
-	t_expr	*expr;
-	char	*tmp;
-
-	i = 0;
-	expr = msh->expr;
-	tmp = NULL;
-	while (msh->prompt[i])
-	{
-		if (msh->prompt[i] == '|')
-		{
-			tmp = ft_substr(msh->prompt, 0, i);
-			add_var_to_expr(expr, tmp);
-			free(tmp);
-			// tmp = ft_strdup(msh->prompt + i + 1);
-			add_var_to_expr(expr, "hu");
-			// free(tmp);
-			// tmp = ft_substr(msh->prompt, 0, i);
-			// if (tmp != NULL)
-			// {
-			// 	add_var_to_expr(expr, "hi");
-			// 	free(tmp);
-			// }
-			// tmp = ft_strdup(msh->prompt + i + 1);
-			// if (tmp != NULL)
-			// {
-			// 	add_var_to_expr(expr, "hu");
-			// 	free(tmp);
-			// }
-		}
-		i++;
-	}
-}
-
 static void	shell_loop(t_msh *msh)
 {
+	int	free_exp;
+
+	free_exp = 0;
 	signal(SIGINT, signal_handler);
 	signal(SIGQUIT, signal_handler);
 	while (RUNNING)
@@ -182,11 +133,12 @@ static void	shell_loop(t_msh *msh)
 		msh->prompt = ft_strdup(msh->g_buffer);
 		if (msh->prompt != NULL && ft_strlen(msh->prompt) != 0)
 		{
-			load_expr(msh);
+			free_exp = load_expr(msh);
 			msh->tokens = ft_split(msh->prompt, ' ');
 			msh->nb_tokens = get_nb_tokens(msh->tokens);
 			evaluate_commands(msh);
-			free_expr(msh);
+			if (free_exp)
+				free_expr(msh);
 			exit_cmd(msh);
 			flush_buffer(msh);
 		}

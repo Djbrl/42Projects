@@ -17,32 +17,27 @@ int	add_var_to_expr(t_expr *expr, char *data)
 	t_expr	*new;
 
 	new = expr;
-    if (!expr || !data)
+	if (!expr || !data)
 		return (0);
-    // if (new != NULL && expr_len(expr) == 0)
-    // {
-    //     new->data = ft_strdup(data);
-    //     return (1);
-    // }
 	while (new->next != NULL)
-			new = new->next;
+		new = new->next;
 	new->next = malloc(sizeof(t_expr));
 	new->next->data = ft_strdup(data);
 	new->next->next = NULL;
 	return (1);
 }
 
-int expr_len(t_expr *expr)
+int	expr_len(t_expr *expr)
 {
-    t_expr  *cur;
-    int     i;
+	t_expr	*cur;
+	int		i;
 
-    i = 0;
-    cur = expr;
-    while (cur)
-    {
-        cur = cur->next;
-        i++;
-    }
-    return (i);
+	i = 0;
+	cur = expr;
+	while (cur)
+	{
+		cur = cur->next;
+		i++;
+	}
+	return (i);
 }

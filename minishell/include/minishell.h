@@ -124,10 +124,12 @@ void	exit_shell(int status, t_msh *msh);
 /*
 ** UTILS
 */
+int		load_expr(t_msh *msh);
+void	free_expr(t_msh *msh);
 char	*expand_var(t_msh *msh, char *var);
 void	free_split(char **array);
 void	flush_buffer(t_msh *msh);
-int 	expr_len(t_expr *expr);
+int		expr_len(t_expr *expr);
 int		is_builtin(char *s, t_msh *msh);
 int		add_var_to_expr(t_expr *expr, char *data);
 #endif
