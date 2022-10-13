@@ -40,6 +40,8 @@
 # define FAILURE 0
 # define CTRL_D_SIGNAL 0
 
+int						g_status = 0;
+
 typedef struct s_msh	t_msh;
 
 typedef struct s_expr{
@@ -77,6 +79,7 @@ typedef struct s_msh
 	char		**paths;
 	char		g_buffer[BUF];
 	int			nb_tokens;
+	int			exit_status;
 }				t_msh;
 
 /*

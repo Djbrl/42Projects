@@ -1,3 +1,20 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: dsy <marvin@42.fr>                         +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2022/10/13 16:01:25 by dsy               #+#    #+#              #
+#    Updated: 2022/10/13 16:01:27 by dsy              ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+#---------------------------------VARIABLES------------------------------------#
+
+GREEN_COLOR = \033[0;32m
+YLW_COLOR = \033[0;33m
+END_COLOR = \033[0m
 NAME := minishell
 
 LIB_FT := libft/libft.a
@@ -25,25 +42,27 @@ SRC := $(addprefix $(SRC_PATH)/,$(SRC_NAME))
 OBJ := $(addprefix $(OBJ_PATH)/,$(OBJ_NAME))
 OBJ := $(addprefix $(BUILD_PATH)/,$(OBJ))
 
-all: $(NAME)
+#---------------------------------VARIABLES------------------------------------#
 
+all: $(NAME)
+	@echo "Ready : ${GREEN_COLOR}`pwd`/${NAME}${END_COLOR}"
 
 $(NAME): $(OBJ) $(LIB_FT)
-	$(CC) $(OBJ) $(LIB_FT) $(CFLAGS) -o $(NAME) -lreadline
-	stty -echoctl 
+	@$(CC) $(OBJ) $(LIB_FT) $(CFLAGS) -o $(NAME) -lreadline
 
 $(BUILD_PATH)/$(OBJ_PATH)/%.o: $(SRC_PATH)/%.c
 	@mkdir -p $(dir $@) 2>/dev/null || true
 	@$(CC) $(CFLAGS) $(PFLAGS) -c $< -o $@
 
-$(LIB_FT): FORCE
-	make -C libft
+$(LIB_FT):
+	@echo "${YLW_COLOR}Compiling ${NAME}...${END_COLOR}"
+	@make -C libft
 
 libft_clean:
-	make -C libft clean
+	@make -C libft clean
 
 libft_fclean:
-	make -C libft fclean
+	@make -C libft fclean
 
 lib_clean: libft_clean 
 
@@ -52,12 +71,18 @@ lib_fclean: libft_clean
 re: fclean all
 
 clean: lib_clean
-	rm -rf $(OBJ)
-	rm -rf $(BUILD_PATH)/$(OBJ_PATH)
+	@rm -rf $(OBJ)
+	@rm -rf $(BUILD_PATH)/$(OBJ_PATH)
+	@echo "Clean : $(YLW_COLOR)/$(BUILD_PATH)${END_COLOR}"
 
-fclean : lib_fclean clean
-	rm -rf $(NAME)
-	rm -rf $(BUILD_PATH)
+fclean : lib_fclean
+	@rm -rf $(NAME)
+	@rm -rf $(BUILD_PATH)
+	@echo "Clean : $(YLW_COLOR)/$(BUILD_PATH)${END_COLOR}"
+	@echo "Clean : $(YLW_COLOR)/$(NAME)${END_COLOR}"
+
+make noenv: all
+	env -i valgrind --leak-check=full --show-leak-kinds=definite ./minishell
 
 FORCE:
 

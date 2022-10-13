@@ -21,7 +21,8 @@ void	free_expr(t_msh *msh)
 	while (msh->expr)
 	{
 		cur = msh->expr;
-		free(msh->expr->data);
+		if (msh->expr->data)
+			free(msh->expr->data);
 		msh->expr = msh->expr->next;
 		free(cur);
 	}

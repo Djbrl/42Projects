@@ -78,5 +78,6 @@ void	exit_cmd(t_msh *msh)
 void	exit_shell(int status, t_msh *msh)
 {
 	free_env(msh);
+	free_expr(msh);
 	exit(status);
 }

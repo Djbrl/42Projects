@@ -119,6 +119,21 @@ static int	get_nb_tokens(char **tokens)
 	return (i);
 }
 
+static int	only_whitespaces(char *buf)
+{
+	int	i;
+
+	i = 0;
+	while (buf[i])
+	{
+		if (buf[i] != ' ' && buf[i] != '\t' && \
+			buf[i] != '\v' && buf[i] != '\n')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 static void	shell_loop(t_msh *msh)
 {
 	int	free_exp;
@@ -131,7 +146,8 @@ static void	shell_loop(t_msh *msh)
 		flush_buffer(msh);
 		read_buffer(msh);
 		msh->prompt = ft_strdup(msh->g_buffer);
-		if (msh->prompt != NULL && ft_strlen(msh->prompt) != 0)
+		if (msh->prompt != NULL && ft_strlen(msh->prompt) != 0 \
+			&& !only_whitespaces(msh->prompt))
 		{
 			free_exp = load_expr(msh);
 			msh->tokens = ft_split(msh->prompt, ' ');
@@ -147,10 +163,14 @@ static void	shell_loop(t_msh *msh)
 	}
 }
 
+/*
+** av = NULL is a protection for /dev/random
+*/
 int	main(int ac, char **av, char **envp)
 {
 	t_msh	msh;
 
+	av = NULL;
 	init_env(&msh);
 	init_msh(&msh, envp);
 	init_expr(&msh);
