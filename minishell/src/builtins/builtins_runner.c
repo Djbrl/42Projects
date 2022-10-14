@@ -30,27 +30,29 @@ static void	ftn_echo_runner(t_msh **msh, t_env_var **var, int i)
 
 static int	list_exports(t_env_var *env, t_msh *msh)
 {
-	t_env_var	*cur;
+	t_env_var	*e;
+	int			l;
 
 	(void)msh;
-	cur = env;
-	while (cur->next != NULL)
+	e = env;
+	l = ft_strlen(e->name);
+	while (e->next != NULL)
 	{
-		if (cur->name && cur->data && \
-			(ft_strncmp(cur->name, "init", ft_strlen(cur->name))))
+		if (e->name && e->data && ft_strncmp(e->name, "init", l) != 0 && \
+			ft_strncmp(e->name, "?", l))
 		{
 			write(1, "export ", 7);
-			ft_putnstr(cur->name, "=", cur->data, "\n");
+			ft_putnstr(e->name, "=", e->data, "\n");
 		}
-		cur = cur->next;
+		e = e->next;
 	}
-	if (cur->name && cur->data && \
-		(ft_strncmp(cur->name, "init", ft_strlen(cur->name))))
+	if (e->name && e->data && (ft_strncmp(e->name, "init", l) != 0 && \
+		ft_strncmp(e->name, "?", l)))
 	{
 		write(1, "export ", 7);
-		ft_putnstr(cur->name, "=", cur->data, "\n");
+		ft_putnstr(e->name, "=", e->data, "\n");
 	}
-	exit_cmd(msh);
+	exit_cmd(msh, 0);
 	return (1);
 }
 
@@ -74,7 +76,7 @@ int	msh_echo_runner(t_env_var *env, t_msh *msh)
 	}
 	else
 		ftn_echo_runner(&msh, &env, i);
-	exit_cmd(msh);
+	exit_cmd(msh, 0);
 	return (1);
 }
 
@@ -87,7 +89,7 @@ int	msh_export_runner(t_env_var *env, t_msh *msh)
 	if (msh->tokens[1] == NULL)
 	{
 		list_exports(env, msh);
-		exit_cmd(msh);
+		exit_cmd(msh, 0);
 		return (1);
 	}
 	while (msh->tokens[i])
@@ -95,20 +97,17 @@ int	msh_export_runner(t_env_var *env, t_msh *msh)
 		msh_export(env, msh->tokens[i], msh);
 		i++;
 	}
-	exit_cmd(msh);
+	exit_cmd(msh, 0);
 	return (1);
 }
 
 int	msh_cd_runner(t_env_var *env, t_msh *msh)
 {
-	int	i;
-
-	i = 1;
 	(void)msh;
 	if (msh->nb_tokens > 2)
 	{
 		printf("Too many args for cd command\n");
-		exit_cmd(msh);
+		exit_cmd(msh, 0);
 		return (1);
 	}
 	else

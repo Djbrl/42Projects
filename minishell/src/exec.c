@@ -49,7 +49,6 @@ void	signal_handler(int sig_n)
 void	evaluate_commands(t_msh *msh)
 {
 	pid_t	pid;
-	pid_t	wpid;
 
 	if (is_builtin(msh->tokens[0], msh) >= 0)
 		msh->cmd.ptr[is_builtin(msh->tokens[0], msh)](msh->env, msh);
@@ -66,11 +65,10 @@ void	evaluate_commands(t_msh *msh)
 			display_error(FORK_ERROR, msh);
 		else
 		{
-			wpid = waitpid(pid, &g_status, WUNTRACED);
+			waitpid(pid, &g_status, WUNTRACED);
 			while (!WIFEXITED(g_status) && !WIFSIGNALED(g_status))
-				wpid = waitpid(pid, &g_status, WUNTRACED);
-			if (g_status == 130)
-				printf("signal exit\n");
+				waitpid(pid, &g_status, WUNTRACED);
+			update_exit_status(msh, g_status);
 		}
 	}
 }

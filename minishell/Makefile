@@ -6,7 +6,7 @@
 #    By: dsy <marvin@42.fr>                         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/13 16:01:25 by dsy               #+#    #+#              #
-#    Updated: 2022/10/13 16:01:27 by dsy              ###   ########.fr        #
+#    Updated: 2022/10/14 18:28:00 by dsy              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,13 +21,13 @@ LIB_FT := libft/libft.a
 
 CC := cc
 CFLAGS := -Wall -Wextra -Werror
-CFLAGS := -g3 -MMD #-lreadline
+CPFLAGS := -g3#-lreadline
 PFLAGS := -Iinclude -Ilibft
 
 SRC_OTHER := main.c display.c exec.c utils/utils.c builtins/builtins_1.c \
 			 init.c builtins/builtins_2.c builtins/builtins_runner.c \
 			 utils/list_utils.c free.c envp.c expr.c utils/expr_utils.c \
-			 builtins/ftn_builtins.c \
+			 builtins/ftn_builtins.c utils/ftn_utils.c\
 
 SRC_PATH := src
 SRC_NAME := $(SRC_OTHER)
@@ -48,11 +48,11 @@ all: $(NAME)
 	@echo "Ready : ${GREEN_COLOR}`pwd`/${NAME}${END_COLOR}"
 
 $(NAME): $(OBJ) $(LIB_FT)
-	@$(CC) $(OBJ) $(LIB_FT) $(CFLAGS) -o $(NAME) -lreadline
+	@$(CC) $(OBJ) $(LIB_FT) $(CFLAGS) $(CPFLAGS) -o $(NAME) -lreadline
 
 $(BUILD_PATH)/$(OBJ_PATH)/%.o: $(SRC_PATH)/%.c
 	@mkdir -p $(dir $@) 2>/dev/null || true
-	@$(CC) $(CFLAGS) $(PFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) $(CPFLAGS) $(PFLAGS) -c $< -o $@
 
 $(LIB_FT):
 	@echo "${YLW_COLOR}Compiling ${NAME}...${END_COLOR}"

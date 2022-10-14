@@ -31,9 +31,7 @@ static int	find_char(char *str, char c)
 static void	parse_paths(char *path, t_msh *msh)
 {
 	char	**paths;
-	char	*tmp;
 
-	tmp = "/";
 	paths = ft_split(path, ':');
 	if (!paths)
 		return ;
@@ -45,7 +43,6 @@ static void	parse_paths(char *path, t_msh *msh)
 void	parse_envp(t_msh *msh)
 {
 	int		i;
-	int		j;
 	char	*var;
 	char	*data;
 

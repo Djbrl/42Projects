@@ -61,7 +61,7 @@ void	free_split(char **array)
 	free(array);
 }
 
-void	exit_cmd(t_msh *msh)
+void	exit_cmd(t_msh *msh, int status)
 {
 	if (msh->prompt != NULL)
 	{
@@ -73,11 +73,15 @@ void	exit_cmd(t_msh *msh)
 		free_split(msh->tokens);
 		msh->tokens = NULL;
 	}
+	update_exit_status(msh, status);
 }
 
-void	exit_shell(int status, t_msh *msh)
+void	exit_shell(t_msh *msh)
 {
+	int		exit_status;
+
+	exit_status = ft_atoi(get_data_from_env(msh->env, ft_strdup("?")));
 	free_env(msh);
 	free_expr(msh);
-	exit(status);
+	exit(exit_status);
 }

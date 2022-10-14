@@ -20,7 +20,7 @@ static int	ftn_msh_export(int valid, char **arg, char **data, char **name)
 
 	s = *arg;
 	i = 0;
-	while (i < ft_strlen(s))
+	while (i < (int)ft_strlen(s))
 	{
 		if (s[i] == '=')
 		{
@@ -43,7 +43,6 @@ static int	ftn_msh_export(int valid, char **arg, char **data, char **name)
 int	msh_export(t_env_var *env, char *arg, t_msh *msh)
 {
 	char		*name;
-	char		*tmp;
 	char		*data;
 	int			valid;
 
@@ -85,20 +84,25 @@ static void	ftn_msh_unset(t_env_var **env, t_env_var **prev)
 int	msh_unset(t_env_var *env, t_msh *msh)
 {
 	t_env_var	*prev;
+	int			len;
 
 	if (env == NULL || !msh->tokens[1])
 	{
-		exit_cmd(msh);
+		exit_cmd(msh, 1);
 		return (0);
 	}
+	len = ft_strlen(msh->tokens[1]);
 	while (env->next != NULL && \
-		(ft_strncmp(msh->tokens[1], env->name, ft_strlen(msh->tokens[1])) != 0))
+		(ft_strncmp(msh->tokens[1], env->name, len) != 0))
 	{
 		prev = env;
 		env = env->next;
 	}
-	if ((ft_strncmp(msh->tokens[1], env->name, ft_strlen(msh->tokens[1]))) == 0)
+	if ((ft_strncmp(msh->tokens[1], env->name, len)) == 0 && \
+		ft_strncmp(msh->tokens[1], "?", len))
 		ftn_msh_unset(&env, &prev);
-	exit_cmd(msh);
+	else
+		return (0);
+	exit_cmd(msh, 0);
 	return (1);
 }

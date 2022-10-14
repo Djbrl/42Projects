@@ -56,7 +56,8 @@ int	msh_echo(t_env_var *env, char *arg, t_msh *msh)
 				write(1, "$", 1);
 			else
 			{
-				if (arg[i] == '$' && ft_isalpha(arg[i + 1]))
+				if (arg[i] == '$' && (ft_isalpha(arg[i + 1]) \
+				|| arg[i + 1] == '?'))
 					ftn_msh_echo(&var, &arg, &env, i);
 			}
 			i++;
@@ -99,10 +100,12 @@ int	msh_cd(t_env_var *env, t_msh *msh)
 	int		ret;
 	char	*path;
 
+	(void)env;
+	ret = 0;
 	path = NULL;
 	ret = ftn_msh_cd(&msh, &path, ret);
 	if (ret < 0)
 		display_cmd_error("cd", PATH_ERROR, msh->tokens);
-	exit_cmd(msh);
+	exit_cmd(msh, 0);
 	return (1);
 }
