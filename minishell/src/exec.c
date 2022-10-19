@@ -18,13 +18,17 @@ static int	exec_env(t_msh *msh)
 	char	*tmp;
 	char	*cmd;
 	char	*path;
+	int		status;
 
 	i = 0;
+	status = access(msh->tokens[0], X_OK & F_OK);
 	tmp = "/";
 	if (!msh->paths)
 		return (-1);
 	while (msh->paths[i])
 	{
+		if (status == 0)
+			execve(msh->tokens[0], msh->tokens, msh->envp);
 		cmd = ft_strjoin(msh->paths[i], tmp);
 		path = ft_strjoin(cmd, msh->tokens[0]);
 		execve(path, msh->tokens, msh->envp);
