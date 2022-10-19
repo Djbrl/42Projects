@@ -145,7 +145,6 @@ static void	shell_loop(t_msh *msh)
 	update_exit_status(msh, 0);
 	while (RUNNING)
 	{
-		flush_buffer(msh);
 		read_buffer(msh);
 		msh->prompt = ft_strdup(msh->g_buffer);
 		if (msh->prompt != NULL && ft_strlen(msh->prompt) != 0 \
@@ -157,7 +156,7 @@ static void	shell_loop(t_msh *msh)
 			evaluate_commands(msh);
 			if (free_exp)
 				free_expr(msh);
-			exit_cmd(msh, g_status);
+			exit_cmd(msh);
 			flush_buffer(msh);
 		}
 		else

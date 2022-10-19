@@ -12,11 +12,12 @@
 
 #include "minishell.h"
 
-void	update_exit_status(t_msh *msh, int status)
+int	update_exit_status(t_msh *msh, int status)
 {
 	char	*tmp;
 
 	tmp = ft_itoa(status);
 	add_var_to_env(msh->env, "?", tmp);
 	free(tmp);
+	return (status);
 }

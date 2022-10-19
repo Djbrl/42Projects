@@ -77,6 +77,7 @@ void	read_buffer(t_msh *msh)
 {
 	int	signal;
 
+	flush_buffer(msh);
 	if (g_status == CTRL_C_EXIT)
 		g_status = STATUS_RESET;
 	else
@@ -85,7 +86,7 @@ void	read_buffer(t_msh *msh)
 	if (signal == CTRL_D_SIGNAL)
 	{
 		flush_buffer(msh);
-		exit_cmd(msh, 0);
+		exit_cmd(msh);
 		exit_shell(msh);
 	}
 	msh->g_buffer[ft_strlen(msh->g_buffer) - 1] = 0;

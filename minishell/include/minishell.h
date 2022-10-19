@@ -122,7 +122,7 @@ void	evaluate_commands(t_msh *t_msh);
 void	signal_handler(int sig_n);
 void	read_buffer(t_msh *msh);
 void	parse_envp(t_msh *msh);
-void	exit_cmd(t_msh *msh, int status);
+void	exit_cmd(t_msh *msh);
 void	exit_shell(t_msh *msh);
 
 /*
@@ -133,7 +133,7 @@ void	free_expr(t_msh *msh);
 char	*expand_var(t_msh *msh, char *var);
 void	free_split(char **array);
 void	flush_buffer(t_msh *msh);
-void	update_exit_status(t_msh *msh, int status);
+int		update_exit_status(t_msh *msh, int status);
 int		expr_len(t_expr *expr);
 int		is_builtin(char *s, t_msh *msh);
 int		add_var_to_expr(t_expr *expr, char *data);

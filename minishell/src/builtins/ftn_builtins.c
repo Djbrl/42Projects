@@ -33,16 +33,19 @@ int	msh_env(t_env_var *env, t_msh *msh)
 	ft_strncmp(cur->name, "init", len) != 0 && \
 	ft_strncmp(cur->name, "?", len))
 		ft_putnstr(cur->name, "=", cur->data, "\n");
-	exit_cmd(msh, 0);
-	return (1);
+	exit_cmd(msh);
+	return (update_exit_status(msh, 0));
 }
 
 int	msh_exit(t_env_var *env, t_msh *msh)
 {
+	int	exit_status;
+
+	exit_status = ft_atoi(get_data_from_env(env, ft_strdup("?")));
 	(void)env;
-	exit_cmd(msh, 0);
+	exit_cmd(msh);
 	exit_shell(msh);
-	return (1);
+	return (exit_status);
 }
 
 int	msh_pwd(t_env_var *env, t_msh *msh)
@@ -52,8 +55,8 @@ int	msh_pwd(t_env_var *env, t_msh *msh)
 	(void)msh;
 	(void)env;
 	ft_putnstr(getcwd(cwd, sizeof(cwd)), "\n", NULL, NULL);
-	exit_cmd(msh, 0);
-	return (1);
+	exit_cmd(msh);
+	return (update_exit_status(msh, 0));
 }
 
 int	msh_help(t_env_var *env, t_msh *msh)
@@ -67,6 +70,6 @@ int	msh_help(t_env_var *env, t_msh *msh)
 	ft_putstr("env\t\t: a clone of bash env\n");
 	ft_putstr("unset\t\t: a clone of bash unset\n");
 	ft_putstr("help\t\t: show this list\n");
-	exit_cmd(msh, 0);
-	return (1);
+	exit_cmd(msh);
+	return (update_exit_status(msh, 0));
 }

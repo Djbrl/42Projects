@@ -12,6 +12,10 @@
 
 #include "minishell.h"
 
+/*
+****************************STATIC FUNCTIONS****************************
+*/
+
 static int	ftn_msh_export(int valid, char **arg, char **data, char **name)
 {
 	int		i;
@@ -40,24 +44,6 @@ static int	ftn_msh_export(int valid, char **arg, char **data, char **name)
 	return (valid);
 }
 
-int	msh_export(t_env_var *env, char *arg, t_msh *msh)
-{
-	char		*name;
-	char		*data;
-	int			valid;
-
-	valid = 0;
-	if (arg == NULL || !ft_isalpha(arg[0]))
-		return (display_error(ENV_ERROR, msh));
-	valid = ftn_msh_export(valid, &arg, &data, &name);
-	if (!valid || !env)
-		return (display_error(ENV_ERROR, msh));
-	add_var_to_env(env, name, data);
-	free(name);
-	free(data);
-	return (1);
-}
-
 static void	ftn_msh_unset(t_env_var **env, t_env_var **prev)
 {
 	t_env_var	*e;
@@ -81,6 +67,37 @@ static void	ftn_msh_unset(t_env_var **env, t_env_var **prev)
 	}
 }
 
+/*
+****************************STATIC FUNCTIONS****************************
+*/
+
+/*
+** MSH EXPORT is ran by msh_export_runner
+*/
+int	msh_export(t_env_var *env, char *arg, t_msh *msh)
+{
+	char		*name;
+	char		*data;
+	int			valid;
+
+	valid = 0;
+	if (arg == NULL || !ft_isalpha(arg[0]))
+	{
+		display_error(ENV_ERROR, msh);
+		return (update_exit_status(msh, 1));
+	}
+	valid = ftn_msh_export(valid, &arg, &data, &name);
+	if (!valid || !env)
+	{
+		display_error(ENV_ERROR, msh);
+		return (update_exit_status(msh, 1));
+	}
+	add_var_to_env(env, name, data);
+	free(name);
+	free(data);
+	return (update_exit_status(msh, 0));
+}
+
 int	msh_unset(t_env_var *env, t_msh *msh)
 {
 	t_env_var	*prev;
@@ -88,8 +105,8 @@ int	msh_unset(t_env_var *env, t_msh *msh)
 
 	if (env == NULL || !msh->tokens[1])
 	{
-		exit_cmd(msh, 1);
-		return (0);
+		exit_cmd(msh);
+		return (update_exit_status(msh, 1));
 	}
 	len = ft_strlen(msh->tokens[1]);
 	while (env->next != NULL && \
@@ -102,7 +119,7 @@ int	msh_unset(t_env_var *env, t_msh *msh)
 		ft_strncmp(msh->tokens[1], "?", len))
 		ftn_msh_unset(&env, &prev);
 	else
-		return (0);
-	exit_cmd(msh, 0);
-	return (1);
+		return (update_exit_status(msh, 1));
+	exit_cmd(msh);
+	return (update_exit_status(msh, 0));
 }
