@@ -67,6 +67,19 @@ static void	ftn_msh_unset(t_env_var **env, t_env_var **prev)
 	}
 }
 
+static int	display_export_error(char *error, char *arg, t_msh *msh)
+{
+	(void)msh;
+	if (!(ft_strncmp(error, ENV_ID_ERROR, ft_strlen(error))))
+	{
+		ft_putnstr("minishell: ", "export: ", NULL, NULL);
+		ft_putnstr("'", arg, "'", error);
+	}
+	else
+		ft_putnstr("minishell: ", "unknown error\n", error, NULL);
+	return (0);
+}
+
 /*
 ****************************STATIC FUNCTIONS****************************
 */
@@ -83,13 +96,13 @@ int	msh_export(t_env_var *env, char *arg, t_msh *msh)
 	valid = 0;
 	if (arg == NULL || !ft_isalpha(arg[0]))
 	{
-		display_error(ENV_ERROR, msh);
+		display_export_error(ENV_ID_ERROR, arg, msh);
 		return (update_exit_status(msh, 1));
 	}
 	valid = ftn_msh_export(valid, &arg, &data, &name);
 	if (!valid || !env)
 	{
-		display_error(ENV_ERROR, msh);
+		display_export_error(ENV_ID_ERROR, arg, msh);
 		return (update_exit_status(msh, 1));
 	}
 	add_var_to_env(env, name, data);

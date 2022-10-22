@@ -26,9 +26,10 @@
 # include <errno.h>
 # include <limits.h>
 
-# define ENV_ERROR ": couldn't setup environment\n"
+# define CD_ARG_ERROR ": too many arguments\n"
+# define ENV_ID_ERROR ": not a valid identifier\n"
 # define FORK_ERROR ": couldn't start process\n"
-# define PATH_ERROR ": no such file or directory\n"
+# define PATH_ERROR ": No such file or directory\n"
 # define CWD_ERROR ": couldn't retrieve current directory\n"
 # define CMD_ERROR ": command not found\n"
 # define MODE_DEFAULT 1

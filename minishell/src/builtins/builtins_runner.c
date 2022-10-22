@@ -118,7 +118,7 @@ int	msh_cd_runner(t_env_var *env, t_msh *msh)
 	(void)msh;
 	if (msh->nb_tokens > 2)
 	{
-		printf("Too many args for cd command\n");
+		display_error(CD_ARG_ERROR, msh);
 		exit_cmd(msh);
 		return (update_exit_status(msh, 1));
 	}
