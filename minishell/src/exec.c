@@ -12,6 +12,44 @@
 
 #include "minishell.h"
 
+static int	pipe_cmd(t_msh *msh, int i, int j)
+{
+	char	**expr;
+	char	*tmp;
+	char	*cmd;
+	char	*path;
+
+	tmp = "/";
+	expr = ft_split(msh->expr[i], ' ');
+	if (access(expr[0], X_OK & F_OK) == 0)
+		execve(expr[0], expr, msh->envp);
+	cmd = ft_strjoin(msh->paths[j], tmp);
+	path = ft_strjoin(cmd, expr[0]);
+	execve(path, expr, msh->envp);
+	free(cmd);
+	free(path);
+	free_split(expr);
+	//un fork par proocess dans le while
+	return (0);
+}
+
+static int	pipe_exec(t_msh *msh)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (msh->expr[i])
+	{
+		while (msh->paths[j])
+			pipe_cmd(msh, i, j++);
+		j = 0;
+		i++;
+	}
+	return (0);
+}
+
 static int	exec_env(t_msh *msh)
 {
 	int		i;
@@ -25,17 +63,22 @@ static int	exec_env(t_msh *msh)
 	tmp = "/";
 	if (!msh->paths)
 		return (-1);
-	while (msh->paths[i])
+	if (msh->expr == NULL)
 	{
-		if (status == 0)
-			execve(msh->tokens[0], msh->tokens, msh->envp);
-		cmd = ft_strjoin(msh->paths[i], tmp);
-		path = ft_strjoin(cmd, msh->tokens[0]);
-		execve(path, msh->tokens, msh->envp);
-		free(cmd);
-		free(path);
-		i++;
+		while (msh->paths[i])
+		{
+			if (status == 0)
+				execve(msh->tokens[0], msh->tokens, msh->envp);
+			cmd = ft_strjoin(msh->paths[i], tmp);
+			path = ft_strjoin(cmd, msh->tokens[0]);
+			execve(path, msh->tokens, msh->envp);
+			free(cmd);
+			free(path);
+			i++;
+		}
 	}
+	else
+		pipe_exec(msh);
 	return (-1);
 }
 

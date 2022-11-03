@@ -155,7 +155,7 @@ static void	shell_loop(t_msh *msh)
 			msh->nb_tokens = get_nb_tokens(msh->tokens);
 			evaluate_commands(msh);
 			if (free_exp)
-				free_expr(msh);
+				free_split(msh->expr);
 			exit_cmd(msh);
 			flush_buffer(msh);
 		}
@@ -172,7 +172,7 @@ int	main(int ac, char **av, char **envp)
 	(void)av;
 	init_env(&msh);
 	init_msh(&msh, envp);
-	init_expr(&msh);
+	// init_expr(&msh);
 	shell_loop(&msh);
 	return (0);
 }

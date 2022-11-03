@@ -51,7 +51,7 @@ static int	ftn_msh_export(char **arg, char **data, char **name)
 		}
 		else
 		{
-			*data = ft_strdup("\0");
+			*data = ft_strdup(0);
 			tmp = ft_strdup(s);
 			tmp[i] = 0;
 			*name = ft_strdup(tmp);
