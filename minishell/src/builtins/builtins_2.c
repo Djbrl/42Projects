@@ -16,7 +16,9 @@
 ****************************STATIC FUNCTIONS****************************
 */
 
-static int	ftn_msh_export(int valid, char **arg, char **data, char **name)
+// static int	ftn_msh_export_val(char c, char **data, char **name);
+
+static int	ftn_msh_export(char **arg, char **data, char **name)
 {
 	int		i;
 	char	*tmp;
@@ -26,22 +28,38 @@ static int	ftn_msh_export(int valid, char **arg, char **data, char **name)
 	i = 0;
 	while (i < (int)ft_strlen(s))
 	{
+		//CHECK IF THERE IS A EQUAL SIGN
+		//IF NOT, PUSH VAR IN THE LISt
+		//IF THERE IS ONE, PARSE THE CONTENT AFTER EWUAL ING 
+
+		
+		// if (!ft_isalpha(s[i]) && s[i] != '_' && s[i] != '=')
+		// 	return (0);
 		if (s[i] == '=')
 		{
-			valid = 1;
-			if (s[i + 1] == 0)
-				*data = ft_strdup("\0");
-			else
-				*data = ft_strdup(s + i + 1);
+			{
+				if (s[i + 1] == 0)
+					*data = ft_strdup("\0");
+				else
+					*data = ft_strdup(s + i + 1);
+				tmp = ft_strdup(s);
+				tmp[i] = 0;
+				*name = ft_strdup(tmp);
+				free(tmp);
+			}
+			break ;
+		}
+		else
+		{
+			*data = ft_strdup("\0");
 			tmp = ft_strdup(s);
 			tmp[i] = 0;
 			*name = ft_strdup(tmp);
 			free(tmp);
-			break ;
 		}
 		i++;
 	}
-	return (valid);
+	return (1);
 }
 
 static void	ftn_msh_unset(t_env_var **env, t_env_var **prev)
@@ -91,16 +109,18 @@ int	msh_export(t_env_var *env, char *arg, t_msh *msh)
 {
 	char		*name;
 	char		*data;
-	int			valid;
+	int			i;
 
-	valid = 0;
-	if (arg == NULL || !ft_isalpha(arg[0]))
+	i = 0;
+	name = NULL;
+	data = NULL;
+	if (arg == NULL || (!ft_isalpha(arg[0]) && arg[0] != '_'))
 	{
 		display_export_error(ENV_ID_ERROR, arg, msh);
 		return (update_exit_status(msh, 1));
 	}
-	valid = ftn_msh_export(valid, &arg, &data, &name);
-	if (!valid || !env)
+	i = ftn_msh_export(&arg, &data, &name);
+	if (i == 0 || !env)
 	{
 		display_export_error(ENV_ID_ERROR, arg, msh);
 		return (update_exit_status(msh, 1));
