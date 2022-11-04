@@ -135,7 +135,10 @@ char	*expand_var(t_msh *msh, char *var);
 void	free_split(char **array);
 void	flush_buffer(t_msh *msh);
 int		update_exit_status(t_msh *msh, int status);
-// int		expr_len(t_expr *expr);
 int		is_builtin(char *s, t_msh *msh);
-// int		add_var_to_expr(t_expr *expr, char *data);
+
+/*
+** PIPE
+*/
+int		pipe_exec(t_msh *msh);
 #endif

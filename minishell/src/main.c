@@ -172,7 +172,6 @@ int	main(int ac, char **av, char **envp)
 	(void)av;
 	init_env(&msh);
 	init_msh(&msh, envp);
-	// init_expr(&msh);
 	shell_loop(&msh);
 	return (0);
 }

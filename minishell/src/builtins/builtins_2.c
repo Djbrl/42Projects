@@ -14,9 +14,8 @@
 
 /*
 ****************************STATIC FUNCTIONS****************************
+* ftn msh export has to be redefined
 */
-
-// static int	ftn_msh_export_val(char c, char **data, char **name);
 
 static int	ftn_msh_export(char **arg, char **data, char **name)
 {
@@ -28,13 +27,6 @@ static int	ftn_msh_export(char **arg, char **data, char **name)
 	i = 0;
 	while (i < (int)ft_strlen(s))
 	{
-		//CHECK IF THERE IS A EQUAL SIGN
-		//IF NOT, PUSH VAR IN THE LISt
-		//IF THERE IS ONE, PARSE THE CONTENT AFTER EWUAL ING 
-
-		
-		// if (!ft_isalpha(s[i]) && s[i] != '_' && s[i] != '=')
-		// 	return (0);
 		if (s[i] == '=')
 		{
 			{
