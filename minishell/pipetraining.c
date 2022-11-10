@@ -7,26 +7,25 @@
 
 int main(int argc, char **av)
 {
-    int fd[2] = {0};
-    int tmp[2] = {0};
+    int fd[2];
+    int tmp[2];
     int status;
 
     pipe(fd);
     pipe(tmp);
-    dup2(fd[0], 0);
-    dup2(fd[1], 1);
     
+    // dup2(fd[0], 0);
+    // dup2(fd[1], 1);
     pid_t pid1 = fork();
     if (pid1 < 0)
         return (0);
     if (pid1 == 0)
     {
         close(tmp[1]);
-        close(fd[0]);
         close(tmp[0]);
+        close(fd[0]);
         
         dup2(fd[1], 1);
-        
         close(fd[1]);
         char *expr[] = {"ls", NULL};
         execvp("/bin/ls", expr);
@@ -64,7 +63,7 @@ int main(int argc, char **av)
 
         close(tmp[0]);
         close(fd[0]);
-        char *expr[] = {"wc", NULL};
+        char *expr[] = {"wc", "-w", NULL};
         execvp("/bin/wc", expr);
     }
 
