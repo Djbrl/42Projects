@@ -48,7 +48,7 @@ int main(int argc, char **av)
         char *expr[] = {"wc", NULL};
         execvp("/bin/wc", expr);
     }
-    
+
     pid_t pid3 = fork();
     if (pid3 < 0)
         return (0);
@@ -60,10 +60,9 @@ int main(int argc, char **av)
         
         close(fd[1]);
         // dup2(fd[1], 1);
-
         close(tmp[0]);
         close(fd[0]);
-        char *expr[] = {"wc", "-w", NULL};
+        char *expr[] = {"wc", NULL};
         execvp("/bin/wc", expr);
     }
 
