@@ -10,7 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/libft.h"
+#include "minishell.h"
+
+/*
+ft_split with multiple characters
+*/
 
 char	**ft_clear_splitted(char **tab)
 {
@@ -98,22 +102,4 @@ char	**ft_split_str(char const *s, const char *delimiters)
 	}
 	tab[i] = NULL;
 	return (tab);
-}
-
-int	main(int ac, char *av[])
-{
-	int		i;
-	char	**rt;
-
-	i = 0;
-	rt = ft_split_str(av[1], ">|()");
-	if (ac > 1)
-	{
-		while (rt[i])
-		{
-			printf("%s\n", rt[i]);
-			i++;
-		}
-	}
-	return (0);
 }

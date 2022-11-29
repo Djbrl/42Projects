@@ -55,19 +55,19 @@ int	pipe_exec(t_msh *msh)
 {
 	char	**expr;
 	int		fd[2];
-	int		tmp[2];
 	int		i;
 	int		j;
 
 	i = 0;
 	j = 0;
 	pipe(fd);
-	pipe(tmp);
 	while (msh->expr[i])
 	{
 		expr = ft_split(msh->expr[i], ' ');
 		pipe_fork(msh, expr, fd, j, 0, 1);
-		free_split(expr);
+		close(fd[0]);
+		close(fd[1]);
+		// free_split(expr);
 		j = 0;
 		i++;
 	}
