@@ -151,11 +151,18 @@ static void	shell_loop(t_msh *msh)
 			&& !only_whitespaces(msh->prompt))
 		{
 			free_exp = load_expr(msh);
+			if (free_exp)
+				printf("expr loaded\n");
+			else
+				printf("expr NOT loaded\n");
 			msh->tokens = ft_split(msh->prompt, ' ');
 			msh->nb_tokens = get_nb_tokens(msh->tokens);
 			evaluate_commands(msh);
 			if (free_exp)
-				free_split(msh->expr);
+			{free_split(msh->expr);
+				printf("expr freed\n");
+				msh->expr = NULL;
+			}
 			exit_cmd(msh);
 			flush_buffer(msh);
 		}
