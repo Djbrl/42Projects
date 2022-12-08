@@ -67,7 +67,6 @@ int	pipe_exec(t_msh *msh)
 		pipe_fork(msh, expr, fd, j, 0, 1);
 		close(fd[0]);
 		close(fd[1]);
-		// free_split(expr);
 		j = 0;
 		i++;
 	}
