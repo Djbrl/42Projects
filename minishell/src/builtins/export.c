@@ -20,36 +20,32 @@
 static int	ftn_msh_export(char **arg, char **data, char **name)
 {
 	int		i;
+	int		flag;
 	char	*tmp;
 	char	*s;
 
 	s = *arg;
 	i = 0;
+	flag = 0;
 	while (i < (int)ft_strlen(s))
 	{
 		if (s[i] == '=')
 		{
+			flag = 1;
 			if (s[i + 1] == 0)
 				*data = ft_strdup("\0");
 			else
 				*data = ft_strdup(s + i + 1);
-			tmp = ft_strdup(s);
-			tmp[i] = 0;
-			*name = ft_strdup(tmp);
-			free(tmp);
 			break ;
-		}
-		else
-		{
-			*data = ft_strdup(0);
-			tmp = ft_strdup(s);
-			tmp[i] = 0;
-			*name = ft_strdup(tmp);
-			free(tmp);
 		}
 		i++;
 	}
-	return (1);
+	tmp = ft_strdup(s);
+	if (flag == 1)
+		tmp[i] = 0;
+	*name = ft_strdup(tmp); 
+	free(tmp);
+	return (flag);
 }
 
 static int	display_export_error(char *error, char *arg, t_msh *msh)
@@ -87,7 +83,7 @@ int	msh_export(t_env_var *env, char *arg, t_msh *msh)
 		return (update_exit_status(msh, 1));
 	}
 	i = ftn_msh_export(&arg, &data, &name);
-	if (i == 0 || !env)
+	if ((i == 0 && name == NULL)|| !env)
 	{
 		display_export_error(ENV_ID_ERROR, arg, msh);
 		return (update_exit_status(msh, 1));

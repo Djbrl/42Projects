@@ -41,7 +41,7 @@ int	add_var_to_env(t_env_var *env, char *name, char *data)
 	t_env_var	*new;
 
 	new = env;
-	if (!env || !name || !data)
+	if (!env || !name)
 		return (0);
 	while (new->next != NULL)
 	{
