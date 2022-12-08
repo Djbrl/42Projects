@@ -135,6 +135,16 @@ static int	only_whitespaces(char *buf)
 	return (1);
 }
 
+static void	clean_expr(t_msh *msh, int free_exp)
+{
+	if (free_exp)
+	{
+		free_split(msh->expr);
+		msh->expr = NULL;
+	}
+	return ;
+}
+
 static void	shell_loop(t_msh *msh)
 {
 	int	free_exp;
@@ -148,21 +158,13 @@ static void	shell_loop(t_msh *msh)
 		read_buffer(msh);
 		msh->prompt = ft_strdup(msh->g_buffer);
 		if (msh->prompt != NULL && ft_strlen(msh->prompt) != 0 \
-			&& !only_whitespaces(msh->prompt) && !check_quotes(msh->prompt))
+			&& !only_whitespaces(msh->prompt))
 		{
 			free_exp = load_expr(msh);
-			if (free_exp)
-				printf("expr loaded\n");
-			else
-				printf("expr NOT loaded\n");
 			msh->tokens = ft_split(msh->prompt, ' ');
 			msh->nb_tokens = get_nb_tokens(msh->tokens);
 			evaluate_commands(msh);
-			if (free_exp)
-			{free_split(msh->expr);
-				printf("expr freed\n");
-				msh->expr = NULL;
-			}
+			clean_expr(msh, free_exp);
 			exit_cmd(msh);
 			flush_buffer(msh);
 		}

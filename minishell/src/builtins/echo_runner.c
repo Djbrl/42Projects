@@ -32,32 +32,40 @@ static void	ftn_echo_runner(t_msh **msh, t_env_var **var, int i)
 	write(1, "\n", 1);
 }
 
-static int	list_exports(t_env_var *env, t_msh *msh)
+static int	check_n_option(char *opt)
+{
+	int	i;
+
+	i = 1;
+	while (opt[i])
+	{
+		if (opt[i] != 'n')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+static int	run_echo(t_msh **msh, t_env_var **env)
 {
 	t_env_var	*e;
-	int			l;
+	t_msh		*m;
+	int			i;
+	int			exit;
 
-	(void)msh;
-	e = env;
-	l = ft_strlen(e->name);
-	while (e->next != NULL)
+	i = 1;
+	exit = 0;
+	m = *msh;
+	e = *env;
+	while (m->tokens[i])
 	{
-		if (e->name && e->data && ft_strncmp(e->name, "init", l) != 0 && \
-			ft_strncmp(e->name, "?", l))
-		{
-			write(1, "export ", 7);
-			ft_putnstr(e->name, "=", e->data, "\n");
-		}
-		e = e->next;
+		if (i > 2)
+			write(1, " ", 1);
+		if (i != 1)
+			exit = msh_echo(e, m->tokens[i], m);
+		i++;
 	}
-	if (e->name && e->data && (ft_strncmp(e->name, "init", l) != 0 && \
-		ft_strncmp(e->name, "?", l)))
-	{
-		write(1, "export ", 7);
-		ft_putnstr(e->name, "=", e->data, "\n");
-	}
-	exit_cmd(msh);
-	return (update_exit_status(msh, 0));
+	return (exit);
 }
 
 /*
@@ -74,54 +82,13 @@ int	msh_echo_runner(t_env_var *env, t_msh *msh)
 	(void)msh;
 	if (!msh->tokens[1])
 		write(1, "\n", 1);
-	else if (!ft_strncmp(msh->tokens[1], "-n", ft_strlen(msh->tokens[1])))
-	{
-		i = 2;
-		while (msh->tokens[i])
-		{
-			if (i > 2)
-				write(1, " ", 1);
-			exit_status = msh_echo(env, msh->tokens[i++], msh);
-		}
-	}
+	else if (ft_strncmp(msh->tokens[1], "-n", ft_strlen(msh->tokens[1])) == 0)
+		run_echo(&msh, &env);
+	else if (ft_strncmp(msh->tokens[1], "-n", ft_strlen(msh->tokens[1])) != 0 \
+		&& check_n_option(msh->tokens[1]))
+		run_echo(&msh, &env);
 	else
 		ftn_echo_runner(&msh, &env, i);
 	exit_cmd(msh);
 	return (update_exit_status(msh, exit_status));
-}
-
-int	msh_export_runner(t_env_var *env, t_msh *msh)
-{
-	int	i;
-	int	exit_status;
-
-	i = 1;
-	exit_status = 0;
-	(void)msh;
-	if (msh->tokens[1] == NULL)
-	{
-		list_exports(env, msh);
-		exit_cmd(msh);
-		return (update_exit_status(msh, 0));
-	}
-	while (msh->tokens[i])
-	{
-		exit_status = msh_export(env, msh->tokens[i], msh);
-		i++;
-	}
-	exit_cmd(msh);
-	return (update_exit_status(msh, exit_status));
-}
-
-int	msh_cd_runner(t_env_var *env, t_msh *msh)
-{
-	(void)msh;
-	if (msh->nb_tokens > 2)
-	{
-		display_error(CD_ARG_ERROR, msh);
-		exit_cmd(msh);
-		return (update_exit_status(msh, 1));
-	}
-	else
-		return (update_exit_status(msh, msh_cd(env, msh)));
 }

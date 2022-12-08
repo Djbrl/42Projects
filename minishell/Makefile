@@ -24,11 +24,16 @@ CFLAGS := -Wall -Wextra -Werror
 CPFLAGS := -g3#-lreadline
 PFLAGS := -Iinclude -Ilibft
 
-SRC_OTHER := main.c display.c exec.c utils/utils.c builtins/builtins_1.c \
-			 init.c builtins/builtins_2.c builtins/builtins_runner.c \
-			 utils/list_utils.c free.c envp.c expr.c utils/expr_utils.c \
-			 builtins/ftn_builtins.c utils/ftn_utils.c pipex/pipe.c\
-			 utils/check_quotes.c\
+SRC_OTHER := main.c display.c exec.c init.c free.c envp.c expr.c\
+			 \
+			 utils/list_utils.c utils/expr_utils.c \
+			 utils/ftn_utils.c utils/utils.c \
+			 \
+			 pipex/pipe.c \
+			 \
+			 builtins/echo_runner.c builtins/export_runner.c \
+			 builtins/other.c builtins/export.c builtins/unset.c \
+			 builtins/echo.c builtins/cd.c \
 
 SRC_PATH := src
 SRC_NAME := $(SRC_OTHER)
