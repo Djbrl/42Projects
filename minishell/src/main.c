@@ -135,13 +135,10 @@ static int	only_whitespaces(char *buf)
 	return (1);
 }
 
-static void	clean_expr(t_msh *msh, int free_exp)
+static void	clean_expr(t_msh *msh, int free_flag)
 {
-	if (free_exp)
-	{
-		free_split(msh->expr);
-		msh->expr = NULL;
-	}
+	if (free_flag)
+		free_expr(&msh);
 	return ;
 }
 
@@ -181,6 +178,7 @@ int	main(int ac, char **av, char **envp)
 	(void)av;
 	init_env(&msh);
 	init_msh(&msh, envp);
+	init_expr(&msh);
 	shell_loop(&msh);
 	return (0);
 }

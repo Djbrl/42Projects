@@ -29,10 +29,12 @@ static int	pipe_cmd(t_msh *msh, char **expr, int j)
 	return (status);
 }
 
-static void	pipe_fork(t_msh *msh, char **expr, int fd[2], int j)
+static void	pipe_fork(t_msh *msh, char **expr, int fd[2])
 {
 	pid_t	pid;
+	int		j;
 
+	j = 0;
 	pid = fork();
 	if (pid == 0)
 	{
@@ -53,22 +55,21 @@ static void	pipe_fork(t_msh *msh, char **expr, int fd[2], int j)
 
 int	pipe_exec(t_msh *msh)
 {
+	t_expr	*cur;
 	char	**expr;
 	int		fd[2];
-	int		i;
-	int		j;
 
-	i = 0;
-	j = 0;
+	cur = msh->exp->next;
 	pipe(fd);
-	while (msh->expr[i])
+	while (cur)
 	{
-		expr = ft_split(msh->expr[i], ' ');
-		pipe_fork(msh, expr, fd, j);
+		expr = ft_split(cur->data, ' ');
+		pipe_fork(msh, expr, fd);
+		free_split(expr);
 		close(fd[0]);
 		close(fd[1]);
-		j = 0;
-		i++;
+		cur = cur->next;
 	}
 	return (0);
 }
+

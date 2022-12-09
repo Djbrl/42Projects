@@ -46,12 +46,12 @@
 extern int				g_status;
 typedef struct s_msh	t_msh;
 
-// typedef struct s_expr{
-// 	char			*data;
-// 	int				fd_in;
-// 	int				fd_out;
-// 	struct s_expr	*next;
-// }					t_expr;
+typedef struct s_expr{
+	char			*data;
+	int				fd_in;
+	int				fd_out;
+	struct s_expr	*next;
+}					t_expr;
 
 typedef struct s_env_var
 {
@@ -69,6 +69,7 @@ typedef struct s_cmd
 typedef struct s_msh
 {
 	t_cmd		cmd;
+	t_expr		*exp;
 	t_env_var	*env;
 	char		*home;
 	char		*user;
@@ -77,7 +78,6 @@ typedef struct s_msh
 	char		*prompt;
 	char		**tokens;
 	char		**envp;
-	char		**expr;
 	char		**paths;
 	char		g_buffer[BUF];
 	int			nb_tokens;
@@ -89,7 +89,7 @@ typedef struct s_msh
 */
 void	init_env(t_msh *msh);
 void	init_msh(t_msh *msh, char **envp);
-// void	init_expr(t_msh *msh);
+void	init_expr(t_msh *msh);
 
 /*
 ** BUILTINS
@@ -130,7 +130,7 @@ void	exit_shell(t_msh *msh);
 ** UTILS
 */
 int		load_expr(t_msh *msh);
-void	free_expr(t_msh *msh);
+void	free_expr(t_msh **msh);
 char	*expand_var(t_msh *msh, char *var);
 void	free_split(char **array);
 void	flush_buffer(t_msh *msh);
