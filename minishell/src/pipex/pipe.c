@@ -29,7 +29,7 @@ static int	pipe_cmd(t_msh *msh, char **expr, int j)
 	return (status);
 }
 
-static void	pipe_fork(t_msh *msh, char **expr, int fd[2], int j, int in, int out)
+static void	pipe_fork(t_msh *msh, char **expr, int fd[2], int j)
 {
 	pid_t	pid;
 
@@ -37,14 +37,14 @@ static void	pipe_fork(t_msh *msh, char **expr, int fd[2], int j, int in, int out
 	if (pid == 0)
 	{
 		close(fd[0]);
-		dup2(fd[1], out);
+		dup2(fd[1], 1);
 		while (msh->paths[j])
 			pipe_cmd(msh, expr, j++);
 	}
 	else
 	{
 		close(fd[1]);
-		dup2(fd[0], in);
+		dup2(fd[0], 0);
 		waitpid(pid, &g_status, WUNTRACED);
 		while (!WIFEXITED(g_status) && !WIFSIGNALED(g_status))
 			waitpid(pid, &g_status, WUNTRACED);
@@ -64,7 +64,7 @@ int	pipe_exec(t_msh *msh)
 	while (msh->expr[i])
 	{
 		expr = ft_split(msh->expr[i], ' ');
-		pipe_fork(msh, expr, fd, j, 0, 1);
+		pipe_fork(msh, expr, fd, j);
 		close(fd[0]);
 		close(fd[1]);
 		j = 0;
