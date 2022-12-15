@@ -23,7 +23,7 @@ static int	exec_env(t_msh *msh)
 	status = access(msh->tokens[0], X_OK & F_OK);
 	if (!msh->paths)
 		return (-1);
-	if (msh->exp == NULL)
+	if (msh->exp == NULL || expr_len(msh->exp) == 1)
 	{
 		while (msh->paths[i])
 		{

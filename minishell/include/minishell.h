@@ -129,6 +129,7 @@ void	exit_shell(t_msh *msh);
 /*
 ** UTILS
 */
+int		expr_len(t_expr *expr);
 int		load_expr(t_msh *msh);
 void	free_expr(t_msh **msh);
 char	*expand_var(t_msh *msh, char *var);

@@ -54,7 +54,7 @@ all: $(NAME)
 	@echo "Ready : ${GREEN_COLOR}`pwd`/${NAME}${END_COLOR}"
 
 $(NAME): $(OBJ) $(LIB_FT)
-	@$(CC) $(OBJ) $(LIB_FT) $(CFLAGS) $(CPFLAGS) -o $(NAME) -lreadline -fsanitize=address
+	@$(CC) $(OBJ) $(LIB_FT) $(CFLAGS) $(CPFLAGS) -o $(NAME) -lreadline
 
 $(BUILD_PATH)/$(OBJ_PATH)/%.o: $(SRC_PATH)/%.c
 	@mkdir -p $(dir $@) 2>/dev/null || true

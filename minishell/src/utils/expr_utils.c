@@ -27,17 +27,17 @@
 // 	return (1);
 // }
 
-// int	expr_len(t_expr *expr)
-// {
-// 	t_expr	*cur;
-// 	int		i;
+int	expr_len(t_expr *expr)
+{
+	t_expr	*cur;
+	int		i;
 
-// 	i = 0;
-// 	cur = expr;
-// 	while (cur)
-// 	{
-// 		cur = cur->next;
-// 		i++;
-// 	}
-// 	return (i);
-// }
+	i = 0;
+	cur = expr;
+	while (cur)
+	{
+		cur = cur->next;
+		i++;
+	}
+	return (i);
+}
