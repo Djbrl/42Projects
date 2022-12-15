@@ -72,4 +72,3 @@ int	pipe_exec(t_msh *msh)
 	}
 	return (0);
 }
-
