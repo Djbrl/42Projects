@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-static void connect_fds(t_expr **curr_command, t_expr *prev_command, t_expr *commands)
+static void connect_fds(t_expr **curr_command, t_expr *commands)
 {
 	t_expr *cur;
 	int			pipefd[2];
@@ -23,7 +23,6 @@ static void connect_fds(t_expr **curr_command, t_expr *prev_command, t_expr *com
 		pipe(pipefd);
 		cur->fd_out = pipefd[1];
 		cur->next->fd_in = pipefd[0];
-		prev_command = cur;
 		cur = cur->next;
 	}
 	cur->fd_out = 1;
@@ -62,12 +61,11 @@ static void close_fds(t_expr **curr_command)
 }
 
 static void	execute_multi_pipe(t_expr *commands) {
-	t_expr	*prev = NULL;
 	t_expr	*curr = commands;
 	pid_t		pid;
 	int			status;
 
-	connect_fds(&curr, prev, commands);
+	connect_fds(&curr, commands);
 	while (curr != NULL)
 	{
 		//Child process

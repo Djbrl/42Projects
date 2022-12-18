@@ -23,7 +23,7 @@ void connect_fds(CommandNode **curr_command, CommandNode *prev_command, CommandN
 		pipe(pipefd);
 		cur->output_fd = pipefd[1];
 		cur->next->input_fd = pipefd[0];
-		prev_command = cur;
+		(void)prev_command;
 		cur = cur->next;
 	}
 	cur->output_fd = STDOUT_FILENO;
