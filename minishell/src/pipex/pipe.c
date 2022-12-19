@@ -12,27 +12,27 @@
 
 #include "minishell.h"
 
-static void connect_fds(t_expr **curr_command, t_expr *commands)
+static void	check_paths(t_msh *msh, char **cmd)
 {
-	t_expr *cur;
-	int			pipefd[2];
+	char	*path;
+	char	*tmp;
+	int		i;
 
-	cur = *curr_command;
-	while (cur->next != NULL)
+	i = 0;
+	while (msh->paths[i])
 	{
-		pipe(pipefd);
-		cur->fd_out = pipefd[1];
-		cur->next->fd_in = pipefd[0];
-		cur = cur->next;
+		tmp = ft_strjoin(msh->paths[i++], "/");
+		path = ft_strjoin(tmp, cmd[0]);
+		execve(path, cmd, msh->envp);
+		free(tmp);
+		free(path);
 	}
-	cur->fd_out = 1;
-	cur = commands;
 }
 
-
-static void execute_commands(t_expr **curr_command)
+static void execute_commands(t_expr **curr_command, t_msh *msh)
 {
-	t_expr *cur;
+	t_expr	*cur;
+	char	**cmd;
 
 	cur = *curr_command;
 	if (cur->fd_in != 0) {
@@ -43,29 +43,13 @@ static void execute_commands(t_expr **curr_command)
 		dup2(cur->fd_out, 1);
 		close(cur->fd_out);
 	}
-	char **cmd = ft_split(cur->data, ' ');
-	char *tmp = ft_strjoin("/bin/", cmd[0]); ß
-	//execute in a while paths loop
-	if (execlp(tmp, tmp, NULL) == -1)
-		perror("");
+	cmd = ft_split(cur->data, ' ');
+	check_paths(msh, cmd);
 	free_split(cmd);
 	exit(EXIT_FAILURE);
 }
 
-static void close_fds(t_expr **curr_command)
-{
-	t_expr *cur;
-
-	cur = *curr_command;
-	if (cur->fd_in != 0) {
-		close(cur->fd_in);
-	}
-	if (cur->fd_out != 1) {
-		close(cur->fd_out);
-	}
-}
-
-static void	execute_multi_pipe(t_expr *commands) {
+static int	execute_multi_pipe(t_expr *commands, t_msh *msh) {
 	t_expr	*curr = commands;
 	pid_t		pid;
 	int			status;
@@ -73,49 +57,29 @@ static void	execute_multi_pipe(t_expr *commands) {
 	connect_fds(&curr, commands);
 	while (curr != NULL)
 	{
-		//Child process
 		pid = fork();
 		if (pid == 0)
-			execute_commands(&curr);
+			execute_commands(&curr, msh);
 		else if (pid < 0)
 			exit(EXIT_FAILURE);
-		// Parent process
 		close_fds(&curr);
 		curr = curr->next;
 	}
-	// Wait for all child processes to finish
-	while (wait(&status) > 0) {}
-}
-
-static void	init_fds(t_expr **commands, t_expr *prev)
-{
-	int		pipefd[2];
-	t_expr	*cur;
-
-	cur = *commands;
-	while (cur->next != NULL)
-	{
-		pipe(pipefd);
-		if (prev != NULL)
-			cur->fd_in = prev->fd_out;
-		else
-			cur->fd_in = STDIN_FILENO;
-		cur->fd_out = pipefd[1];
-		cur->next->fd_in = pipefd[0];
-		prev = cur;
-		cur = cur->next;
-	}
-	if (prev != NULL)
-		cur->fd_in = prev->fd_out;
-	cur->fd_out = 1;
+	while (wait(&status) > 0){}
+	return (0);
 }
 
 int	pipe_exec(t_msh *msh)
 {
-	t_expr	*prev = NULL;
-	t_expr	*commands = msh->exp;
+	t_expr	*prev;
+	t_expr	*commands;
+	int		status;
 
-	init_fds(&commands, prev);
-	execute_multi_pipe(commands);
-	return (0);
+	i = 0;
+	prev = NULL;
+	commands = msh->exp;
+	if (init_fds(&commands, prev) == - 1)
+		return (-1);
+	status = execute_multi_pipe(commands, msh);
+	return (status);
 }

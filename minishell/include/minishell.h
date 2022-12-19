@@ -142,4 +142,8 @@ int		is_builtin(char *s, t_msh *msh);
 ** PIPE
 */
 int		pipe_exec(t_msh *msh);
+void	init_fds(t_expr **commands, t_expr *prev);
+void	close_fds(t_expr **curr_command);
+int		connect_fds(t_expr **curr_command, t_expr *commands);
+
 #endif
