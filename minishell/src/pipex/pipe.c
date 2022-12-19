@@ -43,7 +43,12 @@ static void execute_commands(t_expr **curr_command)
 		dup2(cur->fd_out, 1);
 		close(cur->fd_out);
 	}
-	execlp(cur->data, cur->data, NULL);
+	char **cmd = ft_split(cur->data, ' ');
+	char *tmp = ft_strjoin("/bin/", cmd[0]); ß
+	//execute in a while paths loop
+	if (execlp(tmp, tmp, NULL) == -1)
+		perror("");
+	free_split(cmd);
 	exit(EXIT_FAILURE);
 }
 

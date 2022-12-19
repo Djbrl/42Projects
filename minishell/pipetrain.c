@@ -115,7 +115,7 @@ int main()
 	commands->next = malloc(sizeof(CommandNode));
 	commands->next->command = "wc";
 	commands->next->next = malloc(sizeof(CommandNode));
-	commands->next->next->command = "wc";
+	commands->next->next->command = "sort";
 	commands->next->next->next = NULL;
 
 	CommandNode *prev_command = NULL;

@@ -81,8 +81,11 @@ void	exit_shell(t_msh *msh)
 
 	exit_status = ft_atoi(get_data_from_env(msh->env, ft_strdup("?")));
 	free_env(msh);
-	free(msh->exp->data);
-	free(msh->exp);
+	if (msh->exp != NULL)
+	{
+		free(msh->exp->data);
+		free(msh->exp);
+	}
 	// clear_history();
 	exit(exit_status);
 }
