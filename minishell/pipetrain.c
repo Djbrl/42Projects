@@ -85,25 +85,36 @@ void execute_multi_pipe(CommandNode *commands) {
 	while (wait(&status) > 0) {}
 }
 
-void	init_fds(CommandNode **curr_command, CommandNode *prev_command)
+int	init_fds(t_expr **commands, t_expr *prev)
 {
-	int 		pipefd[2];
-	CommandNode	*cur;
+	int		*pipefd;
+	t_expr	*cur;
 
-	cur = *curr_command;
+	cur = *commands;
+	if (!cur)
+		return (-1);
 	while (cur->next != NULL)
 	{
-		pipe(pipefd);
-		if (prev_command != NULL)
-			cur->input_fd = prev_command->output_fd;
-		cur->output_fd = pipefd[1];
-		cur->next->input_fd = pipefd[0];
-		prev_command = cur;
+		if (!(pipefd = malloc(2 * sizeof(int))))
+			return (-1);
+		if (pipe(pipefd) == -1)
+		{
+			free(pipefd);
+			return (-1);
+		}
+		if (prev != NULL)
+			cur->fd_in = prev->fd_out;
+		else
+			cur->fd_in = STDIN_FILENO;
+		cur->fd_out = pipefd[1];
+		cur->next->fd_in = pipefd[0];
+		prev = cur;
 		cur = cur->next;
 	}
-	if (prev_command != NULL)
-		cur->input_fd = prev_command->output_fd;
-	cur->output_fd = STDOUT_FILENO;
+	if (prev != NULL)
+		cur->fd_in = prev->fd_out;
+	cur->fd_out = 1;
+	return (0);
 }
 
 int main()

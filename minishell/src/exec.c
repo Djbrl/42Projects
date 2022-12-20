@@ -25,6 +25,8 @@ static int	exec_env(t_msh *msh)
 		return (-1);
 	if (msh->exp == NULL || expr_len(msh->exp) == 1)
 	{
+		//fix recurrent multipipe
+		printf("no exp\n");
 		while (msh->paths[i])
 		{
 			if (status == 0)

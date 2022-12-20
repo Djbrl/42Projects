@@ -75,7 +75,6 @@ int	pipe_exec(t_msh *msh)
 	t_expr	*commands;
 	int		status;
 
-	i = 0;
 	prev = NULL;
 	commands = msh->exp;
 	if (init_fds(&commands, prev) == - 1)
