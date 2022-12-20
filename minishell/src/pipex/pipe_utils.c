@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int connect_fds(t_expr **curr_command, t_expr *commands)
+int	connect_fds(t_expr **curr_command, t_expr *commands)
 {
 	t_expr		*cur;
 	int			pipefd[2];
@@ -22,7 +22,7 @@ int connect_fds(t_expr **curr_command, t_expr *commands)
 	{
 		pipe(pipefd);
 		cur->fd_out = pipefd[1];
-		cur->next->fd_in = pipefd[0];;
+		cur->next->fd_in = pipefd[0];
 		cur = cur->next;
 	}
 	cur->fd_out = 1;
@@ -30,9 +30,9 @@ int connect_fds(t_expr **curr_command, t_expr *commands)
 	return (-1);
 }
 
-void close_fds(t_expr **curr_command)
+void	close_fds(t_expr **curr_command)
 {
-	t_expr *cur;
+	t_expr	*cur;
 
 	cur = *curr_command;
 	if (cur->fd_in != 0)

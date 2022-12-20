@@ -19,25 +19,21 @@ static int	exec_env(t_msh *msh)
 	char	*path;
 	int		status;
 
-	i = 0;
-
-	status = access(msh->tokens[0], X_OK & F_OK);
 	if (!msh->paths)
 		return (-1);
+	i = 0;
+	status = access(msh->tokens[0], X_OK & F_OK);
 	if (msh->exp == NULL || expr_len(msh->exp) == 1)
 	{
 		while (msh->paths[i])
 		{
 			if (status == 0)
 				execve(msh->tokens[0], msh->tokens, msh->envp);
-			else
-			{
-				cmd = ft_strjoin(msh->paths[i++], "/");
-				path = ft_strjoin(cmd, msh->tokens[0]);
-				execve(path, msh->tokens, msh->envp);
-				free(cmd);
-				free(path);
-			}
+			cmd = ft_strjoin(msh->paths[i++], "/");
+			path = ft_strjoin(cmd, msh->tokens[0]);
+			execve(path, msh->tokens, msh->envp);
+			free(cmd);
+			free(path);
 		}
 	}
 	else

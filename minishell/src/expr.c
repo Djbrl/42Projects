@@ -29,8 +29,8 @@ static int	add_var_to_expr(t_expr *expr, char *data)
 
 void	free_expr(t_msh **mshh)
 {
-	t_msh *msh;
-    t_expr  *cur;
+	t_msh	*msh;
+	t_expr	*cur;
 
 	msh = *mshh;
 	if (!msh->exp)
@@ -76,6 +76,5 @@ int	load_expr(t_msh *msh)
 		free_split(expr);
 		return (1);
 	}
-	
 	return (0);
 }
