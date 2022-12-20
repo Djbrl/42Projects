@@ -138,7 +138,10 @@ static int	only_whitespaces(char *buf)
 static void	clean_expr(t_msh *msh, int free_flag)
 {
 	if (free_flag)
+	{
 		free_expr(&msh);
+		init_expr(msh);
+	}
 	return ;
 }
 
@@ -146,12 +149,12 @@ static void	shell_loop(t_msh *msh)
 {
 	int	free_exp;
 
-	free_exp = 0;
 	signal(SIGINT, signal_handler);
 	signal(SIGQUIT, signal_handler);
 	update_exit_status(msh, 0);
 	while (RUNNING)
 	{
+		free_exp = 0;
 		read_buffer(msh);
 		msh->prompt = ft_strdup(msh->g_buffer);
 		if (msh->prompt != NULL && ft_strlen(msh->prompt) != 0 \

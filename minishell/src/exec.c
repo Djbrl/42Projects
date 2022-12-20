@@ -20,22 +20,24 @@ static int	exec_env(t_msh *msh)
 	int		status;
 
 	i = 0;
+
 	status = access(msh->tokens[0], X_OK & F_OK);
 	if (!msh->paths)
 		return (-1);
 	if (msh->exp == NULL || expr_len(msh->exp) == 1)
 	{
-		//fix recurrent multipipe
-		printf("no exp\n");
 		while (msh->paths[i])
 		{
 			if (status == 0)
 				execve(msh->tokens[0], msh->tokens, msh->envp);
-			cmd = ft_strjoin(msh->paths[i++], "/");
-			path = ft_strjoin(cmd, msh->tokens[0]);
-			execve(path, msh->tokens, msh->envp);
-			free(cmd);
-			free(path);
+			else
+			{
+				cmd = ft_strjoin(msh->paths[i++], "/");
+				path = ft_strjoin(cmd, msh->tokens[0]);
+				execve(path, msh->tokens, msh->envp);
+				free(cmd);
+				free(path);
+			}
 		}
 	}
 	else

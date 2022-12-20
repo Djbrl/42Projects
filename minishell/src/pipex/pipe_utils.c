@@ -21,7 +21,10 @@ int connect_fds(t_expr **curr_command, t_expr *commands)
 	while (cur->next != NULL)
 	{
 		if (pipe(pipefd) == -1)
+		{
+			perror("connect fd pipe: ");
 			return (-1);
+		}
 		cur->fd_out = pipefd[1];
 		cur->next->fd_in = pipefd[0];
 		cur = cur->next;
@@ -53,7 +56,10 @@ int	init_fds(t_expr **commands, t_expr *prev)
 	while (cur->next != NULL)
 	{
 		if (pipe(pipefd) == -1)
+		{
+			perror("init fd pipe: ");
 			return (-1);
+		}
 		if (prev != NULL)
 			cur->fd_in = prev->fd_out;
 		else

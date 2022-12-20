@@ -12,21 +12,32 @@
 
 #include "minishell.h"
 
-static void	check_paths(t_msh *msh, char **cmd)
+static void check_paths(t_msh *msh, char **cmd)
 {
-	char	*path;
-	char	*tmp;
-	int		i;
+    char *path;
+    char *tmp;
+    int i;
+    int status;
 
-	i = 0;
-	while (msh->paths[i])
-	{
-		tmp = ft_strjoin(msh->paths[i++], "/");
-		path = ft_strjoin(tmp, cmd[0]);
-		execve(path, cmd, msh->envp);
-		free(tmp);
-		free(path);
-	}
+    i = 0;
+    status = access(cmd[0], X_OK);
+    while (msh->paths[i])
+    {
+        if (status == 0)
+        	execve(cmd[0], cmd, msh->envp);
+        tmp = ft_strjoin(msh->paths[i++], "/");
+        path = ft_strjoin(tmp, cmd[0]);
+        status = access(path, X_OK);
+		if (status == -1)
+			perror("check path access: ");
+        if (status == 0)
+        {
+            printf("found valid path [%s], executing...\n", path);
+            execve(path, cmd, msh->envp);
+        }
+        free(tmp);
+        free(path);
+    }
 }
 
 static void execute_commands(t_expr **curr_command, t_msh *msh)

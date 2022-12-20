@@ -53,15 +53,20 @@ void	free_expr(t_msh **mshh)
 int	load_expr(t_msh *msh)
 {
 	int		i;
+	int		end;
 	char	**expr;
 
 	i = 0;
+	end = 1;
 	expr = NULL;
-	while (msh->prompt[i])
+	while (msh->prompt[i] && end)
 	{
 		if (msh->prompt[i] == '|')
+		{
 			expr = ft_split(msh->prompt, '|');
-		i++;		
+			end = 0;
+		}
+		i++;
 	}
 	i = 0;
 	if (expr != NULL)
@@ -71,5 +76,6 @@ int	load_expr(t_msh *msh)
 		free_split(expr);
 		return (1);
 	}
+	
 	return (0);
 }
