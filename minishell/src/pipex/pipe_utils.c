@@ -20,13 +20,9 @@ int connect_fds(t_expr **curr_command, t_expr *commands)
 	cur = *curr_command;
 	while (cur->next != NULL)
 	{
-		if (pipe(pipefd) == -1)
-		{
-			perror("connect fd pipe: ");
-			return (-1);
-		}
+		pipe(pipefd);
 		cur->fd_out = pipefd[1];
-		cur->next->fd_in = pipefd[0];
+		cur->next->fd_in = pipefd[0];;
 		cur = cur->next;
 	}
 	cur->fd_out = 1;
@@ -55,11 +51,7 @@ int	init_fds(t_expr **commands, t_expr *prev)
 		return (-1);
 	while (cur->next != NULL)
 	{
-		if (pipe(pipefd) == -1)
-		{
-			perror("init fd pipe: ");
-			return (-1);
-		}
+		pipe(pipefd);
 		if (prev != NULL)
 			cur->fd_in = prev->fd_out;
 		else
