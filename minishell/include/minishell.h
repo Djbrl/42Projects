@@ -50,6 +50,7 @@ typedef struct s_expr{
 	char			*data;
 	int				fd_in;
 	int				fd_out;
+	int				redir;
 	struct s_expr	*next;
 }					t_expr;
 

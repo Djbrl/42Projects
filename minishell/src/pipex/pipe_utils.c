@@ -63,6 +63,6 @@ int	init_fds(t_expr **commands, t_expr *prev)
 	}
 	if (prev != NULL)
 		cur->fd_in = prev->fd_out;
-	cur->fd_out = 1;
+	cur->fd_out = STDOUT_FILENO;
 	return (0);
 }

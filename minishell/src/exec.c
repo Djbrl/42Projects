@@ -38,6 +38,7 @@ static int	exec_env(t_msh *msh)
 	}
 	else
 		status = pipe_exec(msh);
+	printf("status %i\n", status);
 	return (status);
 }
 

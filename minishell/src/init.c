@@ -58,6 +58,7 @@ void	init_expr(t_msh *msh)
 	msh->exp->next = NULL;
 	msh->exp->fd_in = -1;
 	msh->exp->fd_out = -1;
+	msh->exp->redir = -1;
 }
 
 void	init_env(t_msh *msh)

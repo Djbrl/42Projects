@@ -88,6 +88,7 @@ int	pipe_exec(t_msh *msh)
 	commands = msh->exp;
 	if (init_fds(&commands, prev) == -1)
 		return (-1);
+	//check if commands are executable here, if yes, give paths to multipipe and exec
 	status = execute_multi_pipe(commands, msh);
 	return (status);
 }
