@@ -138,6 +138,7 @@ void	free_split(char **array);
 void	flush_buffer(t_msh *msh);
 int		update_exit_status(t_msh *msh, int status);
 int		is_builtin(char *s, t_msh *msh);
+char	**ft_split_charset(const char *s, const char *set);
 
 /*
 ** PIPE

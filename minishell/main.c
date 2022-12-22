@@ -1,4 +1,4 @@
-#include "libft/libft.h"
+#include "include/minishell.h"
 
 
 size_t	ft_strlcpy(char *dst, const char *src, size_t size)
@@ -89,7 +89,7 @@ char	**ft_splitt(const char *s, const char *set)
 	if (!s || !set)
 		return (NULL);
 	wrds = nb_wrds(s, set, &i, &j);
-	strs = malloc((wrds + 1)*sizeof(char *));
+	strs = malloc((wrds + 1) * sizeof(char *));
 	if (!strs)
 		return (NULL);
 	strs[wrds] = 0;
@@ -98,7 +98,7 @@ char	**ft_splitt(const char *s, const char *set)
 		while (s[j] && ft_issep(s[j], set))
 			j++;
 		len = wrd_len(s + j, set);
-		strs[i] = malloc((len + 1)*sizeof(char));
+		strs[i] = malloc((len + 1) * sizeof(char));
 		if (!(strs[i]))
 			return (ft_free(strs, i));
 		(void)ft_strlcpy(strs[i], s + j, len + 1);
@@ -106,21 +106,50 @@ char	**ft_splitt(const char *s, const char *set)
 	}
 	return (strs);
 }
+void	free_split(char **array)
+{
+	int	i;
+
+	i = 0;
+	if (!array)
+		return ;
+	while (array[i])
+		free(array[i++]);
+	free(array);
+}
 
 int main()
 {
 	int j = 0;
 	int i = 0;
 	int r_redir = 0;
-	char *str = "hi > bro > ski";
-	while (str[i])
-	{
-		if (str[i] == '>')
-			r_redir++;
-	}
-	char **res = ft_splitt("hi > bro > ski", "|>");
+	char *str = "ls -laR | wc > result.txt | cat result.txt > lol | ls -la";
+	char **res = ft_splitt(str, " ");
 	while (res[i])
+	{
+		if (res[i][0] == '|' || res[i][0] == '>')
+			j++;
 		printf("%s\n", res[i++]);
-
+	}
+	printf("num of pipes and redirs : %i\nexpr : %i\n", j, j + 1);
+	i = 0;
+	j = 0;
+	free_split(res);
+	while (res[j])
+	{
+		if (res[j][0] == '|')
+			printf("%s\t", "next");
+		if (res[j][0] == '>')
+		{
+			int fd = open(res[j + 1], O_RDWR | O_CREAT, 0644);
+			if (fd == -1)
+				perror("open");
+			printf("[%i->%i %s]\t",0 , fd, res[j+1]);
+			write(fd, "hello", 4);
+			close(fd);
+		}
+		j++;
+	}
+	
 	return (0);
 }

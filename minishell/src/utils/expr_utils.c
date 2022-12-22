@@ -41,3 +41,13 @@ int	expr_len(t_expr *expr)
 	}
 	return (i);
 }
+
+int	update_exit_status(t_msh *msh, int status)
+{
+	char	*tmp;
+
+	tmp = ft_itoa(status);
+	add_var_to_env(msh->env, "?", tmp);
+	free(tmp);
+	return (status);
+}

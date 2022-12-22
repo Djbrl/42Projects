@@ -85,9 +85,29 @@ int	pipe_exec(t_msh *msh)
 	int		status;
 
 	prev = NULL;
-	commands = msh->exp;
+	commands = msh->exp->next;
 	if (init_fds(&commands, prev) == -1)
 		return (-1);
+	t_expr *cur;
+
+	cur = commands;
+	while (cur)
+		{
+			printf("checking access for [%s]\n", cur->data);
+			char **res = ft_split(cur->data, '>');
+			if (res[1] != NULL)
+			{
+				printf("redirection found : [%s]\n", cur->data);
+				int i = 1;
+				while (res[i])
+				{
+					printf("redirect output to [%s]\n", res[i]);
+					i++;
+				}
+			}
+			cur = cur->next;
+			free_split(res);
+		}
 	//check if commands are executable here, if yes, give paths to multipipe and exec
 	status = execute_multi_pipe(commands, msh);
 	return (status);
