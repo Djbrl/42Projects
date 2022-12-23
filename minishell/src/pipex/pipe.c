@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-static void	check_paths(t_msh *msh, char **cmd)
+static void	check_paths(t_msh *msh, char **cmd, char *arg)
 {
 	char	*path;
 	char	*tmp;
@@ -20,19 +20,51 @@ static void	check_paths(t_msh *msh, char **cmd)
 	int		status;
 
 	i = 0;
+
+	char **res = ft_split(arg, '>');
+	char **re = ft_split(res[0], ' ');
+	free_split(res);
+
 	status = access(cmd[0], X_OK);
 	while (msh->paths[i])
 	{
 		if (status == 0)
-			execve(cmd[0], cmd, msh->envp);
+			execve(cmd[0], re, msh->envp);
 		tmp = ft_strjoin(msh->paths[i++], "/");
 		path = ft_strjoin(tmp, cmd[0]);
 		status = access(path, X_OK);
 		if (status == 0)
-			execve(path, cmd, msh->envp);
+			execve(path, re, msh->envp);
 		free(tmp);
 		free(path);
 	}
+}
+
+static void apply_redirections(t_expr *cur)
+{
+	int		i;
+	char	**tmp;
+	int		fd;
+	int		j;
+
+	j = 1;
+	i = 0;
+	fd = -1;
+	tmp = ft_split_charset(cur->data, " >");
+	while (cur->data[i])
+	{
+		if (cur->data[i] == '>')
+		{
+			while (tmp[j])
+			{
+				fd = open(tmp[j], O_RDWR | O_CREAT, 0644);
+				j++;
+			}
+			cur->fd_out = fd;
+		}
+		i++;
+	}
+	free_split(tmp);
 }
 
 static void	execute_commands(t_expr **curr_command, t_msh *msh)
@@ -41,6 +73,7 @@ static void	execute_commands(t_expr **curr_command, t_msh *msh)
 	char	**cmd;
 
 	cur = *curr_command;
+	apply_redirections(cur);
 	if (cur->fd_in != 0)
 	{
 		dup2(cur->fd_in, 0);
@@ -52,7 +85,7 @@ static void	execute_commands(t_expr **curr_command, t_msh *msh)
 		close(cur->fd_out);
 	}
 	cmd = ft_split(cur->data, ' ');
-	check_paths(msh, cmd);
+	check_paths(msh, cmd, cur->data);
 	free_split(cmd);
 	exit(EXIT_FAILURE);
 }
@@ -88,26 +121,6 @@ int	pipe_exec(t_msh *msh)
 	commands = msh->exp->next;
 	if (init_fds(&commands, prev) == -1)
 		return (-1);
-	t_expr *cur;
-
-	cur = commands;
-	while (cur)
-		{
-			printf("checking access for [%s]\n", cur->data);
-			char **res = ft_split(cur->data, '>');
-			if (res[1] != NULL)
-			{
-				printf("redirection found : [%s]\n", cur->data);
-				int i = 1;
-				while (res[i])
-				{
-					printf("redirect output to [%s]\n", res[i]);
-					i++;
-				}
-			}
-			cur = cur->next;
-			free_split(res);
-		}
 	//check if commands are executable here, if yes, give paths to multipipe and exec
 	status = execute_multi_pipe(commands, msh);
 	return (status);

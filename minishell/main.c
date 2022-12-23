@@ -153,3 +153,20 @@ int main()
 	
 	return (0);
 }
+	// //cmd everything before conv
+	// //change fd to be open of redir
+	// char **res = ft_split(arg, '>');
+	// char **re = ft_split(res[0], ' ');
+
+	// if (res[1] != NULL)
+	// {
+	// 	printf("found a redirection in [%s]\n", arg);
+	// 	printf("res 1 : %s\nres 0 : %s\n", res[1], res[0]);
+	// 	int fd = open("test", O_RDWR | O_CREAT, 0644);
+	// 	t_expr *tmpx = *cur;
+	// 	tmpx->fd_out = fd;
+	// 	(void)cur;
+	// }
+	// else
+	// 	printf("no redirection her\n");
+	// free_split(res);
