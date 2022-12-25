@@ -33,6 +33,8 @@ SRC_OTHER := main.c display.c exec.c init.c free.c envp.c expr.c\
 			 \
 			 redirections/redirections.c redirections/redirections_utils.c \
 			 \
+			 get_next_line/get_next_line.c get_next_line/get_next_line_utils.c \
+			 \
 			 builtins/echo_runner.c builtins/export_runner.c \
 			 builtins/other.c builtins/export.c builtins/unset.c \
 			 builtins/echo.c builtins/cd.c \

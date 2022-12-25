@@ -33,15 +33,15 @@ char		*ft_strdup(const char *s1)
 	return (res);
 }
 
-size_t		ft_strlen(char *str)
-{
-	size_t	len;
+// size_t		ft_strlen(char *str)
+// {
+// 	size_t	len;
 
-	len = 0;
-	while (str[len])
-		len++;
-	return (len);
-}
+// 	len = 0;
+// 	while (str[len])
+// 		len++;
+// 	return (len);
+// }
 
 char		*ft_strchr(const char *str, int c)
 {
@@ -54,33 +54,33 @@ char		*ft_strchr(const char *str, int c)
 	return ((char *)str);
 }
 
-char		*ft_substr(char const *s, unsigned int start, size_t len)
-{
-	char	*res;
-	int		cpy;
-	size_t	lalen;
+// char		*ft_substr(char const *s, unsigned int start, size_t len)
+// {
+// 	char	*res;
+// 	int		cpy;
+// 	size_t	lalen;
 
-	if (s == NULL || start < 0)
-		return (NULL);
-	lalen = ft_strlen((char *)s);
-	if (start >= lalen)
-		len = 0;
-	else
-		len = lalen - start < len ? lalen - start : len;
-	res = (char *)malloc((len + 1) * sizeof(char));
-	if (res == 0)
-		return (NULL);
-	cpy = 0;
-	while (len)
-	{
-		res[cpy] = s[start];
-		cpy++;
-		start++;
-		len--;
-	}
-	res[cpy] = '\0';
-	return (res);
-}
+// 	if (s == NULL || start < 0)
+// 		return (NULL);
+// 	lalen = ft_strlen((char *)s);
+// 	if (start >= lalen)
+// 		len = 0;
+// 	else
+// 		len = lalen - start < len ? lalen - start : len;
+// 	res = (char *)malloc((len + 1) * sizeof(char));
+// 	if (res == 0)
+// 		return (NULL);
+// 	cpy = 0;
+// 	while (len)
+// 	{
+// 		res[cpy] = s[start];
+// 		cpy++;
+// 		start++;
+// 		len--;
+// 	}
+// 	res[cpy] = '\0';
+// 	return (res);
+// }
 
 char		*ft_strjoin(char const *s1, char const *s2)
 {

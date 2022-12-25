@@ -13,14 +13,15 @@
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 # define MAX_FD 1024
+# define BUFFER_SIZE 1
 # include <stdlib.h>
 # include <unistd.h>
 
 int			get_next_line(int fd, char **line);
 char		*ft_strdup(const char *s1);
-char		*ft_substr(char const *s, unsigned int start, size_t len);
+char		*ft_substr(char const *s, unsigned int start, int len);
 char		*ft_strjoin(char const *s1, char const *s2);
 char		*ft_strchr(const char *str, int c);
-size_t		ft_strlen(char *str);
+size_t		ft_strlen(const char *str);
 
 #endif

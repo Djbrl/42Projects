@@ -22,6 +22,7 @@
 # include <sys/wait.h>
 # include <signal.h>
 # include "../libft/libft.h"
+# include "../src/get_next_line/get_next_line.h"
 # include <string.h>
 # include <errno.h>
 # include <limits.h>
