@@ -29,7 +29,9 @@ SRC_OTHER := main.c display.c exec.c init.c free.c envp.c expr.c\
 			 utils/list_utils.c utils/expr_utils.c \
 			 utils/ftn_utils.c utils/utils.c \
 			 \
-			 pipex/pipe.c pipex/pipe_utils.c \
+			 pipes/pipe.c pipes/pipe_utils.c \
+			 \
+			 redirections/redirections.c redirections/redirections_utils.c \
 			 \
 			 builtins/echo_runner.c builtins/export_runner.c \
 			 builtins/other.c builtins/export.c builtins/unset.c \

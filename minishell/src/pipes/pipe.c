@@ -20,11 +20,9 @@ static void	check_paths(t_msh *msh, char **cmd, char *arg)
 	int		status;
 
 	i = 0;
-
 	char **res = ft_split(arg, '>');
 	char **re = ft_split(res[0], ' ');
 	free_split(res);
-
 	status = access(cmd[0], X_OK);
 	while (msh->paths[i])
 	{
@@ -38,33 +36,6 @@ static void	check_paths(t_msh *msh, char **cmd, char *arg)
 		free(tmp);
 		free(path);
 	}
-}
-
-static void apply_redirections(t_expr *cur)
-{
-	int		i;
-	char	**tmp;
-	int		fd;
-	int		j;
-
-	j = 1;
-	i = 0;
-	fd = -1;
-	tmp = ft_split_charset(cur->data, " >");
-	while (cur->data[i])
-	{
-		if (cur->data[i] == '>')
-		{
-			while (tmp[j])
-			{
-				fd = open(tmp[j], O_RDWR | O_CREAT, 0644);
-				j++;
-			}
-			cur->fd_out = fd;
-		}
-		i++;
-	}
-	free_split(tmp);
 }
 
 static void	execute_commands(t_expr **curr_command, t_msh *msh)

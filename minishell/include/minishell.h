@@ -148,4 +148,9 @@ int		init_fds(t_expr **commands, t_expr *prev);
 void	close_fds(t_expr **curr_command);
 int		connect_fds(t_expr **curr_command, t_expr *commands);
 
+/*
+** REDIRECTIONS
+*/
+void	apply_redirections(t_expr *cur);
+
 #endif
