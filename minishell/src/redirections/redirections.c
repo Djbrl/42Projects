@@ -39,14 +39,24 @@ static void	input_redirection(char **field, int mode, int *fd_in)
 	int		j;
 	int		fd;
 	char	**expr;
+	char	*tmp;
 
 	j = 1;
 	fd = -1;
+	tmp = NULL;
 	while (field[j])
 	{
 		expr = ft_split(field[j], ' ');
 		if (mode == 1)
 			fd = open(expr[0], O_RDONLY);
+		if (mode == 2)
+			while(1)
+			{
+				get_next_line(0, &tmp);
+				if (ft_strncmp(tmp, expr[0], ft_strlen(tmp)) == 0)
+					break;
+				free(tmp);
+			}
 		free_split(expr);
 		j++;
 	}
@@ -68,8 +78,8 @@ void	apply_redirections(char *expr, int *fd_in, int *fd_out)
 			output_redirection(ft_split_charset(expr, ">"), 1, fd_out);
 		if (ft_strncmp(redirs[i], ">>", ft_strlen(redirs[i])) == 0)
 			output_redirection(ft_split_charset(expr, ">"), 2, fd_out);
-		// if (ft_strncmp(redirs[i], "<<", ft_strlen(redirs[i])) == 0)
-		// 	input_redirection(field, cur, 2);
+		if (ft_strncmp(redirs[i], "<<", ft_strlen(redirs[i])) == 0)
+			input_redirection(ft_split_charset(expr, "<<"), 2, fd_in);
 		if (ft_strncmp(redirs[i], "<", ft_strlen(redirs[i])) == 0)
 			input_redirection(ft_split_charset(expr, "<"), 1, fd_in);
 		i++;
