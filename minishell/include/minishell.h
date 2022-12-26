@@ -22,7 +22,7 @@
 # include <sys/wait.h>
 # include <signal.h>
 # include "../libft/libft.h"
-# include "../src/get_next_line/get_next_line.h"
+# include "../src/gnl/get_next_line.h"
 # include <string.h>
 # include <errno.h>
 # include <limits.h>
@@ -152,6 +152,6 @@ int		connect_fds(t_expr **curr_command, t_expr *commands);
 /*
 ** REDIRECTIONS
 */
-void	apply_redirections(t_expr *cur);
+void	apply_redirections(char *expr, int *fd_in, int *fd_out);
 
 #endif

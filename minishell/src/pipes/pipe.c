@@ -20,7 +20,7 @@ static void	check_paths(t_msh *msh, char **cmd, char *arg)
 	int		status;
 
 	i = 0;
-	char **res = ft_split(arg, '>');
+	char **res = ft_split_charset(arg, "<>");
 	char **re = ft_split(res[0], ' ');
 	free_split(res);
 	status = access(cmd[0], X_OK);
@@ -44,7 +44,7 @@ static void	execute_commands(t_expr **curr_command, t_msh *msh)
 	char	**cmd;
 
 	cur = *curr_command;
-	apply_redirections(cur);
+	apply_redirections(cur->data, &cur->fd_in, &cur->fd_out);
 	if (cur->fd_in != 0)
 	{
 		dup2(cur->fd_in, 0);
@@ -92,7 +92,6 @@ int	pipe_exec(t_msh *msh)
 	commands = msh->exp->next;
 	if (init_fds(&commands, prev) == -1)
 		return (-1);
-	//check if commands are executable here, if yes, give paths to multipipe and exec
 	status = execute_multi_pipe(commands, msh);
 	return (status);
 }

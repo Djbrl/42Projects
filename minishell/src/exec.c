@@ -25,13 +25,26 @@ static int	exec_env(t_msh *msh)
 	status = access(msh->tokens[0], X_OK & F_OK);
 	if (msh->exp == NULL || expr_len(msh->exp) == 1)
 	{
+		int in = -1, out = -1;
+		apply_redirections(msh->prompt, &in, &out);
+		char **tmp = ft_split_charset(msh->prompt, "<>");
+		char **expr = ft_split(tmp[0], ' ');
+		free_split(tmp);
+		if (in != -1)
+		{
+			dup2(in, 0);
+		}
+		if (out != -1)
+		{
+			dup2(out, 1);
+		}
 		while (msh->paths[i])
 		{
 			if (status == 0)
-				execve(msh->tokens[0], msh->tokens, msh->envp);
+				execve(expr[0], expr, msh->envp);
 			cmd = ft_strjoin(msh->paths[i++], "/");
-			path = ft_strjoin(cmd, msh->tokens[0]);
-			execve(path, msh->tokens, msh->envp);
+			path = ft_strjoin(cmd, expr[0]);
+			execve(path, expr, msh->envp);
 			free(cmd);
 			free(path);
 		}
