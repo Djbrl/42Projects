@@ -86,6 +86,8 @@ void	exit_shell(t_msh *msh)
 		free(msh->exp->data);
 		free(msh->exp);
 	}
-	// clear_history();
 	exit(exit_status);
 }
+/**
+** clear_history();
+**/

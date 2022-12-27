@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-static void	check_paths(t_msh *msh, char **cmd, char *arg)
+static void	exec_paths(t_msh *msh, char **re, char **cmd)
 {
 	char	*path;
 	char	*tmp;
@@ -20,9 +20,6 @@ static void	check_paths(t_msh *msh, char **cmd, char *arg)
 	int		status;
 
 	i = 0;
-	char **res = ft_split_charset(arg, "<>");
-	char **re = ft_split(res[0], ' ');
-	free_split(res);
 	status = access(cmd[0], X_OK);
 	while (msh->paths[i])
 	{
@@ -36,6 +33,22 @@ static void	check_paths(t_msh *msh, char **cmd, char *arg)
 		free(tmp);
 		free(path);
 	}
+}
+
+/*
+** if (is_builtin(cmd[0], msh) >= 0)
+**	 msh->cmd.ptr[is_builtin(cmd[0], msh)](msh->env, msh);
+** else
+*/
+static void	check_paths(t_msh *msh, char **cmd, char *arg)
+{
+	char	**res;
+	char	**re;
+
+	res = ft_split_charset(arg, "<>");
+	re = ft_split(res[0], ' ');
+	free_split(res);
+	exec_paths(msh, re, cmd);
 }
 
 static void	execute_commands(t_expr **curr_command, t_msh *msh)

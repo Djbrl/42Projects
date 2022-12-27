@@ -22,7 +22,6 @@
 # include <sys/wait.h>
 # include <signal.h>
 # include "../libft/libft.h"
-# include "../src/gnl/get_next_line.h"
 # include <string.h>
 # include <errno.h>
 # include <limits.h>
@@ -43,6 +42,7 @@
 # define STATUS_RESET 0
 # define CTRL_C_EXIT 2
 # define CTRL_D_SIGNAL 0
+# define BUFFER_SIZE 1
 
 extern int				g_status;
 typedef struct s_msh	t_msh;
@@ -137,6 +137,7 @@ void	free_expr(t_msh **msh);
 char	*expand_var(t_msh *msh, char *var);
 void	free_split(char **array);
 void	flush_buffer(t_msh *msh);
+int		get_next_line(int fd, char **line);
 int		update_exit_status(t_msh *msh, int status);
 int		is_builtin(char *s, t_msh *msh);
 char	**ft_split_charset(const char *s, const char *set);

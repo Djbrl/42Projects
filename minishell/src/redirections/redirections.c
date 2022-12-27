@@ -34,29 +34,35 @@ static void	output_redirection(char **field, int mode, int *fd_out)
 	free_split(field);
 }
 
+static void	heredoc(char *expr)
+{
+	char	*tmp;
+
+	tmp = NULL;
+	while (1)
+	{
+		get_next_line(0, &tmp);
+		if (ft_strncmp(tmp, expr, ft_strlen(tmp)) == 0)
+			break ;
+		free(tmp);
+	}
+}
+
 static void	input_redirection(char **field, int mode, int *fd_in)
 {
 	int		j;
 	int		fd;
 	char	**expr;
-	char	*tmp;
 
 	j = 1;
 	fd = -1;
-	tmp = NULL;
 	while (field[j])
 	{
 		expr = ft_split(field[j], ' ');
 		if (mode == 1)
 			fd = open(expr[0], O_RDONLY);
 		if (mode == 2)
-			while(1)
-			{
-				get_next_line(0, &tmp);
-				if (ft_strncmp(tmp, expr[0], ft_strlen(tmp)) == 0)
-					break;
-				free(tmp);
-			}
+			heredoc(expr[0]);
 		free_split(expr);
 		j++;
 	}

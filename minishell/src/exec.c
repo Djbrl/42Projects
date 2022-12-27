@@ -12,43 +12,59 @@
 
 #include "minishell.h"
 
-static int	exec_env(t_msh *msh)
+static char	**check_redirections(t_msh *msh)
+{
+	int		in;
+	int		out;
+	char	**expr;
+	char	**tmp;
+
+	in = -1;
+	out = -1;
+	tmp = ft_split_charset(msh->prompt, "<>");
+	expr = ft_split(tmp[0], ' ');
+	apply_redirections(msh->prompt, &in, &out);
+	free_split(tmp);
+	if (in != -1)
+	{
+		dup2(in, 0);
+	}
+	if (out != -1)
+	{
+		dup2(out, 1);
+	}
+	return (expr);
+}
+
+static void	exec_path(t_msh *msh, char **expr)
 {
 	int		i;
 	char	*cmd;
 	char	*path;
+
+	i = 0;
+	while (msh->paths[i])
+	{
+		if (access(msh->tokens[0], X_OK & F_OK) == 0)
+			execve(expr[0], expr, msh->envp);
+		cmd = ft_strjoin(msh->paths[i++], "/");
+		path = ft_strjoin(cmd, expr[0]);
+		execve(path, expr, msh->envp);
+		free(cmd);
+		free(path);
+	}
+}
+
+static int	exec_env(t_msh *msh)
+{
+	char	**expr;
 	int		status;
 
 	if (!msh->paths)
 		return (-1);
-	i = 0;
-	status = access(msh->tokens[0], X_OK & F_OK);
+	status = 0;
 	if (msh->exp == NULL || expr_len(msh->exp) == 1)
-	{
-		int in = -1, out = -1;
-		apply_redirections(msh->prompt, &in, &out);
-		char **tmp = ft_split_charset(msh->prompt, "<>");
-		char **expr = ft_split(tmp[0], ' ');
-		free_split(tmp);
-		if (in != -1)
-		{
-			dup2(in, 0);
-		}
-		if (out != -1)
-		{
-			dup2(out, 1);
-		}
-		while (msh->paths[i])
-		{
-			if (status == 0)
-				execve(expr[0], expr, msh->envp);
-			cmd = ft_strjoin(msh->paths[i++], "/");
-			path = ft_strjoin(cmd, expr[0]);
-			execve(path, expr, msh->envp);
-			free(cmd);
-			free(path);
-		}
-	}
+		exec_path(msh, );
 	else
 		status = pipe_exec(msh);
 	return (status);
