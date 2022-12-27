@@ -57,14 +57,13 @@ static void	exec_path(t_msh *msh, char **expr)
 
 static int	exec_env(t_msh *msh)
 {
-	char	**expr;
 	int		status;
 
 	if (!msh->paths)
 		return (-1);
 	status = 0;
 	if (msh->exp == NULL || expr_len(msh->exp) == 1)
-		exec_path(msh, );
+		exec_path(msh, check_redirections(msh));
 	else
 		status = pipe_exec(msh);
 	return (status);
