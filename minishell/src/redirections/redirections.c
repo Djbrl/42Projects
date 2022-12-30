@@ -84,8 +84,8 @@ void	apply_redirections(char *expr, int *fd_in, int *fd_out)
 			output_redirection(ft_split_charset(expr, ">"), 1, fd_out);
 		if (ft_strncmp(redirs[i], ">>", ft_strlen(redirs[i])) == 0)
 			output_redirection(ft_split_charset(expr, ">"), 2, fd_out);
-		if (ft_strncmp(redirs[i], "<<", ft_strlen(redirs[i])) == 0)
-			input_redirection(ft_split_charset(expr, "<<"), 2, fd_in);
+		// if (ft_strncmp(redirs[i], "<<", ft_strlen(redirs[i])) == 0)
+		// 	input_redirection(ft_split_charset(expr, "<<"), 2, fd_in);
 		if (ft_strncmp(redirs[i], "<", ft_strlen(redirs[i])) == 0)
 			input_redirection(ft_split_charset(expr, "<"), 1, fd_in);
 		i++;
