@@ -33,6 +33,7 @@ void	display_cmd_error(char *cmd, char *error, char **args)
 {
 	if (!ft_strncmp(error, PATH_ERROR, ft_strlen(error)))
 	{
+		dprintf(1, "minishell: %s: No such file or directory\n", cmd);
 		ft_putnstr("minishell: ", cmd, ": ", args[1]);
 		ft_putstr(error);
 	}

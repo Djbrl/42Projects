@@ -26,13 +26,9 @@ static char	**check_redirections(t_msh *msh)
 	apply_redirections(msh->prompt, &in, &out);
 	free_split(tmp);
 	if (in != -1)
-	{
 		dup2(in, 0);
-	}
 	if (out != -1)
-	{
 		dup2(out, 1);
-	}
 	return (expr);
 }
 
@@ -49,10 +45,13 @@ static void	exec_path(t_msh *msh, char **expr)
 			execve(expr[0], expr, msh->envp);
 		cmd = ft_strjoin(msh->paths[i++], "/");
 		path = ft_strjoin(cmd, expr[0]);
-		execve(path, expr, msh->envp);
+		if (access(path, X_OK & F_OK) == 0)
+			execve(path, expr, msh->envp);
 		free(cmd);
 		free(path);
 	}
+	display_cmd_error(expr[0], PATH_ERROR, expr);
+	exit(EXIT_FAILURE);
 }
 
 static int	exec_env(t_msh *msh)
@@ -63,6 +62,8 @@ static int	exec_env(t_msh *msh)
 		return (-1);
 	status = 0;
 	if (msh->exp == NULL || expr_len(msh->exp) == 1)
+	//check if command can be executed, if not return -1
+	//else, execute command
 		exec_path(msh, check_redirections(msh));
 	else
 		status = pipe_exec(msh);

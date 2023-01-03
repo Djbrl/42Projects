@@ -141,6 +141,7 @@ int		get_next_line(int fd, char **line);
 int		update_exit_status(t_msh *msh, int status);
 int		is_builtin(char *s, t_msh *msh);
 char	**ft_split_charset(const char *s, const char *set);
+char	*remove_spaces(const char* str);
 
 /*
 ** PIPE

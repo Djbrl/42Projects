@@ -51,3 +51,27 @@ int	update_exit_status(t_msh *msh, int status)
 	free(tmp);
 	return (status);
 }
+
+char* remove_spaces(const char* str) {
+	int	j;
+	int	i;
+	int	n;
+	char	*res;
+
+	i = 0;
+	j = 0;
+	if (str == NULL) {
+		return NULL;
+	}
+	n = strlen(str);
+	res = malloc(n + 1);
+	while (i < n) {
+		if (str[i] != ' ') {
+			res[j] = str[i];
+			j++;
+		}
+		i++;
+	}
+	res[j] = '\0';
+	return res;
+}

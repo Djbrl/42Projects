@@ -48,7 +48,32 @@ static void	heredoc(char *expr)
 	}
 }
 
-static void	input_redirection(char **field, int mode, int *fd_in)
+static void	check_paths(char *prompt)
+{
+	char	**redir;
+	char	*expr;
+	int		i;
+
+	i = 1;
+	redir = ft_split_charset(prompt, "<>");
+	while (redir[i])
+	{
+		expr = remove_spaces(redir[i]);
+		if (access(expr, F_OK) == -1)
+		{
+			display_cmd_error(redir[i], PATH_ERROR, NULL);
+			free(expr);
+			free_split(redir);
+			exit(EXIT_FAILURE);
+		}
+		free(expr);
+		i++;
+	}
+	free_split(redir);
+}
+
+
+static void	input_redirection(char **field, int mode, int *fd_in, char *prompt)
 {
 	int		j;
 	int		fd;
@@ -56,6 +81,7 @@ static void	input_redirection(char **field, int mode, int *fd_in)
 
 	j = 1;
 	fd = -1;
+	check_paths(prompt);
 	while (field[j])
 	{
 		expr = ft_split(field[j], ' ');
@@ -80,14 +106,16 @@ void	apply_redirections(char *expr, int *fd_in, int *fd_out)
 	redirs = ft_split(expr, ' ');
 	while (redirs[i])
 	{
-		if (ft_strncmp(redirs[i], ">", ft_strlen(redirs[i])) == 0)
-			output_redirection(ft_split_charset(expr, ">"), 1, fd_out);
-		if (ft_strncmp(redirs[i], ">>", ft_strlen(redirs[i])) == 0)
+		if (ft_strncmp(redirs[i], ">>", ft_strlen(">>")) == 0)
 			output_redirection(ft_split_charset(expr, ">"), 2, fd_out);
-		// if (ft_strncmp(redirs[i], "<<", ft_strlen(redirs[i])) == 0)
-		// 	input_redirection(ft_split_charset(expr, "<<"), 2, fd_in);
-		if (ft_strncmp(redirs[i], "<", ft_strlen(redirs[i])) == 0)
-			input_redirection(ft_split_charset(expr, "<"), 1, fd_in);
+		else if (ft_strncmp(redirs[i], ">", ft_strlen(">")) == 0)
+			output_redirection(ft_split_charset(expr, ">"), 1, fd_out);
+		else if (ft_strncmp(redirs[i], "<<", ft_strlen("<<")) == 0)
+		 	input_redirection(ft_split_charset(expr, "<<"), 2, fd_in, expr);
+		else if (ft_strncmp(redirs[i], "<", ft_strlen("<")) == 0)
+			input_redirection(ft_split_charset(expr, "<"), 1, fd_in, expr);
+		else
+			(void)redirs;
 		i++;
 	}
 }
