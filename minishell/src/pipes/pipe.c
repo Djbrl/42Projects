@@ -20,6 +20,11 @@ static void	exec_paths(t_msh *msh, char **re, char **cmd)
 	int		status;
 
 	i = 0;
+	// if (is_builtin(cmd[0], msh) >= 0)
+	// {
+	// 	msh->cmd.ptr[is_builtin(cmd[0], msh)](msh->env, msh);
+	// 	return ;
+	// }
 	status = access(cmd[0], X_OK);
 	while (msh->paths[i])
 	{
@@ -35,11 +40,6 @@ static void	exec_paths(t_msh *msh, char **re, char **cmd)
 	}
 }
 
-/*
-** if (is_builtin(cmd[0], msh) >= 0)
-**	 msh->cmd.ptr[is_builtin(cmd[0], msh)](msh->env, msh);
-** else
-*/
 static void	check_paths(t_msh *msh, char **cmd, char *arg)
 {
 	char	**res;
