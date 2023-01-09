@@ -12,21 +12,6 @@
 
 #include "minishell.h"
 
-// int	add_var_to_expr(t_expr *expr, char *data)
-// {
-// 	t_expr	*new;
-
-// 	new = expr;
-// 	if (!expr || !data)
-// 		return (0);
-// 	while (new->next != NULL)
-// 		new = new->next;
-// 	new->next = malloc(sizeof(t_expr));
-// 	new->next->data = ft_strdup(data);
-// 	new->next->next = NULL;
-// 	return (1);
-// }
-
 int	expr_len(t_expr *expr)
 {
 	t_expr	*cur;
@@ -52,28 +37,27 @@ int	update_exit_status(t_msh *msh, int status)
 	return (status);
 }
 
-char* remove_spaces(const char* str) {
-	int	j;
-	int	i;
-	int	n;
+char	*remove_spaces(const char *str)
+{
+	int		j;
+	int		i;
+	int		n;
 	char	*res;
 
 	i = 0;
 	j = 0;
-	if (str == NULL) {
-		return NULL;
-	}
+	if (str == NULL)
+		return (NULL);
 	n = strlen(str);
 	res = malloc(n + 1);
-	while (i < n) {
-		if (str[i] != ' ') {
-			res[j] = str[i];
-			j++;
-		}
+	while (i < n)
+	{
+		if (str[i] != ' ')
+			res[j++] = str[i];
 		i++;
 	}
 	res[j] = '\0';
-	return res;
+	return (res);
 }
 
 void	signal_handler(int sig_n)

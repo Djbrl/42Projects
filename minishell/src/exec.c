@@ -54,6 +54,10 @@ static void	exec_path(t_msh *msh, char **expr)
 	exit(EXIT_FAILURE);
 }
 
+/*
+**	check if command can be executed, if not return -1
+**	else, execute command
+*/
 static int	exec_env(t_msh *msh)
 {
 	int		status;
@@ -62,40 +66,47 @@ static int	exec_env(t_msh *msh)
 		return (-1);
 	status = 0;
 	if (msh->exp == NULL || expr_len(msh->exp) == 1)
-	//check if command can be executed, if not return -1
-	//else, execute command
 		exec_path(msh, check_redirections(msh));
 	else
 		status = pipe_exec(msh);
 	return (status);
 }
 
+void	exec_single_cmd(t_msh *msh)
+{
+	int	in;
+	int	out;
+	int	saved_stdin;
+	int	saved_stdout;
+
+	in = -1;
+	out = -1;
+	saved_stdin = dup(0);
+	saved_stdout = dup(1);
+	apply_redirections(msh->prompt, &in, &out);
+	if (in != -1)
+	{
+		dup2(in, 0);
+		close(in);
+	}
+	if (out != -1)
+	{
+		dup2(out, 1);
+		close(out);
+	}
+	msh->cmd.ptr[is_builtin(msh->tokens[0], msh)](msh->env, msh);
+	dup2(saved_stdin, 0);
+	dup2(saved_stdout, 1);
+	close(saved_stdin);
+	close(saved_stdout);
+}
+
 void	evaluate_commands(t_msh *msh)
 {
 	pid_t	pid;
-	//put into a function first if
+
 	if (is_builtin(msh->tokens[0], msh) >= 0)
-	{
-		int in = -1, out = -1, saved_stdin = dup(0), saved_stdout = dup(0);
-		apply_redirections(msh->prompt, &in, &out);
-		saved_stdin = dup(0);
-		saved_stdout = dup(1);
-		if (in != -1)
-		{
-			dup2(in, 0);
-			close(in);
-		}
-		if (out != -1)
-		{
-			dup2(out, 1);
-			close(out);
-		}
-		msh->cmd.ptr[is_builtin(msh->tokens[0], msh)](msh->env, msh);
-		dup2(saved_stdin, 0);
-		dup2(saved_stdout, 1);
-		close(saved_stdin);
-		close(saved_stdout);
-	}
+		exec_single_cmd(msh);
 	else
 	{
 		pid = fork();

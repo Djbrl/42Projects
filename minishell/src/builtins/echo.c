@@ -76,5 +76,6 @@ int	msh_echo(t_env_var *env, char *arg, t_msh *msh)
 	}
 	else
 		ft_putstr(arg);
+	free(arg);
 	return (0);
 }
