@@ -75,3 +75,14 @@ char* remove_spaces(const char* str) {
 	res[j] = '\0';
 	return res;
 }
+
+void	signal_handler(int sig_n)
+{
+	if (sig_n == SIGINT)
+	{
+		write(1, "\n", 1);
+		write(1, PROMPTLINE, ft_strlen(PROMPTLINE));
+	}
+	else
+		return ;
+}

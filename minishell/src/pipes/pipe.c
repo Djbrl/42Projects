@@ -20,23 +20,48 @@ static void	exec_paths(t_msh *msh, char **re, char **cmd)
 	int		status;
 
 	i = 0;
-	// if (is_builtin(cmd[0], msh) >= 0)
-	// {
-	// 	msh->cmd.ptr[is_builtin(cmd[0], msh)](msh->env, msh);
-	// 	return ;
-	// }
-	status = access(cmd[0], X_OK);
-	while (msh->paths[i])
+	if (is_builtin(msh->tokens[0], msh) >= 0)
 	{
-		if (status == 0)
-			execve(cmd[0], re, msh->envp);
-		tmp = ft_strjoin(msh->paths[i++], "/");
-		path = ft_strjoin(tmp, cmd[0]);
-		status = access(path, X_OK);
-		if (status == 0)
-			execve(path, re, msh->envp);
-		free(tmp);
-		free(path);
+		int in = -1, out = -1, saved_stdin = dup(0), saved_stdout = dup(0);
+		apply_redirections(msh->prompt, &in, &out);
+		saved_stdin = dup(0);
+		saved_stdout = dup(1);
+		if (in != -1)
+		{
+			dup2(in, 0);
+			close(in);
+		}
+		if (out != -1)
+		{
+			dup2(out, 1);
+			close(out);
+		}
+		msh->cmd.ptr[is_builtin(msh->tokens[0], msh)](msh->env, msh);
+		dup2(saved_stdin, 0);
+		dup2(saved_stdout, 1);
+		close(saved_stdin);
+		close(saved_stdout);
+	}
+	else
+	{
+		// if (is_builtin(cmd[0], msh) >= 0)
+		// {
+		// 	msh->cmd.ptr[is_builtin(cmd[0], msh)](msh->env, msh);
+		// 	return ;
+		// }
+		status = access(cmd[0], X_OK);
+		while (msh->paths[i])
+		{
+			if (status == 0)
+				execve(cmd[0], re, msh->envp);
+			tmp = ft_strjoin(msh->paths[i++], "/");
+			path = ft_strjoin(tmp, cmd[0]);
+			status = access(path, X_OK);
+			if (status == 0)
+				execve(path, re, msh->envp);
+			free(tmp);
+			free(path);
+		}
 	}
 }
 

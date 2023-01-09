@@ -21,33 +21,12 @@ static void ftn_echo_runner(t_msh **msh, t_env_var **var, int i)
     t_msh *m;
     t_env_var *v;
     char **tmp;
-    int in = -1, out = -1;
-    int saved_stdin, saved_stdout;
+    char **expr;
 
     m = *msh;
     v = *var;
     tmp = ft_split_charset(m->prompt, "<>");
-    apply_redirections(m->prompt, &in, &out);
-
-    // Save the current standard input and output file descriptors
-    saved_stdin = dup(0);
-    saved_stdout = dup(1);
-
-    if (in != -1)
-    {
-        // Redirect standard input to "in"
-        dup2(in, 0);
-        close(in);
-    }
-
-    if (out != -1)
-    {
-        // Redirect standard output to "out"
-        dup2(out, 1);
-        close(out);
-    }
-
-    char **expr = ft_split(tmp[0], ' ');
+	expr = ft_split(tmp[0], ' ');
     free_split(tmp);
     i = 1;
     while (expr[i])
@@ -59,12 +38,6 @@ static void ftn_echo_runner(t_msh **msh, t_env_var **var, int i)
         i++;
     }
     write(1, "\n", 1);
-    // Restore the original standard input and output file descriptors
-    dup2(saved_stdin, 0);
-    dup2(saved_stdout, 1);
-    close(saved_stdin);
-    close(saved_stdout);
-
     free_split(expr);
 }
 
