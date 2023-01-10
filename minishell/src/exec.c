@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/27 03:15:12 by dsy               #+#    #+#             */
-/*   Updated: 2022/10/13 12:24:06 by dsy              ###   ########.fr       */
+/*   Updated: 2023/01/10 16:28:21 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static int	exec_env(t_msh *msh)
 	return (status);
 }
 
-void	exec_single_cmd(t_msh *msh)
+void	exec_builtin(t_msh *msh)
 {
 	int	in;
 	int	out;
@@ -106,7 +106,7 @@ void	evaluate_commands(t_msh *msh)
 	pid_t	pid;
 
 	if (is_builtin(msh->tokens[0], msh) >= 0)
-		exec_single_cmd(msh);
+		exec_builtin(msh);
 	else
 	{
 		pid = fork();

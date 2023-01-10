@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/27 02:59:57 by dsy               #+#    #+#             */
-/*   Updated: 2020/12/07 17:46:55 by user42           ###   ########.fr       */
+/*   Updated: 2023/01/10 16:29:24 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	display_cmd_error(char *cmd, char *error, char **args)
 {
 	if (!ft_strncmp(error, PATH_ERROR, ft_strlen(error)))
 	{
-		dprintf(1, "minishell: %s: No such file or directory\n", cmd);
 		ft_putnstr("minishell: ", cmd, ": ", args[1]);
 		ft_putstr(error);
 	}

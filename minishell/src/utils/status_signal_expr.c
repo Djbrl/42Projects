@@ -1,40 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expr_utils.c                                       :+:      :+:    :+:   */
+/*   status_signal_expr.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/14 00:15:15 by dsy               #+#    #+#             */
-/*   Updated: 2022/10/06 11:31:35 by dsy              ###   ########.fr       */
+/*   Updated: 2023/01/10 16:30:04 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	expr_len(t_expr *expr)
+void	signal_handler(int sig_n)
 {
-	t_expr	*cur;
-	int		i;
-
-	i = 0;
-	cur = expr;
-	while (cur)
+	if (sig_n == SIGINT)
 	{
-		cur = cur->next;
-		i++;
+		write(1, "\n", 1);
+		write(1, PROMPTLINE, ft_strlen(PROMPTLINE));
 	}
-	return (i);
-}
-
-int	update_exit_status(t_msh *msh, int status)
-{
-	char	*tmp;
-
-	tmp = ft_itoa(status);
-	add_var_to_env(msh->env, "?", tmp);
-	free(tmp);
-	return (status);
+	else
+		return ;
 }
 
 char	*remove_spaces(const char *str)
@@ -60,13 +46,27 @@ char	*remove_spaces(const char *str)
 	return (res);
 }
 
-void	signal_handler(int sig_n)
+int	expr_len(t_expr *expr)
 {
-	if (sig_n == SIGINT)
+	t_expr	*cur;
+	int		i;
+
+	i = 0;
+	cur = expr;
+	while (cur)
 	{
-		write(1, "\n", 1);
-		write(1, PROMPTLINE, ft_strlen(PROMPTLINE));
+		cur = cur->next;
+		i++;
 	}
-	else
-		return ;
+	return (i);
+}
+
+int	update_exit_status(t_msh *msh, int status)
+{
+	char	*tmp;
+
+	tmp = ft_itoa(status);
+	add_var_to_env(msh->env, "?", tmp);
+	free(tmp);
+	return (status);
 }

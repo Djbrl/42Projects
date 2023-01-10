@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:15:31 by dsy               #+#    #+#             */
-/*   Updated: 2020/12/07 18:10:42 by user42           ###   ########.fr       */
+/*   Updated: 2023/01/10 16:26:41 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,7 @@ int		connect_fds(t_expr **curr_command, t_expr *commands);
 /*
 ** REDIRECTIONS
 */
-void	exec_single_cmd(t_msh *msh);
+void	exec_builtin(t_msh *msh);
 void	apply_redirections(char *expr, int *fd_in, int *fd_out);
 
 #endif

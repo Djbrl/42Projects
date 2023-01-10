@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 18:40:28 by dsy               #+#    #+#             */
-/*   Updated: 2022/11/04 18:40:30 by dsy              ###   ########.fr       */
+/*   Updated: 2023/01/10 16:28:50 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,26 +17,27 @@ static void	exec_paths(t_msh *msh, char **re, char **cmd)
 	char	*path;
 	char	*tmp;
 	int		i;
-	int		status;
 
 	i = 0;
 	if (is_builtin(msh->tokens[0], msh) >= 0)
-		exec_single_cmd(msh);
+		exec_builtin(msh);
 	else
 	{
-		status = access(cmd[0], X_OK);
 		while (msh->paths[i])
 		{
-			if (status == 0)
+			if (access(cmd[0], X_OK) == 0)
 				execve(cmd[0], re, msh->envp);
 			tmp = ft_strjoin(msh->paths[i++], "/");
 			path = ft_strjoin(tmp, cmd[0]);
-			status = access(path, X_OK);
-			if (status == 0)
+			if (access(path, X_OK) == 0)
 				execve(path, re, msh->envp);
 			free(tmp);
 			free(path);
 		}
+		//reset FDs to standard on error
+		//fix display cmd format
+		//check exit status from forks
+		display_cmd_error(cmd[0], PATH_ERROR, cmd);
 	}
 }
 
@@ -49,6 +50,7 @@ static void	check_paths(t_msh *msh, char **cmd, char *arg)
 	re = ft_split(res[0], ' ');
 	free_split(res);
 	exec_paths(msh, re, cmd);
+	free_split(re);
 }
 
 static void	execute_commands(t_expr **curr_command, t_msh *msh)

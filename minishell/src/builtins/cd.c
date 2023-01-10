@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins_1.c                                       :+:      :+:    :+:   */
+/*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dsy <dsy@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/25 11:19:12 by dsy               #+#    #+#             */
-/*   Updated: 2020/10/26 14:55:24 by dsy              ###   ########.fr       */
+/*   Updated: 2023/01/10 16:27:15 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,31 @@ static int	ftn_msh_cd(t_msh **msh, char **path, int ret)
 /*
 ****************************STATIC FUNCTIONS****************************
 */
+
+char	*get_currentdir(t_msh *msh)
+{
+	char	*path;
+	char	cwd[1024];
+	int		i;
+	int		last_slash;
+
+	i = 0;
+	last_slash = 0;
+	path = ft_strdup(getcwd(cwd, sizeof(cwd)));
+	if (!path)
+	{
+		display_error(CWD_ERROR, msh);
+		return (NULL);
+	}
+	while (path[i])
+	{
+		if (path[i] == '/')
+			last_slash = i;
+		i++;
+	}
+	free(path);
+	return (ft_strdup(path + last_slash + 1));
+}
 
 int	msh_cd_runner(t_env_var *env, t_msh *msh)
 {

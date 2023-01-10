@@ -6,7 +6,7 @@
 #    By: dsy <marvin@42.fr>                         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/13 16:01:25 by dsy               #+#    #+#              #
-#    Updated: 2022/10/14 18:28:00 by dsy              ###   ########.fr        #
+#    Updated: 2023/01/10 16:26:53 by dsy              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,10 +24,11 @@ CFLAGS := -Wall -Wextra -Werror
 CPFLAGS := -g3#-lreadline
 PFLAGS := -Iinclude -Ilibft
 
-SRC_OTHER := main.c display.c exec.c init.c free.c envp.c expr.c\
+SRC_OTHER := main.c exec.c init.c envp.c expr.c\
 			 \
-			 utils/list_utils.c utils/expr_utils.c \
-			 utils/ftn_utils.c utils/utils.c utils/get_next_line.c\
+			 utils/list.c utils/status_signal_expr.c utils/free_exit.c \
+			 utils/split_charset.c utils/read_expand_builtin.c \
+			 utils/get_next_line.c utils/display.c \
 			 \
 			 pipes/pipe.c pipes/pipe_utils.c \
 			 \
