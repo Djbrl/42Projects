@@ -37,6 +37,8 @@ static void	exec_paths(t_msh *msh, char **re, char **cmd)
 		//reset FDs to standard on error
 		//fix display cmd format
 		//check exit status from forks
+		//handle multipie if builtin is first command
+		//handle heredoc
 		display_cmd_error(cmd[0], PATH_ERROR, cmd);
 	}
 }

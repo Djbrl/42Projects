@@ -94,6 +94,7 @@ void	exec_builtin(t_msh *msh)
 		dup2(out, 1);
 		close(out);
 	}
+	printf("executing builtin [%s]\n", msh->tokens[0]);
 	msh->cmd.ptr[is_builtin(msh->tokens[0], msh)](msh->env, msh);
 	dup2(saved_stdin, 0);
 	dup2(saved_stdout, 1);
@@ -105,7 +106,7 @@ void	evaluate_commands(t_msh *msh)
 {
 	pid_t	pid;
 
-	if (is_builtin(msh->tokens[0], msh) >= 0)
+	if (is_builtin(msh->tokens[0], msh) >= 0 && expr_len(msh->exp) == 1)
 		exec_builtin(msh);
 	else
 	{
