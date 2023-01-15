@@ -62,7 +62,13 @@ static void	execute_commands(t_expr **curr_command, t_msh *msh)
 	char	**cmd;
 
 	cur = *curr_command;
-	apply_redirections(cur->data, &cur->fd_in, &cur->fd_out);
+	char **expr = ft_split_charset(msh->prompt, "<>");
+	int i = 0;
+	while (expr[i])
+		i++;
+	if (i > 1)
+		apply_redirections(cur->data, &cur->fd_in, &cur->fd_out);
+	free_split(expr);
 	if (cur->fd_in != 0)
 	{
 		dup2(cur->fd_in, 0);
@@ -73,7 +79,6 @@ static void	execute_commands(t_expr **curr_command, t_msh *msh)
 		dup2(cur->fd_out, 1);
 		close(cur->fd_out);
 	}
-	printf("passing over [%s]\n", cur->data);
 	cmd = ft_split(cur->data, ' ');
 	check_paths(msh, cmd, cur->data);
 	free_split(cmd);
@@ -89,7 +94,6 @@ static int	execute_multi_pipe(t_expr *commands, t_msh *msh)
 	connect_fds(&curr, commands);
 	while (curr != NULL)
 	{
-		printf("current command %s\n", curr->data);
 		pid = fork();
 		if (pid == 0)
 			execute_commands(&curr, msh);

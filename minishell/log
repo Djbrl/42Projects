@@ -1,0 +1,142 @@
+8776  execve("./minishell", ["./minishell"], [/* 37 vars */]) = 0
+8776  brk(NULL)                         = 0x171000
+8776  uname({sysname="Linux", nodename="raspberrypi", ...}) = 0
+8776  access("/etc/ld.so.nohwcap", F_OK) = -1 ENOENT (No such file or directory)
+8776  mmap2(NULL, 12288, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x76f9c000
+8776  access("/etc/ld.so.preload", R_OK) = 0
+8776  open("/etc/ld.so.preload", O_RDONLY|O_CLOEXEC) = 3
+8776  fstat64(3, {st_mode=S_IFREG|0644, st_size=42, ...}) = 0
+8776  mmap2(NULL, 42, PROT_READ|PROT_WRITE, MAP_PRIVATE, 3, 0) = 0x76f9b000
+8776  close(3)                          = 0
+8776  open("/usr/lib/arm-linux-gnueabihf/libarmmem.so", O_RDONLY|O_CLOEXEC) = 3
+8776  read(3, "\177ELF\1\1\1\0\0\0\0\0\0\0\0\0\3\0(\0\1\0\0\0\210\5\0\0004\0\0\0"..., 512) = 512
+8776  lseek(3, 20868, SEEK_SET)         = 20868
+8776  read(3, "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 1000) = 1000
+8776  lseek(3, 20540, SEEK_SET)         = 20540
+8776  read(3, "A,\0\0\0aeabi\0\1\"\0\0\0\0056\0\6\6\10\1\t\1\n\3\f\1\22\4\24"..., 45) = 45
+8776  fstat64(3, {st_mode=S_IFREG|0644, st_size=21868, ...}) = 0
+8776  mmap2(NULL, 86080, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x76f59000
+8776  mprotect(0x76f5e000, 61440, PROT_NONE) = 0
+8776  mmap2(0x76f6d000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x4000) = 0x76f6d000
+8776  close(3)                          = 0
+8776  munmap(0x76f9b000, 42)            = 0
+8776  open("/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3
+8776  fstat64(3, {st_mode=S_IFREG|0644, st_size=82263, ...}) = 0
+8776  mmap2(NULL, 82263, PROT_READ, MAP_PRIVATE, 3, 0) = 0x76f44000
+8776  close(3)                          = 0
+8776  access("/etc/ld.so.nohwcap", F_OK) = -1 ENOENT (No such file or directory)
+8776  open("/lib/arm-linux-gnueabihf/libreadline.so.7", O_RDONLY|O_CLOEXEC) = 3
+8776  read(3, "\177ELF\1\1\1\0\0\0\0\0\0\0\0\0\3\0(\0\1\0\0\0\354\323\0\0004\0\0\0"..., 512) = 512
+8776  lseek(3, 239016, SEEK_SET)        = 239016
+8776  read(3, "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 1040) = 1040
+8776  lseek(3, 238680, SEEK_SET)        = 238680
+8776  read(3, "A,\0\0\0aeabi\0\1\"\0\0\0\0056\0\6\6\10\1\t\1\n\2\22\4\24\1\25"..., 45) = 45
+8776  fstat64(3, {st_mode=S_IFREG|0644, st_size=240056, ...}) = 0
+8776  mmap2(NULL, 309004, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x76ef8000
+8776  mprotect(0x76f2e000, 65536, PROT_NONE) = 0
+8776  mmap2(0x76f3e000, 20480, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x36000) = 0x76f3e000
+8776  mmap2(0x76f43000, 1804, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x76f43000
+8776  close(3)                          = 0
+8776  access("/etc/ld.so.nohwcap", F_OK) = -1 ENOENT (No such file or directory)
+8776  open("/lib/arm-linux-gnueabihf/libc.so.6", O_RDONLY|O_CLOEXEC) = 3
+8776  read(3, "\177ELF\1\1\1\0\0\0\0\0\0\0\0\0\3\0(\0\1\0\0\0@h\1\0004\0\0\0"..., 512) = 512
+8776  lseek(3, 1231820, SEEK_SET)       = 1231820
+8776  read(3, "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 2880) = 2880
+8776  lseek(3, 1228284, SEEK_SET)       = 1228284
+8776  read(3, "A.\0\0\0aeabi\0\1$\0\0\0\0056\0\6\6\10\1\t\1\n\2\22\4\23\1\24"..., 47) = 47
+8776  fstat64(3, {st_mode=S_IFREG|0755, st_size=1234700, ...}) = 0
+8776  mmap2(NULL, 1303872, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x76db9000
+8776  mprotect(0x76ee2000, 65536, PROT_NONE) = 0
+8776  mmap2(0x76ef2000, 12288, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x129000) = 0x76ef2000
+8776  mmap2(0x76ef5000, 9536, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x76ef5000
+8776  close(3)                          = 0
+8776  access("/etc/ld.so.nohwcap", F_OK) = -1 ENOENT (No such file or directory)
+8776  open("/lib/arm-linux-gnueabihf/libtinfo.so.5", O_RDONLY|O_CLOEXEC) = 3
+8776  read(3, "\177ELF\1\1\1\0\0\0\0\0\0\0\0\0\3\0(\0\1\0\0\0\354`\0\0004\0\0\0"..., 512) = 512
+8776  lseek(3, 123728, SEEK_SET)        = 123728
+8776  read(3, "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 1080) = 1080
+8776  lseek(3, 123380, SEEK_SET)        = 123380
+8776  read(3, "A,\0\0\0aeabi\0\1\"\0\0\0\0056\0\6\6\10\1\t\1\n\2\22\4\24\1\25"..., 45) = 45
+8776  fstat64(3, {st_mode=S_IFREG|0644, st_size=124808, ...}) = 0
+8776  mmap2(NULL, 190044, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x76d8a000
+8776  mprotect(0x76da6000, 65536, PROT_NONE) = 0
+8776  mmap2(0x76db6000, 12288, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1c000) = 0x76db6000
+8776  close(3)                          = 0
+8776  mmap2(NULL, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x76f9a000
+8776  set_tls(0x76f9a4c0, 0x76f9ab98, 0x76fa0050, 0x76f9a4c0, 0x76fa0050) = 0
+8776  mprotect(0x76ef2000, 8192, PROT_READ) = 0
+8776  mprotect(0x76db6000, 8192, PROT_READ) = 0
+8776  mprotect(0x76f3e000, 4096, PROT_READ) = 0
+8776  mprotect(0x76f59000, 20480, PROT_READ|PROT_WRITE) = 0
+8776  mprotect(0x76f59000, 20480, PROT_READ|PROT_EXEC) = 0
+8776  cacheflush(0x76f59000, 0x76f5e000, 0, 0x15, 0) = 0
+8776  mprotect(0x76f6d000, 4096, PROT_READ) = 0
+8776  mprotect(0x26000, 4096, PROT_READ) = 0
+8776  mprotect(0x76f9f000, 4096, PROT_READ) = 0
+8776  munmap(0x76f44000, 82263)         = 0
+8776  brk(NULL)                         = 0x171000
+8776  brk(0x192000)                     = 0x192000
+8776  rt_sigaction(SIGINT, {sa_handler=0x11b54, sa_mask=[INT], sa_flags=SA_RESTORER|SA_RESTART, sa_restorer=0x76de56b0}, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+8776  rt_sigaction(SIGQUIT, {sa_handler=0x11b54, sa_mask=[QUIT], sa_flags=SA_RESTORER|SA_RESTART, sa_restorer=0x76de56b0}, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+8776  write(1, "minishell-4.2$ > ", 17) = 17
+8776  read(0, "echo hi | wc\n", 4096)   = 13
+8776  clone(child_stack=NULL, flags=CLONE_CHILD_CLEARTID|CLONE_CHILD_SETTID|SIGCHLD, child_tidptr=0x76f9a068) = 8802
+8776  wait4(8802,  <unfinished ...>
+8802  pipe([3, 4])                      = 0
+8802  pipe([5, 6])                      = 0
+8802  clone(child_stack=NULL, flags=CLONE_CHILD_CLEARTID|CLONE_CHILD_SETTID|SIGCHLD, child_tidptr=0x76f9a068) = 8803
+8802  close(6)                          = 0
+8802  clone( <unfinished ...>
+8803  dup2(6, 1)                        = 1
+8803  close(6)                          = 0
+8802  <... clone resumed> child_stack=NULL, flags=CLONE_CHILD_CLEARTID|CLONE_CHILD_SETTID|SIGCHLD, child_tidptr=0x76f9a068) = 8804
+8803  fstat64(1,  <unfinished ...>
+8802  close(5)                          = 0
+8803  <... fstat64 resumed> {st_mode=S_IFIFO|0600, st_size=0, ...}) = 0
+8802  wait4(8804,  <unfinished ...>
+8804  dup2(5, 0 <unfinished ...>
+8803  write(1, "hi", 2 <unfinished ...>
+8804  <... dup2 resumed> )              = 0
+8803  <... write resumed> )             = 2
+8804  close(5 <unfinished ...>
+8803  write(1, "\n", 1 <unfinished ...>
+8804  <... close resumed> )             = 0
+8803  <... write resumed> )             = 1
+8803  close(6 <unfinished ...>
+8804  fstat64(1,  <unfinished ...>
+8803  <... close resumed> )             = -1 EBADF (Bad file descriptor)
+8804  <... fstat64 resumed> {st_mode=S_IFCHR|0620, st_rdev=makedev(136, 0), ...}) = 0
+8803  clone( <unfinished ...>
+8804  write(1, "[hi]\n", 5)             = 5
+8804  write(1, "hi", 2 <unfinished ...>
+8803  <... clone resumed> child_stack=NULL, flags=CLONE_CHILD_CLEARTID|CLONE_CHILD_SETTID|SIGCHLD, child_tidptr=0x76f9a068) = 8805
+8803  close(5)                          = 0
+8803  wait4(8805,  <unfinished ...>
+8804  <... write resumed> )             = 2
+8804  write(1, "\n", 1 <unfinished ...>
+8805  --- SIGSEGV {si_signo=SIGSEGV, si_code=SEGV_MAPERR, si_addr=NULL} ---
+8804  <... write resumed> )             = 1
+8804  close(5 <unfinished ...>
+8805  +++ killed by SIGSEGV +++
+8804  <... close resumed> )             = -1 EBADF (Bad file descriptor)
+8803  <... wait4 resumed> [{WIFSIGNALED(s) && WTERMSIG(s) == SIGSEGV}], WSTOPPED, NULL) = 8805
+8804  wait4(0,  <unfinished ...>
+8803  --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_KILLED, si_pid=8805, si_uid=1000, si_status=SIGSEGV, si_utime=0, si_stime=0} ---
+8804  <... wait4 resumed> 0x27070, WSTOPPED, NULL) = -1 ECHILD (No child processes)
+8803  write(1, "[hi]\n", 5 <unfinished ...>
+8804  exit_group(1 <unfinished ...>
+8803  <... write resumed> )             = 5
+8804  <... exit_group resumed>)         = ?
+8803  exit_group(1)                     = ?
+8804  +++ exited with 1 +++
+8803  +++ exited with 1 +++
+8802  <... wait4 resumed> [{WIFEXITED(s) && WEXITSTATUS(s) == 1}], WSTOPPED, NULL) = 8804
+8802  --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=8804, si_uid=1000, si_status=1, si_utime=0, si_stime=0} ---
+8802  exit_group(1)                     = ?
+8802  +++ exited with 1 +++
+8776  <... wait4 resumed> [{WIFEXITED(s) && WEXITSTATUS(s) == 1}], WSTOPPED, NULL) = 8802
+8776  --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=8802, si_uid=1000, si_status=1, si_utime=0, si_stime=1} ---
+8776  write(1, "minishell-4.2$ > ", 17) = 17
+8776  read(0, "exit\n", 4096)           = 5
+8776  exit_group(256)                   = ?
+8776  +++ exited with 0 +++

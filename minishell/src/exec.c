@@ -94,7 +94,6 @@ void	exec_builtin(t_msh *msh)
 	// 	dup2(out, 1);
 	// 	close(out);
 	// }
-	printf("executing builtin [%s]\n", msh->tokens[0]);
 	msh->cmd.ptr[is_builtin(msh->tokens[0], msh)](msh->env, msh);
 	// dup2(saved_stdin, 0);
 	// dup2(saved_stdout, 1);
