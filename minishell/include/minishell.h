@@ -157,4 +157,18 @@ int		connect_fds(t_expr **curr_command, t_expr *commands);
 void	exec_builtin(t_msh *msh);
 void	apply_redirections(char *expr, int *fd_in, int *fd_out);
 
+/*
+** PARSING
+*/
+char	**parse_prompt(char *str, t_msh *msh);
+void	add_to_rt(char **rt, char *tmp);
+void	*ft_realloc(void *ptr, size_t cursize, size_t newsize);
+int		is_pipe_redir(char c);
+int		is_whitespace(char c);
+int		dollar(char *str, char **rt, int i, t_msh *msh);
+int		double_quote(char *str, char **rt, int i, t_msh *msh);
+int		pipe_redir(char *str, char **rt, int i);
+int		single_quote(char *str, char **rt, int i);
+int		string(char *str, char **rt, int i);
+
 #endif

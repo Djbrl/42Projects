@@ -37,6 +37,12 @@ SRC_OTHER := main.c exec.c init.c envp.c expr.c\
 			 builtins/echo_runner.c builtins/export_runner.c \
 			 builtins/other.c builtins/export.c builtins/unset.c \
 			 builtins/echo.c builtins/cd.c \
+			 \
+			 parsing/parse_prompt.c parsing/cases/dollar.c \
+			 parsing/cases/double_quote.c parsing/cases/single_quote.c \
+			 parsing/cases/pipe_redir.c parsing/cases/string.c \
+			 parsing/utils/add_to_rt.c parsing/utils/ft_realloc.c \
+			 parsing/utils/is_pipe_redir.c parsing/utils/is_whitespace.c \
 
 SRC_PATH := src
 SRC_NAME := $(SRC_OTHER)
