@@ -74,32 +74,32 @@ static int	exec_env(t_msh *msh)
 
 void	exec_builtin(t_msh *msh)
 {
-	int	in;
-	int	out;
-	int	saved_stdin;
-	int	saved_stdout;
+	// int	in;
+	// int	out;
+	// int	saved_stdin;
+	// int	saved_stdout;
 
-	in = -1;
-	out = -1;
-	saved_stdin = dup(0);
-	saved_stdout = dup(1);
-	apply_redirections(msh->prompt, &in, &out);
-	if (in != -1)
-	{
-		dup2(in, 0);
-		close(in);
-	}
-	if (out != -1)
-	{
-		dup2(out, 1);
-		close(out);
-	}
+	// in = -1;
+	// out = -1;
+	// saved_stdin = dup(0);
+	// saved_stdout = dup(1);
+	// apply_redirections(msh->prompt, &in, &out);
+	// if (in != -1)
+	// {
+	// 	dup2(in, 0);
+	// 	close(in);
+	// }
+	// if (out != -1)
+	// {
+	// 	dup2(out, 1);
+	// 	close(out);
+	// }
 	printf("executing builtin [%s]\n", msh->tokens[0]);
 	msh->cmd.ptr[is_builtin(msh->tokens[0], msh)](msh->env, msh);
-	dup2(saved_stdin, 0);
-	dup2(saved_stdout, 1);
-	close(saved_stdin);
-	close(saved_stdout);
+	// dup2(saved_stdin, 0);
+	// dup2(saved_stdout, 1);
+	// close(saved_stdin);
+	// close(saved_stdout);
 }
 
 void	evaluate_commands(t_msh *msh)

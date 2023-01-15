@@ -30,7 +30,7 @@ static void ftn_echo_runner(t_msh **msh, t_env_var **var, int i)
     free_split(tmp);
     i = 1;
 	//change this
-    while (expr[i])
+    while (ft_strncmp(expr[i], "|", ft_strlen("|")) != 0)
     {
 		printf("[%s]\n", expr[i]);
         if (i > 1)
@@ -71,7 +71,7 @@ static int	run_echo(t_msh **msh, t_env_var **env)
 	m = *msh;
 	e = *env;
 	//change that
-	while (m->tokens[i])
+    while (ft_strncmp(m->tokens[i], "|", ft_strlen("|")) != 0)
 	{
 		expr = ft_split_charset(m->tokens[i], "<>");
 		if (i > 2)

@@ -19,6 +19,7 @@ static void	exec_paths(t_msh *msh, char **re, char **cmd)
 	int		i;
 
 	i = 0;
+	//change builtin handler to take a token array
 	if (is_builtin(msh->tokens[0], msh) >= 0)
 		exec_builtin(msh);
 	else
@@ -72,10 +73,11 @@ static void	execute_commands(t_expr **curr_command, t_msh *msh)
 		dup2(cur->fd_out, 1);
 		close(cur->fd_out);
 	}
+	printf("passing over [%s]\n", cur->data);
 	cmd = ft_split(cur->data, ' ');
 	check_paths(msh, cmd, cur->data);
 	free_split(cmd);
-	exit(EXIT_FAILURE);
+	// exit(EXIT_FAILURE);
 }
 
 static int	execute_multi_pipe(t_expr *commands, t_msh *msh)
@@ -87,6 +89,7 @@ static int	execute_multi_pipe(t_expr *commands, t_msh *msh)
 	connect_fds(&curr, commands);
 	while (curr != NULL)
 	{
+		printf("current command %s\n", curr->data);
 		pid = fork();
 		if (pid == 0)
 			execute_commands(&curr, msh);
