@@ -72,12 +72,12 @@ static void	execute_commands(t_expr **curr_command, t_msh *msh)
 	if (cur->fd_in != 0)
 	{
 		dup2(cur->fd_in, 0);
-		close(cur->fd_in);
+		// close(cur->fd_in);
 	}
 	if (cur->fd_out != 1)
 	{
 		dup2(cur->fd_out, 1);
-		close(cur->fd_out);
+		// close(cur->fd_out);
 	}
 	cmd = ft_split(cur->data, ' ');
 	check_paths(msh, cmd, cur->data);
