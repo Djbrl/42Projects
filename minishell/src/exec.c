@@ -50,19 +50,18 @@ static void	exec_path(t_msh *msh, char **expr)
 		free(cmd);
 		free(path);
 	}
-	display_cmd_error(expr[0], PATH_ERROR, expr);
+	display_error(CMD_ERROR, msh);
+	free_split(expr);
 	exit(EXIT_FAILURE);
 }
 
-/*
-**	check if command can be executed, if not return -1
-**	else, execute command
-*/
 static int	exec_env(t_msh *msh)
 {
 	int		status;
+	char	*tmp;
 
-	if (!msh->paths)
+	tmp = ft_strdup("PATH");
+	if (!msh->paths || get_data_from_env(msh->env, tmp) == NULL)
 		return (-1);
 	status = 0;
 	if (msh->exp == NULL || expr_len(msh->exp) == 1)
@@ -72,33 +71,32 @@ static int	exec_env(t_msh *msh)
 	return (status);
 }
 
+/*
+** change builtin arguement to take current prompt
+*/
 void	exec_builtin(t_msh *msh)
 {
-	// int	in;
-	// int	out;
-	// int	saved_stdin;
-	// int	saved_stdout;
+	int	in;
+	int	out;
 
-	// in = -1;
-	// out = -1;
-	// saved_stdin = dup(0);
-	// saved_stdout = dup(1);
-	// apply_redirections(msh->prompt, &in, &out);
-	// if (in != -1)
-	// {
-	// 	dup2(in, 0);
-	// 	close(in);
-	// }
-	// if (out != -1)
-	// {
-	// 	dup2(out, 1);
-	// 	close(out);
-	// }
+	in = -1;
+	out = -1;
+	apply_redirections(msh->prompt, &in, &out);
+	if (in != -1)
+	{
+		dup2(in, 0);
+		close(in);
+	}
+	if (out != -1)
+	{
+		dup2(out, 1);
+		close(out);
+	}
 	msh->cmd.ptr[is_builtin(msh->tokens[0], msh)](msh->env, msh);
-	// dup2(saved_stdin, 0);
-	// dup2(saved_stdout, 1);
-	// close(saved_stdin);
-	// close(saved_stdout);
+	dup2(msh->std_in, 0);
+	dup2(msh->std_out, 1);
+	close(msh->std_in);
+	close(msh->std_out);
 }
 
 void	evaluate_commands(t_msh *msh)
@@ -113,8 +111,12 @@ void	evaluate_commands(t_msh *msh)
 		if (pid == 0)
 		{
 			if (exec_env(msh) == -1)
+			{
 				display_error(CMD_ERROR, msh);
-			exit(EXIT_FAILURE);
+				exit(EXIT_FAILURE);
+			}
+			else
+				exit(13);
 		}
 		else if (pid < 0)
 			display_error(FORK_ERROR, msh);

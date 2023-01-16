@@ -64,7 +64,7 @@ static void	check_paths(char *prompt)
 			display_cmd_error(redir[i], PATH_ERROR, NULL);
 			free(expr);
 			free_split(redir);
-			exit(EXIT_FAILURE);
+			exit(45);
 		}
 		free(expr);
 		i++;

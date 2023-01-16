@@ -1,48 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins_runner.c                                  :+:      :+:    :+:   */
+/*   echo_runner.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/05 16:13:26 by dsy               #+#    #+#             */
-/*   Updated: 2020/12/07 18:10:05 by user42           ###   ########.fr       */
+/*   Updated: 2023/01/16 16:37:46 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /*
-****************************STATIC FUNCTIONS****************************
-*/
+ ****************************STATIC FUNCTIONS****************************
+ * refactor these functions to read expri] properly
+ */
 
-static void ftn_echo_runner(t_msh **msh, t_env_var **var, int i)
+static void	ftn_echo_runner(t_msh **msh, t_env_var **var, int i)
 {
-    t_msh *m;
-    t_env_var *v;
-    char **tmp;
-    char **expr;
+	t_msh		*m;
+	t_env_var	*v;
+	char		**tmp;
+	char		**expr;
 
-    m = *msh;
-    v = *var;
-    tmp = ft_split_charset(m->prompt, "<>");
+	m = *msh;
+	v = *var;
+	tmp = ft_split_charset(m->prompt, "<>");
 	expr = ft_split(tmp[0], ' ');
-    free_split(tmp);
-    i = 1;
-	//change this
-    while (ft_strncmp(expr[i], "|", ft_strlen("|")) != 0)
-    {
-		printf("[%s]\n", expr[i]);
-        if (i > 1)
-            write(1, " ", 1);
-        if (expr[i] != NULL)
-            msh_echo(v, remove_spaces(expr[i]), m);
-        i++;
-    }
-    write(1, "\n", 1);
-    free_split(expr);
+	free_split(tmp);
+	i = 1;
+	while (expr[i])
+	{
+		if (i > 1)
+			write(1, " ", 1);
+		if (expr[i] != NULL)
+			msh_echo(v, remove_spaces(expr[i]), m);
+		i++;
+	}
+	write(1, "\n", 1);
+	free_split(expr);
 }
-
 
 static int	check_n_option(char *opt)
 {
@@ -70,8 +68,7 @@ static int	run_echo(t_msh **msh, t_env_var **env)
 	exit = 0;
 	m = *msh;
 	e = *env;
-	//change that
-    while (ft_strncmp(m->tokens[i], "|", ft_strlen("|")) != 0)
+	while (m->tokens[i])
 	{
 		expr = ft_split_charset(m->tokens[i], "<>");
 		if (i > 2)
@@ -85,8 +82,8 @@ static int	run_echo(t_msh **msh, t_env_var **env)
 }
 
 /*
-****************************STATIC FUNCTIONS****************************
-*/
+ ****************************STATIC FUNCTIONS****************************
+ */
 
 int	msh_echo_runner(t_env_var *env, t_msh *msh)
 {
@@ -101,7 +98,7 @@ int	msh_echo_runner(t_env_var *env, t_msh *msh)
 	else if (ft_strncmp(msh->tokens[1], "-n", ft_strlen(msh->tokens[1])) == 0)
 		run_echo(&msh, &env);
 	else if (ft_strncmp(msh->tokens[1], "-n", ft_strlen(msh->tokens[1])) != 0 \
-		&& check_n_option(msh->tokens[1]))
+			&& check_n_option(msh->tokens[1]))
 		run_echo(&msh, &env);
 	else
 		ftn_echo_runner(&msh, &env, i);

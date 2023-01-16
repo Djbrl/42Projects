@@ -12,6 +12,12 @@
 
 #include "minishell.h"
 
+/*reset FDs to standard on error
+**fix display cmd format
+**check exit status from forks
+**handle multipie if builtin is first command
+**handle heredoc
+*/
 static void	exec_paths(t_msh *msh, char **re, char **cmd)
 {
 	char	*path;
@@ -19,8 +25,7 @@ static void	exec_paths(t_msh *msh, char **re, char **cmd)
 	int		i;
 
 	i = 0;
-	//change builtin handler to take a token array
-	if (is_builtin(msh->tokens[0], msh) >= 0)
+	if (is_builtin(cmd[0], msh) >= 0)
 		exec_builtin(msh);
 	else
 	{
@@ -35,11 +40,6 @@ static void	exec_paths(t_msh *msh, char **re, char **cmd)
 			free(tmp);
 			free(path);
 		}
-		//reset FDs to standard on error
-		//fix display cmd format
-		//check exit status from forks
-		//handle multipie if builtin is first command
-		//handle heredoc
 		display_cmd_error(cmd[0], PATH_ERROR, cmd);
 	}
 }
@@ -60,29 +60,27 @@ static void	execute_commands(t_expr **curr_command, t_msh *msh)
 {
 	t_expr	*cur;
 	char	**cmd;
+	int		i;
 
+	i = 0;
 	cur = *curr_command;
-	char **expr = ft_split_charset(msh->prompt, "<>");
-	int i = 0;
-	while (expr[i])
+	while (msh->prompt[i])
+	{
+		if (msh->prompt[i] == '>' || msh->prompt[i] == '<')
+		{
+			apply_redirections(cur->data, &cur->fd_in, &cur->fd_out);
+			break ;
+		}
 		i++;
-	if (i > 1)
-		apply_redirections(cur->data, &cur->fd_in, &cur->fd_out);
-	free_split(expr);
+	}
 	if (cur->fd_in != 0)
-	{
 		dup2(cur->fd_in, 0);
-		// close(cur->fd_in);
-	}
 	if (cur->fd_out != 1)
-	{
 		dup2(cur->fd_out, 1);
-		// close(cur->fd_out);
-	}
 	cmd = ft_split(cur->data, ' ');
 	check_paths(msh, cmd, cur->data);
 	free_split(cmd);
-	// exit(EXIT_FAILURE);
+	exit(EXIT_FAILURE);
 }
 
 static int	execute_multi_pipe(t_expr *commands, t_msh *msh)
@@ -98,7 +96,7 @@ static int	execute_multi_pipe(t_expr *commands, t_msh *msh)
 		if (pid == 0)
 			execute_commands(&curr, msh);
 		else if (pid < 0)
-			exit(EXIT_FAILURE);
+			exit(34);
 		close_fds(&curr);
 		curr = curr->next;
 	}

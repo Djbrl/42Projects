@@ -48,6 +48,8 @@ void	init_msh(t_msh *msh, char **envp)
 	msh->full_path = NULL;
 	msh->exit_status = 0;
 	msh->nb_tokens = 0;
+	msh->std_in = dup(0);
+	msh->std_out = dup(1);
 	parse_envp(msh);
 }
 

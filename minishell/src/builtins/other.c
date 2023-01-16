@@ -45,7 +45,8 @@ int	msh_exit(t_env_var *env, t_msh *msh)
 	(void)env;
 	exit_cmd(msh);
 	exit_shell(msh);
-	return (exit_status);
+	exit(exit_status);
+	return (EXIT_FAILURE);
 }
 
 int	msh_pwd(t_env_var *env, t_msh *msh)

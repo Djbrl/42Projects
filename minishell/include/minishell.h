@@ -84,6 +84,8 @@ typedef struct s_msh
 	char		g_buffer[BUF];
 	int			nb_tokens;
 	int			exit_status;
+	int			std_in;
+	int			std_out;
 }				t_msh;
 
 /*
