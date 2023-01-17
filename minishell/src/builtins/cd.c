@@ -16,21 +16,23 @@
 ****************************STATIC FUNCTIONS****************************
 */
 
-static int	ftn_msh_cd(t_msh **msh, char **path, int ret)
+static int	ftn_msh_cd(t_msh **msh, char **path, int ret, char *field)
 {
 	char	*p;
 	t_msh	*m;
+	char	**tokens;
 
+	tokens = ft_split(field, ' ');
 	m = *msh;
 	p = *path;
-	if (m->tokens[1])
+	if (tokens[1])
 	{
-		if (m->tokens[1][0] == '$')
-			p = expand_var(m, m->tokens[1]);
+		if (tokens[1][0] == '$')
+			p = expand_var(m, tokens[1]);
 		else
-			p = ft_strdup(m->tokens[1]);
+			p = ft_strdup(tokens[1]);
 	}
-	if (!m->tokens[1])
+	if (!tokens[1])
 	{
 		if (m->home != NULL)
 			ret = chdir(m->home);
@@ -72,7 +74,8 @@ char	*get_currentdir(t_msh *msh)
 	return (ft_strdup(path + last_slash + 1));
 }
 
-int	msh_cd_runner(t_env_var *env, t_msh *msh)
+	//only if FIELD != NULL, also change it in echo
+int	msh_cd_runner(t_env_var *env, t_msh *msh, char* field)
 {
 	(void)msh;
 	if (msh->nb_tokens > 2)
@@ -82,10 +85,10 @@ int	msh_cd_runner(t_env_var *env, t_msh *msh)
 		return (update_exit_status(msh, 1));
 	}
 	else
-		return (update_exit_status(msh, msh_cd(env, msh)));
+		return (update_exit_status(msh, msh_cd(env, msh, field)));
 }
 
-int	msh_cd(t_env_var *env, t_msh *msh)
+int	msh_cd(t_env_var *env, t_msh *msh, char *field)
 {
 	int		ret;
 	char	*path;
@@ -93,7 +96,7 @@ int	msh_cd(t_env_var *env, t_msh *msh)
 	(void)env;
 	ret = 0;
 	path = NULL;
-	ret = ftn_msh_cd(&msh, &path, ret);
+	ret = ftn_msh_cd(&msh, &path, ret, field);
 	if (ret < 0)
 	{
 		display_cmd_error("cd", PATH_ERROR, msh->tokens);

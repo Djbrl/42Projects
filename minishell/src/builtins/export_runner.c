@@ -48,7 +48,7 @@ static int	list_exports(t_env_var *env, t_msh *msh)
 ****************************STATIC FUNCTIONS****************************
 */
 
-int	msh_export_runner(t_env_var *env, t_msh *msh)
+int	msh_export_runner(t_env_var *env, t_msh *msh, char *field)
 {
 	int	i;
 	int	exit_status;
@@ -56,6 +56,7 @@ int	msh_export_runner(t_env_var *env, t_msh *msh)
 	i = 1;
 	exit_status = 0;
 	(void)msh;
+	(void)field;
 	if (msh->tokens[1] == NULL)
 	{
 		list_exports(env, msh);

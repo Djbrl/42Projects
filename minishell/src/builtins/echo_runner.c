@@ -17,7 +17,7 @@
  * refactor these functions to read expri] properly
  */
 
-static void	ftn_echo_runner(t_msh **msh, t_env_var **var, int i)
+static void	ftn_echo_runner(t_msh **msh, t_env_var **var, int i, char *field)
 {
 	t_msh		*m;
 	t_env_var	*v;
@@ -26,8 +26,9 @@ static void	ftn_echo_runner(t_msh **msh, t_env_var **var, int i)
 
 	m = *msh;
 	v = *var;
+	
 	tmp = ft_split_charset(m->prompt, "<>");
-	expr = ft_split(tmp[0], ' ');
+	expr = ft_split(field, ' ');
 	free_split(tmp);
 	i = 1;
 	while (expr[i])
@@ -56,21 +57,23 @@ static int	check_n_option(char *opt)
 	return (1);
 }
 
-static int	run_echo(t_msh **msh, t_env_var **env)
+static int	run_echo(t_msh **msh, t_env_var **env, char *field)
 {
 	t_env_var	*e;
 	t_msh		*m;
 	int			i;
 	int			exit;
 	char		**expr;
+	char		**tokens;
 
 	i = 1;
 	exit = 0;
 	m = *msh;
 	e = *env;
-	while (m->tokens[i])
+	tokens = ft_split(field, ' ');
+	while (tokens[i])
 	{
-		expr = ft_split_charset(m->tokens[i], "<>");
+		expr = ft_split_charset(tokens[i], "<>");
 		if (i > 2)
 			write(1, " ", 1);
 		if (i != 1)
@@ -78,6 +81,7 @@ static int	run_echo(t_msh **msh, t_env_var **env)
 		i++;
 		free_split(expr);
 	}
+	free_split(tokens);
 	return (exit);
 }
 
@@ -85,23 +89,29 @@ static int	run_echo(t_msh **msh, t_env_var **env)
  ****************************STATIC FUNCTIONS****************************
  */
 
-int	msh_echo_runner(t_env_var *env, t_msh *msh)
+//only if field isnt NULL
+int	msh_echo_runner(t_env_var *env, t_msh *msh, char *field)
 {
-	int	i;
-	int	exit_status;
+	int		i;
+	int		exit_status;
+	char	**tokens;
 
 	i = 1;
 	exit_status = 0;
-	(void)msh;
-	if (!msh->tokens[1])
-		write(1, "\n", 1);
-	else if (ft_strncmp(msh->tokens[1], "-n", ft_strlen(msh->tokens[1])) == 0)
-		run_echo(&msh, &env);
-	else if (ft_strncmp(msh->tokens[1], "-n", ft_strlen(msh->tokens[1])) != 0 \
-			&& check_n_option(msh->tokens[1]))
-		run_echo(&msh, &env);
+	if (field == NULL)
+		tokens = msh->tokens;
 	else
-		ftn_echo_runner(&msh, &env, i);
+		tokens = ft_split(field, ' ');
+	if (!tokens[1])
+		write(1, "\n", 1);
+	else if (ft_strncmp(tokens[1], "-n", ft_strlen(tokens[1])) == 0)
+		run_echo(&msh, &env, field);
+	else if (ft_strncmp(tokens[1], "-n", ft_strlen(tokens[1])) != 0 \
+			&& check_n_option(tokens[1]))
+		run_echo(&msh, &env, field);
+	else
+		ftn_echo_runner(&msh, &env, i, field);
 	exit_cmd(msh);
+	free_split(tokens);
 	return (update_exit_status(msh, exit_status));
 }

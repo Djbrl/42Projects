@@ -12,13 +12,14 @@
 
 #include "minishell.h"
 
-int	msh_env(t_env_var *env, t_msh *msh)
+int	msh_env(t_env_var *env, t_msh *msh, char *field)
 {
 	t_env_var	*cur;
 	int			len;
 
 	(void)msh;
 	(void)env;
+	(void)field;
 	cur = env;
 	len = ft_strlen(cur->name);
 	while (cur->next != NULL)
@@ -37,10 +38,11 @@ int	msh_env(t_env_var *env, t_msh *msh)
 	return (update_exit_status(msh, 0));
 }
 
-int	msh_exit(t_env_var *env, t_msh *msh)
+int	msh_exit(t_env_var *env, t_msh *msh, char *field)
 {
 	int	exit_status;
 
+	(void)field;
 	exit_status = ft_atoi(get_data_from_env(env, ft_strdup("?")));
 	(void)env;
 	exit_cmd(msh);
@@ -49,10 +51,11 @@ int	msh_exit(t_env_var *env, t_msh *msh)
 	return (EXIT_FAILURE);
 }
 
-int	msh_pwd(t_env_var *env, t_msh *msh)
+int	msh_pwd(t_env_var *env, t_msh *msh, char *field)
 {
 	char	cwd[1024];
 
+	(void)field;
 	(void)msh;
 	(void)env;
 	ft_putnstr(getcwd(cwd, sizeof(cwd)), "\n", NULL, NULL);
@@ -60,8 +63,9 @@ int	msh_pwd(t_env_var *env, t_msh *msh)
 	return (update_exit_status(msh, 0));
 }
 
-int	msh_help(t_env_var *env, t_msh *msh)
+int	msh_help(t_env_var *env, t_msh *msh, char *field)
 {
+	(void)field;
 	(void)msh;
 	(void)env;
 	ft_putstr("\nminishell-4.2 commands: \n\necho\t\t: a clone of bash echo\n");

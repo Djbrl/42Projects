@@ -74,7 +74,7 @@ static int	exec_env(t_msh *msh)
 /*
 ** change builtin arguement to take current prompt
 */
-void	exec_builtin(t_msh *msh)
+void	exec_builtin(t_msh *msh, char *field)
 {
 	int	in;
 	int	out;
@@ -92,7 +92,7 @@ void	exec_builtin(t_msh *msh)
 		dup2(out, 1);
 		close(out);
 	}
-	msh->cmd.ptr[is_builtin(msh->tokens[0], msh)](msh->env, msh);
+	msh->cmd.ptr[is_builtin(msh->tokens[0], msh)](msh->env, msh, field);
 	dup2(msh->std_in, 0);
 	dup2(msh->std_out, 1);
 	close(msh->std_in);
@@ -104,7 +104,7 @@ void	evaluate_commands(t_msh *msh)
 	pid_t	pid;
 
 	if (is_builtin(msh->tokens[0], msh) >= 0 && expr_len(msh->exp) == 1)
-		exec_builtin(msh);
+		exec_builtin(msh, NULL);
 	else
 	{
 		pid = fork();

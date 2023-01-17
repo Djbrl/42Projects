@@ -18,7 +18,7 @@
 **handle multipie if builtin is first command
 **handle heredoc
 */
-static void	exec_paths(t_msh *msh, char **re, char **cmd)
+static void	exec_paths(t_msh *msh, char **re, char **cmd, char *field)
 {
 	char	*path;
 	char	*tmp;
@@ -26,7 +26,7 @@ static void	exec_paths(t_msh *msh, char **re, char **cmd)
 
 	i = 0;
 	if (is_builtin(cmd[0], msh) >= 0)
-		exec_builtin(msh);
+		exec_builtin(msh, field);
 	else
 	{
 		while (msh->paths[i])
@@ -52,7 +52,7 @@ static void	check_paths(t_msh *msh, char **cmd, char *arg)
 	res = ft_split_charset(arg, "<>");
 	re = ft_split(res[0], ' ');
 	free_split(res);
-	exec_paths(msh, re, cmd);
+	exec_paths(msh, re, cmd, arg);
 	free_split(re);
 }
 

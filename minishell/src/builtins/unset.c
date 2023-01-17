@@ -44,11 +44,12 @@ static void	ftn_msh_unset(t_env_var **env, t_env_var **prev)
 ****************************STATIC FUNCTIONS****************************
 */
 
-int	msh_unset(t_env_var *env, t_msh *msh)
+int	msh_unset(t_env_var *env, t_msh *msh, char *field)
 {
 	t_env_var	*prev;
 	int			len;
 
+	(void)field;
 	if (env == NULL || !msh->tokens[1])
 	{
 		exit_cmd(msh);
