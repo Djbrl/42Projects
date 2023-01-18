@@ -17,24 +17,33 @@
  * refactor these functions to read expri] properly
  */
 
+static int	is_redir(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '>' || str[i] == '<')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 static void	ftn_echo_runner(t_msh **msh, t_env_var **var, int i, char **tokens)
 {
-	t_msh		*m;
-	t_env_var	*v;
-
-	m = *msh;
-	v = *var;
-	(void)m;
-	(void)v;
 	i = 1;
-	//check for redirections so they dont get printed aswell for ALL builtins
-	
+	(void)msh;
+	(void)var;
 	while (tokens[i] != NULL)
 	{
+		if (is_redir(tokens[i]))
+			break ;
 		if (i > 1)
 			write(1, " ", 1);
 		if (tokens[i] != NULL)
-			msh_echo(v, remove_spaces(tokens[i]), m);
+			msh_echo(*var, remove_spaces(tokens[i]), *msh);
 		i++;
 	}
 	write(1, "\n", 1);
@@ -60,7 +69,6 @@ static int	run_echo(t_msh **msh, t_env_var **env, char **tokens)
 	t_msh		*m;
 	int			i;
 	int			exit;
-	char		**expr;
 
 	i = 1;
 	exit = 0;
@@ -68,13 +76,13 @@ static int	run_echo(t_msh **msh, t_env_var **env, char **tokens)
 	e = *env;
 	while (tokens[i])
 	{
-		expr = ft_split_charset(tokens[i], "<>");
+		if (is_redir(tokens[i]))
+			break ;
 		if (i > 2)
 			write(1, " ", 1);
 		if (i != 1)
-			exit = msh_echo(e, remove_spaces(expr[0]), m);
+			exit = msh_echo(e, remove_spaces(tokens[i]), m);
 		i++;
-		free_split(expr);
 	}
 	return (exit);
 }

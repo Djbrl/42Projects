@@ -61,6 +61,7 @@ static int	exec_env(t_msh *msh)
 	char	*tmp;
 
 	tmp = ft_strdup("PATH");
+	//check if hard path works
 	if (!msh->paths || get_data_from_env(msh->env, tmp) == NULL)
 		return (-1);
 	status = 0;
