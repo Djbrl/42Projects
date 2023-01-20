@@ -95,7 +95,8 @@ void	exec_builtin(t_msh *msh, char *field)
 		dup2(out, 1);
 		close(out);
 	}
-	msh->cmd.ptr[is_builtin(msh->tokens[0], msh)](msh->env, msh, field);
+	(void)field;
+	msh->cmd.ptr[is_builtin(msh->tokens[0], msh)](msh->env, msh, NULL);
 	dup2(msh->std_in, 0);
 	dup2(msh->std_out, 1);
 }

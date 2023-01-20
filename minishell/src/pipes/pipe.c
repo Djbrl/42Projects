@@ -26,7 +26,13 @@ static void	exec_paths(t_msh *msh, char **re, char **cmd, char *field)
 
 	i = 0;
 	if (is_builtin(cmd[0], msh) >= 0)
-		exec_builtin(msh, field);
+	{
+		char *arg = NULL;
+		arg = ft_strdup(field);
+		(void)arg;
+		exec_builtin((t_msh*)NULL, NULL);
+		free(arg);
+	}
 	else
 	{
 		while (msh->paths[i])
