@@ -16,15 +16,29 @@
 ****************************STATIC FUNCTIONS****************************
 */
 
+/*
+** create error cd. The directory "[name]" does not exist
+** if mhs->home NULL : bash: cd: HOME not set
+*/
 static int	ftn_msh_cd(t_msh **msh, char **path, int ret, char *field)
 {
 	char	*p;
 	t_msh	*m;
 	char	**tokens;
+	int		freef;
+	int		i;
 
-	tokens = ft_split(field, ' ');
+	freef = 0;
+	i = 1;
 	m = *msh;
 	p = *path;
+	if (field == NULL)
+		tokens = m->tokens;
+	else
+	{
+		tokens = ft_split(field, ' ');
+		freef = 1;
+	}
 	if (tokens[1])
 	{
 		if (tokens[1][0] == '$')
@@ -42,6 +56,8 @@ static int	ftn_msh_cd(t_msh **msh, char **path, int ret, char *field)
 	else
 		ret = chdir(p);
 	free(p);
+	if (freef)
+		free_split(tokens);
 	return (ret);
 }
 

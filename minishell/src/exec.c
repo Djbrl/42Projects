@@ -39,13 +39,15 @@ static void	exec_path(t_msh *msh, char **expr)
 	char	*path;
 
 	i = 0;
+	if (msh->paths == NULL)
+		execve(expr[0], expr, msh->envp);
 	while (msh->paths[i])
 	{
-		if (access(msh->tokens[0], X_OK & F_OK) == 0)
+		if (access(msh->tokens[0], X_OK) == 0)
 			execve(expr[0], expr, msh->envp);
 		cmd = ft_strjoin(msh->paths[i++], "/");
 		path = ft_strjoin(cmd, expr[0]);
-		if (access(path, X_OK & F_OK) == 0)
+		if (access(path, X_OK) == 0)
 			execve(path, expr, msh->envp);
 		free(cmd);
 		free(path);
@@ -61,8 +63,8 @@ static int	exec_env(t_msh *msh)
 	char	*tmp;
 
 	tmp = ft_strdup("PATH");
-	//check if hard path works
-	if (!msh->paths || get_data_from_env(msh->env, tmp) == NULL)
+	if ((!msh->paths || get_data_from_env(msh->env, tmp) == NULL) \
+		&& access(msh->tokens[0], X_OK) == -1)
 		return (-1);
 	status = 0;
 	if (msh->exp == NULL || expr_len(msh->exp) == 1)
@@ -96,8 +98,6 @@ void	exec_builtin(t_msh *msh, char *field)
 	msh->cmd.ptr[is_builtin(msh->tokens[0], msh)](msh->env, msh, field);
 	dup2(msh->std_in, 0);
 	dup2(msh->std_out, 1);
-	close(msh->std_in);
-	close(msh->std_out);
 }
 
 void	evaluate_commands(t_msh *msh)

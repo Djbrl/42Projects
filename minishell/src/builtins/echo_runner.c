@@ -17,7 +17,7 @@
  * refactor these functions to read expri] properly
  */
 
-static int	is_redir(char *str)
+int	is_redir(char *str)
 {
 	int	i;
 

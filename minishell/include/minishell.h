@@ -133,6 +133,7 @@ void	exit_shell(t_msh *msh);
 /*
 ** UTILS
 */
+int		is_redir(char *str);
 int		expr_len(t_expr *expr);
 int		load_expr(t_msh *msh);
 void	free_expr(t_msh **msh);

@@ -52,22 +52,34 @@ int	msh_export_runner(t_env_var *env, t_msh *msh, char *field)
 {
 	int	i;
 	int	exit_status;
+	int	freef;
+	char	**tokens;
 
 	i = 1;
+	freef = 0;
 	exit_status = 0;
-	(void)msh;
-	(void)field;
-	if (msh->tokens[1] == NULL)
+	if (field == NULL)
+		tokens = msh->tokens;
+	else
+	{
+		tokens = ft_split(field, ' ');
+		freef = 1;
+	}
+	if (tokens[1] == NULL)
 	{
 		list_exports(env, msh);
 		exit_cmd(msh);
 		return (update_exit_status(msh, 0));
 	}
-	while (msh->tokens[i])
+	while (tokens[i])
 	{
-		exit_status = msh_export(env, msh->tokens[i], msh);
+		if (is_redir(tokens[i]))
+			break ;
+		exit_status = msh_export(env, tokens[i], msh);
 		i++;
 	}
 	exit_cmd(msh);
+	if (freef)
+		free_split(tokens);
 	return (update_exit_status(msh, exit_status));
 }
