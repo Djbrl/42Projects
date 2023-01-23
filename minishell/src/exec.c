@@ -12,26 +12,6 @@
 
 #include "minishell.h"
 
-static char	**check_redirections(t_msh *msh)
-{
-	int		in;
-	int		out;
-	char	**expr;
-	char	**tmp;
-
-	in = -1;
-	out = -1;
-	tmp = ft_split_charset(msh->prompt, "<>");
-	expr = ft_split(tmp[0], ' ');
-	apply_redirections(msh->prompt, &in, &out);
-	free_split(tmp);
-	if (in != -1)
-		dup2(in, 0);
-	if (out != -1)
-		dup2(out, 1);
-	return (expr);
-}
-
 static void	exec_path(t_msh *msh, char **expr)
 {
 	int		i;
@@ -74,10 +54,36 @@ static int	exec_env(t_msh *msh)
 	return (status);
 }
 
+static void	fork_cmd(t_msh *msh)
+{
+	int	pid;
+
+	pid = fork();
+	if (pid == 0)
+	{
+		if (exec_env(msh) == -1)
+		{
+			display_error(CMD_ERROR, msh);
+			exit(EXIT_FAILURE);
+		}
+		else
+			exit(13);
+	}
+	else if (pid < 0)
+		display_error(FORK_ERROR, msh);
+	else
+	{
+		waitpid(pid, &g_status, WUNTRACED);
+		while (!WIFEXITED(g_status) && !WIFSIGNALED(g_status))
+			waitpid(pid, &g_status, WUNTRACED);
+		update_exit_status(msh, g_status);
+	}
+}
+
 /*
 ** change builtin arguement to take current prompt
 */
-void	exec_builtin(t_msh *msh, char **tokens)
+void	exec_builtin(t_msh *msh, char *field)
 {
 	int		in;
 	int		out;
@@ -88,16 +94,7 @@ void	exec_builtin(t_msh *msh, char **tokens)
 	in = -1;
 	out = -1;
 	apply_redirections(msh->prompt, &in, &out);
-	if (in != -1)
-	{
-		dup2(in, 0);
-		close(in);
-	}
-	if (out != -1)
-	{
-		dup2(out, 1);
-		close(out);
-	}
+	close_redir(in, out);
 	if (field != NULL)
 	{
 		tmp = ft_split(field, ' ');
@@ -114,31 +111,8 @@ void	exec_builtin(t_msh *msh, char **tokens)
 
 void	evaluate_commands(t_msh *msh)
 {
-	pid_t	pid;
-
 	if (is_builtin(msh->tokens[0], msh) >= 0 && expr_len(msh->exp) == 1)
 		exec_builtin(msh, NULL);
 	else
-	{
-		pid = fork();
-		if (pid == 0)
-		{
-			if (exec_env(msh) == -1)
-			{
-				display_error(CMD_ERROR, msh);
-				exit(EXIT_FAILURE);
-			}
-			else
-				exit(13);
-		}
-		else if (pid < 0)
-			display_error(FORK_ERROR, msh);
-		else
-		{
-			waitpid(pid, &g_status, WUNTRACED);
-			while (!WIFEXITED(g_status) && !WIFSIGNALED(g_status))
-				waitpid(pid, &g_status, WUNTRACED);
-			update_exit_status(msh, g_status);
-		}
-	}
+		fork_cmd(msh);
 }

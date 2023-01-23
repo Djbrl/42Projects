@@ -101,7 +101,6 @@ void	apply_redirections(char *expr, int *fd_in, int *fd_out)
 	char	**redirs;
 
 	i = 0;
-	(void)redirs;
 	redirs = ft_split(expr, ' ');
 	while (redirs[i])
 	{

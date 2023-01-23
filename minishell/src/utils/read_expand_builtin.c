@@ -16,6 +16,20 @@
 ** The 'ft_strlen() + 1' is meant to check if there 
 ** are any extra characters after the builtin name string
 */
+int	is_redir(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '>' || str[i] == '<')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 int	is_builtin(char *s, t_msh *msh)
 {
 	int	i;

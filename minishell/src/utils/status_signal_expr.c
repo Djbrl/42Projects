@@ -46,6 +46,20 @@ char	*remove_spaces(const char *str)
 	return (res);
 }
 
+void	close_redir(int in, int out)
+{
+	if (in != -1)
+	{
+		dup2(in, 0);
+		close(in);
+	}
+	if (out != -1)
+	{
+		dup2(out, 1);
+		close(out);
+	}
+}
+
 int	expr_len(t_expr *expr)
 {
 	t_expr	*cur;

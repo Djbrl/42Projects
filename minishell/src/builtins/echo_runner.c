@@ -17,20 +17,6 @@
  * refactor these functions to read expri] properly
  */
 
-int	is_redir(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '>' || str[i] == '<')
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
 static void	ftn_echo_runner(t_msh **msh, t_env_var **var, int i, char **tokens)
 {
 	i = 1;
@@ -78,37 +64,23 @@ static int	run_echo(t_msh **msh, t_env_var **env, char **tokens)
 	{
 		if (is_redir(tokens[i]))
 			break ;
-		if (i > 2)
-			write(1, " ", 1);
 		if (i != 1)
-			exit = msh_echo(e, remove_spaces(tokens[i]), m);
+		{
+			if (!check_n_option(tokens[i]))
+				exit = msh_echo(e, remove_spaces(tokens[i]), m);
+		}
+		if (tokens[i + 1] != NULL && !check_n_option(tokens[i]))
+			write(1, " ", 1);
 		i++;
 	}
 	return (exit);
 }
 
-/*
- ****************************STATIC FUNCTIONS****************************
- */
-
-//only if field isnt NULL
-int	msh_echo_runner(t_env_var *env, t_msh *msh, char *field)
+static void	check_options(t_msh *msh, t_env_var *env, char **tokens)
 {
-	int		i;
-	int		exit_status;
-	char	**tokens;
-	int		free;
+	int	i;
 
-	free = 0;
 	i = 1;
-	exit_status = 0;
-	if (field == NULL)
-		tokens = msh->tokens;
-	else
-	{
-		tokens = ft_split(field, ' ');
-		free = 1;
-	}
 	if (!tokens[1])
 		write(1, "\n", 1);
 	else if (ft_strncmp(tokens[1], "-n", ft_strlen(tokens[1])) == 0)
@@ -119,7 +91,30 @@ int	msh_echo_runner(t_env_var *env, t_msh *msh, char *field)
 	else
 		ftn_echo_runner(&msh, &env, i, tokens);
 	exit_cmd(msh);
-	if (free)
+}
+
+/*
+****************************STATIC FUNCTIONS****************************
+*/
+
+//only if field isnt NULL
+int	msh_echo_runner(t_env_var *env, t_msh *msh, char *field)
+{
+	int		exit_status;
+	int		free_tokens;
+	char	**tokens;
+
+	free_tokens = 0;
+	exit_status = 0;
+	if (field == NULL)
+		tokens = msh->tokens;
+	else
+	{
+		tokens = ft_split(field, ' ');
+		free_tokens = 1;
+	}
+	check_options(msh, env, tokens);
+	if (free_tokens)
 		free_split(tokens);
 	return (update_exit_status(msh, exit_status));
 }

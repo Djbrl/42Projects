@@ -17,7 +17,7 @@
 * ftn msh export has to be redefined
 */
 
-static void	ftn_msh_unset(t_env_var **env, t_env_var **prev)
+static void	unset_var(t_env_var **env, t_env_var **prev)
 {
 	t_env_var	*e;
 	t_env_var	*p;
@@ -40,32 +40,13 @@ static void	ftn_msh_unset(t_env_var **env, t_env_var **prev)
 	}
 }
 
-/*
-****************************STATIC FUNCTIONS****************************
-*/
-
-int	msh_unset(t_env_var *env, t_msh *msh, char *field)
+static int	find_var(char **tokens, t_env_var **envar, t_msh *msh)
 {
 	t_env_var	*prev;
+	t_env_var	*env;
 	int			len;
-	int			freef;
-	int			i;
-	char		**tokens;
 
-	freef = 0;
-	i = 1;
-	if (field == NULL)
-		tokens = msh->tokens;
-	else
-	{
-		tokens = ft_split(field, ' ');
-		freef = 1;
-	}
-	if (env == NULL || !tokens[1])
-	{
-		exit_cmd(msh);
-		return (update_exit_status(msh, 1));
-	}
+	env = *envar;
 	len = ft_strlen(tokens[1]);
 	while (env->next != NULL && \
 		(ft_strncmp(tokens[1], env->name, len) != 0))
@@ -75,11 +56,38 @@ int	msh_unset(t_env_var *env, t_msh *msh, char *field)
 	}
 	if ((ft_strncmp(tokens[1], env->name, len)) == 0 && \
 		ft_strncmp(tokens[1], "?", len))
-		ftn_msh_unset(&env, &prev);
+		unset_var(&env, &prev);
 	else
 		return (update_exit_status(msh, 1));
 	exit_cmd(msh);
-	if (freef)
-		free_split(tokens);
 	return (update_exit_status(msh, 0));
+}
+
+/*
+****************************STATIC FUNCTIONS****************************
+*/
+
+int	msh_unset(t_env_var *env, t_msh *msh, char *field)
+{
+	int		free_tokens;
+	int		status;
+	char	**tokens;
+
+	free_tokens = 0;
+	if (field == NULL)
+		tokens = msh->tokens;
+	else
+	{
+		tokens = ft_split(field, ' ');
+		free_tokens = 1;
+	}
+	if (env == NULL || !tokens[1])
+	{
+		exit_cmd(msh);
+		return (update_exit_status(msh, 1));
+	}
+	status = find_var(tokens, &env, msh);
+	if (free_tokens)
+		free_split(tokens);
+	return (status);
 }

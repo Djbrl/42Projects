@@ -44,27 +44,15 @@ static int	list_exports(t_env_var *env, t_msh *msh)
 	return (update_exit_status(msh, 0));
 }
 
-/*
-****************************STATIC FUNCTIONS****************************
-*/
-
-int	msh_export_runner(t_env_var *env, t_msh *msh, char *field)
+static int	ftn_msh_export(t_msh *msh, char **tokens, t_env_var **envar)
 {
-	int		i;
-	int		exit_status;
-	int		freef;
-	char	**tokens;
+	int			exit_status;
+	int			i;
+	t_env_var	*env;
 
 	i = 1;
-	freef = 0;
+	env = *envar;
 	exit_status = 0;
-	if (field == NULL)
-		tokens = msh->tokens;
-	else
-	{
-		tokens = ft_split(field, ' ');
-		freef = 1;
-	}
 	if (tokens[1] == NULL)
 	{
 		list_exports(env, msh);
@@ -79,7 +67,30 @@ int	msh_export_runner(t_env_var *env, t_msh *msh, char *field)
 		i++;
 	}
 	exit_cmd(msh);
-	if (freef)
+	return (exit_status);
+}
+
+/*
+****************************STATIC FUNCTIONS****************************
+*/
+
+int	msh_export_runner(t_env_var *env, t_msh *msh, char *field)
+{
+	int		exit_status;
+	int		free_tokens;
+	char	**tokens;
+
+	free_tokens = 0;
+	exit_status = 0;
+	if (field == NULL)
+		tokens = msh->tokens;
+	else
+	{
+		tokens = ft_split(field, ' ');
+		free_tokens = 1;
+	}
+	exit_status = ftn_msh_export(msh, tokens, &env);
+	if (free_tokens)
 		free_split(tokens);
 	return (update_exit_status(msh, exit_status));
 }

@@ -145,6 +145,7 @@ int		update_exit_status(t_msh *msh, int status);
 int		is_builtin(char *s, t_msh *msh);
 char	**ft_split_charset(const char *s, const char *set);
 char	*remove_spaces(const char *str);
+void	close_redir(int in, int out);
 
 /*
 ** PIPE
@@ -159,6 +160,7 @@ int		connect_fds(t_expr **curr_command, t_expr *commands);
 */
 void	exec_builtin(t_msh *msh, char *field);
 void	apply_redirections(char *expr, int *fd_in, int *fd_out);
+char	**check_redirections(t_msh *msh);
 
 /*
 ** PARSING
