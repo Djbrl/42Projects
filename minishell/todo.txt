@@ -1,0 +1,4 @@
+finish heredoc
+finish export in pipes
+finish signals
+finish exit
