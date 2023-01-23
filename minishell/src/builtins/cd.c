@@ -90,8 +90,10 @@ char	*get_currentdir(t_msh *msh)
 	return (ft_strdup(path + last_slash + 1));
 }
 
-	//only if FIELD != NULL, also change it in echo
-int	msh_cd_runner(t_env_var *env, t_msh *msh, char* field)
+/*
+**only if FIELD != NULL, also change it in echo
+*/
+int	msh_cd_runner(t_env_var *env, t_msh *msh, char *field)
 {
 	(void)msh;
 	if (msh->nb_tokens > 2)

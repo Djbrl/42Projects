@@ -50,9 +50,9 @@ static int	list_exports(t_env_var *env, t_msh *msh)
 
 int	msh_export_runner(t_env_var *env, t_msh *msh, char *field)
 {
-	int	i;
-	int	exit_status;
-	int	freef;
+	int		i;
+	int		exit_status;
+	int		freef;
 	char	**tokens;
 
 	i = 1;

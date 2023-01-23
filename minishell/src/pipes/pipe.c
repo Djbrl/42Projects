@@ -26,13 +26,7 @@ static void	exec_paths(t_msh *msh, char **re, char **cmd, char *field)
 
 	i = 0;
 	if (is_builtin(cmd[0], msh) >= 0)
-	{
-		char *arg = NULL;
-		arg = ft_strdup(field);
-		(void)arg;
-		exec_builtin((t_msh*)NULL, NULL);
-		free(arg);
-	}
+		exec_builtin(msh, field);
 	else
 	{
 		while (msh->paths[i])
@@ -50,15 +44,15 @@ static void	exec_paths(t_msh *msh, char **re, char **cmd, char *field)
 	}
 }
 
-static void	check_paths(t_msh *msh, char **cmd, char *arg)
+static void	check_paths(t_msh *msh, char **cmd, char *field)
 {
 	char	**res;
 	char	**re;
 
-	res = ft_split_charset(arg, "<>");
+	res = ft_split_charset(field, "<>");
 	re = ft_split(res[0], ' ');
 	free_split(res);
-	exec_paths(msh, re, cmd, arg);
+	exec_paths(msh, re, cmd, field);
 	free_split(re);
 }
 

@@ -48,9 +48,9 @@ int	msh_unset(t_env_var *env, t_msh *msh, char *field)
 {
 	t_env_var	*prev;
 	int			len;
-	int		freef;
-	int		i;
-	char	**tokens;
+	int			freef;
+	int			i;
+	char		**tokens;
 
 	freef = 0;
 	i = 1;

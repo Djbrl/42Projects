@@ -77,11 +77,14 @@ static int	exec_env(t_msh *msh)
 /*
 ** change builtin arguement to take current prompt
 */
-void	exec_builtin(t_msh *msh, char *field)
+void	exec_builtin(t_msh *msh, char **tokens)
 {
-	int	in;
-	int	out;
+	int		in;
+	int		out;
+	int		free;
+	char	**tmp;
 
+	free = 0;
 	in = -1;
 	out = -1;
 	apply_redirections(msh->prompt, &in, &out);
@@ -95,8 +98,16 @@ void	exec_builtin(t_msh *msh, char *field)
 		dup2(out, 1);
 		close(out);
 	}
-	(void)field;
-	msh->cmd.ptr[is_builtin(msh->tokens[0], msh)](msh->env, msh, NULL);
+	if (field != NULL)
+	{
+		tmp = ft_split(field, ' ');
+		free = 1;
+	}
+	else
+		tmp = msh->tokens;
+	msh->cmd.ptr[is_builtin(tmp[0], msh)](msh->env, msh, field);
+	if (free)
+		free_split(tmp);
 	dup2(msh->std_in, 0);
 	dup2(msh->std_out, 1);
 }
