@@ -54,6 +54,38 @@ static int	exec_env(t_msh *msh)
 	return (status);
 }
 
+/*
+** change builtin arguement to take current prompt
+*/
+void	exec_builtin(t_msh *msh, char *field)
+{
+	int		in;
+	int		out;
+	int		free;
+	char	**tmp;
+
+	free = 0;
+	in = -1;
+	out = -1;
+	if (!field)
+		apply_redirections(msh->prompt, &in, &out, msh);
+	else
+		apply_redirections(field, &in, &out, msh);
+	close_redir(in, out);
+	if (field != NULL)
+	{
+		tmp = ft_split(field, ' ');
+		free = 1;
+	}
+	else
+		tmp = msh->tokens;
+	msh->cmd.ptr[is_builtin(tmp[0], msh)](msh->env, msh, field);
+	if (free)
+		free_split(tmp);
+	dup2(msh->std_in, 0);
+	dup2(msh->std_out, 1);
+}
+
 static void	fork_cmd(t_msh *msh)
 {
 	int	pid;
@@ -78,35 +110,6 @@ static void	fork_cmd(t_msh *msh)
 			waitpid(pid, &g_status, WUNTRACED);
 		update_exit_status(msh, g_status);
 	}
-}
-
-/*
-** change builtin arguement to take current prompt
-*/
-void	exec_builtin(t_msh *msh, char *field)
-{
-	int		in;
-	int		out;
-	int		free;
-	char	**tmp;
-
-	free = 0;
-	in = -1;
-	out = -1;
-	apply_redirections(msh->prompt, &in, &out);
-	close_redir(in, out);
-	if (field != NULL)
-	{
-		tmp = ft_split(field, ' ');
-		free = 1;
-	}
-	else
-		tmp = msh->tokens;
-	msh->cmd.ptr[is_builtin(tmp[0], msh)](msh->env, msh, field);
-	if (free)
-		free_split(tmp);
-	dup2(msh->std_in, 0);
-	dup2(msh->std_out, 1);
 }
 
 void	evaluate_commands(t_msh *msh)

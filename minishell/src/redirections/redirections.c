@@ -34,60 +34,87 @@ static void	output_redirection(char **field, int mode, int *fd_out)
 	free_split(field);
 }
 
-static void	heredoc(char *expr)
+static void	print_heredoc(char **heredoc, int size)
+{
+	int	i;
+
+	i = 0;
+	// while (i < size)
+	// 	printf("%s\n", heredoc[i++]);
+	// i = 0;
+	while (i < size)
+		free(heredoc[i++]);
+}
+
+static void	heredoc(char *expr, t_msh *msh, int fd_in, int fd_out)
 {
 	char	*tmp;
-
-	tmp = NULL;
-	while (1)
-	{
-		get_next_line(0, &tmp);
-		if (ft_strncmp(tmp, expr, ft_strlen(tmp)) == 0)
-			break ;
-		free(tmp);
-	}
-}
-
-static void	check_paths(char *prompt)
-{
-	char	**redir;
-	char	*expr;
+	char	*str;
+	char	*heredoc[100];
 	int		i;
 
-	i = 1;
-	redir = ft_split_charset(prompt, "<>");
-	while (redir[i])
+	tmp = NULL;
+	i = 0;
+	while (1)
 	{
-		expr = remove_spaces(redir[i]);
-		if (access(expr, F_OK) == -1)
+		write(1, "> ", 2);
+		str = remove_spaces(expr);
+		get_next_line(0, &tmp);
+		heredoc[i++] = ft_strdup(tmp);
+		if (ft_strncmp(tmp, str, ft_strlen(tmp)) == 0 && tmp[0] != '\0')
 		{
-			display_cmd_error(redir[i], PATH_ERROR, NULL);
-			free(expr);
-			free_split(redir);
-			exit(45);
+			free(str);
+			free(tmp);
+			break ;
 		}
-		free(expr);
-		i++;
+		free(tmp);
+		free(str);
 	}
-	free_split(redir);
+//UNDER CONSTRUCTION
+//using a fork pipe to feed the result of heredoc into the associated command
+	// close(msh->std_in);
+	// close(msh->std_out);
+	// msh->std_in = dup(0);
+	// msh->std_out = dup(1);
+	// //resetting fds
+	// int pid = fork();
+	// if (pid == 0)
+	// {}
+	// else
+	// //
+	// waitpid(pid, &g_status, WUNTRACED);
+	// //second fork
+	// int pid2 = fork();
+	// if (pid2 == 0)
+	// {}
+	// else
+	// //
+	// waitpid(pid2, &g_status, WUNTRACED);
+	
+	print_heredoc(heredoc, i);
 }
 
-static void	input_redirection(char **field, int mode, int *fd_in, char *prompt)
+static void	input_redirection(char **field, int mode, int *fd_in, char *prompt, t_msh *msh)
 {
 	int		j;
 	int		fd;
 	char	**expr;
 
+	(void)msh;
 	j = 1;
 	fd = -1;
-	check_paths(prompt);
+	(void)prompt;
 	while (field[j])
 	{
 		expr = ft_split(field[j], ' ');
-		if (mode == 1)
-			fd = open(expr[0], O_RDONLY);
-		if (mode == 2)
-			heredoc(expr[0]);
+		// if (mode == 1)
+		fd = open(expr[0], O_RDONLY);
+	if (mode == 2)
+	{
+		// *fd_in = dup(0);
+		// fd = open(, O_RDONLY);
+		heredoc(field[1], msh, *fd_in, *fd_out);
+	}
 		free_split(expr);
 		j++;
 	}
@@ -95,7 +122,7 @@ static void	input_redirection(char **field, int mode, int *fd_in, char *prompt)
 	free_split(field);
 }
 
-void	apply_redirections(char *expr, int *fd_in, int *fd_out)
+void	apply_redirections(char *expr, int *fd_in, int *fd_out, t_msh *msh)
 {
 	int		i;
 	char	**redirs;
@@ -109,9 +136,9 @@ void	apply_redirections(char *expr, int *fd_in, int *fd_out)
 		else if (ft_strncmp(redirs[i], ">", ft_strlen(">")) == 0)
 			output_redirection(ft_split_charset(expr, ">"), 1, fd_out);
 		else if (ft_strncmp(redirs[i], "<<", ft_strlen("<<")) == 0)
-			input_redirection(ft_split_charset(expr, "<<"), 2, fd_in, expr);
+		 	input_redirection(ft_split_charset(expr, "<<"), 2, fd_in, expr, msh);
 		else if (ft_strncmp(redirs[i], "<", ft_strlen("<")) == 0)
-			input_redirection(ft_split_charset(expr, "<"), 1, fd_in, expr);
+			input_redirection(ft_split_charset(expr, "<"), 1, fd_in, expr, msh);
 		else
 			(void)redirs;
 		i++;

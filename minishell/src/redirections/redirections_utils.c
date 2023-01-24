@@ -23,7 +23,7 @@ char	**check_redirections(t_msh *msh)
 	out = -1;
 	tmp = ft_split_charset(msh->prompt, "<>");
 	expr = ft_split(tmp[0], ' ');
-	apply_redirections(msh->prompt, &in, &out);
+	apply_redirections(msh->prompt, &in, &out, msh);
 	free_split(tmp);
 	if (in != -1)
 		dup2(in, 0);

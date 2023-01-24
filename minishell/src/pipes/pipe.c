@@ -68,7 +68,7 @@ static void	execute_commands(t_expr **curr_command, t_msh *msh)
 	{
 		if (msh->prompt[i] == '>' || msh->prompt[i] == '<')
 		{
-			apply_redirections(cur->data, &cur->fd_in, &cur->fd_out);
+			apply_redirections(cur->data, &cur->fd_in, &cur->fd_out, msh);
 			break ;
 		}
 		i++;

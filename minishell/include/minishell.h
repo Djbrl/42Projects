@@ -42,7 +42,7 @@
 # define STATUS_RESET 0
 # define CTRL_C_EXIT 2
 # define CTRL_D_SIGNAL 0
-# define BUFFER_SIZE 1
+# define BUFFER_SIZE 4096
 
 extern int				g_status;
 typedef struct s_msh	t_msh;
@@ -159,7 +159,7 @@ int		connect_fds(t_expr **curr_command, t_expr *commands);
 ** REDIRECTIONS
 */
 void	exec_builtin(t_msh *msh, char *field);
-void	apply_redirections(char *expr, int *fd_in, int *fd_out);
+void	apply_redirections(char *expr, int *fd_in, int *fd_out, t_msh *msh);
 char	**check_redirections(t_msh *msh);
 
 /*

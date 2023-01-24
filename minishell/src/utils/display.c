@@ -31,9 +31,13 @@ int	display_error(char *error, t_msh *msh)
 
 void	display_cmd_error(char *cmd, char *error, char **args)
 {
+
 	if (!ft_strncmp(error, PATH_ERROR, ft_strlen(error)))
 	{
-		ft_putnstr("minishell: ", cmd, ": ", args[1]);
+		if (args)
+			ft_putnstr("minishell: ", cmd, ": ", args[1]);
+		else
+			ft_putnstr("minishell: ", cmd, ": ", NULL);	
 		ft_putstr(error);
 	}
 }
