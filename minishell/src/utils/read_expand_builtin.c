@@ -76,7 +76,7 @@ void	read_buffer(t_msh *msh)
 	{
 		flush_buffer(msh);
 		exit_cmd(msh);
-		exit_shell(msh);
+		exit_shell(msh, NULL);
 	}
 	msh->g_buffer[ft_strlen(msh->g_buffer) - 1] = 0;
 }

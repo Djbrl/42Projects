@@ -70,6 +70,9 @@ static void	heredoc(char *expr, t_msh *msh, int fd_in, int fd_out)
 		free(tmp);
 		free(str);
 	}
+	(void)msh;
+	(void)fd_in;
+	(void)fd_out;
 //UNDER CONSTRUCTION
 //using a fork pipe to feed the result of heredoc into the associated command
 	// close(msh->std_in);
@@ -94,7 +97,7 @@ static void	heredoc(char *expr, t_msh *msh, int fd_in, int fd_out)
 	print_heredoc(heredoc, i);
 }
 
-static void	input_redirection(char **field, int mode, int *fd_in, char *prompt, t_msh *msh)
+static void	input_redirection(char **field, int mode, int *fd_in, int *fd_out, char *prompt, t_msh *msh)
 {
 	int		j;
 	int		fd;
@@ -136,9 +139,9 @@ void	apply_redirections(char *expr, int *fd_in, int *fd_out, t_msh *msh)
 		else if (ft_strncmp(redirs[i], ">", ft_strlen(">")) == 0)
 			output_redirection(ft_split_charset(expr, ">"), 1, fd_out);
 		else if (ft_strncmp(redirs[i], "<<", ft_strlen("<<")) == 0)
-		 	input_redirection(ft_split_charset(expr, "<<"), 2, fd_in, expr, msh);
+		 	input_redirection(ft_split_charset(expr, "<<"), 2, fd_in, fd_out, expr, msh);
 		else if (ft_strncmp(redirs[i], "<", ft_strlen("<")) == 0)
-			input_redirection(ft_split_charset(expr, "<"), 1, fd_in, expr, msh);
+			input_redirection(ft_split_charset(expr, "<"), 1, fd_in, fd_out, expr, msh);
 		else
 			(void)redirs;
 		i++;

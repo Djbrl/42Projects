@@ -40,15 +40,14 @@ int	msh_env(t_env_var *env, t_msh *msh, char *field)
 
 int	msh_exit(t_env_var *env, t_msh *msh, char *field)
 {
-	int	exit_status;
+	int		exit_status;
 
-	(void)field;
-	exit_status = ft_atoi(get_data_from_env(env, ft_strdup("?")));
 	(void)env;
-	exit_cmd(msh);
-	exit_shell(msh);
-	exit(exit_status);
-	return (EXIT_FAILURE);
+	if (!field)
+		exit_status = exit_shell(msh, msh->prompt);
+	else
+		exit_status = exit_shell(msh, field);
+	return (update_exit_status(msh, exit_status));
 }
 
 int	msh_pwd(t_env_var *env, t_msh *msh, char *field)

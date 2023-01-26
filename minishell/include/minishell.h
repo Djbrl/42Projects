@@ -128,7 +128,7 @@ void	signal_handler(int sig_n);
 void	read_buffer(t_msh *msh);
 void	parse_envp(t_msh *msh);
 void	exit_cmd(t_msh *msh);
-void	exit_shell(t_msh *msh);
+int		exit_shell(t_msh *msh, char *field);
 
 /*
 ** UTILS
@@ -146,6 +146,7 @@ int		is_builtin(char *s, t_msh *msh);
 char	**ft_split_charset(const char *s, const char *set);
 char	*remove_spaces(const char *str);
 void	close_redir(int in, int out);
+int		arr_len(char **arr);
 
 /*
 ** PIPE
