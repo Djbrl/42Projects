@@ -60,6 +60,7 @@ static void	ftn_exit(t_msh *msh, int status, char **arr)
 	}
 	if (arr != NULL)
 		free_split(arr);
+	clear_history();
 	exit(status);
 }
 

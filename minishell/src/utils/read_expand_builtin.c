@@ -62,56 +62,56 @@ void	flush_buffer(t_msh *msh)
 	ft_memset(msh->g_buffer, 0, BUF);
 }
 
-void	read_buffer(t_msh *msh)
-{
-	int	signal;
-
-	flush_buffer(msh);
-	if (g_status == CTRL_C_EXIT)
-		g_status = STATUS_RESET;
-	else
-		display_prompt(MODE_DEFAULT, msh);
-	signal = read(0, msh->g_buffer, BUF);
-	if (signal == CTRL_D_SIGNAL)
-	{
-		flush_buffer(msh);
-		exit_cmd(msh);
-		exit_shell(msh, NULL);
-	}
-	msh->g_buffer[ft_strlen(msh->g_buffer) - 1] = 0;
-}
-
 // void	read_buffer(t_msh *msh)
 // {
-// 	// int	signal;
-// 	char	*s;
-// 	int		i;
+// 	int	signal;
 
-// 	i = 0;
-// 	s = readline(PROMPTLINE);
-// 	if (s != NULL)
-// 	{
-// 		add_history(s);
-// 		if (ft_strlen(s) == 0)
-// 		{
-// 		//	write(1, "\n", 1);
-// 			return ;
-// 		}
-// 		else
-// 		{
-// 			while (s[i] && s[i] != '\n')
-// 			{
-// 				msh->g_buffer[i] = s[i];
-// 				i++;
-// 			}
-// 		}
-// 	}
+// 	flush_buffer(msh);
+// 	if (g_status == CTRL_C_EXIT)
+// 		g_status = STATUS_RESET;
 // 	else
+// 		display_prompt(MODE_DEFAULT, msh);
+// 	signal = read(0, msh->g_buffer, BUF);
+// 	if (signal == CTRL_D_SIGNAL)
 // 	{
 // 		flush_buffer(msh);
 // 		exit_cmd(msh);
-// 		exit_shell(SUCCESS, msh);
-// 		return ;
+// 		exit_shell(msh, NULL);
 // 	}
-// 	free(s);
+// 	msh->g_buffer[ft_strlen(msh->g_buffer) - 1] = 0;
 // }
+
+void	read_buffer(t_msh *msh)
+{
+	// int	signal;
+	char	*s;
+	int		i;
+
+	i = 0;
+	s = readline(PROMPTLINE);
+	if (s != NULL)
+	{
+		add_history(s);
+		if (ft_strlen(s) == 0)
+		{
+			flush_buffer(msh);
+			return ;
+		}
+		else
+		{
+			while (s[i] && s[i] != '\n')
+			{
+				msh->g_buffer[i] = s[i];
+				i++;
+			}
+		}
+	}
+	else
+	{
+		flush_buffer(msh);
+		// exit_cmd(msh);
+		exit_shell(msh, NULL);
+		return ;
+	}
+	free(s);
+}

@@ -122,6 +122,7 @@ void	display_cmd_error(char *cmd, char *error, char **args);
 */
 char	*get_currentdir(t_msh *msh);
 char	*get_data_from_env(t_env_var *env, char *name);
+void	free_data_from_env(t_env_var *env, char *name);
 int		add_var_to_env(t_env_var *env, char *name, char *data);
 void	evaluate_commands(t_msh *t_msh);
 void	signal_handler(int sig_n);

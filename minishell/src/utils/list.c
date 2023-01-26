@@ -36,6 +36,32 @@ char	*get_data_from_env(t_env_var *env, char *name)
 	return (NULL);
 }
 
+void	free_data_from_env(t_env_var *env, char *name)
+{
+	t_env_var	*cur;
+
+	cur = env;
+	while (cur->next != NULL)
+	{
+		if (!ft_strncmp(cur->name, name, ft_strlen(cur->name)))
+		{
+			free(name);
+			free(cur->data);
+			cur->data = NULL;
+		}
+		else
+			cur = cur->next;
+	}
+	if (!ft_strncmp(cur->name, name, ft_strlen(cur->name)))
+	{
+		free(name);
+		free(cur->data);
+		cur->data = NULL;
+	}
+	free(name);
+	return ;
+}
+
 int	add_var_to_env(t_env_var *env, char *name, char *data)
 {
 	t_env_var	*new;
