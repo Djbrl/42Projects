@@ -12,6 +12,43 @@
 
 #include "minishell.h"
 
+static void	free_envar(t_msh *msh)
+{
+	if (msh->home != NULL)
+		free(msh->home);
+	if (msh->user != NULL)
+		free(msh->user);
+	if (msh->full_path != NULL)
+		free(msh->full_path);
+	if (msh->default_path != NULL)
+		free(msh->default_path);
+	if (msh->paths != NULL)
+		free_split(msh->paths);
+}
+
+static void	free_env(t_msh *msh)
+{
+	t_env_var	*cur;
+
+	if (!msh->env)
+		return ;
+	while (msh->env->next != NULL)
+	{
+		cur = msh->env;
+		free(msh->env->data);
+		free(msh->env->name);
+		msh->env = msh->env->next;
+		free(cur);
+	}
+	if (msh->env)
+	{
+		free(msh->env->data);
+		free(msh->env->name);
+		free(msh->env);
+	}
+	free_envar(msh);
+}
+
 static void	exec_path(t_msh *msh, char **expr)
 {
 	int		i;
@@ -34,6 +71,10 @@ static void	exec_path(t_msh *msh, char **expr)
 	}
 	display_error(CMD_ERROR, msh);
 	free_split(expr);
+	exit_cmd(msh);
+	free_env(msh);
+	free_expr(&msh);
+	clear_history();
 	exit(EXIT_FAILURE);
 }
 
