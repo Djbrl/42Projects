@@ -41,6 +41,11 @@ static void	exec_paths(t_msh *msh, char **re, char **cmd, char *field)
 			free(path);
 		}
 		display_cmd_error(cmd[0], PATH_ERROR, cmd);
+		// free_split(cmd);
+		// exit_cmd(msh);
+		// free_env(msh);
+		// free_expr(&msh);
+		// clear_history();
 	}
 }
 

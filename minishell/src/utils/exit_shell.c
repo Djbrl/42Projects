@@ -12,7 +12,22 @@
 
 #include "minishell.h"
 
-static void	free_envar(t_msh *msh)
+static void	ftn_exit(t_msh *msh, int status, char **arr)
+{
+	exit_cmd(msh);
+	free_env(msh);
+	if (msh->exp != NULL)
+	{
+		free(msh->exp->data);
+		free(msh->exp);
+	}
+	if (arr != NULL)
+		free_split(arr);
+	clear_history();
+	exit(status);
+}
+
+void	free_envar(t_msh *msh)
 {
 	if (msh->home != NULL)
 		free(msh->home);
@@ -26,7 +41,7 @@ static void	free_envar(t_msh *msh)
 		free_split(msh->paths);
 }
 
-static void	free_env(t_msh *msh)
+void	free_env(t_msh *msh)
 {
 	t_env_var	*cur;
 
@@ -47,21 +62,6 @@ static void	free_env(t_msh *msh)
 		free(msh->env);
 	}
 	free_envar(msh);
-}
-
-static void	ftn_exit(t_msh *msh, int status, char **arr)
-{
-	exit_cmd(msh);
-	free_env(msh);
-	if (msh->exp != NULL)
-	{
-		free(msh->exp->data);
-		free(msh->exp);
-	}
-	if (arr != NULL)
-		free_split(arr);
-	clear_history();
-	exit(status);
 }
 
 int	exit_shell(t_msh *msh, char *field)
@@ -92,6 +92,3 @@ int	exit_shell(t_msh *msh, char *field)
 	ftn_exit(msh, exit_status, arr);
 	return (0);
 }
-/**
- ** clear_history();
- **/

@@ -78,12 +78,8 @@ int	expr_len(t_expr *expr)
 int	update_exit_status(t_msh *msh, int status)
 {
 	char	*tmp;
-	// char	*prev;
 
 	tmp = ft_itoa(status);
-	// prev = get_data_from_env(msh->env, ft_strdup("?"));
-	// if (prev != NULL)
-	// 	free_data_from_env(msh->env, "?");
 	add_var_to_env(msh->env, "?", tmp);
 	free(tmp);
 	return (status);

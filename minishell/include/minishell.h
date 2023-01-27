@@ -148,6 +148,8 @@ char	**ft_split_charset(const char *s, const char *set);
 char	*remove_spaces(const char *str);
 void	close_redir(int in, int out);
 int		arr_len(char **arr);
+void	free_envar(t_msh *msh);
+void	free_env(t_msh *msh);
 
 /*
 ** PIPE

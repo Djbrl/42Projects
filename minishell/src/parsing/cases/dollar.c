@@ -26,8 +26,8 @@ static char	*expand_env(char *str, t_msh *msh)
 	tmp = malloc(sizeof(char) * i + 1);
 	ft_strlcpy(tmp, str, i + 1);
 	rt = get_data_from_env(msh->env, tmp);
-	// if (tmp)
-	// 	free(tmp);
+	if (tmp)
+		free(tmp);
 	return (rt);
 }
 
