@@ -35,7 +35,7 @@ static void	exec_path(t_msh *msh, char **expr)
 	if (!is_redir(msh->tokens[0]))
 		display_error(CMD_ERROR, msh);
 	else
-		display_cmd_error(expr[0], PATH_ERROR, NULL);	
+		display_cmd_error(expr[0], PATH_ERROR, NULL);
 	free_split(expr);
 	exit_cmd(msh);
 	free_env(msh);

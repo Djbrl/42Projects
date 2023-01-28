@@ -44,7 +44,7 @@ static void	exec_paths(t_msh *msh, char **re, char **cmd, char *field)
 		if (!is_redir(cmd[0]))
 			display_error(CMD_ERROR, msh);
 		else
-			display_cmd_error(cmd[1], PATH_ERROR, NULL);	
+			display_cmd_error(cmd[1], PATH_ERROR, NULL);
 	}
 }
 
