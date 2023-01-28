@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 18:40:28 by dsy               #+#    #+#             */
-/*   Updated: 2023/01/10 16:29:08 by dsy              ###   ########.fr       */
+/*   Updated: 2023/01/28 03:15:19 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,70 +34,99 @@ static void	output_redirection(char **field, int mode, int *fd_out)
 	free_split(field);
 }
 
-static void	print_heredoc(char **heredoc, int size)
+static void	print_heredoc(char **heredoc_buf, int size)
 {
 	int	i;
 
 	i = 0;
-	// while (i < size)
-	// 	printf("%s\n", heredoc[i++]);
-	// i = 0;
 	while (i < size)
-		free(heredoc[i++]);
+		printf("%s\n", heredoc_buf[i++]);
+	i = 0;
+	while (i < size)
+		free(heredoc_buf[i++]);
 }
 
-static void	heredoc(char *expr, t_msh *msh, int fd_in, int fd_out)
+static void	exec_heredoc(char *cmd, char **buf, t_msh *msh, int size)
 {
-	char	*tmp;
-	char	*str;
-	char	*heredoc[100];
-	int		i;
+	int		pipefd[2];
+	char	**arg;
+	int		pid;
 
-	tmp = NULL;
+	arg = NULL;
+	pipe(pipefd);
+	pid = fork();
+	if (pid == 0)
+	{
+		close(pipefd[0]);
+		dup2(pipefd[1], 1);
+		close(pipefd[1]);
+		print_heredoc(buf, size);
+		exit(EXIT_SUCCESS);
+	}
+	else
+	{
+		close(pipefd[1]);
+		dup2(pipefd[0], 0);
+		close(pipefd[0]);
+		waitpid(pid, &g_status, WUNTRACED);
+		arg = ft_split(cmd, ' ');
+		if (arg[0] != NULL)
+		{
+			int i = 0;
+
+			while (msh->paths[i])
+			{
+				char *tmp;
+				char *path;
+				if (access(arg[0], X_OK) == 0)
+					execve(arg[0], arg, msh->envp);
+				tmp = ft_strjoin(msh->paths[i++], "/");
+				path = ft_strjoin(tmp, arg[0]);
+				if (access(path, X_OK) == 0)
+					execve(path, arg, msh->envp);
+				free(tmp);
+				free(path);
+			}
+		}
+		free_split(arg);
+		exit(EXIT_FAILURE);
+	}
+}
+
+static void	heredoc(char **field, t_msh *msh)
+{
+	char	**heredoc_buf;
+	int		i;
+	char	*tmp;
+	char	*rkey;
+
 	i = 0;
+	heredoc_buf = malloc(sizeof(char *));
 	while (1)
 	{
 		write(1, "> ", 2);
-		str = remove_spaces(expr);
 		get_next_line(0, &tmp);
-		heredoc[i++] = ft_strdup(tmp);
-		if (ft_strncmp(tmp, str, ft_strlen(tmp)) == 0 && tmp[0] != '\0')
+		heredoc_buf[i++] = ft_strdup(tmp);
+		heredoc_buf = realloc(heredoc_buf, sizeof(char *) * (i + 1));
+		if (field[1])
+			rkey = remove_spaces(field[1]);
+		else
+			rkey = remove_spaces(field[0]);
+		if (ft_strncmp(tmp, rkey, ft_strlen(rkey)) == 0)
 		{
-			free(str);
+			free(rkey);
 			free(tmp);
 			break ;
 		}
+		free(rkey);
 		free(tmp);
-		free(str);
 	}
-	(void)msh;
-	(void)fd_in;
-	(void)fd_out;
-//UNDER CONSTRUCTION
-//using a fork pipe to feed the result of heredoc into the associated command
-	// close(msh->std_in);
-	// close(msh->std_out);
-	// msh->std_in = dup(0);
-	// msh->std_out = dup(1);
-	// //resetting fds
-	// int pid = fork();
-	// if (pid == 0)
-	// {}
-	// else
-	// //
-	// waitpid(pid, &g_status, WUNTRACED);
-	// //second fork
-	// int pid2 = fork();
-	// if (pid2 == 0)
-	// {}
-	// else
-	// //
-	// waitpid(pid2, &g_status, WUNTRACED);
-	
-	print_heredoc(heredoc, i);
+	heredoc_buf[i] = NULL;
+	exec_heredoc(field[0], heredoc_buf, msh, i);
 }
 
-static void	input_redirection(char **field, int mode, int *fd_in, int *fd_out, char *prompt, t_msh *msh)
+static void	input_redirection(char **field, int *fd_in, \
+	char *prompt, t_msh *msh)
 {
 	int		j;
 	int		fd;
@@ -110,18 +139,17 @@ static void	input_redirection(char **field, int mode, int *fd_in, int *fd_out, c
 	while (field[j])
 	{
 		expr = ft_split(field[j], ' ');
-		// if (mode == 1)
 		fd = open(expr[0], O_RDONLY);
-	if (mode == 2)
-	{
-		// *fd_in = dup(0);
-		// fd = open(, O_RDONLY);
-		heredoc(field[1], msh, *fd_in, *fd_out);
-	}
 		free_split(expr);
 		j++;
 	}
 	*fd_in = fd;
+	free_split(field);
+}
+
+static void	heredoc_redirection(char **field, t_msh *msh)
+{
+	heredoc(field, msh);
 	free_split(field);
 }
 
@@ -139,9 +167,9 @@ void	apply_redirections(char *expr, int *fd_in, int *fd_out, t_msh *msh)
 		else if (ft_strncmp(redirs[i], ">", ft_strlen(">")) == 0)
 			output_redirection(ft_split_charset(expr, ">"), 1, fd_out);
 		else if (ft_strncmp(redirs[i], "<<", ft_strlen("<<")) == 0)
-		 	input_redirection(ft_split_charset(expr, "<<"), 2, fd_in, fd_out, expr, msh);
+			heredoc_redirection(ft_split_charset(expr, "<<"), msh);
 		else if (ft_strncmp(redirs[i], "<", ft_strlen("<")) == 0)
-			input_redirection(ft_split_charset(expr, "<"), 1, fd_in, fd_out, expr, msh);
+			input_redirection(ft_split_charset(expr, "<"), fd_in, expr, msh);
 		else
 			(void)redirs;
 		i++;

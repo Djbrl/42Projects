@@ -32,7 +32,10 @@ static void	exec_path(t_msh *msh, char **expr)
 		free(cmd);
 		free(path);
 	}
-	display_error(CMD_ERROR, msh);
+	if (!is_redir(msh->tokens[0]))
+		display_error(CMD_ERROR, msh);
+	else
+		display_cmd_error(expr[0], PATH_ERROR, NULL);	
 	free_split(expr);
 	exit_cmd(msh);
 	free_env(msh);
@@ -58,9 +61,6 @@ static int	exec_env(t_msh *msh)
 	return (status);
 }
 
-/*
-** change builtin arguement to take current prompt
-*/
 void	exec_builtin(t_msh *msh, char *field)
 {
 	int		in;
