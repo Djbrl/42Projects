@@ -18,6 +18,7 @@
 **handle multipie if builtin is first command
 **handle heredoc
 */
+
 static void	exec_paths(t_msh *msh, char **re, char **cmd, char *field)
 {
 	char	*path;
@@ -40,12 +41,10 @@ static void	exec_paths(t_msh *msh, char **re, char **cmd, char *field)
 			free(tmp);
 			free(path);
 		}
-		display_cmd_error(cmd[0], PATH_ERROR, cmd);
-		// free_split(cmd);
-		// exit_cmd(msh);
-		// free_env(msh);
-		// free_expr(&msh);
-		// clear_history();
+		if (!is_redir(cmd[0]))
+			display_error(CMD_ERROR, msh);
+		else
+			display_cmd_error(cmd[1], PATH_ERROR, NULL);
 	}
 }
 

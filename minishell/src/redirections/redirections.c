@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 18:40:28 by dsy               #+#    #+#             */
-/*   Updated: 2023/01/10 16:29:08 by dsy              ###   ########.fr       */
+/*   Updated: 2023/01/28 03:15:19 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,70 +34,8 @@ static void	output_redirection(char **field, int mode, int *fd_out)
 	free_split(field);
 }
 
-static void	print_heredoc(char **heredoc, int size)
-{
-	int	i;
-
-	i = 0;
-	// while (i < size)
-	// 	printf("%s\n", heredoc[i++]);
-	// i = 0;
-	while (i < size)
-		free(heredoc[i++]);
-}
-
-static void	heredoc(char *expr, t_msh *msh, int fd_in, int fd_out)
-{
-	char	*tmp;
-	char	*str;
-	char	*heredoc[100];
-	int		i;
-
-	tmp = NULL;
-	i = 0;
-	while (1)
-	{
-		write(1, "> ", 2);
-		str = remove_spaces(expr);
-		get_next_line(0, &tmp);
-		heredoc[i++] = ft_strdup(tmp);
-		if (ft_strncmp(tmp, str, ft_strlen(tmp)) == 0 && tmp[0] != '\0')
-		{
-			free(str);
-			free(tmp);
-			break ;
-		}
-		free(tmp);
-		free(str);
-	}
-	(void)msh;
-	(void)fd_in;
-	(void)fd_out;
-//UNDER CONSTRUCTION
-//using a fork pipe to feed the result of heredoc into the associated command
-	// close(msh->std_in);
-	// close(msh->std_out);
-	// msh->std_in = dup(0);
-	// msh->std_out = dup(1);
-	// //resetting fds
-	// int pid = fork();
-	// if (pid == 0)
-	// {}
-	// else
-	// //
-	// waitpid(pid, &g_status, WUNTRACED);
-	// //second fork
-	// int pid2 = fork();
-	// if (pid2 == 0)
-	// {}
-	// else
-	// //
-	// waitpid(pid2, &g_status, WUNTRACED);
-	
-	print_heredoc(heredoc, i);
-}
-
-static void	input_redirection(char **field, int mode, int *fd_in, int *fd_out, char *prompt, t_msh *msh)
+static void	input_redirection(char **field, int *fd_in, \
+	char *prompt, t_msh *msh)
 {
 	int		j;
 	int		fd;
@@ -110,18 +48,17 @@ static void	input_redirection(char **field, int mode, int *fd_in, int *fd_out, c
 	while (field[j])
 	{
 		expr = ft_split(field[j], ' ');
-		// if (mode == 1)
 		fd = open(expr[0], O_RDONLY);
-	if (mode == 2)
-	{
-		// *fd_in = dup(0);
-		// fd = open(, O_RDONLY);
-		heredoc(field[1], msh, *fd_in, *fd_out);
-	}
 		free_split(expr);
 		j++;
 	}
 	*fd_in = fd;
+	free_split(field);
+}
+
+static void	heredoc_redirection(char **field, t_msh *msh)
+{
+	heredoc(field, msh);
 	free_split(field);
 }
 
@@ -139,9 +76,9 @@ void	apply_redirections(char *expr, int *fd_in, int *fd_out, t_msh *msh)
 		else if (ft_strncmp(redirs[i], ">", ft_strlen(">")) == 0)
 			output_redirection(ft_split_charset(expr, ">"), 1, fd_out);
 		else if (ft_strncmp(redirs[i], "<<", ft_strlen("<<")) == 0)
-		 	input_redirection(ft_split_charset(expr, "<<"), 2, fd_in, fd_out, expr, msh);
+			heredoc_redirection(ft_split_charset(expr, "<<"), msh);
 		else if (ft_strncmp(redirs[i], "<", ft_strlen("<")) == 0)
-			input_redirection(ft_split_charset(expr, "<"), 1, fd_in, fd_out, expr, msh);
+			input_redirection(ft_split_charset(expr, "<"), fd_in, expr, msh);
 		else
 			(void)redirs;
 		i++;
