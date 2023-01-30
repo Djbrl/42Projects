@@ -48,7 +48,7 @@ void	display_cmd_error(char *cmd, char *error, char **args)
 		if (args)
 			ft_putnstr("minishell: ", cmd, ": ", args[1]);
 		else
-			ft_putnstr("minishell: ", cmd, NULL, NULL);
+			ft_putnstr("minishell: ", cmd, ": ", NULL);
 		ft_putstr(error);
 	}
 }

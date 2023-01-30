@@ -19,7 +19,7 @@ static int	get_nb_tokens(char **tokens)
 	int	i;
 
 	i = 0;
-	while (tokens[i] != NULL)
+	while (tokens && tokens[i] != NULL)
 		i++;
 	return (i);
 }
