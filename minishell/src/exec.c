@@ -6,25 +6,21 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/27 03:15:12 by dsy               #+#    #+#             */
-/*   Updated: 2023/01/10 16:28:21 by dsy              ###   ########.fr       */
+/*   Updated: 2023/01/30 17:24:15 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	exec_path(t_msh *msh, char **expr)
+static void	exec_paths(t_msh *msh, char **expr)
 {
 	int		i;
 	char	*cmd;
 	char	*path;
 
 	i = 0;
-	if (msh->paths == NULL)
-		execve(expr[0], expr, msh->envp);
 	while (msh->paths[i])
 	{
-		if (access(msh->tokens[0], X_OK) == 0)
-			execve(expr[0], expr, msh->envp);
 		cmd = ft_strjoin(msh->paths[i++], "/");
 		path = ft_strjoin(cmd, expr[0]);
 		if (access(path, X_OK) == 0)
@@ -32,6 +28,13 @@ static void	exec_path(t_msh *msh, char **expr)
 		free(cmd);
 		free(path);
 	}
+}
+
+static void	exec_path(t_msh *msh, char **expr)
+{
+	if (msh->paths == NULL && access(expr[0], X_OK) == 0)
+		execve(expr[0], expr, msh->envp);
+	exec_paths(msh, expr);
 	if (!is_redir(msh->tokens[0]))
 		display_error(CMD_ERROR, msh);
 	else
@@ -51,7 +54,7 @@ static int	exec_env(t_msh *msh)
 
 	tmp = ft_strdup("PATH");
 	if ((!msh->paths || get_data_from_env(msh->env, tmp) == NULL) \
-		&& access(msh->tokens[0], X_OK) == -1)
+			&& access(msh->tokens[0], X_OK) == -1)
 		return (-1);
 	status = 0;
 	if (msh->exp == NULL || expr_len(msh->exp) == 1)
@@ -59,35 +62,6 @@ static int	exec_env(t_msh *msh)
 	else
 		status = pipe_exec(msh);
 	return (status);
-}
-
-void	exec_builtin(t_msh *msh, char *field)
-{
-	int		in;
-	int		out;
-	int		free;
-	char	**tmp;
-
-	free = 0;
-	in = -1;
-	out = -1;
-	if (!field)
-		apply_redirections(msh->prompt, &in, &out, msh);
-	else
-		apply_redirections(field, &in, &out, msh);
-	close_redir(in, out);
-	if (field != NULL)
-	{
-		tmp = ft_split(field, ' ');
-		free = 1;
-	}
-	else
-		tmp = msh->tokens;
-	msh->cmd.ptr[is_builtin(tmp[0], msh)](msh->env, msh, field);
-	if (free)
-		free_split(tmp);
-	dup2(msh->std_in, 0);
-	dup2(msh->std_out, 1);
 }
 
 static void	fork_cmd(t_msh *msh)

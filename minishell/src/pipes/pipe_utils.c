@@ -66,3 +66,32 @@ int	init_fds(t_expr **commands, t_expr *prev)
 	cur->fd_out = STDOUT_FILENO;
 	return (0);
 }
+
+void	exec_builtin(t_msh *msh, char *field)
+{
+	int		in;
+	int		out;
+	int		free;
+	char	**tmp;
+
+	free = 0;
+	in = -1;
+	out = -1;
+	if (!field)
+		apply_redirections(msh->prompt, &in, &out, msh);
+	else
+		apply_redirections(field, &in, &out, msh);
+	close_redir(in, out);
+	if (field != NULL)
+	{
+		tmp = ft_split(field, ' ');
+		free = 1;
+	}
+	else
+		tmp = msh->tokens;
+	msh->cmd.ptr[is_builtin(tmp[0], msh)](msh->env, msh, field);
+	if (free)
+		free_split(tmp);
+	dup2(msh->std_in, 0);
+	dup2(msh->std_out, 1);
+}

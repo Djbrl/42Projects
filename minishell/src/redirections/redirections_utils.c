@@ -12,26 +12,6 @@
 
 #include "minishell.h"
 
-char	**check_redirections(t_msh *msh)
-{
-	int		in;
-	int		out;
-	char	**expr;
-	char	**tmp;
-
-	in = -1;
-	out = -1;
-	tmp = ft_split_charset(msh->prompt, "<>");
-	expr = ft_split(tmp[0], ' ');
-	apply_redirections(msh->prompt, &in, &out, msh);
-	free_split(tmp);
-	if (in != -1)
-		dup2(in, 0);
-	if (out != -1)
-		dup2(out, 1);
-	return (expr);
-}
-
 static void	print_heredoc(char **heredoc_buf, int size)
 {
 	int	i;
@@ -97,24 +77,18 @@ static void	ftn_heredoc(char *cmd, char **buf, t_msh *msh, int size)
 	}
 }
 
-/*
-** make sure this pipes into the next command
-*/
-void	heredoc(char **field, t_msh *msh)
+static void	get_heredoc_lines(char **field, char ***heredoc_buf, int *i)
 {
-	char	**heredoc_buf;
-	int		i;
 	char	*tmp;
 	char	*rkey;
 
-	i = 0;
-	heredoc_buf = malloc(sizeof(char *));
 	while (1)
 	{
 		write(1, "> ", 2);
 		get_next_line(0, &tmp);
-		heredoc_buf[i++] = ft_strdup(tmp);
-		heredoc_buf = realloc(heredoc_buf, sizeof(char *) * (i + 1));
+		(*heredoc_buf)[*i] = ft_strdup(tmp);
+		*heredoc_buf = realloc(*heredoc_buf, sizeof(char *) * (*i + 2));
+		(*i)++;
 		if (field[1])
 			rkey = remove_spaces(field[1]);
 		else
@@ -128,6 +102,16 @@ void	heredoc(char **field, t_msh *msh)
 		free(rkey);
 		free(tmp);
 	}
-	heredoc_buf[i] = NULL;
+	(*heredoc_buf)[*i] = NULL;
+}
+
+void	heredoc(char **field, t_msh *msh)
+{
+	char	**heredoc_buf;
+	int		i;
+
+	i = 0;
+	heredoc_buf = malloc(sizeof(char *));
+	get_heredoc_lines(field, &heredoc_buf, &i);
 	ftn_heredoc(field[0], heredoc_buf, msh, i);
 }
