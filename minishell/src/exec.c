@@ -19,6 +19,8 @@ static void	exec_paths(t_msh *msh, char **expr)
 	char	*path;
 
 	i = 0;
+	if (access(expr[0], X_OK) == 0)
+		execve(expr[0], expr, msh->envp);
 	while (msh->paths[i])
 	{
 		cmd = ft_strjoin(msh->paths[i++], "/");
