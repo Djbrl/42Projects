@@ -37,7 +37,7 @@ SRC_OTHER := main.c exec.c init.c envp.c expr.c\
 			 \
 			 builtins/echo_runner.c builtins/export_runner.c \
 			 builtins/other.c builtins/export.c builtins/unset.c \
-			 builtins/echo.c builtins/cd.c \
+			 builtins/echo.c builtins/cd.c builtins/cd_extension.c \
 			 \
 			 parsing/parse_prompt.c parsing/cases/dollar.c \
 			 parsing/cases/double_quote.c parsing/cases/single_quote.c \

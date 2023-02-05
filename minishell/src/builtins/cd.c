@@ -21,36 +21,7 @@
 ** if mhs->home NULL : bash: cd: HOME not set
 */
 
-static int	change_dir(t_msh **msh, char **tokens, char **path)
-{
-	char	*p;
-	int		ret;
-	t_msh	*m;
-
-	ret = 0;
-	m = *msh;
-	p = *path;
-	if (tokens[1])
-	{
-		if (tokens[1][0] == '$')
-			p = expand_var(m, tokens[1]);
-		else
-			p = ft_strdup(tokens[1]);
-	}
-	if (!tokens[1])
-	{
-		if (m->home != NULL)
-			ret = chdir(m->home);
-		else
-			ret = chdir("/");
-	}
-	else
-		ret = chdir(p);
-	free(p);
-	return (ret);
-}
-
-static int	ftn_msh_cd(t_msh **msh, char **path, int ret, char *field)
+static int	ftn_msh_cd(t_msh **msh, int ret, char *field)
 {
 	char	**tokens;
 	int		free_tokens;
@@ -63,7 +34,8 @@ static int	ftn_msh_cd(t_msh **msh, char **path, int ret, char *field)
 		tokens = ft_split(field, ' ');
 		free_tokens = 1;
 	}
-	ret = change_dir(msh, tokens, path);
+	
+	ret = change_dir(msh, tokens);
 	if (free_tokens)
 		free_split(tokens);
 	return (ret);
@@ -117,12 +89,10 @@ int	msh_cd_runner(t_env_var *env, t_msh *msh, char *field)
 int	msh_cd(t_env_var *env, t_msh *msh, char *field)
 {
 	int		ret;
-	char	*path;
 
 	(void)env;
 	ret = 0;
-	path = NULL;
-	ret = ftn_msh_cd(&msh, &path, ret, field);
+	ret = ftn_msh_cd(&msh, ret, field);
 	if (ret < 0)
 	{
 		display_cmd_error("cd", PATH_ERROR, msh->tokens);

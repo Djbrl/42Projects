@@ -26,6 +26,7 @@
 # include <errno.h>
 # include <limits.h>
 
+# define CHDIR_ERR "chdir: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n"
 # define CD_ARG_ERROR ": too many arguments\n"
 # define ENV_ID_ERROR ": not a valid identifier\n"
 # define FORK_ERROR ": couldn't start process\n"
@@ -73,6 +74,7 @@ typedef struct s_msh
 	t_cmd		cmd;
 	t_expr		*exp;
 	t_env_var	*env;
+	char		*last_valid_path;
 	char		*home;
 	char		*user;
 	char		*full_path;
@@ -150,6 +152,7 @@ void	close_redir(int in, int out);
 int		arr_len(char **arr);
 void	free_envar(t_msh *msh);
 void	free_env(t_msh *msh);
+int 	change_dir(t_msh **msh, char **tokens);
 
 /*
 ** PIPE
