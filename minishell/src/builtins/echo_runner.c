@@ -26,23 +26,23 @@ static void	ftn_echo_runner(t_msh **msh, t_env_var **var, int i, char **tokens)
 	{
 		if (is_redir(tokens[i]))
 			break ;
-		if (i > 1)
-			write(1, " ", 1);
 		if (tokens[i] != NULL)
 		{
     		if (more_than_one_word(tokens[i]))
 				msh_echo(*var, ft_strdup(tokens[i]), *msh);
-			else if (!ft_strncmp(tokens[i], "$", ft_strlen(tokens[i])))
-				printf("$");
-			else if (!ft_strncmp(tokens[i], "$$", ft_strlen(tokens[i])))
-				printf(SHELL_PID_ERROR);
+			else if (!ft_strcmp(tokens[i], "$"))
+				write(1, "$", 1);
+			else if (!ft_strcmp(tokens[i], "$$"))
+				write(1, SHELL_PID_ERROR, ft_strlen(SHELL_PID_ERROR));
 			else
 				msh_echo(*var, remove_spaces(tokens[i]), *msh);
+			if (tokens[i + 1] != NULL)
+				write(1, " ", 1);
 		}
 		i++;
 	}
 	write(1, "\n", 1);
-}
+} 
 
 static int	run_echo(t_msh **msh, t_env_var **env, char **tokens)
 {
@@ -82,7 +82,7 @@ static void	check_options(t_msh *msh, t_env_var *env, char **tokens)
 {
 	int	i;
 
-	//make sure that echo $ works, stop omitting - char too, fix $?+$?
+	//fix segfault on unkown $envar
 	i = 1;
 	if (!tokens[1])
 		write(1, "\n", 1);

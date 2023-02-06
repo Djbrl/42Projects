@@ -72,13 +72,12 @@ static void	ftn_msh_echo(char **var, char **arg, t_env_var **env, int i)
 /*
 ** MSH ECHO is ran by msh_echo_runner
 */
-int	msh_echo(t_env_var *env, char *arg, t_msh *msh)
+static int echo_dollar_check(char *arg, t_env_var *env)
 {
-	int		i;
-	char	*var;
+	int i;
+	char *var;
 
 	i = 0;
-	(void)msh;
 	if (arg[0] == '$')
 	{
 		while (arg[i])
@@ -91,6 +90,31 @@ int	msh_echo(t_env_var *env, char *arg, t_msh *msh)
 	}
 	else
 		ft_putstr(arg);
+	return (0);
+}
+
+int msh_echo(t_env_var *env, char *arg, t_msh *msh)
+{
+	char **args;
+	int i;
+
+	(void)msh;
+	if (more_than_one_word(arg) == 1)
+	{
+
+		args = ft_split(arg, ' ');
+		i = 0;
+		while (args[i])
+		{
+			echo_dollar_check(args[i], env);
+			if (args[i + 1])
+				ft_putchar(' ');
+			i++;
+		}
+		free_split(args);
+	}
+	else
+		echo_dollar_check(arg, env);
 	free(arg);
 	return (0);
 }
