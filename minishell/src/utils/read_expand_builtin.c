@@ -83,6 +83,22 @@ void	flush_buffer(t_msh *msh)
 ** }
 */
 
+int has_odd_quotes(char *str)
+{
+    int quotes;
+    int i;
+
+    quotes = 0;
+    i = 0;
+    while (str[i])
+    {
+        if (str[i] == '\"' || str[i] == '\'')
+            quotes++;
+        i++;
+    }
+    return (quotes % 2 == 1);
+}
+
 void	read_buffer(t_msh *msh)
 {
 	char	*s;
@@ -93,6 +109,12 @@ void	read_buffer(t_msh *msh)
 	if (s != NULL)
 	{
 		add_history(s);
+		if (has_odd_quotes(s))
+		{
+			printf(SYNTAX_ERR_QUOTES);
+			flush_buffer(msh);
+			return ;
+		}
 		if (ft_strlen(s) == 0)
 			flush_buffer(msh);
 		else

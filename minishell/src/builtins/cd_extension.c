@@ -24,12 +24,10 @@
 static int change_dir_helper(t_msh *msh, char *path)
 {
 	int		ret;
-	char	cwd[1023];
+	char	cwd[1024];
 
 	ret = chdir(path);
-	if (ret == -1)
-		chdir(msh->last_valid_path);
-	else
+	if (ret == 0)
 	{
 		if (getcwd(cwd, sizeof(cwd)) == NULL)
 			printf(CHDIR_ERR);

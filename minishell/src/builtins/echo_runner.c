@@ -29,24 +29,19 @@ static void	ftn_echo_runner(t_msh **msh, t_env_var **var, int i, char **tokens)
 		if (i > 1)
 			write(1, " ", 1);
 		if (tokens[i] != NULL)
-			msh_echo(*var, remove_spaces(tokens[i]), *msh);
+		{
+    		if (more_than_one_word(tokens[i]))
+				msh_echo(*var, ft_strdup(tokens[i]), *msh);
+			else if (!ft_strncmp(tokens[i], "$", ft_strlen(tokens[i])))
+				printf("$");
+			else if (!ft_strncmp(tokens[i], "$$", ft_strlen(tokens[i])))
+				printf(SHELL_PID_ERROR);
+			else
+				msh_echo(*var, remove_spaces(tokens[i]), *msh);
+		}
 		i++;
 	}
 	write(1, "\n", 1);
-}
-
-static int	check_n_option(char *opt)
-{
-	int	i;
-
-	i = 1;
-	while (opt[i])
-	{
-		if (opt[i] != 'n')
-			return (0);
-		i++;
-	}
-	return (1);
 }
 
 static int	run_echo(t_msh **msh, t_env_var **env, char **tokens)
@@ -64,12 +59,19 @@ static int	run_echo(t_msh **msh, t_env_var **env, char **tokens)
 	{
 		if (is_redir(tokens[i]))
 			break ;
+		if (ft_strcmp(tokens[i], "-n") == 0)
+		{
+			i++;
+			continue ;
+		}
 		if (i != 1)
 		{
-			if (!check_n_option(tokens[i]))
+			if (more_than_one_word(tokens[i]))
+				exit = msh_echo(e, ft_strdup(tokens[i]), m);
+			else
 				exit = msh_echo(e, remove_spaces(tokens[i]), m);
 		}
-		if (tokens[i + 1] != NULL && !check_n_option(tokens[i]))
+		if (tokens[i + 1] != NULL && i != 1)
 			write(1, " ", 1);
 		i++;
 	}
@@ -80,13 +82,11 @@ static void	check_options(t_msh *msh, t_env_var *env, char **tokens)
 {
 	int	i;
 
+	//make sure that echo $ works, stop omitting - char too, fix $?+$?
 	i = 1;
 	if (!tokens[1])
 		write(1, "\n", 1);
-	else if (ft_strncmp(tokens[1], "-n", ft_strlen(tokens[1])) == 0)
-		run_echo(&msh, &env, tokens);
-	else if (ft_strncmp(tokens[1], "-n", ft_strlen(tokens[1])) != 0 \
-			&& check_n_option(tokens[1]))
+	else if (ft_strncmp(tokens[1], "-n", ft_strlen("-n")) == 0)
 		run_echo(&msh, &env, tokens);
 	else
 		ftn_echo_runner(&msh, &env, i, tokens);

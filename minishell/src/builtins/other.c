@@ -57,7 +57,10 @@ int	msh_pwd(t_env_var *env, t_msh *msh, char *field)
 	(void)field;
 	(void)msh;
 	(void)env;
-	ft_putnstr(getcwd(cwd, sizeof(cwd)), "\n", NULL, NULL);
+	if (getcwd(cwd, sizeof(cwd)) == NULL)
+		printf(PWD_ERR);
+	else
+		ft_putnstr(getcwd(cwd, sizeof(cwd)), "\n", NULL, NULL);
 	exit_cmd(msh);
 	return (update_exit_status(msh, 0));
 }

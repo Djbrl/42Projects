@@ -12,6 +12,26 @@
 
 #include "minishell.h"
 
+int	more_than_one_word(char *echo)
+{
+	char	**expr;
+	int		i;
+
+	i = 0;
+	if (!echo)
+		return (0);
+	expr = ft_split(echo, ' ');
+	while (expr[i] != NULL)
+		i++;
+	if (i > 1)
+	{
+		free_split(expr);
+		return (1);
+	}
+	free_split(expr);
+	return (0);
+}
+
 /*
 ****************************STATIC FUNCTIONS****************************
 */
@@ -63,14 +83,9 @@ int	msh_echo(t_env_var *env, char *arg, t_msh *msh)
 	{
 		while (arg[i])
 		{
-			if (arg[i] == '$' && arg[i + 1] == '$')
-				write(1, "$", 1);
-			else
-			{
-				if (arg[i] == '$' && (ft_isalpha(arg[i + 1]) \
+			if (arg[i] == '$' && (ft_isalpha(arg[i + 1]) \
 				|| arg[i + 1] == '?'))
-					ftn_msh_echo(&var, &arg, &env, i);
-			}
+				ftn_msh_echo(&var, &arg, &env, i);
 			i++;
 		}
 	}

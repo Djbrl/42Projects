@@ -26,6 +26,9 @@
 # include <errno.h>
 # include <limits.h>
 
+# define SHELL_PID_ERROR "[SHELL_PID]"
+# define SYNTAX_ERR_QUOTES "minishell: syntax error: unclosed quotes\n"
+# define PWD_ERR "pwd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n"
 # define CHDIR_ERR "chdir: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n"
 # define CD_ARG_ERROR ": too many arguments\n"
 # define ENV_ID_ERROR ": not a valid identifier\n"
@@ -153,6 +156,7 @@ int		arr_len(char **arr);
 void	free_envar(t_msh *msh);
 void	free_env(t_msh *msh);
 int 	change_dir(t_msh **msh, char **tokens);
+int		more_than_one_word(char *echo);
 
 /*
 ** PIPE
