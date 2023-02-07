@@ -60,8 +60,6 @@ static void	ftn_msh_echo(char **var, char **arg, t_env_var **env, int i)
 	t = ft_strdup(get_data_from_env(e, v));
 	if (t != NULL)
 		ft_putstr(t);
-	else
-		write(1, "\n", 1);
 	free(t);
 }
 
@@ -74,20 +72,25 @@ static void	ftn_msh_echo(char **var, char **arg, t_env_var **env, int i)
 */
 static int echo_dollar_check(char *arg, t_env_var *env)
 {
-	int i;
-	char *var;
+	int		i;
+	char	*var;
+	char	*tmp;
+	char	*res;
 
 	i = 0;
-	if (arg[0] == '$')
+ 	if (ft_strcmp(arg, "$") == 0)
+		printf("$");
+	else if (ft_strcmp(arg, "$$") == 0)
+		printf(SHELL_PID_ERROR);
+	else if (ft_strcmp(arg, "$?") == 0)
 	{
-		while (arg[i])
-		{
-			if (arg[i] == '$' && (ft_isalpha(arg[i + 1]) \
-				|| arg[i + 1] == '?'))
-				ftn_msh_echo(&var, &arg, &env, i);
-			i++;
-		}
+		tmp = ft_strdup("?");
+		res = ft_strdup(get_data_from_env(env, tmp));
+		printf("%s", res);
+		free(res);
 	}
+	else if (arg[i] == '$' && ft_isalpha(arg[i + 1]))
+		ftn_msh_echo(&var, &arg, &env, i);
 	else
 		ft_putstr(arg);
 	return (0);
@@ -95,23 +98,31 @@ static int echo_dollar_check(char *arg, t_env_var *env)
 
 int msh_echo(t_env_var *env, char *arg, t_msh *msh)
 {
-	char **args;
-	int i;
+	char	**tmp;
+	char	**args;
+	int		i;
+	int		j;
 
-	(void)msh;
+	j = 1;
 	if (more_than_one_word(arg) == 1)
 	{
-
-		args = ft_split(arg, ' ');
-		i = 0;
-		while (args[i])
+		tmp = ft_split(msh->prompt, '\"');
+		while (tmp[j])
 		{
-			echo_dollar_check(args[i], env);
-			if (args[i + 1])
-				ft_putchar(' ');
-			i++;
+			args = ft_split(tmp[j], ' ');
+			i = 0;
+			while (args[i])
+			{
+				echo_dollar_check(args[i], env);
+				if (args[i + 1])
+					printf(" ");
+				i++;
+			}
+			free_split(args);
+			i = 0;
+			j++;
 		}
-		free_split(args);
+		free_split(tmp);
 	}
 	else
 		echo_dollar_check(arg, env);

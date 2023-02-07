@@ -41,7 +41,6 @@ static void	ftn_echo_runner(t_msh **msh, t_env_var **var, int i, char **tokens)
 		}
 		i++;
 	}
-	write(1, "\n", 1);
 } 
 
 static int	run_echo(t_msh **msh, t_env_var **env, char **tokens)
@@ -56,7 +55,7 @@ static int	run_echo(t_msh **msh, t_env_var **env, char **tokens)
 	m = *msh;
 	e = *env;
 	while (tokens[i])
-	{
+	{		
 		if (is_redir(tokens[i]))
 			break ;
 		if (ft_strcmp(tokens[i], "-n") == 0)
@@ -82,14 +81,16 @@ static void	check_options(t_msh *msh, t_env_var *env, char **tokens)
 {
 	int	i;
 
-	//fix segfault on unkown $envar
 	i = 1;
 	if (!tokens[1])
 		write(1, "\n", 1);
 	else if (ft_strncmp(tokens[1], "-n", ft_strlen("-n")) == 0)
 		run_echo(&msh, &env, tokens);
 	else
+	{
 		ftn_echo_runner(&msh, &env, i, tokens);
+		printf("\n");
+	}
 	exit_cmd(msh);
 }
 
@@ -97,7 +98,6 @@ static void	check_options(t_msh *msh, t_env_var *env, char **tokens)
 ****************************STATIC FUNCTIONS****************************
 */
 
-//only if field isnt NULL
 int	msh_echo_runner(t_env_var *env, t_msh *msh, char *field)
 {
 	int		exit_status;

@@ -16,6 +16,8 @@ void	add_to_rt(char **rt, char *tmp)
 {
 	char	*rt_cpy;
 
+	if (!tmp)
+		return ;
 	if (*rt)
 	{
 		rt_cpy = ft_strdup(*rt);
