@@ -88,6 +88,7 @@ typedef struct s_msh
 	char		**paths;
 	char		g_buffer[BUF];
 	int			nb_tokens;
+	int			single_quote;
 	int			exit_status;
 	int			std_in;
 	int			std_out;

@@ -26,7 +26,10 @@ static int	check_which_case(char *str, char **rt, int i, t_msh *msh)
 				&& !is_whitespace(str[i]))
 				i = string(str, rt, i);
 			else if (str[i] == '\'')
+			{
+				msh->single_quote = 1;
 				i = single_quote(str, rt, i);
+			}
 			else if (str[i] == '"')
 				i = double_quote(str, rt, i, msh);
 			else if (str[i] == '$')

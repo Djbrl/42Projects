@@ -54,6 +54,7 @@ void	init_msh(t_msh *msh, char **envp)
 	msh->last_valid_path = getcwd(cwd, sizeof(cwd));
 	msh->std_in = dup(0);
 	msh->std_out = dup(1);
+	msh->single_quote = 0;
 	parse_envp(msh);
 	flush_buffer(msh);
 }
