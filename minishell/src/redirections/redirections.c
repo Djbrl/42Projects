@@ -56,8 +56,9 @@ static void	input_redirection(char **field, int *fd_in, \
 	free_split(field);
 }
 
-static void	heredoc_redirection(char **field, t_msh *msh)
+static void	heredoc_redirection(char **redirs, char **field, t_msh *msh)
 {
+	free_split(redirs);
 	heredoc(field, msh);
 	free_split(field);
 }
@@ -76,7 +77,7 @@ void	apply_redirections(char *expr, int *fd_in, int *fd_out, t_msh *msh)
 		else if (ft_strncmp(redirs[i], ">", ft_strlen(">")) == 0)
 			output_redirection(ft_split_charset(expr, ">"), 1, fd_out);
 		else if (ft_strncmp(redirs[i], "<<", ft_strlen("<<")) == 0)
-			heredoc_redirection(ft_split_charset(expr, "<<"), msh);
+			heredoc_redirection(redirs, ft_split_charset(expr, "<<"), msh);
 		else if (ft_strncmp(redirs[i], "<", ft_strlen("<")) == 0)
 			input_redirection(ft_split_charset(expr, "<"), fd_in, expr, msh);
 		else

@@ -41,7 +41,6 @@ static void	exec_path(t_msh *msh, char **expr)
 		display_error(CMD_ERROR, msh);
 	else
 		display_cmd_error(expr[0], PATH_ERROR, NULL);
-	free_split(expr);
 	exit_cmd(msh);
 	free_env(msh);
 	free_expr(&msh);
@@ -53,6 +52,8 @@ static int	exec_env(t_msh *msh)
 {
 	int		status;
 	char	*tmp;
+	char	**redir;
+	char	**expr;
 
 	tmp = ft_strdup("PATH");
 	if ((!msh->paths || get_data_from_env(msh->env, tmp) == NULL) \
@@ -60,7 +61,14 @@ static int	exec_env(t_msh *msh)
 		return (-1);
 	status = 0;
 	if (msh->exp == NULL || expr_len(msh->exp) == 1)
-		exec_path(msh, check_redirections(msh));
+	{
+		check_redirections(msh);
+		redir = ft_split_charset(msh->prompt, "<>");
+		expr = ft_split(redir[0], ' ');
+		free_split(redir);
+		exec_path(msh, expr);
+		free_split(expr);
+	}
 	else
 		status = pipe_exec(msh);
 	return (status);

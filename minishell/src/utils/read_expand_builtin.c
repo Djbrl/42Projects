@@ -99,6 +99,37 @@ int has_odd_quotes(char *str)
     return (quotes % 2 == 1);
 }
 
+int		has_unexpected_token(char *str)
+{
+	char	**res;
+	int		i;
+	int		len;
+
+	res = ft_split(str, ' ');
+	i = 0;
+	while (res[i])
+	{
+		len = ft_strlen(res[i]);
+		if ((len == 1 && (res[i][0] == '>' || res[i][0] == '<' || res[i][0] == '|'))
+			|| (len == 2 && (ft_strcmp(res[i], ">>") == 0 || ft_strcmp(res[i], "<<") == 0)))
+		{
+			if (res[i + 1] == NULL)
+			{
+				free_split(res);
+				return (1);
+			}
+		}
+		else if (i == 0 && len == 2 && ft_strcmp(res[i], "<<") == 0)
+		{
+			free_split(res);
+			return (1);
+		}
+		i++;
+	}
+	free_split(res);
+	return (0);
+}
+
 void	read_buffer(t_msh *msh)
 {
 	char	*s;
@@ -110,6 +141,12 @@ void	read_buffer(t_msh *msh)
 	{
 		add_history(s);
 		if (has_odd_quotes(s))
+		{
+			printf(SYNTAX_ERR_QUOTES);
+			flush_buffer(msh);
+			return ;
+		}
+		if (has_unexpected_token(s))
 		{
 			printf(SYNTAX_ERR_QUOTES);
 			flush_buffer(msh);
