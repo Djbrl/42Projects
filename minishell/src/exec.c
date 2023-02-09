@@ -70,7 +70,10 @@ static int	exec_env(t_msh *msh)
 		free_split(expr);
 	}
 	else
+	{
 		status = pipe_exec(msh);
+
+	}
 	return (status);
 }
 
@@ -84,6 +87,10 @@ static void	fork_cmd(t_msh *msh)
 		if (exec_env(msh) == -1)
 		{
 			display_error(CMD_ERROR, msh);
+			exit_cmd(msh);
+			free_env(msh);
+			free_expr(&msh);
+			clear_history();
 			exit(EXIT_FAILURE);
 		}
 		else

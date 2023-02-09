@@ -70,7 +70,7 @@ static void	ftn_msh_echo(char **var, char **arg, t_env_var **env, int i)
 /*
 ** MSH ECHO is ran by msh_echo_runner
 */
-static int echo_dollar_check(char *arg, t_env_var *env)
+static int echo_dollar_check(char *arg, t_env_var *env, t_msh *msh)
 {
 	int		i;
 	char	*var;
@@ -89,7 +89,7 @@ static int echo_dollar_check(char *arg, t_env_var *env)
 		printf("%s", res);
 		free(res);
 	}
-	else if (arg[i] == '$' && ft_isalpha(arg[i + 1]))
+	else if (arg[i] == '$' && ft_isalpha(arg[i + 1]) && !msh->single_quote)
 		ftn_msh_echo(&var, &arg, &env, i);
 	else
 		ft_putstr(arg);
@@ -113,7 +113,7 @@ int msh_echo(t_env_var *env, char *arg, t_msh *msh)
 			i = 0;
 			while (args[i])
 			{
-				echo_dollar_check(args[i], env);
+				echo_dollar_check(args[i], env, msh);
 				if (args[i + 1])
 					printf(" ");
 				i++;
@@ -125,7 +125,7 @@ int msh_echo(t_env_var *env, char *arg, t_msh *msh)
 		free_split(tmp);
 	}
 	else
-		echo_dollar_check(arg, env);
+		echo_dollar_check(arg, env, msh);
 	free(arg);
 	return (0);
 }

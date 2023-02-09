@@ -14,14 +14,19 @@
 
 #define HEREDOC_BUF_SIZE 1024
 
-static void	print_heredoc(char **heredoc_buf, int size)
+static void	print_heredoc(char *heredoc_buf[15])
 {
 	int	i;
 
 	i = 0;
-	while (i < size)
-		printf("%s\n", heredoc_buf[i++]);
+	while (heredoc_buf[i] != NULL)
+	{
+		printf("%s\n", heredoc_buf[i]);
+		free(heredoc_buf[i++]);
+	}
+	free(heredoc_buf[i]);
 }
+
 static void	exec_heredoc(t_msh *msh, char *cmd)
 {
 	char	**arg;
@@ -54,11 +59,13 @@ static void	exec_heredoc(t_msh *msh, char *cmd)
 	exit(EXIT_FAILURE);
 }
 
-static void	ftn_heredoc(char *cmd, char **buf, t_msh *msh, int size)
+static void	ftn_heredoc(char *cmd, char *buf[15], t_msh *msh)
 {
 	int		pipefd[2];
 	int		pid;
+	int		i;
 
+	i = 0;
 	pipe(pipefd);
 	pid = fork();
 	if (pid == 0)
@@ -66,7 +73,7 @@ static void	ftn_heredoc(char *cmd, char **buf, t_msh *msh, int size)
 		close(pipefd[0]);
 		dup2(pipefd[1], 1);
 		close(pipefd[1]);
-		print_heredoc(buf, size);
+		print_heredoc(buf);
 		free(cmd);
 		exit_cmd(msh);
 		free_env(msh);
@@ -79,21 +86,26 @@ static void	ftn_heredoc(char *cmd, char **buf, t_msh *msh, int size)
 		dup2(pipefd[0], 0);
 		close(pipefd[0]);
 		waitpid(pid, &g_status, WUNTRACED);
+		while (buf[i] != NULL)
+			free(buf[i++]);
+		free(buf[i]);
 		exec_heredoc(msh, cmd);
 	}
 }
 
-static void	get_heredoc_lines(char **field, char ***heredoc_buf, int *i)
+static void	get_heredoc_lines(char **field, char *heredoc_buf[15])
 {
 	char	tmp[HEREDOC_BUF_SIZE];
 	char	*rkey;
+	int		i;
 
+	i = 0;
 	while (1)
 	{
 		write(1, "> ", 2);
 		if (!fgets(tmp, HEREDOC_BUF_SIZE, stdin))
 			break;
-		(*heredoc_buf)[*i] = ft_strdup(tmp);
+		heredoc_buf[i] = ft_strdup(tmp);
 		if (field[1])
 			rkey = remove_spaces(field[1]);
 		else
@@ -104,21 +116,22 @@ static void	get_heredoc_lines(char **field, char ***heredoc_buf, int *i)
 			break ;
 		}
 		free(rkey);
-		(*i)++;
+		i++;
 	}
-	(*heredoc_buf)[*i] = NULL;
+	heredoc_buf[i] = NULL;
 }
 
 void	heredoc(char **field, t_msh *msh)
 {
-	char	**heredoc_buf;
+	char	*heredoc_buf[15];
 	char	*tmp;
 	int		i;
 
 	i = 0;
-	heredoc_buf = malloc(sizeof(char *) * HEREDOC_BUF_SIZE);
-	get_heredoc_lines(field, &heredoc_buf, &i);
+	while (i < 15)
+		heredoc_buf[i++] = NULL;
+	get_heredoc_lines(field, heredoc_buf);
 	tmp = ft_strdup(field[0]);
 	free_split(field);
-	ftn_heredoc(tmp, heredoc_buf, msh, i);
+	ftn_heredoc(tmp, heredoc_buf, msh);
 }
