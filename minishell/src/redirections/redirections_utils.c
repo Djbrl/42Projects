@@ -13,8 +13,9 @@
 #include "minishell.h"
 
 #define HEREDOC_BUF_SIZE 1024
+#define HEREDOC_LIMIT 100
 
-static void	print_heredoc(char *heredoc_buf[15])
+static void	print_heredoc(char *heredoc_buf[HEREDOC_LIMIT])
 {
 	int	i;
 
@@ -59,7 +60,7 @@ static void	exec_heredoc(t_msh *msh, char *cmd)
 	exit(EXIT_FAILURE);
 }
 
-static void	ftn_heredoc(char *cmd, char *buf[15], t_msh *msh)
+static void	ftn_heredoc(char *cmd, char *buf[HEREDOC_LIMIT], t_msh *msh)
 {
 	int		pipefd[2];
 	int		pid;
@@ -93,14 +94,14 @@ static void	ftn_heredoc(char *cmd, char *buf[15], t_msh *msh)
 	}
 }
 
-static void	get_heredoc_lines(char **field, char *heredoc_buf[15])
+static void	get_heredoc_lines(char **field, char *heredoc_buf[HEREDOC_LIMIT])
 {
 	char	tmp[HEREDOC_BUF_SIZE];
 	char	*rkey;
 	int		i;
 
 	i = 0;
-	while (1)
+	while (i < HEREDOC_LIMIT - 1)
 	{
 		write(1, "> ", 2);
 		if (!fgets(tmp, HEREDOC_BUF_SIZE, stdin))
@@ -123,7 +124,7 @@ static void	get_heredoc_lines(char **field, char *heredoc_buf[15])
 
 void	heredoc(char **field, t_msh *msh)
 {
-	char	*heredoc_buf[15];
+	char	*heredoc_buf[HEREDOC_LIMIT];
 	char	*tmp;
 	int		i;
 
