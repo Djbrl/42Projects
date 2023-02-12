@@ -25,7 +25,6 @@ static void	print_heredoc(char *heredoc_buf[HEREDOC_LIMIT])
 		printf("%s\n", heredoc_buf[i]);
 		free(heredoc_buf[i++]);
 	}
-	free(heredoc_buf[i]);
 }
 
 static void	exec_heredoc(t_msh *msh, char *cmd)
@@ -89,7 +88,6 @@ static void	ftn_heredoc(char *cmd, char *buf[HEREDOC_LIMIT], t_msh *msh)
 		waitpid(pid, &g_status, WUNTRACED);
 		while (buf[i] != NULL)
 			free(buf[i++]);
-		free(buf[i]);
 		exec_heredoc(msh, cmd);
 	}
 }
@@ -99,14 +97,20 @@ static void	get_heredoc_lines(char **field, char *heredoc_buf[HEREDOC_LIMIT])
 	char	tmp[HEREDOC_BUF_SIZE];
 	char	*rkey;
 	int		i;
+	int		ret;
 
 	i = 0;
 	while (i < HEREDOC_LIMIT - 1)
 	{
 		write(1, "> ", 2);
-		if (!fgets(tmp, HEREDOC_BUF_SIZE, stdin))
-			break;
-		heredoc_buf[i] = ft_strdup(tmp);
+		ret = read(0, tmp, HEREDOC_BUF_SIZE - 1);
+		if (ret <= 0)
+			break ;
+		tmp[ret - 1] = '\0';
+		if (ret == 0)
+			heredoc_buf[i] = ft_strdup("");
+		else
+			heredoc_buf[i] = ft_strdup(tmp);
 		if (field[1])
 			rkey = remove_spaces(field[1]);
 		else
@@ -114,13 +118,16 @@ static void	get_heredoc_lines(char **field, char *heredoc_buf[HEREDOC_LIMIT])
 		if (ft_strncmp(tmp, rkey, ft_strlen(rkey)) == 0)
 		{
 			free(rkey);
+			free(heredoc_buf[i]);
 			break ;
 		}
 		free(rkey);
+		ft_memset(tmp, 0, HEREDOC_BUF_SIZE);
 		i++;
 	}
 	heredoc_buf[i] = NULL;
 }
+
 
 void	heredoc(char **field, t_msh *msh)
 {
@@ -129,7 +136,7 @@ void	heredoc(char **field, t_msh *msh)
 	int		i;
 
 	i = 0;
-	while (i < 15)
+	while (i < HEREDOC_LIMIT)
 		heredoc_buf[i++] = NULL;
 	get_heredoc_lines(field, heredoc_buf);
 	tmp = ft_strdup(field[0]);
