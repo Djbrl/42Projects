@@ -33,7 +33,7 @@ int	dollar(char *str, char **rt, int i, t_msh *msh)
 {
 	if (str[i] == '$')
 		i++;
-	if (ft_isalpha(str[i]) || str[i] == '_' || str[i] == '?')
+	if (ft_isalpha(str[i]) || str[i] == '_')
 	{
 		add_to_rt(rt, expand_env(&str[i], msh));
 		while (str[i] && str[i] != '"' && str[i] != '\''
