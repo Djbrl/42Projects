@@ -105,7 +105,12 @@ static void	get_heredoc_lines(char **field, char *heredoc_buf[HEREDOC_LIMIT])
 		write(1, "> ", 2);
 		ret = read(0, tmp, HEREDOC_BUF_SIZE - 1);
 		if (ret <= 0)
+		{
+			int j = 0;
+			while (heredoc_buf[j] != NULL)
+				free(heredoc_buf[j++]);
 			break ;
+		}
 		tmp[ret - 1] = '\0';
 		if (ret == 0)
 			heredoc_buf[i] = ft_strdup("");

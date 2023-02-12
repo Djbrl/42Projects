@@ -147,9 +147,9 @@ void	read_buffer(t_msh *msh)
 		char *tmp6 = ft_strjoin(KBLU, curdir);
 		char *tmp7 = ft_strjoin(tmp6, "\033[0m");
 		char *tmp5 = ft_strjoin("./", tmp7);
-		char *dir = ft_strjoin("@minishell-4.2$ ", tmp5);
+		char *dir = ft_strjoin("@Minishell-4.2$ ", tmp5);
 		free(curdir);
-		char *tmp4 = ft_strjoin(dir, "> ");
+		char *tmp4 = ft_strjoin(dir, " > ");
 		promptline = ft_strjoin(tmp2, tmp4);
 		free(user);
 		free(tmp);
@@ -161,7 +161,7 @@ void	read_buffer(t_msh *msh)
 		free(tmp7);	
 	}
 	else
-		promptline = ft_strjoin("guest", "@minishell-4.2$ > ");
+		promptline = ft_strjoin("guest", "@Minishell-4.2$ > ");
 	s = readline(promptline);
 	free(promptline);
 	if (s != NULL)
