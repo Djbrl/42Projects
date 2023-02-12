@@ -28,7 +28,7 @@ static void	ftn_echo_runner(t_msh **msh, t_env_var **var, int i, char **tokens)
 			break ;
 		if (tokens[i] != NULL)
 		{
-    		if (more_than_one_word(tokens[i]))
+			if (more_than_one_word(tokens[i]))
 				msh_echo(*var, ft_strdup(tokens[i]), *msh);
 			else if (!ft_strcmp(tokens[i], "$"))
 				write(1, "$", 1);
@@ -41,39 +41,56 @@ static void	ftn_echo_runner(t_msh **msh, t_env_var **var, int i, char **tokens)
 		}
 		i++;
 	}
-} 
+}
 
-static int	run_echo(t_msh **msh, t_env_var **env, char **tokens)
+static int	handle_token(t_msh **msh, t_env_var **env, char *token)
 {
 	t_env_var	*e;
 	t_msh		*m;
-	int			i;
 	int			exit;
 
-	i = 1;
 	exit = 0;
 	m = *msh;
 	e = *env;
-	while (tokens[i])
-	{		
-		if (is_redir(tokens[i]))
+	if (more_than_one_word(token))
+		exit = msh_echo(e, ft_strdup(token), m);
+	else
+		exit = msh_echo(e, remove_spaces(token), m);
+	return (exit);
+}
+
+static int	handle_tokens(t_msh **msh, t_env_var **env, char **tokens, int *i)
+{
+	int		exit;
+
+	exit = 0;
+	while (tokens[*i])
+	{
+		if (is_redir(tokens[*i]))
 			break ;
-		if (ft_strcmp(tokens[i], "-n") == 0)
+		if (ft_strcmp(tokens[*i], "-n") == 0)
 		{
-			i++;
+			(*i)++;
 			continue ;
 		}
-		if (i != 1)
+		if (*i != 1)
 		{
-			if (more_than_one_word(tokens[i]))
-				exit = msh_echo(e, ft_strdup(tokens[i]), m);
-			else
-				exit = msh_echo(e, remove_spaces(tokens[i]), m);
+			exit = handle_token(msh, env, tokens[*i]);
+			if (tokens[*i + 1] != NULL && *i != 1)
+				write(1, " ", 1);
 		}
-		if (tokens[i + 1] != NULL && i != 1)
-			write(1, " ", 1);
-		i++;
+		(*i)++;
 	}
+	return (exit);
+}
+
+static int	run_echo(t_msh **msh, t_env_var **env, char **tokens)
+{
+	int	i;
+	int	exit;
+
+	i = 1;
+	exit = handle_tokens(msh, env, tokens, &i);
 	return (exit);
 }
 

@@ -13,9 +13,9 @@
 #include "minishell.h"
 
 /*
-** The 'ft_strlen() + 1' is meant to check if there 
-** are any extra characters after the builtin name string
-*/
+ ** The 'ft_strlen() + 1' is meant to check if there 
+ ** are any extra characters after the builtin name string
+ */
 int	is_redir(char *str)
 {
 	int	i;
@@ -63,43 +63,43 @@ void	flush_buffer(t_msh *msh)
 }
 
 /*
-** void	read_buffer(t_msh *msh)
-** {
-** 	int	signal;
-**
-** 	flush_buffer(msh);
-** 	if (g_status == CTRL_C_EXIT)
-** 		g_status = STATUS_RESET;
-** 	else
-** 		display_prompt(MODE_DEFAULT, msh);
-** 	signal = read(0, msh->g_buffer, BUF);
-** 	if (signal == CTRL_D_SIGNAL)
-** 	{
-** 		flush_buffer(msh);
-** 		exit_cmd(msh);
-** 		exit_shell(msh, NULL);
-** 	}
-** 	msh->g_buffer[ft_strlen(msh->g_buffer) - 1] = 0;
-** }
-*/
+ ** void	read_buffer(t_msh *msh)
+ ** {
+ ** 	int	signal;
+ **
+ ** 	flush_buffer(msh);
+ ** 	if (g_status == CTRL_C_EXIT)
+ ** 		g_status = STATUS_RESET;
+ ** 	else
+ ** 		display_prompt(MODE_DEFAULT, msh);
+ ** 	signal = read(0, msh->g_buffer, BUF);
+ ** 	if (signal == CTRL_D_SIGNAL)
+ ** 	{
+ ** 		flush_buffer(msh);
+ ** 		exit_cmd(msh);
+ ** 		exit_shell(msh, NULL);
+ ** 	}
+ ** 	msh->g_buffer[ft_strlen(msh->g_buffer) - 1] = 0;
+ ** }
+ */
 
-int has_odd_quotes(char *str)
+int	has_odd_quotes(char *str)
 {
-    int quotes;
-    int i;
+	int	quotes;
+	int	i;
 
-    quotes = 0;
-    i = 0;
-    while (str[i])
-    {
-        if (str[i] == '\"' || str[i] == '\'')
-            quotes++;
-        i++;
-    }
-    return (quotes % 2 == 1);
+	quotes = 0;
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '\"' || str[i] == '\'')
+			quotes++;
+		i++;
+	}
+	return (quotes % 2 == 1);
 }
 
-int		has_unexpected_token(char *str)
+int	has_unexpected_token(char *str)
 {
 	char	**res;
 	int		i;
@@ -110,8 +110,10 @@ int		has_unexpected_token(char *str)
 	while (res[i])
 	{
 		len = ft_strlen(res[i]);
-		if ((len == 1 && (res[i][0] == '>' || res[i][0] == '<' || res[i][0] == '|'))
-			|| (len == 2 && (ft_strcmp(res[i], ">>") == 0 || ft_strcmp(res[i], "<<") == 0)))
+		if ((len == 1 && (res[i][0] == '>' || res[i][0] == '<' \
+			|| res[i][0] == '|')) \
+			|| (len == 2 && (ft_strcmp(res[i], ">>") == 0 \
+			|| ft_strcmp(res[i], "<<") == 0)))
 		{
 			if (res[i + 1] == NULL)
 			{
@@ -130,75 +132,121 @@ int		has_unexpected_token(char *str)
 	return (0);
 }
 
-void	read_buffer(t_msh *msh)
+char	*get_colored_user(t_msh *msh)
 {
-	char	*s;
-	int		i;
 	char	*user;
-	char	*promptline;
+	char	*colored_user;
+	char	*green_user;
 
-	i = -1;
-	user = ft_strdup(get_data_from_env(msh->env, ft_strdup("USER")));
+	user = get_data_from_env(msh->env, ft_strdup("USER"));
+	colored_user = NULL;
 	if (user != NULL)
 	{
-		char *tmp = ft_strjoin(KGRN, user);
-		char *tmp2 = ft_strjoin(tmp, "\033[0m");
-		char *curdir = get_currentdir(msh);
-		char *tmp6 = ft_strjoin(KBLU, curdir);
-		char *tmp7 = ft_strjoin(tmp6, "\033[0m");
-		char *tmp5 = ft_strjoin("./", tmp7);
-		char *dir = ft_strjoin("@minishell-4.2$ ", tmp5);
-		free(curdir);
-		char *tmp4 = ft_strjoin(dir, "> ");
-		promptline = ft_strjoin(tmp2, tmp4);
+		green_user = ft_strjoin(KGRN, user);
+		colored_user = ft_strjoin(green_user, "\033[0m");
+		free(green_user);
 		free(user);
-		free(tmp);
-		free(tmp2);
-		free(dir);
-		free(tmp4);
-		free(tmp5);
-		free(tmp6);
-		free(tmp7);	
+	}	
+	return (colored_user);
+}
+
+char	*get_colored_curdir(t_msh *msh)
+{
+	char	*curdir;
+	char	*colored_curdir;
+	char	*blue_curdir;
+
+	colored_curdir = NULL;
+	curdir = get_currentdir(msh);
+	if (curdir != NULL)
+	{
+		blue_curdir = ft_strjoin(KBLU, curdir);
+		colored_curdir = ft_strjoin(blue_curdir, "\033[0m");
+		free(blue_curdir);
+		free(curdir);
 	}
+	return (colored_curdir);
+}
+
+char	*get_prompt_prefix(char *colored_user)
+{
+	if (colored_user != NULL)
+		return (ft_strjoin(colored_user, "@minishell-4.2$ "));
 	else
-		promptline = ft_strjoin("guest", "@minishell-4.2$ > ");
+		return (ft_strdup("guest@minishell-4.2$ "));
+}
+
+void	build_prompt_line(t_msh *msh, char **promptline)
+{
+	char	*colored_user;
+	char	*colored_curdir;
+	char	*prompt_prefix;
+	char	*full_curdir;
+	char	*dir;
+
+	colored_user = get_colored_user(msh);
+	colored_curdir = get_colored_curdir(msh);
+	prompt_prefix = get_prompt_prefix(colored_user);
+	full_curdir = ft_strjoin("./", colored_curdir);
+	dir = ft_strjoin(prompt_prefix, full_curdir);
+	*promptline = ft_strjoin(dir, "> ");
+	free(colored_user);
+	free(colored_curdir);
+	free(full_curdir);
+	free(dir);
+	free(prompt_prefix);
+}
+
+char	*get_input_from_user(char *promptline)
+{
+	char	*s;
+
 	s = readline(promptline);
 	free(promptline);
-	if (s != NULL)
+	return (s);
+}
+
+int	check_input_validity(char *s)
+{
+	if (s == NULL)
+		return (0);
+	if (has_odd_quotes(s))
 	{
-		add_history(s);
-		if (has_odd_quotes(s))
-		{
-			printf(SYNTAX_ERR_QUOTES);
-			flush_buffer(msh);
-			return ;
-		}
-		if (has_unexpected_token(s))
-		{
-			printf(SYNTAX_ERR_QUOTES);
-			flush_buffer(msh);
-			return ;
-		}
-		if (ft_strlen(s) == 0)
-			flush_buffer(msh);
-		else
-		{
-			while (s[++i] && s[i] != '\n')
-				msh->g_buffer[i] = s[i];
-		}
+		printf(SYNTAX_ERR_QUOTES);
+		return (0);
 	}
+	if (has_unexpected_token(s))
+	{
+		printf(SYNTAX_ERR_QUOTES);
+		return (0);
+	}
+	return (1);
+}
+
+void	process_input(t_msh *msh, char *s)
+{
+	int		i;
+
+	if (ft_strlen(s) == 0)
+		flush_buffer(msh);
 	else
 	{
-		flush_buffer(msh);
-		free_env(msh);
-		free_expr(&msh);
-		exit(EXIT_FAILURE);
-		return ;
-	}
-	if (g_status == CTRL_D_SIGNAL)
-	{
-		flush_buffer(msh);
-		g_status = 0;
+		i = -1;
+		while (s[++i] && s[i] != '\n')
+			msh->g_buffer[i] = s[i];
 	}
 	free(s);
+}
+
+void	read_buffer(t_msh *msh)
+{
+	char	*promptline;
+	char	*s;
+
+	build_prompt_line(msh, &promptline);
+	s = get_input_from_user(promptline);
+	if (check_input_validity(s))
+		process_input(msh, s);
+	else
+		flush_buffer(msh);
 }

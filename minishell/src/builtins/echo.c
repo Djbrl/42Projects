@@ -70,7 +70,7 @@ static void	ftn_msh_echo(char **var, char **arg, t_env_var **env, int i)
 /*
 ** MSH ECHO is ran by msh_echo_runner
 */
-static int echo_dollar_check(char *arg, t_env_var *env, t_msh *msh)
+static int	echo_dollar_check(char *arg, t_env_var *env, t_msh *msh)
 {
 	int		i;
 	char	*var;
@@ -78,7 +78,7 @@ static int echo_dollar_check(char *arg, t_env_var *env, t_msh *msh)
 	char	*res;
 
 	i = 0;
- 	if (ft_strcmp(arg, "$") == 0)
+	if (ft_strcmp(arg, "$") == 0)
 		printf("$");
 	else if (ft_strcmp(arg, "$$") == 0)
 		printf(SHELL_PID_ERROR);
@@ -96,36 +96,46 @@ static int echo_dollar_check(char *arg, t_env_var *env, t_msh *msh)
 	return (0);
 }
 
-int msh_echo(t_env_var *env, char *arg, t_msh *msh)
+int	msh_echo_dollar_check(char *arg, t_env_var *env, t_msh *msh)
 {
-	char	**tmp;
 	char	**args;
 	int		i;
+
+	args = ft_split(arg, ' ');
+	i = 0;
+	while (args[i])
+	{
+		echo_dollar_check(args[i], env, msh);
+		if (args[i + 1])
+			printf(" ");
+		i++;
+	}
+	free_split(args);
+	return (0);
+}
+
+int	msh_echo_multiple_words(t_env_var *env, t_msh *msh)
+{
+	char	**tmp;
 	int		j;
 
 	j = 1;
-	if (more_than_one_word(arg) == 1)
+	tmp = ft_split(msh->prompt, '\"');
+	while (tmp[j])
 	{
-		tmp = ft_split(msh->prompt, '\"');
-		while (tmp[j])
-		{
-			args = ft_split(tmp[j], ' ');
-			i = 0;
-			while (args[i])
-			{
-				echo_dollar_check(args[i], env, msh);
-				if (args[i + 1])
-					printf(" ");
-				i++;
-			}
-			free_split(args);
-			i = 0;
-			j++;
-		}
-		free_split(tmp);
+		msh_echo_dollar_check(tmp[j], env, msh);
+		j++;
 	}
+	free_split(tmp);
+	return (0);
+}
+
+int	msh_echo(t_env_var *env, char *arg, t_msh *msh)
+{
+	if (more_than_one_word(arg) == 1)
+		msh_echo_multiple_words(env, msh);
 	else
-		echo_dollar_check(arg, env, msh);
+		msh_echo_dollar_check(arg, env, msh);
 	free(arg);
 	return (0);
 }

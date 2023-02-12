@@ -84,9 +84,7 @@ static void	execute_commands(t_expr **curr_command, t_msh *msh)
 	cmd = ft_split(cur->data, ' ');
 	check_paths(msh, cmd, cur->data);
 	free_split(cmd);
-	exit_cmd(msh);
-	free_expr(&msh);
-	free_env(msh);
+	temp_exit(msh);
 	exit(EXIT_FAILURE);
 }
 
@@ -103,23 +101,16 @@ static int	execute_multi_pipe(t_expr *commands, t_msh *msh)
 		if (pid == 0)
 		{
 			execute_commands(&curr, msh);
-			exit_cmd(msh);
-			free_env(msh);
-			free_expr(&msh);
-			clear_history();
+			temp_exit(msh);
 			exit(EXIT_FAILURE);
 		}
 		else if (pid < 0)
 		{
-			exit_cmd(msh);
-			free_env(msh);
-			free_expr(&msh);
-			clear_history();
+			temp_exit(msh);
 			exit(34);
 		}
 		close_fds(&curr);
 		curr = curr->next;
-
 	}
 	waitpid(pid, &g_status, WUNTRACED);
 	return (0);
