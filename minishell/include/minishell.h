@@ -26,6 +26,15 @@
 # include <errno.h>
 # include <limits.h>
 
+#define KNRM  "\x1B[0m"
+#define KRED  "\x1B[31m"
+#define KGRN  "\x1B[32m"
+#define KYEL  "\x1B[33m"
+#define KBLU  "\x1B[34m"
+#define KMAG  "\x1B[35m"
+#define KCYN  "\x1B[36m"
+#define KWHT  "\x1B[37m"
+
 # define SHELL_PID_ERROR "[SHELL_PID]"
 # define SYNTAX_ERR_QUOTES "minishell: syntax error: unclosed quotes\n"
 # define PWD_ERR "pwd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n"
@@ -45,7 +54,7 @@
 # define FAILURE 1
 # define STATUS_RESET 0
 # define CTRL_C_EXIT 2
-# define CTRL_D_SIGNAL 0
+# define CTRL_D_SIGNAL -1
 # define BUFFER_SIZE 4096
 
 extern int				g_status;

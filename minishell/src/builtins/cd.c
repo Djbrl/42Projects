@@ -48,6 +48,7 @@ static int	ftn_msh_cd(t_msh **msh, int ret, char *field)
 char	*get_currentdir(t_msh *msh)
 {
 	char	*path;
+	char	*ret;
 	char	cwd[1024];
 	int		i;
 	int		last_slash;
@@ -66,8 +67,9 @@ char	*get_currentdir(t_msh *msh)
 			last_slash = i;
 		i++;
 	}
+	ret = ft_strdup(path + last_slash + 1);
 	free(path);
-	return (ft_strdup(path + last_slash + 1));
+	return (ret);
 }
 
 /*

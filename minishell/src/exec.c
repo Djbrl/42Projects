@@ -43,6 +43,7 @@ static void	exec_path(t_msh *msh, char **expr)
 		display_cmd_error(expr[0], PATH_ERROR, NULL);
 	exit_cmd(msh);
 	free_env(msh);
+	free_split(expr);
 	free_expr(&msh);
 	clear_history();
 	exit(EXIT_FAILURE);
