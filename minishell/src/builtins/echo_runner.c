@@ -43,58 +43,11 @@ static void	ftn_echo_runner(t_msh **msh, t_env_var **var, int i, char **tokens)
 	}
 }
 
-static int	handle_token(t_msh **msh, t_env_var **env, char *token)
-{
-	t_env_var	*e;
-	t_msh		*m;
-	int			exit;
+/*
+****************************STATIC FUNCTIONS****************************
+*/
 
-	exit = 0;
-	m = *msh;
-	e = *env;
-	if (more_than_one_word(token))
-		exit = msh_echo(e, ft_strdup(token), m);
-	else
-		exit = msh_echo(e, remove_spaces(token), m);
-	return (exit);
-}
-
-static int	handle_tokens(t_msh **msh, t_env_var **env, char **tokens, int *i)
-{
-	int		exit;
-
-	exit = 0;
-	while (tokens[*i])
-	{
-		if (is_redir(tokens[*i]))
-			break ;
-		if (ft_strcmp(tokens[*i], "-n") == 0)
-		{
-			(*i)++;
-			continue ;
-		}
-		if (*i != 1)
-		{
-			exit = handle_token(msh, env, tokens[*i]);
-			if (tokens[*i + 1] != NULL && *i != 1)
-				write(1, " ", 1);
-		}
-		(*i)++;
-	}
-	return (exit);
-}
-
-static int	run_echo(t_msh **msh, t_env_var **env, char **tokens)
-{
-	int	i;
-	int	exit;
-
-	i = 1;
-	exit = handle_tokens(msh, env, tokens, &i);
-	return (exit);
-}
-
-static void	check_options(t_msh *msh, t_env_var *env, char **tokens)
+void	check_options(t_msh *msh, t_env_var *env, char **tokens)
 {
 	int	i;
 
@@ -110,10 +63,6 @@ static void	check_options(t_msh *msh, t_env_var *env, char **tokens)
 	}
 	exit_cmd(msh);
 }
-
-/*
-****************************STATIC FUNCTIONS****************************
-*/
 
 int	msh_echo_runner(t_env_var *env, t_msh *msh, char *field)
 {

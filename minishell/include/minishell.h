@@ -60,6 +60,8 @@
 # define MODE_DIR 2
 # define BUF 4096
 # define RUNNING 1
+# define HEREDOC_BUF_SIZE 1024
+# define HEREDOC_LIMIT 100
 # define PROMPTLINE "minishell-4.2$ > "
 # define SUCCESS 0
 # define FAILURE 1
@@ -179,6 +181,15 @@ void	free_env(t_msh *msh);
 int		change_dir(t_msh **msh, char **tokens);
 int		more_than_one_word(char *echo);
 void	temp_exit(t_msh *msh);
+void	dup_heredoc(char *cmd, char *buf[HEREDOC_LIMIT], t_msh *msh);
+int		msh_echo_dollar_check(char *arg, t_env_var *env, t_msh *msh);
+void	check_options(t_msh *msh, t_env_var *env, char **tokens);
+int		run_echo(t_msh **msh, t_env_var **env, char **tokens);
+void	build_prompt_line(t_msh *msh, char **promptline);
+void	process_input(t_msh *msh, char *s);
+int		check_input_validity(char *s);
+char	*get_input_from_user(char *promptline);
+int		has_unexpected_token(char *str);
 
 /*
 ** PIPE

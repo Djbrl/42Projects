@@ -12,28 +12,53 @@
 
 #include "minishell.h"
 
-int	msh_echo_multiple_words(t_env_var *env, t_msh *msh)
+static int	handle_token(t_msh **msh, t_env_var **env, char *token)
 {
-	char	**tmp;
-	int		j;
+	t_env_var	*e;
+	t_msh		*m;
+	int			exit;
 
-	j = 1;
-	tmp = ft_split(msh->prompt, '\"');
-	while (tmp[j])
-	{
-		msh_echo_dollar_check(tmp[j], env, msh);
-		j++;
-	}
-	free_split(tmp);
-	return (0);
+	exit = 0;
+	m = *msh;
+	e = *env;
+	if (more_than_one_word(token))
+		exit = msh_echo(e, ft_strdup(token), m);
+	else
+		exit = msh_echo(e, remove_spaces(token), m);
+	return (exit);
 }
 
-int	msh_echo(t_env_var *env, char *arg, t_msh *msh)
+static int	handle_tokens(t_msh **msh, t_env_var **env, char **tokens, int *i)
 {
-	if (more_than_one_word(arg) == 1)
-		msh_echo_multiple_words(env, msh);
-	else
-		msh_echo_dollar_check(arg, env, msh);
-	free(arg);
-	return (0);
+	int		exit;
+
+	exit = 0;
+	while (tokens[*i])
+	{
+		if (is_redir(tokens[*i]))
+			break ;
+		if (ft_strcmp(tokens[*i], "-n") == 0)
+		{
+			(*i)++;
+			continue ;
+		}
+		if (*i != 1)
+		{
+			exit = handle_token(msh, env, tokens[*i]);
+			if (tokens[*i + 1] != NULL && *i != 1)
+				write(1, " ", 1);
+		}
+		(*i)++;
+	}
+	return (exit);
+}
+
+int	run_echo(t_msh **msh, t_env_var **env, char **tokens)
+{
+	int	i;
+	int	exit;
+
+	i = 1;
+	exit = handle_tokens(msh, env, tokens, &i);
+	return (exit);
 }
