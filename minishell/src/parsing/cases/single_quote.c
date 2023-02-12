@@ -17,23 +17,18 @@ int	single_quote(char *str, char **rt, int i)
 	int		k;
 	char	*tmp;
 
-	i++;
-	k = i;
-	while (str[i] && str[i] != '\'')
+	if (str[i] == '\'' && str[i + 1])
 	{
-		if (is_pipe_redir(str[i]))
-		{
-			i = k + pipe_redir_inside_quotes(&str[k], rt, i - k);
-			k = i;
-		}
-		else
+		i++;
+		k = i;
+		while (str[i] && str[i] != '\'')
 			i++;
+		if (str[i] && str[i] == '\'')
+			i++;
+		tmp = malloc(sizeof(char) * i - k + 1);
+		ft_strlcpy(tmp, &str[k], i - k);
+		add_to_rt(rt, tmp);
+		free(tmp);
 	}
-	if (!str[i] || str[i++] != '\'')
-		return (-1);
-	tmp = malloc(sizeof(char) * i - k);
-	ft_strlcpy(tmp, &str[k], i - k);
-	add_to_rt(rt, tmp);
-	free(tmp);
 	return (i);
 }

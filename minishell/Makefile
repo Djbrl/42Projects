@@ -44,7 +44,6 @@ SRC_OTHER := main.c exec.c init.c envp.c expr.c\
 			 parsing/cases/pipe_redir.c parsing/cases/string.c \
 			 parsing/utils/add_to_rt.c parsing/utils/ft_realloc.c \
 			 parsing/utils/is_pipe_redir.c parsing/utils/is_whitespace.c \
-			 parsing/utils/pipe_redir_inside_quotes.c \
 
 SRC_PATH := src
 SRC_NAME := $(SRC_OTHER)

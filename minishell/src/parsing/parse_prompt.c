@@ -12,42 +12,24 @@
 
 #include "minishell.h"
 
-static void	*syntax_error_free(char **str)
-{
-	int	i;
-
-	i = 0;
-	printf("Syntax error\n");
-	if (str)
-	{
-		while (str[i])
-		{
-			free(str[i]);
-			i++;
-		}
-		*str = NULL;
-		if (str)
-			free(str);
-	}
-	return (NULL);
-}
-
 static int	check_which_case(char *str, char **rt, int i, t_msh *msh)
 {
-	while (i != -1 && str[i] && is_whitespace(str[i]))
+	while (str[i] && is_whitespace(str[i]))
 		i++;
 	if (is_pipe_redir(str[i]))
 		i = pipe_redir(str, rt, i);
 	else
 	{
-		while (i != -1 && str[i] && !is_whitespace(str[i])
-			&& !is_pipe_redir(str[i]))
+		while (str[i] && !is_whitespace(str[i]) && !is_pipe_redir(str[i]))
 		{
 			if (str[i] != '\'' && str[i] != '"' && str[i] != '$'
 				&& !is_whitespace(str[i]))
 				i = string(str, rt, i);
 			else if (str[i] == '\'')
+			{
+				msh->single_quote = 1;
 				i = single_quote(str, rt, i);
+			}
 			else if (str[i] == '"')
 				i = double_quote(str, rt, i, msh);
 			else if (str[i] == '$')
@@ -70,16 +52,15 @@ char	**parse_prompt(char *str, t_msh *msh)
 	rt = malloc(sizeof(rt));
 	if (!rt)
 		return (NULL);
-	while (i != -1 && str[i])
+	while (str[i])
 	{
-		rt[j] = 0;
-		i = check_which_case(str, &rt[j++], i, msh);
+		rt[j] = NULL;
+		i = check_which_case(str, &rt[j], i, msh);
+		j++;
 		rt = ft_realloc(rt, j * sizeof(rt), (j + 1) * sizeof(rt));
 		if (!rt)
 			return (NULL);
 	}
 	rt[j] = 0;
-	if (i == -1)
-		return (syntax_error_free(rt));
 	return (rt);
 }
