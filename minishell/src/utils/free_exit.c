@@ -37,3 +37,11 @@ void	exit_cmd(t_msh *msh)
 		msh->tokens = NULL;
 	}
 }
+
+void	temp_exit(t_msh *msh)
+{
+	exit_cmd(msh);
+	free_env(msh);
+	free_expr(&msh);
+	clear_history();
+}

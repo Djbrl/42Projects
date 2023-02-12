@@ -27,6 +27,12 @@ static void	print_heredoc(char *heredoc_buf[HEREDOC_LIMIT])
 	}
 }
 
+static void	exec_heredoc_aux(t_msh *msh, char *path, char **arg)
+{
+	if (access(path, X_OK) == 0)
+		execve(path, arg, msh->envp);
+}
+
 static void	exec_heredoc(t_msh *msh, char *cmd)
 {
 	char	**arg;
@@ -34,7 +40,6 @@ static void	exec_heredoc(t_msh *msh, char *cmd)
 	char	*path;
 	int		i;
 
-	i = 0;
 	arg = ft_split(cmd, ' ');
 	free(cmd);
 	if (arg[0] != NULL)
@@ -42,20 +47,16 @@ static void	exec_heredoc(t_msh *msh, char *cmd)
 		i = 0;
 		while (msh->paths[i])
 		{
-			if (access(arg[0], X_OK) == 0)
-				execve(arg[0], arg, msh->envp);
+			exec_heredoc_aux(msh, arg[0], arg);
 			tmp = ft_strjoin(msh->paths[i++], "/");
 			path = ft_strjoin(tmp, arg[0]);
-			if (access(path, X_OK) == 0)
-				execve(path, arg, msh->envp);
+			exec_heredoc_aux(msh, path, arg);
 			free(tmp);
 			free(path);
 		}
 	}
 	free_split(arg);
-	exit_cmd(msh);
-	free_env(msh);
-	free_expr(&msh);
+	temp_exit(msh);
 	exit(EXIT_FAILURE);
 }
 
@@ -75,9 +76,7 @@ static void	ftn_heredoc(char *cmd, char *buf[HEREDOC_LIMIT], t_msh *msh)
 		close(pipefd[1]);
 		print_heredoc(buf);
 		free(cmd);
-		exit_cmd(msh);
-		free_env(msh);
-		free_expr(&msh);
+		temp_exit(msh);
 		exit(EXIT_SUCCESS);
 	}
 	else
@@ -92,6 +91,34 @@ static void	ftn_heredoc(char *cmd, char *buf[HEREDOC_LIMIT], t_msh *msh)
 	}
 }
 
+static char	*get_heredoc_rkey(char **field)
+{
+	char	*rkey;
+
+	if (field[1])
+		rkey = remove_spaces(field[1]);
+	else
+		rkey = remove_spaces(field[0]);
+	return (rkey);
+}
+
+static void	get_heredoc_lines_aux(char *tmp, char *rkey,
+		char *heredoc_buf[HEREDOC_LIMIT], int *i)
+{
+	if (tmp[0] == '\0')
+		heredoc_buf[*i] = ft_strdup("");
+	else
+		heredoc_buf[*i] = ft_strdup(tmp);
+	if (ft_strncmp(tmp, rkey, ft_strlen(rkey)) == 0)
+	{
+		free(rkey);
+		free(heredoc_buf[*i]);
+		*i = HEREDOC_LIMIT;
+	}
+	else
+		(*i)++;
+}
+
 static void	get_heredoc_lines(char **field, char *heredoc_buf[HEREDOC_LIMIT])
 {
 	char	tmp[HEREDOC_BUF_SIZE];
@@ -100,6 +127,7 @@ static void	get_heredoc_lines(char **field, char *heredoc_buf[HEREDOC_LIMIT])
 	int		ret;
 
 	i = 0;
+	rkey = get_heredoc_rkey(field);
 	while (i < HEREDOC_LIMIT - 1)
 	{
 		write(1, "> ", 2);
@@ -107,27 +135,12 @@ static void	get_heredoc_lines(char **field, char *heredoc_buf[HEREDOC_LIMIT])
 		if (ret <= 0)
 			break ;
 		tmp[ret - 1] = '\0';
-		if (ret == 0)
-			heredoc_buf[i] = ft_strdup("");
-		else
-			heredoc_buf[i] = ft_strdup(tmp);
-		if (field[1])
-			rkey = remove_spaces(field[1]);
-		else
-			rkey = remove_spaces(field[0]);
-		if (ft_strncmp(tmp, rkey, ft_strlen(rkey)) == 0)
-		{
-			free(rkey);
-			free(heredoc_buf[i]);
-			break ;
-		}
-		free(rkey);
+		get_heredoc_lines_aux(tmp, rkey, heredoc_buf, &i);
 		ft_memset(tmp, 0, HEREDOC_BUF_SIZE);
-		i++;
 	}
+	free(rkey);
 	heredoc_buf[i] = NULL;
 }
-
 
 void	heredoc(char **field, t_msh *msh)
 {
