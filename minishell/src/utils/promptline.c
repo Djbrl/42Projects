@@ -18,7 +18,7 @@ static char	*get_colored_user(t_msh *msh)
 	char	*colored_user;
 	char	*green_user;
 
-	user = get_data_from_env(msh->env, ft_strdup("USER"));
+	user = ft_strdup(get_data_from_env(msh->env, ft_strdup("USER")));
 	colored_user = NULL;
 	if (user != NULL)
 	{

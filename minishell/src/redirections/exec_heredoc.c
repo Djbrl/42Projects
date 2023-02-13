@@ -78,7 +78,10 @@ void	dup_heredoc(char *cmd, char *buf[HEREDOC_LIMIT], t_msh *msh)
 	pipe(pipefd);
 	pid = fork();
 	if (pid == 0)
+	{
+		free(cmd);
 		run_heredoc_child(buf, pipefd, msh);
+	}
 	else
 	{
 		close(pipefd[1]);
