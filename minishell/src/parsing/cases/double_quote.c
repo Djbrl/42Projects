@@ -17,11 +17,20 @@ static int	dollar_inside_dquote(char *str, char **rt, int i, t_msh *msh)
 	char	*tmp;
 
 	i++;
-	tmp = malloc(sizeof(char) * i + 1);
+	tmp = malloc(sizeof(char) * i);
 	ft_strlcpy(tmp, str, i);
 	add_to_rt(rt, tmp);
 	free(tmp);
 	i = dollar(str, rt, i, msh);
+	return (i);
+}
+
+static int	special_cases_dquote(char *str, char **rt, int i, t_msh *msh)
+{
+	if (str[i] && str[i] == '$')
+		i = dollar_inside_dquote(str, rt, i, msh);
+	else if (str[i] && is_pipe_redir(str[i]))
+		i = pipe_redir_inside_quotes(str, rt, i);
 	return (i);
 }
 
@@ -30,26 +39,23 @@ int	double_quote(char *str, char **rt, int i, t_msh *msh)
 	int		k;
 	char	*tmp;
 
-	if (str[i] == '\"' && str[i + 1])
+	i++;
+	k = i;
+	while (str[i] && (str[i] != '\"'))
 	{
-		i++;
-		k = i;
-		while (str[i] && (str[i] != '\"'))
+		if (str[i] == '$' || is_pipe_redir(str[i]))
 		{
-			if (str[i] == '$')
-			{
-				i = k + dollar_inside_dquote(&str[k], rt, i - k, msh);
-				k = i;
-			}
-			else
-				i++;
+			i = k + special_cases_dquote(&str[k], rt, i - k, msh);
+			k = i;
 		}
-		if (str[i] && str[i] == '\"')
+		else
 			i++;
-		tmp = malloc(sizeof(char) * i - k + 1);
-		ft_strlcpy(tmp, &str[k], i - k);
-		add_to_rt(rt, tmp);
-		free(tmp);
 	}
+		if (!str[i] || str[i++] != '\"')
+		return (-1);
+	tmp = malloc(sizeof(char) * i - k);
+	ft_strlcpy(tmp, &str[k], i - k);
+	add_to_rt(rt, tmp);
+	free(tmp);
 	return (i);
 }
