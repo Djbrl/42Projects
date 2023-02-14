@@ -71,10 +71,7 @@ static int	exec_env(t_msh *msh)
 		free_split(expr);
 	}
 	else
-	{
 		status = pipe_exec(msh);
-
-	}
 	return (status);
 }
 
@@ -85,7 +82,6 @@ static void	fork_cmd(t_msh *msh)
 	pid = fork();
 	if (pid == 0)
 	{
-		g_status = 777;
 		if (exec_env(msh) == -1)
 		{
 			display_error(CMD_ERROR, msh);

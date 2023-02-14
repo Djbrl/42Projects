@@ -84,10 +84,6 @@ static void	execute_commands(t_expr **curr_command, t_msh *msh)
 	cmd = ft_split(cur->data, ' ');
 	check_paths(msh, cmd, cur->data);
 	free_split(cmd);
-	exit_cmd(msh);
-	free_expr(&msh);
-	free_env(msh);
-	exit(EXIT_FAILURE);
 }
 
 static int	execute_multi_pipe(t_expr *commands, t_msh *msh)
@@ -99,6 +95,7 @@ static int	execute_multi_pipe(t_expr *commands, t_msh *msh)
 	connect_fds(&curr, commands);
 	while (curr != NULL)
 	{
+		g_status = -1;
 		pid = fork();
 		if (pid == 0)
 		{
@@ -139,5 +136,6 @@ int	pipe_exec(t_msh *msh)
 	exit_cmd(msh);
 	free_expr(&msh);
 	free_env(msh);
+	exit(EXIT_SUCCESS);
 	return (status);
 }

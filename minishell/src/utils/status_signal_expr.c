@@ -17,15 +17,11 @@ void	signal_handler(int sig_n)
 	if (sig_n == SIGINT)
 	{
 		write(1, "\n", 1);
-		if (getpid() == 0)
-		{
-			kill(0, SIGINT);
-			return ;
-		}
-		// g_status = -1;
-		// write(1, PROMPTLINE, ft_strlen(PROMPTLINE));
-    	// char *line = readline(NULL);
-		// free(line);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+		g_status = 130;
+		//deal with rl in fork on cat ctrl c
 	}
 	else
 		return ;
