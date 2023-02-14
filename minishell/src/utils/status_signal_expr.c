@@ -17,8 +17,13 @@ void	signal_handler(int sig_n)
 	if (sig_n == SIGINT)
 	{
 		write(1, "\n", 1);
-		g_status = -1;
-		write(1, PROMPTLINE, ft_strlen(PROMPTLINE));
+		if (getpid() == 0)
+		{
+			kill(0, SIGINT);
+			return ;
+		}
+		// g_status = -1;
+		// write(1, PROMPTLINE, ft_strlen(PROMPTLINE));
     	// char *line = readline(NULL);
 		// free(line);
 	}
