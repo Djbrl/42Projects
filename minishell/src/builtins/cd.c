@@ -34,6 +34,7 @@ static int	ftn_msh_cd(t_msh **msh, int ret, char *field)
 		tokens = ft_split(field, ' ');
 		free_tokens = 1;
 	}
+	
 	ret = change_dir(msh, tokens);
 	if (free_tokens)
 		free_split(tokens);

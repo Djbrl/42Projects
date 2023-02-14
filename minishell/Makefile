@@ -29,17 +29,15 @@ SRC_OTHER := main.c exec.c init.c envp.c expr.c\
 			 utils/list.c utils/status_signal_expr.c utils/free_exit.c \
 			 utils/split_charset.c utils/read_expand_builtin.c \
 			 utils/get_next_line.c utils/display.c utils/exit_shell.c \
-			 utils/promptline.c utils/check_read.c utils/check_syntax.c \
 			 \
 			 pipes/pipe.c pipes/pipe_utils.c \
 			 \
 			 redirections/redirections.c redirections/redirections_utils.c \
-			 redirections/check_redirections.c redirections/exec_heredoc.c \
+			 redirections/ftn_redirections.c\
 			 \
 			 builtins/echo_runner.c builtins/export_runner.c \
 			 builtins/other.c builtins/export.c builtins/unset.c \
 			 builtins/echo.c builtins/cd.c builtins/cd_extension.c \
-			 builtins/echo_dollar.c builtins/echo_tokens.c \
 			 \
 			 parsing/parse_prompt.c parsing/cases/dollar.c \
 			 parsing/cases/double_quote.c parsing/cases/single_quote.c \

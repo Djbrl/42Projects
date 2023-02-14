@@ -19,6 +19,8 @@ void	signal_handler(int sig_n)
 		write(1, "\n", 1);
 		g_status = -1;
 		write(1, PROMPTLINE, ft_strlen(PROMPTLINE));
+    	// char *line = readline(NULL);
+		// free(line);
 	}
 	else
 		return ;
@@ -80,6 +82,10 @@ int	update_exit_status(t_msh *msh, int status)
 {
 	char	*tmp;
 
+	if (status == 256)
+		status = 127;
+	if (status == 512)
+		status = 2;
 	tmp = ft_itoa(status);
 	add_var_to_env(msh->env, "?", tmp);
 	free(tmp);

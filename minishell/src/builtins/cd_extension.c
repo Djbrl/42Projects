@@ -21,7 +21,7 @@
 ** if mhs->home NULL : bash: cd: HOME not set
 */
 
-static int	change_dir_helper(t_msh *msh, char *path)
+static int change_dir_helper(t_msh *msh, char *path)
 {
 	int		ret;
 	char	cwd[1024];
@@ -38,9 +38,9 @@ static int	change_dir_helper(t_msh *msh, char *path)
 	return (ret);
 }
 
-static int	change_dir_default(t_msh *msh)
+static int change_dir_default(t_msh *msh)
 {
-	int	ret;
+	int ret;
 
 	if (msh->home != NULL)
 	{
@@ -52,18 +52,18 @@ static int	change_dir_default(t_msh *msh)
 	return (ret);
 }
 
-static int	change_dir_expand(t_msh *msh, char *token)
+static int change_dir_expand(t_msh *msh, char *token)
 {
-	char	*path;
+	char *path;
 
 	path = expand_var(msh, token);
 	return (change_dir_helper(msh, path));
 }
 
-int	change_dir(t_msh **msh, char **tokens)
+int change_dir(t_msh **msh, char **tokens)
 {
-	t_msh	*m;
-	int		ret;
+	t_msh *m;
+	int ret;
 
 	ret = 0;
 	m = *msh;

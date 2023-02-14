@@ -12,10 +12,6 @@
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-
-/*
-** LIBS
-*/
 # include <sys/stat.h>
 # include <fcntl.h>
 # include <stdio.h>
@@ -30,26 +26,19 @@
 # include <errno.h>
 # include <limits.h>
 
-/*
-** GENERAL PURPOSE COLORS
-*/
+#define KNRM  "\x1B[0m"
+#define KRED  "\x1B[31m"
+#define KGRN  "\x1B[32m"
+#define KYEL  "\x1B[33m"
+#define KBLU  "\x1B[34m"
+#define KMAG  "\x1B[35m"
+#define KCYN  "\x1B[36m"
+#define KWHT  "\x1B[37m"
 
-# define KNRM  "\x1B[0m"
-# define KRED  "\x1B[31m"
-# define KGRN  "\x1B[32m"
-# define KYEL  "\x1B[33m"
-# define KBLU  "\x1B[34m"
-# define KMAG  "\x1B[35m"
-# define KCYN  "\x1B[36m"
-# define KWHT  "\x1B[37m"
-
-/*
-** DEFINES
-*/
 # define SHELL_PID_ERROR "[SHELL_PID]"
 # define SYNTAX_ERR_QUOTES "minishell: syntax error: unclosed quotes\n"
-# define PWD_ERR "pwd: getcwd: cannot access parent directories\n"
-# define CHDIR_ERR "chdir: getcwd: cannot access parent directories\n"
+# define PWD_ERR "pwd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n"
+# define CHDIR_ERR "chdir: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n"
 # define CD_ARG_ERROR ": too many arguments\n"
 # define ENV_ID_ERROR ": not a valid identifier\n"
 # define FORK_ERROR ": couldn't start process\n"
@@ -60,11 +49,9 @@
 # define MODE_DIR 2
 # define BUF 4096
 # define RUNNING 1
-# define HEREDOC_BUF_SIZE 1024
-# define HEREDOC_LIMIT 100
 # define PROMPTLINE "minishell-4.2$ > "
 # define SUCCESS 0
-# define FAILURE 1
+# define FAILURE 127
 # define STATUS_RESET 0
 # define CTRL_C_EXIT 2
 # define CTRL_D_SIGNAL -1
@@ -178,18 +165,8 @@ void	close_redir(int in, int out);
 int		arr_len(char **arr);
 void	free_envar(t_msh *msh);
 void	free_env(t_msh *msh);
-int		change_dir(t_msh **msh, char **tokens);
+int 	change_dir(t_msh **msh, char **tokens);
 int		more_than_one_word(char *echo);
-void	temp_exit(t_msh *msh);
-void	dup_heredoc(char *cmd, char *buf[HEREDOC_LIMIT], t_msh *msh);
-int		msh_echo_dollar_check(char *arg, t_env_var *env, t_msh *msh);
-void	check_options(t_msh *msh, t_env_var *env, char **tokens);
-int		run_echo(t_msh **msh, t_env_var **env, char **tokens);
-void	build_prompt_line(t_msh *msh, char **promptline);
-void	process_input(t_msh *msh, char *s);
-int		check_input_validity(char *s);
-char	*get_input_from_user(char *promptline);
-int		has_unexpected_token(char *str);
 
 /*
 ** PIPE
