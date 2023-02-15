@@ -26,19 +26,14 @@
 # include <errno.h>
 # include <limits.h>
 
-#define KNRM  "\x1B[0m"
-#define KRED  "\x1B[31m"
-#define KGRN  "\x1B[32m"
-#define KYEL  "\x1B[33m"
-#define KBLU  "\x1B[34m"
-#define KMAG  "\x1B[35m"
-#define KCYN  "\x1B[36m"
-#define KWHT  "\x1B[37m"
+# define KGRN  "\x1B[32m"
+# define KBLU  "\x1B[34m"
+# define KCYN  "\x1B[36m"
 
 # define SHELL_PID_ERROR "[SHELL_PID]"
 # define SYNTAX_ERR_QUOTES "minishell: syntax error: unclosed quotes\n"
-# define PWD_ERR "pwd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n"
-# define CHDIR_ERR "chdir: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n"
+# define PWD_ERR "pwd: getcwd: cannot access parent directories\n"
+# define CHDIR_ERR "chdir: getcwd: cannot access parent directories\n"
 # define CD_ARG_ERROR ": too many arguments\n"
 # define ENV_ID_ERROR ": not a valid identifier\n"
 # define FORK_ERROR ": couldn't start process\n"
@@ -145,6 +140,7 @@ void	read_buffer(t_msh *msh);
 void	parse_envp(t_msh *msh);
 void	exit_cmd(t_msh *msh);
 int		exit_shell(t_msh *msh, char *field);
+char	*read_prompt(t_msh *msh);
 
 /*
 ** UTILS
@@ -165,9 +161,9 @@ void	close_redir(int in, int out);
 int		arr_len(char **arr);
 void	free_envar(t_msh *msh);
 void	free_env(t_msh *msh);
-int 	change_dir(t_msh **msh, char **tokens);
+int		change_dir(t_msh **msh, char **tokens);
 int		more_than_one_word(char *echo);
-
+void	temp_exit(t_msh *msh);
 /*
 ** PIPE
 */

@@ -28,7 +28,7 @@ static void	ftn_echo_runner(t_msh **msh, t_env_var **var, int i, char **tokens)
 			break ;
 		if (tokens[i] != NULL)
 		{
-    		if (more_than_one_word(tokens[i]))
+			if (more_than_one_word(tokens[i]))
 				msh_echo(*var, ft_strdup(tokens[i]), *msh);
 			else if (!ft_strcmp(tokens[i], "$"))
 				write(1, "$", 1);
@@ -41,7 +41,7 @@ static void	ftn_echo_runner(t_msh **msh, t_env_var **var, int i, char **tokens)
 		}
 		i++;
 	}
-} 
+}
 
 static int	run_echo(t_msh **msh, t_env_var **env, char **tokens)
 {

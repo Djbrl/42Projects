@@ -58,6 +58,8 @@ static void	shell_loop(t_msh *msh)
 	update_exit_status(msh, 0);
 	while (RUNNING)
 	{
+		signal(SIGINT, signal_handler);
+		signal(SIGQUIT, signal_handler);
 		free_exp = 0;
 		read_buffer(msh);
 		msh->prompt = ft_strdup(msh->g_buffer);
@@ -66,7 +68,16 @@ static void	shell_loop(t_msh *msh)
 		{
 			free_exp = load_expr(msh);
 			msh->tokens = parse_prompt(msh->prompt, msh);
+			if (msh->tokens == NULL)
+			{
+				clean_expr(msh, free_exp);
+				exit_cmd(msh);
+				flush_buffer(msh);
+				continue ;
+			}
 			msh->nb_tokens = get_nb_tokens(msh->tokens);
+			signal(SIGINT, SIG_IGN);
+			signal(SIGQUIT, SIG_IGN);
 			evaluate_commands(msh);
 			clean_expr(msh, free_exp);
 			exit_cmd(msh);

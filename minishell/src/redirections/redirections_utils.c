@@ -128,7 +128,6 @@ static void	get_heredoc_lines(char **field, char *heredoc_buf[HEREDOC_LIMIT])
 	heredoc_buf[i] = NULL;
 }
 
-
 void	heredoc(char **field, t_msh *msh)
 {
 	char	*heredoc_buf[HEREDOC_LIMIT];

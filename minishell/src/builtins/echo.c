@@ -70,7 +70,7 @@ static void	ftn_msh_echo(char **var, char **arg, t_env_var **env, int i)
 /*
 ** MSH ECHO is ran by msh_echo_runner
 */
-static int echo_dollar_check(char *arg, t_env_var *env, t_msh *msh)
+static int	echo_dollar_check(char *arg, t_env_var *env, t_msh *msh)
 {
 	int		i;
 	char	*var;
@@ -78,7 +78,7 @@ static int echo_dollar_check(char *arg, t_env_var *env, t_msh *msh)
 	char	*res;
 
 	i = 0;
- 	if (ft_strcmp(arg, "$") == 0)
+	if (ft_strcmp(arg, "$") == 0)
 		printf("$");
 	else if (ft_strcmp(arg, "$$") == 0)
 		printf(SHELL_PID_ERROR);
@@ -96,7 +96,7 @@ static int echo_dollar_check(char *arg, t_env_var *env, t_msh *msh)
 	return (0);
 }
 
-int msh_echo(t_env_var *env, char *arg, t_msh *msh)
+int	msh_echo(t_env_var *env, char *arg, t_msh *msh)
 {
 	char	**tmp;
 	char	**args;

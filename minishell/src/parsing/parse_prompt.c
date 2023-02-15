@@ -17,7 +17,7 @@ static void	*syntax_error_free(char **str)
 	int	i;
 
 	i = 0;
-	printf("Syntax error\n");
+	printf(SYNTAX_ERR_QUOTES);
 	if (str)
 	{
 		while (str[i])

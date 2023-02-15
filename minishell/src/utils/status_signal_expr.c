@@ -21,7 +21,6 @@ void	signal_handler(int sig_n)
 		rl_replace_line("", 0);
 		rl_redisplay();
 		g_status = 130;
-		//deal with rl in fork on cat ctrl c
 	}
 	else
 		return ;

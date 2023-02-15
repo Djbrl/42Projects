@@ -6,16 +6,16 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/25 11:17:24 by dsy               #+#    #+#             */
-/*   Updated: 2023/01/10 16:29:53 by dsy              ###   ########.fr       */
+/*   Updated: 2023/02/15 17:26:34 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /*
-** The 'ft_strlen() + 1' is meant to check if there 
-** are any extra characters after the builtin name string
-*/
+ ** The 'ft_strlen() + 1' is meant to check if there 
+ ** are any extra characters after the builtin name string
+ */
 int	is_redir(char *str)
 {
 	int	i;
@@ -63,43 +63,43 @@ void	flush_buffer(t_msh *msh)
 }
 
 /*
-** void	read_buffer(t_msh *msh)
-** {
-** 	int	signal;
-**
-** 	flush_buffer(msh);
-** 	if (g_status == CTRL_C_EXIT)
-** 		g_status = STATUS_RESET;
-** 	else
-** 		display_prompt(MODE_DEFAULT, msh);
-** 	signal = read(0, msh->g_buffer, BUF);
-** 	if (signal == CTRL_D_SIGNAL)
-** 	{
-** 		flush_buffer(msh);
-** 		exit_cmd(msh);
-** 		exit_shell(msh, NULL);
-** 	}
-** 	msh->g_buffer[ft_strlen(msh->g_buffer) - 1] = 0;
-** }
-*/
+ ** void	read_buffer(t_msh *msh)
+ ** {
+ ** 	int	signal;
+ **
+ ** 	flush_buffer(msh);
+ ** 	if (g_status == CTRL_C_EXIT)
+ ** 		g_status = STATUS_RESET;
+ ** 	else
+ ** 		display_prompt(MODE_DEFAULT, msh);
+ ** 	signal = read(0, msh->g_buffer, BUF);
+ ** 	if (signal == CTRL_D_SIGNAL)
+ ** 	{
+ ** 		flush_buffer(msh);
+ ** 		exit_cmd(msh);
+ ** 		exit_shell(msh, NULL);
+ ** 	}
+ ** 	msh->g_buffer[ft_strlen(msh->g_buffer) - 1] = 0;
+ ** }
+ */
 
-int has_odd_quotes(char *str)
+int	has_odd_quotes(char *str)
 {
-    int quotes;
-    int i;
+	int	quotes;
+	int	i;
 
-    quotes = 0;
-    i = 0;
-    while (str[i])
-    {
-        if (str[i] == '\"' || str[i] == '\'')
-            quotes++;
-        i++;
-    }
-    return (quotes % 2 == 1);
+	quotes = 0;
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '\"' || str[i] == '\'')
+			quotes++;
+		i++;
+	}
+	return (quotes % 2 == 1);
 }
 
-int		has_unexpected_token(char *str)
+int	has_unexpected_token(char *str)
 {
 	char	**res;
 	int		i;
@@ -110,8 +110,10 @@ int		has_unexpected_token(char *str)
 	while (res[i])
 	{
 		len = ft_strlen(res[i]);
-		if ((len == 1 && (res[i][0] == '>' || res[i][0] == '<' || res[i][0] == '|'))
-			|| (len == 2 && (ft_strcmp(res[i], ">>") == 0 || ft_strcmp(res[i], "<<") == 0)))
+		if ((len == 1 && (res[i][0] == '>' || res[i][0] == '<' \
+			|| res[i][0] == '|')) \
+			|| (len == 2 && (ft_strcmp(res[i], ">>") == 0 \
+			|| ft_strcmp(res[i], "<<") == 0)))
 		{
 			if (res[i + 1] == NULL)
 			{
@@ -141,15 +143,24 @@ void	read_buffer(t_msh *msh)
 	user = ft_strdup(get_data_from_env(msh->env, ft_strdup("USER")));
 	if (user != NULL)
 	{
-		char *tmp = ft_strjoin(KGRN, user);
-		char *tmp2 = ft_strjoin(tmp, "\033[0m");
-		char *curdir = get_currentdir(msh);
-		char *tmp6 = ft_strjoin(KBLU, curdir);
-		char *tmp7 = ft_strjoin(tmp6, "\033[0m");
-		char *tmp5 = ft_strjoin("./", tmp7);
-		char *dir = ft_strjoin("@minishell-4.2$ ", tmp5);
+		char	*tmp;
+		char	*tmp2;
+		char	*curdir;
+		char	*tmp6;
+		char	*tmp7;
+		char	*tmp5;
+		char	*dir;
+		char	*tmp4;
+
+		tmp = ft_strjoin(KGRN, user);
+		tmp2 = ft_strjoin(tmp, "\033[0m");
+		curdir = get_currentdir(msh);
+		tmp6 = ft_strjoin(KBLU, curdir);
+		tmp7 = ft_strjoin(tmp6, "\033[0m");
+		tmp5 = ft_strjoin("./", tmp7);
+		dir = ft_strjoin("@minishell-4.2$ ", tmp5);
 		free(curdir);
-		char *tmp4 = ft_strjoin(dir, "> ");
+		tmp4 = ft_strjoin(dir, "> ");
 		promptline = ft_strjoin(tmp2, tmp4);
 		free(user);
 		free(tmp);
@@ -158,7 +169,7 @@ void	read_buffer(t_msh *msh)
 		free(tmp4);
 		free(tmp5);
 		free(tmp6);
-		free(tmp7);	
+		free(tmp7);
 	}
 	else
 		promptline = ft_strjoin("guest", "@minishell-4.2$ > ");

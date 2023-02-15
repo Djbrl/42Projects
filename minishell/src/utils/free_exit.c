@@ -12,6 +12,14 @@
 
 #include "minishell.h"
 
+void	temp_exit(t_msh *msh)
+{
+	exit_cmd(msh);
+	free_env(msh);
+	free_expr(&msh);
+	clear_history();
+}
+
 void	free_split(char **array)
 {
 	int	i;

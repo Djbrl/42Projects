@@ -1,6 +1,0 @@
-finish heredoc
-finish export in pipes
-finish signals and return statuses
-DONE finished chdir exception, make sure it works before corssing off the list
-DONE finish exit
-DONE leaks and reachables

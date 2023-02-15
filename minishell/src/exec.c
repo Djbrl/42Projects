@@ -6,18 +6,72 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/27 03:15:12 by dsy               #+#    #+#             */
-/*   Updated: 2023/01/30 17:24:15 by dsy              ###   ########.fr       */
+/*   Updated: 2023/02/15 17:13:08 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	exec_paths(t_msh *msh, char **expr)
+char	**remove_array_quotes(char **cmd)
+{
+	int		i;
+	int		j;
+	char	**result;
+
+	i = 0;
+	j = 0;
+	result = NULL;
+	while (cmd[i] != NULL)
+	{
+		int		len;
+		int		k;
+		int		l;
+		int		m;
+		char	*new_str;
+		char	**new_result;
+
+		k = 0;
+		l = 0;
+		m = 0;
+		len = strlen(cmd[i]);
+		new_str = malloc(sizeof(char) * (len + 1));
+		while (l < len)
+		{
+			if (cmd[i][l] != '"' && cmd[i][l] != '\'')
+			{
+				new_str[k] = cmd[i][l];
+				k++;
+			}
+			l++;
+		}
+		new_str[k] = '\0';
+		new_result = malloc(sizeof(char *) * (j + 2));
+		if (new_result == NULL)
+			exit(EXIT_FAILURE);
+		while (m < j)
+		{
+			new_result[m] = result[m];
+			m++;
+		}
+		new_result[j] = new_str;
+		new_result[j + 1] = NULL;
+		if (result != NULL)
+			free(result);
+		result = new_result;
+		i++;
+		j++;
+	}
+	return (result);
+}
+
+static void	exec_paths(t_msh *msh, char **cmds)
 {
 	int		i;
 	char	*cmd;
 	char	*path;
+	char	**expr;
 
+	expr = remove_array_quotes(cmds);
 	i = 0;
 	if (access(expr[0], X_OK) == 0)
 		execve(expr[0], expr, msh->envp);
@@ -82,6 +136,8 @@ static void	fork_cmd(t_msh *msh)
 	pid = fork();
 	if (pid == 0)
 	{
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 		if (exec_env(msh) == -1)
 		{
 			display_error(CMD_ERROR, msh);
