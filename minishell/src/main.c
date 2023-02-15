@@ -53,8 +53,6 @@ static void	shell_loop(t_msh *msh)
 {
 	int	free_exp;
 
-	signal(SIGINT, signal_handler);
-	signal(SIGQUIT, signal_handler);
 	update_exit_status(msh, 0);
 	while (RUNNING)
 	{
