@@ -96,6 +96,8 @@ static int	execute_multi_pipe(t_expr *commands, t_msh *msh)
 	while (curr != NULL)
 	{
 		g_status = -1;
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 		pid = fork();
 		if (pid == 0)
 		{
@@ -112,6 +114,10 @@ static int	execute_multi_pipe(t_expr *commands, t_msh *msh)
 		curr = curr->next;
 	}
 	waitpid(pid, &g_status, WUNTRACED);
+	if (WIFSIGNALED(g_status) && WTERMSIG(g_status) == SIGINT)
+		update_exit_status(msh, 130); 
+	else 
+		update_exit_status(msh, g_status);
 	return (0);
 }
 
