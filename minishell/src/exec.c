@@ -149,7 +149,10 @@ static void	fork_cmd(t_msh *msh)
 		while (!WIFEXITED(g_status) && !WIFSIGNALED(g_status))
 			waitpid(pid, &g_status, WUNTRACED);
 		if (WIFSIGNALED(g_status) && WTERMSIG(g_status) == SIGINT)
-			update_exit_status(msh, 130); 
+		{
+			update_exit_status(msh, 130);
+			write(1, "\n", 1);
+		}
 		else 
 			update_exit_status(msh, g_status);
 	}

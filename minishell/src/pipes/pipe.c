@@ -77,10 +77,17 @@ static void	execute_commands(t_expr **curr_command, t_msh *msh)
 		}
 		i++;
 	}
-	if (cur->fd_in != 0)
-		dup2(cur->fd_in, 0);
+	
 	if (cur->fd_out != 1)
+	{
 		dup2(cur->fd_out, 1);
+		close(cur->fd_out);
+	}
+	if (cur->fd_in != 0)
+	{
+		close(cur->fd_in);
+		dup2(cur->fd_in, 0);
+	}
 	cmd = ft_split(cur->data, ' ');
 	check_paths(msh, cmd, cur->data);
 	free_split(cmd);
@@ -89,35 +96,63 @@ static void	execute_commands(t_expr **curr_command, t_msh *msh)
 static int	execute_multi_pipe(t_expr *commands, t_msh *msh)
 {
 	t_expr	*curr;
-	pid_t	pid;
+	// pid_t	pid;
 
 	curr = commands;
 	connect_fds(&curr, commands);
+	int count =0;
+	// int tabpid[expr_len(commands)];
+	int tabpid[2];
 	while (curr != NULL)
 	{
 		g_status = -1;
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
-		pid = fork();
-		if (pid == 0)
+		tabpid[count] = fork();
+		if (tabpid[count] == 0)
 		{
 			execute_commands(&curr, msh);
 			temp_exit(msh);
 			exit(EXIT_FAILURE);
 		}
-		else if (pid < 0)
+		else if (tabpid[count] < 0)
 		{
 			temp_exit(msh);
 			exit(34);
 		}
-		close_fds(&curr);
-		curr = curr->next;
+		else
+		{
+			printf("tabpid[%d] = %d\n", count, tabpid[count]);
+			close_fds(&curr);
+			if (WIFSIGNALED(g_status) && WTERMSIG(g_status) == SIGINT)
+			{
+				update_exit_status(msh, 130);
+				write(1, "\n", 1);
+			}
+			else
+				update_exit_status(msh, g_status);
+			if (curr->next == NULL)
+			{
+				int j = 0;
+				while (j < count)
+				{
+					waitpid(tabpid[j], &g_status, WUNTRACED);
+					printf("pid = %d\n", tabpid[j]);
+					j++;
+				}
+
+			}
+			count++;
+			curr = curr->next;
+		}
 	}
-	waitpid(pid, &g_status, WUNTRACED);
-	if (WIFSIGNALED(g_status) && WTERMSIG(g_status) == SIGINT)
-		update_exit_status(msh, 130); 
-	else 
-		update_exit_status(msh, g_status);
+	// 		t_expr *tmp = commands;
+	// while (tmp)
+	// {
+	// 	close_fds(&tmp);
+	// 	tmp= tmp->next;
+	// }
+	// printf("count = %d\n", count);
 	return (0);
 }
 
