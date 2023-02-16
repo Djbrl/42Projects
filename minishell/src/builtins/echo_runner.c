@@ -45,34 +45,26 @@ static void	ftn_echo_runner(t_msh **msh, t_env_var **var, int i, char **tokens)
 
 static int	run_echo(t_msh **msh, t_env_var **env, char **tokens)
 {
-	t_env_var	*e;
-	t_msh		*m;
 	int			i;
 	int			exit;
 
-	i = 1;
+	i = 0;
 	exit = 0;
-	m = *msh;
-	e = *env;
-	while (tokens[i])
+	while (tokens[++i])
 	{		
 		if (is_redir(tokens[i]))
 			break ;
 		if (ft_strcmp(tokens[i], "-n") == 0)
-		{
-			i++;
 			continue ;
-		}
 		if (i != 1)
 		{
 			if (more_than_one_word(tokens[i]))
-				exit = msh_echo(e, ft_strdup(tokens[i]), m);
+				exit = msh_echo(*env, ft_strdup(tokens[i]), *msh);
 			else
-				exit = msh_echo(e, remove_spaces(tokens[i]), m);
+				exit = msh_echo(*env, remove_spaces(tokens[i]), *msh);
 		}
 		if (tokens[i + 1] != NULL && i != 1)
 			write(1, " ", 1);
-		i++;
 	}
 	return (exit);
 }

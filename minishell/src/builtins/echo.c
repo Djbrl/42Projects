@@ -96,34 +96,37 @@ static int	echo_dollar_check(char *arg, t_env_var *env, t_msh *msh)
 	return (0);
 }
 
-int	msh_echo(t_env_var *env, char *arg, t_msh *msh)
+static void	more_than_one_word_exec(t_msh *msh, t_env_var *env)
 {
-	char	**tmp;
-	char	**args;
 	int		i;
 	int		j;
+	char	**tmp;
+	char	**args;
 
 	j = 1;
-	if (more_than_one_word(arg) == 1)
+	tmp = ft_split(msh->prompt, '\"');
+	while (tmp[j])
 	{
-		tmp = ft_split(msh->prompt, '\"');
-		while (tmp[j])
+		args = ft_split(tmp[j], ' ');
+		i = 0;
+		while (args[i])
 		{
-			args = ft_split(tmp[j], ' ');
-			i = 0;
-			while (args[i])
-			{
-				echo_dollar_check(args[i], env, msh);
-				if (args[i + 1])
-					printf(" ");
-				i++;
-			}
-			free_split(args);
-			i = 0;
-			j++;
+			echo_dollar_check(args[i], env, msh);
+			if (args[i + 1])
+				printf(" ");
+			i++;
 		}
-		free_split(tmp);
+		free_split(args);
+		i = 0;
+		j++;
 	}
+	free_split(tmp);
+}
+
+int	msh_echo(t_env_var *env, char *arg, t_msh *msh)
+{
+	if (more_than_one_word(arg) == 1)
+		more_than_one_word_exec(msh, env);
 	else
 		echo_dollar_check(arg, env, msh);
 	free(arg);
