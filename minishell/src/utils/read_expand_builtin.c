@@ -200,11 +200,9 @@ void	exit_failure(t_msh *msh)
 void	read_buffer(t_msh *msh)
 {
 	char	*s;
-	int		i;
 	char	*user;
 	char	*promptline;
 
-	i = -1;
 	user = ft_strdup(get_data_from_env(msh->env, ft_strdup("USER")));
 	promptline = NULL;
 	if (user != NULL)

@@ -96,13 +96,12 @@ static void	execute_commands(t_expr **curr_command, t_msh *msh)
 static int	execute_multi_pipe(t_expr *commands, t_msh *msh)
 {
 	t_expr	*curr;
-	// pid_t	pid;
+	int		count;
+	int		tabpid[2];
 
+	count = 0;
 	curr = commands;
 	connect_fds(&curr, commands);
-	int count =0;
-	// int tabpid[expr_len(commands)];
-	int tabpid[2];
 	while (curr != NULL)
 	{
 		g_status = -1;
@@ -112,6 +111,7 @@ static int	execute_multi_pipe(t_expr *commands, t_msh *msh)
 		if (tabpid[count] == 0)
 		{
 			execute_commands(&curr, msh);
+			close(curr->fd_in);
 			temp_exit(msh);
 			exit(EXIT_FAILURE);
 		}
@@ -123,7 +123,7 @@ static int	execute_multi_pipe(t_expr *commands, t_msh *msh)
 		else
 		{
 			printf("tabpid[%d] = %d\n", count, tabpid[count]);
-			close_fds(&curr);
+			// close(curr->fd_out);
 			if (WIFSIGNALED(g_status) && WTERMSIG(g_status) == SIGINT)
 			{
 				update_exit_status(msh, 130);
@@ -131,9 +131,11 @@ static int	execute_multi_pipe(t_expr *commands, t_msh *msh)
 			}
 			else
 				update_exit_status(msh, g_status);
+			printf("process %s finished\n", curr->data);
 			if (curr->next == NULL)
 			{
 				int j = 0;
+				printf("last process is %s\n", curr->data);
 				while (j < count)
 				{
 					waitpid(tabpid[j], &g_status, WUNTRACED);
@@ -146,13 +148,6 @@ static int	execute_multi_pipe(t_expr *commands, t_msh *msh)
 			curr = curr->next;
 		}
 	}
-	// 		t_expr *tmp = commands;
-	// while (tmp)
-	// {
-	// 	close_fds(&tmp);
-	// 	tmp= tmp->next;
-	// }
-	// printf("count = %d\n", count);
 	return (0);
 }
 
@@ -167,9 +162,9 @@ int	pipe_exec(t_msh *msh)
 	if (init_fds(&commands, prev) == -1)
 		return (-1);
 	status = execute_multi_pipe(commands, msh);
-	exit_cmd(msh);
-	free_expr(&msh);
-	free_env(msh);
-	exit(EXIT_SUCCESS);
+	// exit_cmd(msh);
+	// free_expr(&msh);
+	// free_env(msh);
+	// exit(EXIT_SUCCESS);
 	return (status);
 }

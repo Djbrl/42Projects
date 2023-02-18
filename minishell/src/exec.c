@@ -111,17 +111,12 @@ static int	exec_env(t_msh *msh)
 			&& access(msh->tokens[0], X_OK) == -1)
 		return (-1);
 	status = 0;
-	if (msh->exp == NULL || expr_len(msh->exp) == 1)
-	{
-		check_redirections(msh);
-		redir = ft_split_charset(msh->prompt, "<>");
-		expr = ft_split(redir[0], ' ');
-		free_split(redir);
-		exec_path(msh, expr);
-		free_split(expr);
-	}
-	else
-		status = pipe_exec(msh);
+	check_redirections(msh);
+	redir = ft_split_charset(msh->prompt, "<>");
+	expr = ft_split(redir[0], ' ');
+	free_split(redir);
+	exec_path(msh, expr);
+	free_split(expr);
 	return (status);
 }
 
@@ -162,6 +157,8 @@ void	evaluate_commands(t_msh *msh)
 {
 	if (is_builtin(msh->tokens[0], msh) >= 0 && expr_len(msh->exp) == 1)
 		exec_builtin(msh, NULL);
-	else
+	else if (msh->exp == NULL || expr_len(msh->exp) == 1)
 		fork_cmd(msh);
+	else
+		pipe_exec(msh);
 }
