@@ -64,7 +64,8 @@ int	init_fds(t_expr **commands, t_expr *prev)
 			cur->fd_in = STDIN_FILENO;
 		cur->fd_out = pipefd[1];
 		cur->next->fd_in = pipefd[0];
-		close(cur->fd_in);
+		if (cur->fd_in != STDIN_FILENO)
+			close(cur->fd_in);
 		prev = cur;
 		cur = cur->next;
 	}

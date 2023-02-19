@@ -97,7 +97,7 @@ static int	execute_multi_pipe(t_expr *commands, t_msh *msh)
 {
 	t_expr	*curr;
 	int		count;
-	int		tabpid[2];
+	int		tabpid[expr_len(commands)];
 
 	count = 0;
 	curr = commands;
@@ -111,7 +111,7 @@ static int	execute_multi_pipe(t_expr *commands, t_msh *msh)
 		if (tabpid[count] == 0)
 		{
 			execute_commands(&curr, msh);
-			if (curr->fd_in != STDIN_FILENO)
+			if (curr->fd_in != 1)
 				close(curr->fd_in);
 			temp_exit(msh);
 			exit(EXIT_SUCCESS);
@@ -132,17 +132,15 @@ static int	execute_multi_pipe(t_expr *commands, t_msh *msh)
 			}
 			else
 				update_exit_status(msh, g_status);
-			printf("process %s finished\n", curr->data);
 			if (curr->next == NULL)
 			{
 				int j = 0;
 				while (j < count)
 				{
 					waitpid(tabpid[j], &g_status, WUNTRACED);
-					printf("pid = %d\n", tabpid[j]);
 					j++;
 				}
-
+				return (0);
 			}
 			count++;
 			curr = curr->next;

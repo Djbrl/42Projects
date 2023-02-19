@@ -195,6 +195,7 @@ void	exit_failure(t_msh *msh)
 	flush_buffer(msh);
 	free_env(msh);
 	free_expr(&msh);
+	exit(EXIT_SUCCESS);
 }
 
 void	read_buffer(t_msh *msh)
