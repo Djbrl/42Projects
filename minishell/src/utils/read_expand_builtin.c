@@ -191,10 +191,10 @@ void	check_prompt(t_msh *msh, char *s)
 
 void	exit_failure(t_msh *msh)
 {
+	(void)msh;
 	flush_buffer(msh);
 	free_env(msh);
 	free_expr(&msh);
-	exit(EXIT_FAILURE);
 }
 
 void	read_buffer(t_msh *msh)
@@ -203,6 +203,7 @@ void	read_buffer(t_msh *msh)
 	char	*user;
 	char	*promptline;
 
+	dup2(msh->std_in, 0);
 	user = ft_strdup(get_data_from_env(msh->env, ft_strdup("USER")));
 	promptline = NULL;
 	if (user != NULL)
@@ -214,7 +215,10 @@ void	read_buffer(t_msh *msh)
 	if (s != NULL)
 		check_prompt(msh, s);
 	else
+	{
 		exit_failure(msh);
+		return ;
+	}
 	if (g_status == CTRL_D_SIGNAL)
 	{
 		flush_buffer(msh);

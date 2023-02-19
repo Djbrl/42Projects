@@ -21,8 +21,14 @@ void	check_redirections(t_msh *msh)
 	out = -1;
 	apply_redirections(msh->prompt, &in, &out, msh);
 	if (in != -1)
+	{
 		dup2(in, 0);
+		close(in);
+	}
 	if (out != -1)
+	{
 		dup2(out, 1);
+		close(out);
+	}
 	return ;
 }

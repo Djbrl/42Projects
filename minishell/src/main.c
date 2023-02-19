@@ -56,6 +56,7 @@ static void	shell_loop(t_msh *msh)
 	update_exit_status(msh, 0);
 	while (RUNNING)
 	{
+		printf("interactive mode on\n");
 		signal(SIGINT, signal_handler);
 		signal(SIGQUIT, signal_handler);
 		free_exp = 0;
@@ -80,6 +81,7 @@ static void	shell_loop(t_msh *msh)
 			clean_expr(msh, free_exp);
 			exit_cmd(msh);
 			flush_buffer(msh);
+			printf("command finished\n");
 		}
 		else
 			free(msh->prompt);

@@ -84,6 +84,7 @@ static void	exec_paths(t_msh *msh, char **cmds)
 		free(cmd);
 		free(path);
 	}
+	free_split(expr);
 }
 
 static void	exec_path(t_msh *msh, char **expr)
@@ -158,7 +159,13 @@ void	evaluate_commands(t_msh *msh)
 	if (is_builtin(msh->tokens[0], msh) >= 0 && expr_len(msh->exp) == 1)
 		exec_builtin(msh, NULL);
 	else if (msh->exp == NULL || expr_len(msh->exp) == 1)
-		fork_cmd(msh);
+		{
+			printf("single command\n");
+			fork_cmd(msh);
+		}
 	else
+	{
+		printf("pipe command\n");
 		pipe_exec(msh);
+	}
 }
