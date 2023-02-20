@@ -210,16 +210,13 @@ void	read_buffer(t_msh *msh)
 	if (user != NULL)
 		get_prompt_line(msh, user, &promptline);
 	else
-		promptline = ft_strjoin("guest", "@minishell-4.2$ > ");
+		get_prompt_line(msh, ft_strdup("user42"), &promptline);
 	s = readline(promptline);
 	free(promptline);
 	if (s != NULL)
 		check_prompt(msh, s);
 	else
-	{
 		exit_failure(msh);
-		return ;
-	}
 	if (g_status == CTRL_D_SIGNAL)
 	{
 		flush_buffer(msh);

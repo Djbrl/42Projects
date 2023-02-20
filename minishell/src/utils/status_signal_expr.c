@@ -18,7 +18,7 @@ void	signal_handler(int sig_n)
 	{
 		write(1, "\n", 1);
 		rl_on_new_line();
-		rl_replace_line("", 0);
+		//rl_replace_line("", 0);
 		rl_redisplay();
 		g_status = 130;
 	}
@@ -52,15 +52,9 @@ char	*remove_spaces(const char *str)
 void	close_redir(int in, int out)
 {
 	if (in != -1)
-	{
 		dup2(in, 0);
-		// close(in);
-	}
 	if (out != -1)
-	{
 		dup2(out, 1);
-		// close(out);
-	}
 }
 
 int	expr_len(t_expr *expr)
