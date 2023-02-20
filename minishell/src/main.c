@@ -65,7 +65,6 @@ static void	shell_loop(t_msh *msh)
 		if (msh->prompt != NULL && ft_strlen(msh->prompt) != 0 \
 			&& !only_whitespaces(msh->prompt))
 		{
-			free_exp = load_expr(msh);
 			msh->tokens = parse_prompt(msh->prompt, msh);
 			if (msh->tokens == NULL)
 			{
@@ -75,6 +74,8 @@ static void	shell_loop(t_msh *msh)
 				continue ;
 			}
 			msh->nb_tokens = get_nb_tokens(msh->tokens);
+			join_tokens(msh);
+			free_exp = load_expr(msh);
 			signal(SIGINT, SIG_IGN);
 			signal(SIGQUIT, SIG_IGN);
 			evaluate_commands(msh);

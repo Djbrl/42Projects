@@ -29,6 +29,7 @@ SRC_OTHER := main.c exec.c init.c envp.c expr.c\
 			 utils/list.c utils/status_signal_expr.c utils/free_exit.c \
 			 utils/split_charset.c utils/read_expand_builtin.c \
 			 utils/get_next_line.c utils/display.c utils/exit_shell.c \
+			 parsing/utils/join_tokens.c utils/ft_split_exception.c\
 			 \
 			 pipes/pipe.c pipes/pipe_utils.c \
 			 \

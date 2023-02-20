@@ -59,11 +59,12 @@ int	load_expr(t_msh *msh)
 	i = 0;
 	end = 1;
 	expr = NULL;
-	while (msh->prompt[i] && end)
+	while (msh->clean_prompt[i] && end)
 	{
-		if (msh->prompt[i] == '|')
+		if (msh->clean_prompt[i] == '|' && (msh->clean_prompt[i + 1] && msh->clean_prompt[i + 1]
+			!= 6))
 		{
-			expr = ft_split(msh->prompt, '|');
+			expr = ft_split_exception(msh->clean_prompt, '|', 6);
 			end = 0;
 		}
 		i++;

@@ -87,6 +87,7 @@ typedef struct s_msh
 	char		*full_path;
 	char		*default_path;
 	char		*prompt;
+	char		*clean_prompt;
 	char		**tokens;
 	char		**envp;
 	char		**paths;
@@ -164,6 +165,9 @@ void	free_env(t_msh *msh);
 int		change_dir(t_msh **msh, char **tokens);
 int		more_than_one_word(char *echo);
 void	temp_exit(t_msh *msh);
+void	join_tokens(t_msh *msh);
+char	**ft_split_exception(char *s, char c, char exception);
+
 /*
 ** PIPE
 */
