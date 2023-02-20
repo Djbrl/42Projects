@@ -6,57 +6,67 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/27 03:15:12 by dsy               #+#    #+#             */
-/*   Updated: 2023/02/15 17:13:08 by dsy              ###   ########.fr       */
+/*   Updated: 2023/02/20 17:11:44 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+char	*remove_quotes(char *str)
+{
+	int		i;
+	int		j;
+	char	*new_str;
+
+	i = 0;
+	j = 0;
+	new_str = malloc(sizeof(char) * (ft_strlen(str) + 1));
+	while (i < (int)ft_strlen(str))
+	{
+		if (str[i] != '"' && str[i] != '\'')
+		{
+			new_str[j] = str[i];
+			j++;
+		}
+		i++;
+	}
+	new_str[j] = '\0';
+	return (new_str);
+}
+
+static void	copy_result(char **new_result, char **result, int len)
+{
+	int	i;
+
+	i = 0;
+	while (i < len)
+	{
+		new_result[i] = result[i];
+		i++;
+	}
+}
+
 char	**remove_array_quotes(char **cmd)
 {
 	int		i;
 	int		j;
+	char	*new_str;
 	char	**result;
+	char	**new_result;
 
 	i = 0;
 	j = 0;
 	result = NULL;
-	while (cmd[i] != NULL)
+	new_result = malloc(sizeof(char *) * (j + 2));
+	new_str = remove_quotes(cmd[i]);
+	while (cmd[i])
 	{
-		int		len;
-		int		k;
-		int		l;
-		int		m;
-		char	*new_str;
-		char	**new_result;
-
-		k = 0;
-		l = 0;
-		m = 0;
-		len = strlen(cmd[i]);
-		new_str = malloc(sizeof(char) * (len + 1));
-		while (l < len)
-		{
-			if (cmd[i][l] != '"' && cmd[i][l] != '\'')
-			{
-				new_str[k] = cmd[i][l];
-				k++;
-			}
-			l++;
-		}
-		new_str[k] = '\0';
-		new_result = malloc(sizeof(char *) * (j + 2));
 		if (new_result == NULL)
 			exit(EXIT_FAILURE);
-		while (m < j)
-		{
-			new_result[m] = result[m];
-			m++;
-		}
+		copy_result(new_result, result, j);
 		new_result[j] = new_str;
 		new_result[j + 1] = NULL;
-		if (result != NULL)
-			free(result);
+		free(result);
 		result = new_result;
 		i++;
 		j++;
@@ -121,6 +131,18 @@ static int	exec_env(t_msh *msh)
 	return (status);
 }
 
+static void	close_process(t_msh *msh, int pid)
+{
+	waitpid(pid, &g_status, WUNTRACED);
+	if (WIFSIGNALED(g_status) && WTERMSIG(g_status) == SIGINT)
+	{
+		update_exit_status(msh, 130);
+		write(1, "\n", 1);
+	}
+	else
+		update_exit_status(msh, g_status);
+}
+
 static void	fork_cmd(t_msh *msh)
 {
 	int	pid;
@@ -140,18 +162,7 @@ static void	fork_cmd(t_msh *msh)
 	else if (pid < 0)
 		display_error(FORK_ERROR, msh);
 	else
-	{
-		waitpid(pid, &g_status, WUNTRACED);
-		while (!WIFEXITED(g_status) && !WIFSIGNALED(g_status))
-			waitpid(pid, &g_status, WUNTRACED);
-		if (WIFSIGNALED(g_status) && WTERMSIG(g_status) == SIGINT)
-		{
-			update_exit_status(msh, 130);
-			write(1, "\n", 1);
-		}
-		else 
-			update_exit_status(msh, g_status);
-	}
+		close_process(msh, pid);
 }
 
 void	evaluate_commands(t_msh *msh)

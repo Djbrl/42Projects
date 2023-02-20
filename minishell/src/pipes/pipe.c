@@ -77,7 +77,6 @@ static void	execute_commands(t_expr **curr_command, t_msh *msh)
 		}
 		i++;
 	}
-	
 	if (cur->fd_out != 1)
 	{
 		dup2(cur->fd_out, 1);
@@ -93,18 +92,43 @@ static void	execute_commands(t_expr **curr_command, t_msh *msh)
 	free_split(cmd);
 }
 
+static void	check_pid_status(t_expr **cmd, t_msh *msh, int tabpid[100], int count)
+{
+	t_expr	*curr;
+	int		j;
+
+	curr = *cmd;
+	if (curr->fd_out != STDOUT_FILENO)
+		close(curr->fd_out);
+	if (WIFSIGNALED(g_status) && WTERMSIG(g_status) == SIGINT)
+	{
+		update_exit_status(msh, 130);
+		write(1, "\n", 1);
+	}
+	else
+		update_exit_status(msh, g_status);
+	if (curr->next == NULL)
+	{
+		j = 0;
+		while (j < count)
+		{
+			waitpid(tabpid[j], &g_status, WUNTRACED);
+			j++;
+		}
+	}			
+}
+
 static int	execute_multi_pipe(t_expr *commands, t_msh *msh)
 {
 	t_expr	*curr;
 	int		count;
-	int		tabpid[expr_len(commands)];
+	int		tabpid[100];
 
 	count = 0;
 	curr = commands;
 	connect_fds(&curr, commands);
 	while (curr != NULL)
 	{
-		g_status = -1;
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
 		tabpid[count] = fork();
@@ -119,29 +143,11 @@ static int	execute_multi_pipe(t_expr *commands, t_msh *msh)
 		else if (tabpid[count] < 0)
 		{
 			temp_exit(msh);
-			exit(34);
+			exit(EXIT_FAILURE);
 		}
 		else
 		{
-			if (curr->fd_out != STDOUT_FILENO)
-				close(curr->fd_out);
-			if (WIFSIGNALED(g_status) && WTERMSIG(g_status) == SIGINT)
-			{
-				update_exit_status(msh, 130);
-				write(1, "\n", 1);
-			}
-			else
-				update_exit_status(msh, g_status);
-			if (curr->next == NULL)
-			{
-				int j = 0;
-				while (j < count)
-				{
-					waitpid(tabpid[j], &g_status, WUNTRACED);
-					j++;
-				}
-				return (0);
-			}
+			check_pid_status(&curr, msh, tabpid, count);
 			count++;
 			curr = curr->next;
 		}
@@ -160,9 +166,5 @@ int	pipe_exec(t_msh *msh)
 	if (init_fds(&commands, prev) == -1)
 		return (-1);
 	status = execute_multi_pipe(commands, msh);
-	// exit_cmd(msh);
-	// free_expr(&msh);
-	// free_env(msh);
-	// exit(EXIT_SUCCESS);
 	return (status);
 }

@@ -40,6 +40,8 @@
 # define PATH_ERROR ": No such file or directory\n"
 # define CWD_ERROR ": couldn't retrieve current directory\n"
 # define CMD_ERROR ": command not found\n"
+# define HEREDOC_BUF_SIZE 1024
+# define HEREDOC_LIMIT 100
 # define MODE_DEFAULT 1
 # define MODE_DIR 2
 # define BUF 4096

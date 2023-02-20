@@ -49,21 +49,38 @@ static void	clean_expr(t_msh *msh, int free_flag)
 	return ;
 }
 
+static void	launch_command(t_msh *msh, int free_exp)
+{
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
+	msh->nb_tokens = get_nb_tokens(msh->tokens);
+	evaluate_commands(msh);
+	clean_expr(msh, free_exp);
+	exit_cmd(msh);
+	flush_buffer(msh);
+}
+
+static int	set_prompt(t_msh *msh)
+{
+	signal(SIGINT, signal_handler);
+	signal(SIGQUIT, signal_handler);
+	read_buffer(msh);
+	msh->prompt = ft_strdup(msh->g_buffer);
+	if (msh->prompt != NULL && ft_strlen(msh->prompt) != 0 \
+			&& !only_whitespaces(msh->prompt))
+		return (1);
+	return (0);
+}
+
 static void	shell_loop(t_msh *msh)
 {
 	int	free_exp;
 
+	free_exp = 0;
 	update_exit_status(msh, 0);
 	while (RUNNING)
 	{
-		printf("interactive mode on\n");
-		signal(SIGINT, signal_handler);
-		signal(SIGQUIT, signal_handler);
-		free_exp = 0;
-		read_buffer(msh);
-		msh->prompt = ft_strdup(msh->g_buffer);
-		if (msh->prompt != NULL && ft_strlen(msh->prompt) != 0 \
-			&& !only_whitespaces(msh->prompt))
+		if (set_prompt(msh))
 		{
 			free_exp = load_expr(msh);
 			msh->tokens = parse_prompt(msh->prompt, msh);
@@ -74,14 +91,7 @@ static void	shell_loop(t_msh *msh)
 				flush_buffer(msh);
 				continue ;
 			}
-			msh->nb_tokens = get_nb_tokens(msh->tokens);
-			signal(SIGINT, SIG_IGN);
-			signal(SIGQUIT, SIG_IGN);
-			evaluate_commands(msh);
-			clean_expr(msh, free_exp);
-			exit_cmd(msh);
-			flush_buffer(msh);
-			printf("command finished\n");
+			launch_command(msh, free_exp);
 		}
 		else
 			free(msh->prompt);

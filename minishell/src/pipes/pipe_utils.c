@@ -33,18 +33,12 @@ int	connect_fds(t_expr **curr_command, t_expr *commands)
 void	close_fds(t_expr **curr_command)
 {
 	t_expr	*cur;
-	int status = 0;
+
 	cur = *curr_command;
 	if (cur->fd_in != 0)
-		status = close(cur->fd_in);
-	if (status == -1)
-		perror("close");
-	status = 0;
+		close(cur->fd_in);
 	if (cur->fd_out != 1)
-		status = close(cur->fd_out);
-	if (status == -1)
-		perror("close");
-	status = 0;
+		close(cur->fd_out);
 }
 
 int	init_fds(t_expr **commands, t_expr *prev)

@@ -12,9 +12,6 @@
 
 #include "minishell.h"
 
-#define HEREDOC_BUF_SIZE 1024
-#define HEREDOC_LIMIT 100
-
 static void	print_heredoc(char *heredoc_buf[HEREDOC_LIMIT])
 {
 	int	i;
