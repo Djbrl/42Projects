@@ -16,10 +16,20 @@ void	check_redirections(t_msh *msh)
 {
 	int		in;
 	int		out;
+	int		i;
 
+	i = 0;
 	in = -1;
 	out = -1;
-	apply_redirections(msh->prompt, &in, &out, msh);
+	while (msh->tokens[i])
+	{
+		if (msh->tokens[i][0] == '>' || msh->tokens[i][0] == '<')
+		{
+			apply_redirections(msh->prompt, &in, &out, msh);
+			break ;
+		}
+		i++;
+	}
 	if (in != -1)
 	{
 		dup2(in, 0);

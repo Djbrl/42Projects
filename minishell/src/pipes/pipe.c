@@ -85,9 +85,9 @@ static void	execute_commands(t_expr **curr_command, t_msh *msh)
 
 	i = 0;
 	cur = *curr_command;
-	while (msh->prompt[i])
+	while (msh->tokens[i])
 	{
-		if (msh->prompt[i] == '>' || msh->prompt[i] == '<')
+		if (msh->tokens[i][0] == '>' || msh->tokens[i][0] == '<')
 		{
 			apply_redirections(cur->data, &cur->fd_in, &cur->fd_out, msh);
 			break ;
