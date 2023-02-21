@@ -57,10 +57,10 @@ char	**remove_array_quotes(char **cmd)
 	i = 0;
 	j = 0;
 	result = NULL;
-	new_result = malloc(sizeof(char *) * (j + 2));
-	new_str = remove_quotes(cmd[i]);
 	while (cmd[i])
 	{
+		new_result = malloc(sizeof(char *) * (j + 2));
+		new_str = remove_quotes(cmd[i]);
 		if (new_result == NULL)
 			exit(EXIT_FAILURE);
 		copy_result(new_result, result, j);

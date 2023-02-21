@@ -1,0 +1,11 @@
+Makefile
+build
+file
+hi
+include
+libft
+minishell
+redir
+rl_ignore.valgrind
+src
+valgrind_command
