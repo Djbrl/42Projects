@@ -18,7 +18,7 @@ static void	output_redirection(char **field, int mode, int *fd_out)
 	int		fd;
 	char	**expr;
 
-	j = 1;
+	j = 2;
 	fd = -1;
 	while (field[j])
 	{
@@ -70,16 +70,16 @@ void	apply_redirections(char *expr, int *fd_in, int *fd_out, t_msh *msh)
 
 	i = 0;
 	redirs = ft_split(expr, ' ');
-	while (redirs[i])
+	while (msh->tokens[i])
 	{
-		if (ft_strncmp(redirs[i], ">>", ft_strlen(">>")) == 0)
-			output_redirection(ft_split_charset(expr, ">"), 2, fd_out);
-		else if (ft_strncmp(redirs[i], ">", ft_strlen(">")) == 0)
-			output_redirection(ft_split_charset(expr, ">"), 1, fd_out);
-		else if (ft_strncmp(redirs[i], "<<", ft_strlen("<<")) == 0)
-			heredoc_redirection(redirs, ft_split_charset(expr, "<<"), msh);
-		else if (ft_strncmp(redirs[i], "<", ft_strlen("<")) == 0)
-			input_redirection(ft_split_charset(expr, "<"), fd_in, expr, msh);
+		if (ft_strncmp(msh->tokens[i], ">>", ft_strlen(">>")) == 0)
+			output_redirection(msh->tokens, 2, fd_out);
+		else if (ft_strncmp(msh->tokens[i], ">", ft_strlen(">")) == 0)
+			output_redirection(msh->tokens, 1, fd_out);
+		else if (ft_strncmp(msh->tokens[i], "<<", ft_strlen("<<")) == 0)
+			heredoc_redirection(redirs, msh->tokens, msh);
+		else if (ft_strncmp(msh->tokens[i], "<", ft_strlen("<")) == 0)
+			input_redirection(msh->tokens, fd_in, expr, msh);
 		else
 			(void)redirs;
 		i++;
