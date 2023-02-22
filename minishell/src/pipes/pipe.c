@@ -19,45 +19,66 @@
 **handle heredoc
 */
 
+static void	fail_command(char **expr)
+{
+	if (!is_redir(expr[0]))
+		display_cmd_error(expr[0], CMD_ERROR, NULL);
+	else
+		display_cmd_error(expr[1], PATH_ERROR, NULL);
+}
+
+static void	exec_command(char *path, char *tmp, char **re, char **env)
+{
+	if (access(path, X_OK) == 0)
+		execve(path, re, env);
+	free(tmp);
+	free(path);
+}
+
 static void	exec_paths(t_msh *msh, char **re, char **cmd, char *field)
 {
+	char	**expr;
 	char	*path;
 	char	*tmp;
 	int		i;
 
+	expr = remove_array_quotes(cmd);
+	if (re == NULL)
+		re = expr;
 	i = 0;
-	if (is_builtin(cmd[0], msh) >= 0)
+	if (is_builtin(expr[0], msh) >= 0)
 		exec_builtin(msh, field);
 	else
 	{
 		while (msh->paths[i])
 		{
-			if (access(cmd[0], X_OK) == 0)
-				execve(cmd[0], re, msh->envp);
+			if (!ft_isalpha(expr[0][0]))
+				break ;
+			if (access(expr[0], X_OK) == 0)
+				execve(expr[0], re, msh->envp);
 			tmp = ft_strjoin(msh->paths[i++], "/");
-			path = ft_strjoin(tmp, cmd[0]);
-			if (access(path, X_OK) == 0)
-				execve(path, re, msh->envp);
-			free(tmp);
-			free(path);
+			path = ft_strjoin(tmp, expr[0]);
+			exec_command(path, tmp, re, msh->envp);
 		}
-		if (!is_redir(cmd[0]))
-			display_error(CMD_ERROR, msh);
-		else
-			display_cmd_error(cmd[1], PATH_ERROR, NULL);
+		fail_command(expr);
 	}
 }
 
-static void	check_paths(t_msh *msh, char **cmd, char *field)
+static void	check_paths(t_msh *msh, char **cmd, int redir, char *field)
 {
 	char	**res;
 	char	**re;
 
-	res = ft_split_charset(field, "<>");
-	re = ft_split(res[0], ' ');
-	free_split(res);
-	exec_paths(msh, re, cmd, field);
-	free_split(re);
+	if (redir == 0)
+		exec_paths(msh, NULL, cmd, field);
+	else
+	{
+		res = ft_split_charset(field, "<>");
+		re = ft_split(res[0], ' ');
+		free_split(res);
+		exec_paths(msh, re, cmd, field);
+		free_split(re);
+	}
 }
 
 static void	dup_command(t_expr **commands)
@@ -82,21 +103,24 @@ static void	execute_commands(t_expr **curr_command, t_msh *msh)
 	t_expr	*cur;
 	char	**cmd;
 	int		i;
+	int		redir;
 
 	i = 0;
+	redir = 0;
 	cur = *curr_command;
 	while (msh->tokens[i])
 	{
 		if (msh->tokens[i][0] == '>' || msh->tokens[i][0] == '<')
 		{
 			apply_redirections(cur->data, &cur->fd_in, &cur->fd_out, msh);
+			redir = 1;
 			break ;
 		}
 		i++;
 	}
 	dup_command(curr_command);
 	cmd = ft_split(cur->data, ' ');
-	check_paths(msh, cmd, cur->data);
+	check_paths(msh, cmd, redir, cur->data);
 	free_split(cmd);
 }
 

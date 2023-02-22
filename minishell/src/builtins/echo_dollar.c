@@ -80,14 +80,14 @@ static int	echo_dollar_check(char *arg, t_env_var *env, t_msh *msh)
 
 	i = 0;
 	if (ft_strcmp(arg, "$") == 0)
-		printf("$");
+		write(1, "$", 1);
 	else if (ft_strcmp(arg, "$$") == 0)
-		printf(SHELL_PID_ERROR);
+		ft_putstr(SHELL_PID_ERROR);
 	else if (ft_strcmp(arg, "$?") == 0)
 	{
 		tmp = ft_strdup("?");
 		res = ft_strdup(get_data_from_env(env, tmp));
-		printf("%s", res);
+		ft_putstr(res);
 		free(res);
 	}
 	else if (arg[i] == '$' && ft_isalpha(arg[i + 1]) && !msh->single_quote)
@@ -108,7 +108,7 @@ int	msh_echo_dollar_check(char *arg, t_env_var *env, t_msh *msh)
 	{
 		echo_dollar_check(args[i], env, msh);
 		if (args[i + 1])
-			printf(" ");
+			write(1, " ", 1);
 		i++;
 	}
 	free_split(args);

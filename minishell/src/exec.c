@@ -87,6 +87,8 @@ static void	exec_paths(t_msh *msh, char **cmds)
 		execve(expr[0], expr, msh->envp);
 	while (msh->paths[i])
 	{
+		if (!ft_isalpha(expr[0][0]))
+			break ;
 		cmd = ft_strjoin(msh->paths[i++], "/");
 		path = ft_strjoin(cmd, expr[0]);
 		if (access(path, X_OK) == 0)
@@ -99,14 +101,23 @@ static void	exec_paths(t_msh *msh, char **cmds)
 
 static void	exec_path(t_msh *msh, char **expr)
 {
+	int	free_tokens;
+
+	free_tokens = 0;
+	if (expr != NULL)
+		free_tokens = 1;
+	else
+		expr = msh->tokens;
 	if (msh->paths == NULL && access(expr[0], X_OK) == 0)
 		execve(expr[0], expr, msh->envp);
 	exec_paths(msh, expr);
 	if (!is_redir(msh->tokens[0]))
-		display_error(CMD_ERROR, msh);
+		display_cmd_error(msh->tokens[0], CMD_ERROR, NULL);
 	else
 		display_cmd_error(expr[0], PATH_ERROR, NULL);
 	temp_exit(msh);
+	if (free_tokens)
+		free_split(expr);
 	exit(EXIT_FAILURE);
 }
 
@@ -117,17 +128,22 @@ static int	exec_env(t_msh *msh)
 	char	**redir;
 	char	**expr;
 
+	expr = NULL;
 	tmp = ft_strdup("PATH");
 	if ((!msh->paths || get_data_from_env(msh->env, tmp) == NULL) \
 			&& access(msh->tokens[0], X_OK) == -1)
 		return (-1);
 	status = 0;
-	check_redirections(msh);
-	redir = ft_split_charset(msh->prompt, "<>");
-	expr = ft_split(redir[0], ' ');
-	free_split(redir);
-	exec_path(msh, expr);
-	free_split(expr);
+	if (check_redirections(msh) == 0)
+		exec_path(msh, expr);
+	else
+	{
+		redir = ft_split_charset(msh->prompt, "<>");
+		expr = ft_split(redir[0], ' ');
+		free_split(redir);
+		exec_path(msh, expr);
+		free_split(expr);
+	}
 	return (status);
 }
 

@@ -51,6 +51,14 @@ void	display_cmd_error(char *cmd, char *error, char **args)
 			ft_putnstr("minishell: ", cmd, NULL, NULL);
 		ft_putstr(error);
 	}
+	if (!ft_strncmp(error, CMD_ERROR, ft_strlen(error)))
+	{
+		if (args)
+			ft_putnstr("minishell: ", cmd, ": ", args[1]);
+		else
+			ft_putnstr("minishell: ", cmd, NULL, NULL);
+		ft_putstr(error);
+	}
 }
 
 void	display_prompt(int mode, t_msh *msh)

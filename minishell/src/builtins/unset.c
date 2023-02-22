@@ -24,7 +24,7 @@ static void	unset_var(t_env_var **env, t_env_var **prev)
 
 	e = *env;
 	p = *prev;
-	if (e->next != NULL)
+	if (e->next != NULL && p->next != NULL)
 	{
 		free(e->name);
 		free(e->data);

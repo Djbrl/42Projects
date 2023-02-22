@@ -142,7 +142,6 @@ void	read_buffer(t_msh *msh);
 void	parse_envp(t_msh *msh);
 void	exit_cmd(t_msh *msh);
 int		exit_shell(t_msh *msh, char *field);
-char	*read_prompt(t_msh *msh);
 
 /*
 ** UTILS
@@ -166,9 +165,12 @@ void	free_env(t_msh *msh);
 int		change_dir(t_msh **msh, char **tokens);
 int		more_than_one_word(char *echo);
 void	temp_exit(t_msh *msh);
+char	**remove_array_quotes(char **cmd);
+
 /*
 ** PIPE
 */
+
 int		pipe_exec(t_msh *msh);
 int		init_fds(t_expr **commands, t_expr *prev);
 void	close_fds(t_expr **curr_command);
@@ -179,7 +181,7 @@ int		connect_fds(t_expr **curr_command, t_expr *commands);
 */
 void	exec_builtin(t_msh *msh, char *field);
 void	apply_redirections(char *expr, int *fd_in, int *fd_out, t_msh *msh);
-void	check_redirections(t_msh *msh);
+int		check_redirections(t_msh *msh);
 void	heredoc(char **field, t_msh *msh);
 
 /*

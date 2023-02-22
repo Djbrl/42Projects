@@ -33,7 +33,7 @@ SRC_OTHER := main.c exec.c init.c envp.c expr.c\
 			 pipes/pipe.c pipes/pipe_utils.c \
 			 \
 			 redirections/redirections.c redirections/redirections_utils.c \
-			 redirections/ftn_redirections.c\
+			 redirections/check_redirections.c\
 			 \
 			 builtins/echo_runner.c builtins/export_runner.c \
 			 builtins/other.c builtins/export.c builtins/unset.c \

@@ -81,7 +81,7 @@ static void	check_options(t_msh *msh, t_env_var *env, char **tokens)
 	else
 	{
 		ftn_echo_runner(&msh, &env, i, tokens);
-		printf("\n");
+		write(1, "\n", 1);
 	}
 	exit_cmd(msh);
 }
