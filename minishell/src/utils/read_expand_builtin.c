@@ -142,13 +142,31 @@ int	has_unexpected_token(char *str)
 	return (0);
 }
 
+static char	*get_current_user(char *user)
+{
+	char	**username;
+	char	*name;
+	int		i;
+
+	i = 0;
+	username = ft_split(user, '/');
+	while (username[i])
+		i++;
+	name = ft_strdup(username[i - 1]);
+	free_split(username);
+	return (name);
+}
+
 void	get_prompt_line(t_msh *msh, char *user, char **promptline)
 {
 	char	*curdir;
 	char	*tmp[6];
 	char	*dir;
+	char	*name;
 
-	tmp[0] = ft_strjoin(KGRN, user);
+	name = get_current_user(user);
+	tmp[0] = ft_strjoin(KGRN, name);
+	free(name);
 	tmp[1] = ft_strjoin(tmp[0], "\033[0m");
 	curdir = get_currentdir(msh);
 	tmp[2] = ft_strjoin(KBLU, curdir);
@@ -158,7 +176,6 @@ void	get_prompt_line(t_msh *msh, char *user, char **promptline)
 	dir = ft_strjoin("@minishell-4.2$ ", tmp[4]);
 	tmp[5] = ft_strjoin(dir, "> ");
 	*promptline = ft_strjoin(tmp[1], tmp[5]);
-	free(user);
 	free(tmp[0]);
 	free(tmp[1]);
 	free(tmp[2]);
@@ -166,6 +183,7 @@ void	get_prompt_line(t_msh *msh, char *user, char **promptline)
 	free(tmp[4]);
 	free(dir);
 	free(tmp[5]);
+	free(user);
 }
 
 void	check_prompt(t_msh *msh, char *s)
@@ -189,6 +207,18 @@ void	check_prompt(t_msh *msh, char *s)
 	}
 }
 
+static void	build_promptline(char *user, char **promptline, t_msh *msh)
+{
+	if (user != NULL && ft_strlen(user) > 0)
+		get_prompt_line(msh, user, promptline);
+	else
+	{
+		get_prompt_line(msh, ft_strdup("user42"), promptline);
+		if (user != NULL)
+			free(user);
+	}
+}
+
 void	exit_failure(t_msh *msh)
 {
 	(void)msh;
@@ -207,10 +237,7 @@ void	read_buffer(t_msh *msh)
 	dup2(msh->std_in, 0);
 	user = ft_strdup(get_data_from_env(msh->env, ft_strdup("USER")));
 	promptline = NULL;
-	if (user != NULL)
-		get_prompt_line(msh, user, &promptline);
-	else
-		get_prompt_line(msh, ft_strdup("user42"), &promptline);
+	build_promptline(user, &promptline, msh);
 	s = readline(promptline);
 	free(promptline);
 	if (s != NULL)

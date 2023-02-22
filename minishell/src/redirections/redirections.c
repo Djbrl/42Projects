@@ -63,12 +63,34 @@ static void	heredoc_redirection(char **redirs, char **field, t_msh *msh)
 	free_split(field);
 }
 
+static int sneaky_redir(char *expr)
+{
+	int	i;
+
+	i = 0;
+	while (expr[i])
+	{
+		if (expr[i] == '>' && expr[i + 1] != '>')
+			return (1);
+		if (expr[i] == '<' && expr[i + 1] != '<')
+			return (4);
+		if (expr[i] == '>' && expr[i + 1] == '>' && expr[i + 2] != '>')
+			return (2);
+		if (expr[i] == '<' && expr[i + 1] == '<' && expr[i + 2] != '<')
+			return (3);
+		i++;
+	}
+	return (0);
+}
+
 void	apply_redirections(char *expr, int *fd_in, int *fd_out, t_msh *msh)
 {
 	int		i;
+	int		ret;
 	char	**redirs;
 
 	i = 0;
+	ret = 0;
 	redirs = ft_split(expr, ' ');
 	while (redirs[i])
 	{
@@ -81,7 +103,22 @@ void	apply_redirections(char *expr, int *fd_in, int *fd_out, t_msh *msh)
 		else if (ft_strncmp(redirs[i], "<", ft_strlen("<")) == 0)
 			input_redirection(ft_split_charset(expr, "<"), fd_in, expr, msh);
 		else
-			(void)redirs;
+		{
+			ret = sneaky_redir(redirs[i]);
+			if (ret == 1)
+				output_redirection(ft_split_charset(redirs[i], ">"), 1, fd_out);
+			else if (ret == 2)
+				output_redirection(ft_split_charset(redirs[i], ">"), 2, fd_out);
+			else if (ret == 3)
+				heredoc_redirection(redirs, ft_split_charset(redirs[i], "<<"), msh);
+			else if (ret == 4)
+				input_redirection(ft_split_charset(redirs[i], "<"), fd_in, redirs[i], msh);
+			else
+			{
+				i++;
+				continue ;
+			}
+		}
 		i++;
 	}
 	free_split(redirs);
