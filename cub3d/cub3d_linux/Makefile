@@ -6,7 +6,7 @@ LIBS := $(LIB_FT) $(MLX)
 LDFLAGS = -Llib/libft -Llib/minilibx-linux
 LFLAGS = -lft -lmlx -lX11 -lXext -lm
 
-CC := clang
+CC := cc
 CFLAGS := -Wall -Wextra -ggdb
 PFLAGS := -Iinclude -Ilib/libft -Ilib/minilibx-linux
 

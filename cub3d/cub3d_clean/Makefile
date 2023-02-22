@@ -1,12 +1,12 @@
 NAME := Cub3D
 
 LIB_FT := lib/libft/libft.a
-MLX := mlx/
+MLX := lib/mlx/libmlx_Linux.a
 LIBS := $(LIB_FT) $(MLX)
 LDFLAGS = -Llib/libft
 LFLAGS = -lft -lmlx -framework OpenGL -framework Appkit
 
-CC := clang
+CC := cc
 CFLAGS := -Wall -Wextra -ggdb
 PFLAGS := -Iinclude -Ilib/libft
 
