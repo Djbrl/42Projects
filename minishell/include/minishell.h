@@ -166,6 +166,7 @@ int		change_dir(t_msh **msh, char **tokens);
 int		more_than_one_word(char *echo);
 void	temp_exit(t_msh *msh);
 char	**remove_array_quotes(char **cmd);
+void	reload_path(t_msh *msh);
 
 /*
 ** PIPE

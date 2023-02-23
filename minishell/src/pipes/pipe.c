@@ -50,6 +50,7 @@ static void	exec_paths(t_msh *msh, char **re, char **cmd, char *field)
 		exec_builtin(msh, field);
 	else
 	{
+		reload_path(msh);
 		while (msh->paths[i])
 		{
 			if (!ft_isalpha(expr[0][0]))

@@ -74,6 +74,22 @@ char	**remove_array_quotes(char **cmd)
 	return (result);
 }
 
+void	reload_path(t_msh *msh)
+{
+	char	**paths;
+	char	*env_path;
+	char	*name;
+
+	name = ft_strdup("PATH");
+	env_path = ft_strdup(get_data_from_env(msh->env, name));
+	paths = ft_split(env_path, ':');
+	if (!paths)
+		return ;
+	free_split(msh->paths);
+	msh->paths = paths;
+	free(env_path);
+}
+
 static void	exec_paths(t_msh *msh, char **cmds)
 {
 	int		i;
@@ -85,6 +101,7 @@ static void	exec_paths(t_msh *msh, char **cmds)
 	i = 0;
 	if (access(expr[0], X_OK) == 0)
 		execve(expr[0], expr, msh->envp);
+	reload_path(msh);
 	while (msh->paths[i])
 	{
 		if (!ft_isalpha(expr[0][0]))
