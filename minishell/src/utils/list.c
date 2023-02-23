@@ -43,7 +43,7 @@ void	free_data_from_env(t_env_var *env, char *name)
 	cur = env;
 	while (cur->next != NULL)
 	{
-		if (!ft_strncmp(cur->name, name, ft_strlen(cur->name)))
+		if (!ft_strncmp(cur->name, name, ft_strlen(name)))
 		{
 			free(name);
 			free(cur->data);
@@ -52,7 +52,7 @@ void	free_data_from_env(t_env_var *env, char *name)
 		else
 			cur = cur->next;
 	}
-	if (!ft_strncmp(cur->name, name, ft_strlen(cur->name)))
+	if (!ft_strncmp(cur->name, name, ft_strlen(name)))
 	{
 		free(name);
 		free(cur->data);
@@ -71,7 +71,7 @@ int	add_var_to_env(t_env_var *env, char *name, char *data)
 		return (0);
 	while (new->next != NULL)
 	{
-		if (!ft_strncmp(new->next->name, name, ft_strlen(new->next->name)))
+		if (!ft_strncmp(new->next->name, name, ft_strlen(name)))
 		{
 			free(new->next->data);
 			new->next->data = ft_strdup(data);

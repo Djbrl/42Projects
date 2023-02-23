@@ -57,9 +57,9 @@ void	parse_envp(t_msh *msh)
 		data = ft_substr(msh->envp[i], find_char(msh->envp[i], '=') + 1 \
 			, find_char(msh->envp[i], '\0'));
 		add_var_to_env(msh->env, var, data);
-		if (ft_strncmp(var, "PATH", ft_strlen(var)) == 0)
+		if (ft_strncmp(var, "PATH", ft_strlen("PATH")) == 0)
 			parse_paths(data, msh);
-		if (ft_strncmp(var, "HOME", ft_strlen(var)) == 0)
+		if (ft_strncmp(var, "HOME", ft_strlen("HOME")) == 0)
 			msh->home = ft_strdup(data);
 		free(var);
 		free(data);
