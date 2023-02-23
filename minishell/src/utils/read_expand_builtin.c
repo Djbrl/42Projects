@@ -203,7 +203,8 @@ void	check_prompt(t_msh *msh, char *s)
 	int	i;
 
 	i = -1;
-	add_history(s);
+	if (ft_strlen(s) != 0)
+		add_history(s);
 	if (has_odd_quotes(s) || has_unexpected_token(s))
 	{
 		printf(SYNTAX_ERR_QUOTES);
