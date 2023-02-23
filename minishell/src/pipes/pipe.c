@@ -133,6 +133,8 @@ static void	check_pid_status(t_expr **cmd, t_msh *msh, int pid[100], int count)
 	curr = *cmd;
 	if (curr->fd_out != STDOUT_FILENO)
 		close(curr->fd_out);
+	if (curr->fd_out != STDOUT_FILENO)
+		close(curr->fd_in);
 	if (WIFSIGNALED(g_status) && WTERMSIG(g_status) == SIGINT)
 	{
 		update_exit_status(msh, 130);
@@ -148,14 +150,14 @@ static void	check_pid_status(t_expr **cmd, t_msh *msh, int pid[100], int count)
 			waitpid(pid[j], &g_status, WUNTRACED);
 			j++;
 		}
-	}			
+	}
 }
 
 static void	child_pipe(t_expr *curr, t_msh *msh)
 {
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 	execute_commands(&curr, msh);
-	if (curr->fd_in != 1)
-		close(curr->fd_in);
 	temp_exit(msh);
 	exit(EXIT_SUCCESS);
 }
@@ -177,8 +179,6 @@ static int	execute_multi_pipe(t_expr *commands, t_msh *msh)
 	connect_fds(&curr, commands);
 	while (curr != NULL && count < 100)
 	{
-		signal(SIGINT, SIG_DFL);
-		signal(SIGQUIT, SIG_DFL);
 		pid[count] = fork();
 		if (pid[count] == 0)
 			child_pipe(curr, msh);

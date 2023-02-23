@@ -25,7 +25,7 @@ int	connect_fds(t_expr **curr_command, t_expr *commands)
 		cur->next->fd_in = pipefd[0];
 		cur = cur->next;
 	}
-	cur->fd_out = 1;
+	// cur->fd_out = 1;
 	cur = commands;
 	return (-1);
 }
