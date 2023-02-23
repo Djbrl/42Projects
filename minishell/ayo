@@ -1,0 +1,16 @@
+FIXED- make fclean
+FIXED- Try ctrl-\ in an empty prompt should not do anything
+FIXED- echo "bon'jou" -> unclosed quotes ?
+FIXED BUT open fd on success- echo "bonjour | rt" | ls
+FIXED- echo "slt ca va$PATH"
+FIXED- mkdir 1 -> cd 1 -> mkdir 2 -> rm -rf ../../1 -> Invalid read
+FIXED- unset $PATH -> ls -> invalid read get_prompt_line
+FIXED- variable env strncmp -> ex.: echo $PATHH
+X- export PATH=directory1:directory2 -> devrait pas marcher
+X- export $s="s -la" -> l$s marche pas
+X- echo "cat lol.c | cat > lol.c"
+X- echo "bonjour" "ca va" "bien"
+X- echo 'salut ca va'
+X- echo '$USER'
+X- cat file | grep bla | more
+X- cat | cat | ls ->  devrait faire 2 cat et quitter

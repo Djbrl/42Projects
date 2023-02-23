@@ -19,7 +19,7 @@ char	*get_data_from_env(t_env_var *env, char *name)
 	cur = env;
 	while (cur->next != NULL)
 	{
-		if (!ft_strncmp(cur->name, name, ft_strlen(cur->name)))
+		if (!ft_strncmp(cur->name, name, ft_strlen(name)))
 		{
 			free(name);
 			return (cur->data);
@@ -27,7 +27,7 @@ char	*get_data_from_env(t_env_var *env, char *name)
 		else
 			cur = cur->next;
 	}
-	if (!ft_strncmp(cur->name, name, ft_strlen(cur->name)))
+	if (!ft_strncmp(cur->name, name, ft_strlen(name)))
 	{
 		free(name);
 		return (cur->data);

@@ -62,6 +62,7 @@ static void	exec_paths(t_msh *msh, char **re, char **cmd, char *field)
 		}
 		fail_command(expr);
 	}
+	free_split(expr);
 }
 
 static void	check_paths(t_msh *msh, char **cmd, int redir, char *field)

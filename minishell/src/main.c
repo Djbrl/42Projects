@@ -83,6 +83,7 @@ static void	shell_loop(t_msh *msh)
 		if (set_prompt(msh))
 		{
 			msh->tokens = parse_prompt(msh->prompt, msh);
+			if (msh->tokens != NULL)
 			free_exp = load_expr(msh);
 			if (msh->tokens == NULL)
 			{

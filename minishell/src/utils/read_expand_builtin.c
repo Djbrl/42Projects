@@ -85,18 +85,30 @@ void	flush_buffer(t_msh *msh)
 
 int	has_odd_quotes(char *str)
 {
-	int	quotes;
 	int	i;
+	int	unclosed_q;
+	int	unclosed_dq;
+	int unclosed;
 
-	quotes = 0;
+	unclosed = 0;
+	unclosed_q = 0;
+	unclosed_dq = 0;
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] == '\"' || str[i] == '\'')
-			quotes++;
+		if (str[i] == '\"')
+			unclosed_q = 1;
+		if (str[i] == '\"' && unclosed_q == 1)
+			unclosed_q = 0;
+		if (str[i] == '\'')
+			unclosed_dq = 1;
+		if (str[i] == '\'' && unclosed_dq == 1)
+			unclosed_dq = 0;
 		i++;
 	}
-	return (quotes % 2 == 1);
+	if (unclosed_q || unclosed_dq)
+		unclosed = 1;
+	return (unclosed);
 }
 
 int	is_pipe_or_redir(char *str)

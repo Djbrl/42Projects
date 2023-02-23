@@ -60,6 +60,11 @@ char	*get_currentdir(t_msh *msh)
 		display_error(CWD_ERROR, msh);
 		return (NULL);
 	}
+	if (ft_strlen(path) == 0)
+	{
+		free(path);
+		return (ft_strdup(" "));
+	}
 	while (path[i])
 	{
 		if (path[i] == '/')

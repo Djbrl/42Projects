@@ -6,7 +6,7 @@
 #    By: dsy <marvin@42.fr>                         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/13 16:01:25 by dsy               #+#    #+#              #
-#    Updated: 2023/01/10 16:26:53 by dsy              ###   ########.fr        #
+#    Updated: 2023/02/23 12:28:07 by dsy              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -83,7 +83,7 @@ libft_fclean:
 
 lib_clean: libft_clean 
 
-lib_fclean: libft_clean 
+lib_fclean: libft_fclean 
 
 re: fclean all
 
