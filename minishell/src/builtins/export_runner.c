@@ -19,11 +19,9 @@
 static int	list_exports(t_env_var *env, t_msh *msh)
 {
 	t_env_var	*e;
-	int			l;
 
 	(void)msh;
 	e = env;
-	l = ft_strlen(e->name);
 	while (e->next != NULL)
 	{
 		if (e->name && e->data && ft_strncmp(e->name, "init", ft_strlen("init")) != 0 && \

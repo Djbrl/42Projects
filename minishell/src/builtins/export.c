@@ -116,7 +116,6 @@ int	msh_export(t_env_var *env, char *arg, t_msh *msh)
 		display_export_error(ENV_ID_ERROR, arg, msh);
 		return (update_exit_status(msh, 1));
 	}
-	printf("[%s] [%s]\n", name, data);
 	add_var_to_env(env, name, data);
 	free(name);
 	free(data);

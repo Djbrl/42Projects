@@ -105,6 +105,14 @@ static void	more_than_one_word_exec(t_msh *msh, t_env_var *env)
 
 	j = 1;
 	tmp = ft_split(msh->prompt, '\"');
+	if (tmp[1] == NULL)
+	{
+		args = ft_split(tmp[0], ' ');
+		echo_dollar_check(args[1], env, msh);
+		free_split(args);
+		free_split(tmp);
+		return ;
+	}
 	while (tmp[j])
 	{
 		args = ft_split(tmp[j], ' ');
