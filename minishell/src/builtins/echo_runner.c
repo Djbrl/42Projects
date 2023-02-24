@@ -24,8 +24,7 @@ static void	ftn_echo_runner(t_msh **msh, t_env_var **var, int i, char **tokens)
 	(void)var;
 	while (tokens[i] != NULL)
 	{
-		printf("[%s]\n", tokens[i]);
-		if (is_redir(tokens[i]))
+		if (is_redir(tokens[i]) && !more_than_one_word(tokens[i]))
 			break ;
 		if (tokens[i] != NULL)
 		{

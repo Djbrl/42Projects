@@ -83,6 +83,20 @@ static int sneaky_redir(char *expr)
 	return (0);
 }
 
+static int	has_quote(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '\"' || str[i] == '\'')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 void	apply_redirections(char *expr, int *fd_in, int *fd_out, t_msh *msh)
 {
 	int		i;
@@ -94,6 +108,13 @@ void	apply_redirections(char *expr, int *fd_in, int *fd_out, t_msh *msh)
 	redirs = ft_split(expr, ' ');
 	while (redirs[i])
 	{
+		//skip fields that are in between quotes
+		if (redirs[i + 1] && has_quote(redirs[i + 1]))
+		{
+			i++;
+			continue ;
+		}
+		//
 		if (ft_strncmp(redirs[i], ">>", ft_strlen(">>")) == 0)
 			output_redirection(ft_split_charset(expr, ">"), 2, fd_out);
 		else if (ft_strncmp(redirs[i], ">", ft_strlen(">")) == 0)
