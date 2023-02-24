@@ -96,11 +96,11 @@ int	has_odd_quotes(char *str)
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] == '\"')
+		if (str[i] == '\"' && (str[i - 1] && str[i - 1] != '\\'))
 			unclosed_q = 1;
 		if (str[i] == '\"' && unclosed_q == 1)
 			unclosed_q = 0;
-		if (str[i] == '\'')
+		if (str[i] == '\'' && (str[i - 1] && str[i - 1] != '\\'))
 			unclosed_dq = 1;
 		if (str[i] == '\'' && unclosed_dq == 1)
 			unclosed_dq = 0;
