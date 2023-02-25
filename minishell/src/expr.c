@@ -59,6 +59,8 @@ int	load_expr(t_msh *msh)
 	i = 0;
 	end = 1;
 	expr = NULL;
+	if (!msh->tokens)
+		return (0);
 	while (msh->tokens[i] && end)
 	{
 		if (ft_strcmp(msh->tokens[i], "|") == 0)
