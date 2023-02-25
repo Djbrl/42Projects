@@ -36,32 +36,32 @@ int	more_than_one_word(char *echo)
 ****************************STATIC FUNCTIONS****************************
 */
 
-static int	var_name_len(char *name)
-{
-	int	i;
+// static int	var_name_len(char *name)
+// {
+// 	int	i;
 
-	i = 0;
-	while (name[i] != '$' && name[i])
-		i++;
-	return (i);
-}
+// 	i = 0;
+// 	while (name[i] != '$' && name[i])
+// 		i++;
+// 	return (i);
+// }
 
-static void	ftn_msh_echo(char **var, char **arg, t_env_var **env, int i)
-{
-	char		*t;
-	char		*v;
-	char		*a;
-	t_env_var	*e;
+// static void	ftn_msh_echo(char **var, char **arg, t_env_var **env, int i)
+// {
+// 	char		*t;
+// 	char		*v;
+// 	char		*a;
+// 	t_env_var	*e;
 
-	a = *arg;
-	v = *var;
-	e = *env;
-	v = ft_substr(a, i + 1, var_name_len(a + i + 1));
-	t = ft_strdup(get_data_from_env(e, v));
-	if (t != NULL)
-		ft_putstr(t);
-	free(t);
-}
+// 	a = *arg;
+// 	v = *var;
+// 	e = *env;
+// 	v = ft_substr(a, i + 1, var_name_len(a + i + 1));
+// 	t = ft_strdup(get_data_from_env(e, v));
+// 	if (t != NULL)
+// 		ft_putstr(t);
+// 	free(t);
+// }
 
 /*
 ****************************STATIC FUNCTIONS****************************
@@ -72,12 +72,12 @@ static void	ftn_msh_echo(char **var, char **arg, t_env_var **env, int i)
 */
 static int	echo_dollar_check(char *arg, t_env_var *env, t_msh *msh)
 {
-	int		i;
-	char	*var;
+	// int		i;
+	// char	*var;
 	char	*tmp;
 	char	*res;
 
-	i = 0;
+	// i = 0;
 	if (ft_strcmp(arg, "$") == 0)
 		ft_putstr("$");
 	else if (ft_strcmp(arg, "$$") == 0)
@@ -89,10 +89,11 @@ static int	echo_dollar_check(char *arg, t_env_var *env, t_msh *msh)
 		ft_putstr(res);
 		free(res);
 	}
-	else if (arg[i] == '$' && ft_isalpha(arg[i + 1]) && !msh->single_quote)
-		ftn_msh_echo(&var, &arg, &env, i);
 	else
 		ft_putstr(arg);
+	(void)msh;
+	// else if (arg[i] == '$' && ft_isalpha(arg[i + 1]) && !msh->single_quote)
+	// 	ftn_msh_echo(&var, &arg, &env, i);
 	return (0);
 }
 

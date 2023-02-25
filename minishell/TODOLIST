@@ -8,7 +8,7 @@ FIXED- unset $PATH -> ls -> invalid read get_prompt_line
 FIXED- variable env strncmp -> ex.: echo $PATHH
 FIXED- export PATH=directory1:directory2 -> devrait pas marcher
 
-X- export $s="s -la" -> l$s marche pas
+FIXED- export $s="s -la" -> l$s marche pas
 
 FIXED- echo "cat lol.c | cat > lol.c"
 X- echo "bonjour" "ca va" "bien"
