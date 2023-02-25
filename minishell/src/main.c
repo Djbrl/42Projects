@@ -19,7 +19,7 @@ static int	get_nb_tokens(char **tokens)
 	int	i;
 
 	i = 0;
-	while (tokens[i] != NULL)
+	while (tokens && tokens[i] != NULL)
 		i++;
 	return (i);
 }
@@ -49,12 +49,15 @@ static void	clean_expr(t_msh *msh, int free_flag)
 	return ;
 }
 
-static void	launch_command(t_msh *msh, int free_exp)
+static void	launch_command(t_msh *msh)
 {
+	int	free_exp;
+
+	free_exp = load_expr(msh);
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
-	msh->nb_tokens = get_nb_tokens(msh->tokens);
-	evaluate_commands(msh);
+	if (msh->nb_tokens > 0)
+		evaluate_commands(msh);
 	clean_expr(msh, free_exp);
 	exit_cmd(msh);
 	flush_buffer(msh);
@@ -74,25 +77,14 @@ static int	set_prompt(t_msh *msh)
 
 static void	shell_loop(t_msh *msh)
 {
-	int	free_exp;
-
-	free_exp = 0;
 	update_exit_status(msh, 0);
 	while (RUNNING)
 	{
 		if (set_prompt(msh))
 		{
 			msh->tokens = parse_prompt(msh->prompt, msh);
-			if (msh->tokens != NULL)
-			free_exp = load_expr(msh);
-			if (msh->tokens == NULL)
-			{
-				clean_expr(msh, free_exp);
-				exit_cmd(msh);
-				flush_buffer(msh);
-				continue ;
-			}
-			launch_command(msh, free_exp);
+			msh->nb_tokens = get_nb_tokens(msh->tokens);
+			launch_command(msh);
 		}
 		else
 			free(msh->prompt);

@@ -16,18 +16,22 @@ static int	doll_to_expand(char *str, int i)
 {
 	int	j;
 	int	squote_nb;
+	int	dquote_nb;
 
 	j = 0;
 	squote_nb = 0;
+	dquote_nb = 0;
 	if (str[i] && str[i] == '$')
 	{
 		while (j < i)
 		{
 			if (str[j] == '\'')
 				squote_nb++;
+			if (str[j] == '"' && squote_nb % 2 == 0)
+				dquote_nb++;
 			j++;
 		}
-		if (squote_nb % 2 == 0)
+		if (squote_nb % 2 == 0 || (squote_nb % 2 == 1 && dquote_nb % 2 == 1))
 			return (1);
 	}
 	return (0);
