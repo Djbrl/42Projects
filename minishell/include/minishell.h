@@ -194,10 +194,11 @@ void	*ft_realloc(void *ptr, size_t cursize, size_t newsize);
 int		is_pipe_redir(char c);
 int		is_whitespace(char c);
 int		dollar(char *str, char **rt, int i, t_msh *msh);
-int		double_quote(char *str, char **rt, int i, t_msh *msh);
+int		double_quote(char *str, char **rt, int i);
 int		pipe_redir(char *str, char **rt, int i);
 int		single_quote(char *str, char **rt, int i);
 int		string(char *str, char **rt, int i);
 int		pipe_redir_inside_quotes(char *str, char **rt, int i);
+char	*expand_prompt(char *str, t_msh *msh);
 
 #endif

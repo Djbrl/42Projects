@@ -17,7 +17,6 @@ static char	*expand_env(char *str, t_msh *msh)
 	int		i;
 	char	*tmp;
 	char	*rt;
-	char	*var;
 
 	i = 0;
 	rt = NULL;
@@ -27,13 +26,6 @@ static char	*expand_env(char *str, t_msh *msh)
 	tmp = malloc(sizeof(char) * i + 1);
 	ft_strlcpy(tmp, str, i + 1);
 	rt = get_data_from_env(msh->env, tmp);
-	if (rt == NULL)
-	{
-		var = ft_strjoin("$", str);
-		rt = ft_strdup(var);
-		free(var);
-		return (rt);
-	}
 	return (ft_strdup(rt));
 }
 
