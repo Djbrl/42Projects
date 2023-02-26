@@ -15,6 +15,10 @@ FIXED- echo "bonjour" "ca va" "bien"
 FIXED- echo 'salut ca va'
 FIXED- echo '$USER'
 
+
+X- export is not ASCII-sorted
+X- env should not show variable that have been created
+
 X- cat file | grep bla | more
 X- cat | cat | ls ->  devrait faire 2 cat et quitter
 todo : rework connect_fds and init_fds
