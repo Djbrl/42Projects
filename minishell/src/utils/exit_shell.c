@@ -75,7 +75,7 @@ int	exit_shell(t_msh *msh, char *field)
 		ftn_exit(msh, g_status, NULL);
 	else
 		arr = ft_split(field, ' ');
-	if ((arr[1] && ft_atoi(arr[1]) == 0 && ft_strncmp(arr[1], "0", 1) != 0) \
+	if ((arr[1] && ft_atoi(arr[1]) == 0 && ft_strncmp(arr[1], "0", ft_strlen(arr[1])) != 0) \
 		|| !ft_isnum(arr[1]) || (ft_isnum(arr[1]) && ft_strlen(arr[1]) > 9))
 	{
 		ft_putstr_fd("minishell: exit: numeric argument required\n", 2);

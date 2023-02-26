@@ -76,7 +76,7 @@ static void	check_options(t_msh *msh, t_env_var *env, char **tokens)
 	i = 1;
 	if (!tokens[1])
 		write(1, "\n", 1);
-	else if (ft_strncmp(tokens[1], "-n", ft_strlen("-n")) == 0)
+	else if (ft_strncmp(tokens[1], "-n", ft_strlen(tokens[1])) == 0)
 		run_echo(&msh, &env, tokens);
 	else
 	{

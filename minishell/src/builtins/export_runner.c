@@ -24,16 +24,16 @@ static int	list_exports(t_env_var *env, t_msh *msh)
 	e = env;
 	while (e->next != NULL)
 	{
-		if (e->name && e->data && ft_strncmp(e->name, "init", ft_strlen("init")) != 0 && \
-			ft_strncmp(e->name, "?", ft_strlen("?")))
+		if (e->name && e->data && ft_strncmp(e->name, "init", ft_strlen(e->name)) != 0 && \
+			ft_strncmp(e->name, "?", ft_strlen(e->name)))
 		{
 			write(1, "export ", 7);
 			ft_putnstr(e->name, "=", e->data, "\n");
 		}
 		e = e->next;
 	}
-	if (e->name && e->data && (ft_strncmp(e->name, "init", ft_strlen("init")) != 0 && \
-		ft_strncmp(e->name, "?", ft_strlen("?"))))
+	if (e->name && e->data && (ft_strncmp(e->name, "init", ft_strlen(e->name)) != 0 && \
+		ft_strncmp(e->name, "?", ft_strlen(e->name))))
 	{
 		write(1, "export ", 7);
 		ft_putnstr(e->name, "=", e->data, "\n");

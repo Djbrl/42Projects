@@ -115,13 +115,13 @@ void	apply_redirections(char *expr, int *fd_in, int *fd_out, t_msh *msh)
 			continue ;
 		}
 		//
-		if (ft_strncmp(redirs[i], ">>", ft_strlen(">>")) == 0)
+		if (ft_strncmp(redirs[i], ">>", ft_strlen(redirs[i])) == 0)
 			output_redirection(ft_split_charset(expr, ">"), 2, fd_out);
-		else if (ft_strncmp(redirs[i], ">", ft_strlen(">")) == 0)
+		else if (ft_strncmp(redirs[i], ">", ft_strlen(redirs[i])) == 0)
 			output_redirection(ft_split_charset(expr, ">"), 1, fd_out);
-		else if (ft_strncmp(redirs[i], "<<", ft_strlen("<<")) == 0)
+		else if (ft_strncmp(redirs[i], "<<", ft_strlen(redirs[i])) == 0)
 			heredoc_redirection(redirs, ft_split_charset(expr, "<<"), msh);
-		else if (ft_strncmp(redirs[i], "<", ft_strlen("<")) == 0)
+		else if (ft_strncmp(redirs[i], "<", ft_strlen(redirs[i])) == 0)
 			input_redirection(ft_split_charset(expr, "<"), fd_in, expr, msh);
 		else
 		{
