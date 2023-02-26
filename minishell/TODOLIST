@@ -11,8 +11,8 @@ FIXED- export PATH=directory1:directory2 -> devrait pas marcher
 FIXED- export $s="s -la" -> l$s marche pas
 
 FIXED- echo "cat lol.c | cat > lol.c"
-X- echo "bonjour" "ca va" "bien"
-X- echo 'salut ca va'
+FIXED- echo "bonjour" "ca va" "bien"
+FIXED- echo 'salut ca va'
 FIXED- echo '$USER'
 
 X- cat file | grep bla | more
