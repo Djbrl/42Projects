@@ -103,105 +103,105 @@ typedef struct s_msh
 /*
 ** INIT
 */
-void	init_env(t_msh *msh);
-void	init_msh(t_msh *msh, char **envp);
-void	init_expr(t_msh *msh);
+void		init_env(t_msh *msh);
+void		init_msh(t_msh *msh, char **envp);
+void		init_expr(t_msh *msh);
 
 /*
 ** BUILTINS
 */
-int		msh_cd(t_env_var *env, t_msh *msh, char *field);
-int		msh_pwd(t_env_var *env, t_msh *msh, char *field);
-int		msh_env(t_env_var *env, t_msh *msh, char *field);
-int		msh_echo(t_env_var *env, char *s, t_msh *msh);
-int		msh_help(t_env_var *env, t_msh *msh, char *field);
-int		msh_exit(t_env_var *env, t_msh *msh, char *field);
-int		msh_unset(t_env_var *env, t_msh *msh, char *field);
-int		msh_export(t_env_var *env, char *arg, t_msh *msh);
-int		msh_cd_runner(t_env_var *env, t_msh *msh, char *field);
-int		msh_echo_runner(t_env_var *env, t_msh *msh, char *field);
-int		msh_export_runner(t_env_var *env, t_msh *msh, char *field);
+int			msh_cd(t_env_var *env, t_msh *msh, char *field);
+int			msh_pwd(t_env_var *env, t_msh *msh, char *field);
+int			msh_env(t_env_var *env, t_msh *msh, char *field);
+int			msh_echo(t_env_var *env, char *s, t_msh *msh);
+int			msh_help(t_env_var *env, t_msh *msh, char *field);
+int			msh_exit(t_env_var *env, t_msh *msh, char *field);
+int			msh_unset(t_env_var *env, t_msh *msh, char *field);
+int			msh_export(t_env_var *env, char *arg, t_msh *msh);
+int			msh_cd_runner(t_env_var *env, t_msh *msh, char *field);
+int			msh_echo_runner(t_env_var *env, t_msh *msh, char *field);
+int			msh_export_runner(t_env_var *env, t_msh *msh, char *field);
 
 /*
 ** DISPLAY
 */
-int		display_error(char *error, t_msh *msh);
-void	display_prompt(int mode, t_msh *msh);
-void	display_cmd_error(char *cmd, char *error, char **args);
+int			display_error(char *error, t_msh *msh);
+void		display_prompt(int mode, t_msh *msh);
+void		display_cmd_error(char *cmd, char *error, char **args);
 
 /*
 ** CONTROL
 */
-char	*get_currentdir(t_msh *msh);
-char	*get_data_from_env(t_env_var *env, char *name);
-void	free_data_from_env(t_env_var *env, char *name);
-int		add_var_to_env(t_env_var *env, char *name, char *data);
-void	evaluate_commands(t_msh *t_msh);
-void	signal_handler(int sig_n);
-void	read_buffer(t_msh *msh);
-void	parse_envp(t_msh *msh);
-void	exit_cmd(t_msh *msh);
-int		exit_shell(t_msh *msh, char *field);
+char		*get_currentdir(t_msh *msh);
+char		*get_data_from_env(t_env_var *env, char *name);
+void		free_data_from_env(t_env_var *env, char *name);
+int			add_var_to_env(t_env_var *env, char *name, char *data);
+void		evaluate_commands(t_msh *t_msh);
+void		signal_handler(int sig_n);
+void		read_buffer(t_msh *msh);
+void		parse_envp(t_msh *msh);
+void		exit_cmd(t_msh *msh);
+int			exit_shell(t_msh *msh, char *field);
 
 /*
 ** UTILS
 */
-int		is_redir(char *str);
-int		expr_len(t_expr *expr);
-int		load_expr(t_msh *msh);
-void	free_expr(t_msh **msh);
-char	*expand_var(t_msh *msh, char *var);
-void	free_split(char **array);
-void	flush_buffer(t_msh *msh);
-int		get_next_line(int fd, char **line);
-int		update_exit_status(t_msh *msh, int status);
-int		is_builtin(char *s, t_msh *msh);
-char	**ft_split_charset(const char *s, const char *set);
-char	*remove_spaces(const char *str);
-void	close_redir(int in, int out);
-int		arr_len(char **arr);
-void	free_envar(t_msh *msh);
-void	free_env(t_msh *msh);
-int		change_dir(t_msh **msh, char **tokens);
-int		more_than_one_word(char *echo);
-void	temp_exit(t_msh *msh);
-char	**remove_array_quotes(char **cmd);
-void	reload_path(t_msh *msh);
-void	sort_env(t_env_var *env);
-void	free_env_cpy(t_env_var *env);
+int			is_redir(char *str);
+int			expr_len(t_expr *expr);
+int			load_expr(t_msh *msh);
+void		free_expr(t_msh **msh);
+char		*expand_var(t_msh *msh, char *var);
+void		free_split(char **array);
+void		flush_buffer(t_msh *msh);
+int			get_next_line(int fd, char **line);
+int			update_exit_status(t_msh *msh, int status);
+int			is_builtin(char *s, t_msh *msh);
+char		**ft_split_charset(const char *s, const char *set);
+char		*remove_spaces(const char *str);
+void		close_redir(int in, int out);
+int			arr_len(char **arr);
+void		free_envar(t_msh *msh);
+void		free_env(t_msh *msh);
+int			change_dir(t_msh **msh, char **tokens);
+int			more_than_one_word(char *echo);
+void		temp_exit(t_msh *msh);
+char		**remove_array_quotes(char **cmd);
+void		reload_path(t_msh *msh);
+void		sort_env(t_env_var *env);
+void		free_env_cpy(t_env_var *env);
 t_env_var	*env_duplicate(t_env_var *lst);
 
 /*
 ** PIPE
 */
 
-int		pipe_exec(t_msh *msh);
-int		init_fds(t_expr **commands, t_expr *prev);
-void	close_fds(t_expr **curr_command);
-int		connect_fds(t_expr **curr_command, t_expr *commands);
+int			pipe_exec(t_msh *msh);
+int			init_fds(t_expr **commands, t_expr *prev);
+void		close_fds(t_expr **curr_command);
+int			connect_fds(t_expr **curr_command, t_expr *commands);
 
 /*
 ** REDIRECTIONS
 */
-void	exec_builtin(t_msh *msh, char *field);
-void	apply_redirections(char *expr, int *fd_in, int *fd_out, t_msh *msh);
-int		check_redirections(t_msh *msh);
-void	heredoc(char **field, t_msh *msh);
+void		exec_builtin(t_msh *msh, char *field);
+void		apply_redirections(char *expr, int *fd_in, int *fd_out, t_msh *msh);
+int			check_redirections(t_msh *msh);
+void		heredoc(char **field, t_msh *msh);
 
 /*
 ** PARSING
 */
-char	**parse_prompt(char *str, t_msh *msh);
-void	add_to_rt(char **rt, char *tmp);
-void	*ft_realloc(void *ptr, size_t cursize, size_t newsize);
-int		is_pipe_redir(char c);
-int		is_whitespace(char c);
-int		dollar(char *str, char **rt, int i, t_msh *msh);
-int		double_quote(char *str, char **rt, int i);
-int		pipe_redir(char *str, char **rt, int i);
-int		single_quote(char *str, char **rt, int i);
-int		string(char *str, char **rt, int i);
-int		pipe_redir_inside_quotes(char *str, char **rt, int i);
-char	*expand_prompt(char *str, t_msh *msh);
+char		**parse_prompt(char *str, t_msh *msh);
+void		add_to_rt(char **rt, char *tmp);
+void		*ft_realloc(void *ptr, size_t cursize, size_t newsize);
+int			is_pipe_redir(char c);
+int			is_whitespace(char c);
+int			dollar(char *str, char **rt, int i, t_msh *msh);
+int			double_quote(char *str, char **rt, int i);
+int			pipe_redir(char *str, char **rt, int i);
+int			single_quote(char *str, char **rt, int i);
+int			string(char *str, char **rt, int i);
+int			pipe_redir_inside_quotes(char *str, char **rt, int i);
+char		*expand_prompt(char *str, t_msh *msh);
 
 #endif

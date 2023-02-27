@@ -7,18 +7,13 @@ FIXED- mkdir 1 -> cd 1 -> mkdir 2 -> rm -rf ../../1 -> Invalid read
 FIXED- unset $PATH -> ls -> invalid read get_prompt_line
 FIXED- variable env strncmp -> ex.: echo $PATHH
 FIXED- export PATH=directory1:directory2 -> devrait pas marcher
-
 FIXED- export $s="s -la" -> l$s marche pas
-
 FIXED- echo "cat lol.c | cat > lol.c"
 FIXED- echo "bonjour" "ca va" "bien"
 FIXED- echo 'salut ca va'
 FIXED- echo '$USER'
+FIXED - export is not ASCII-sorted
 
-
-X- export is not ASCII-sorted
-X- env should not show variable that have been created
-
-X- cat file | grep bla | more
+X - cat file | grep bla | more
 X- cat | cat | ls ->  devrait faire 2 cat et quitter
-todo : rework connect_fds and init_fds
+X- env should not show variable that have been createdls

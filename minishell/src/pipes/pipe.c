@@ -174,11 +174,11 @@ static int	execute_multi_pipe(t_expr *commands, t_msh *msh)
 	t_expr	*curr;
 	int		count;
 	int		pid[100];
+	t_expr	*tmp;
 
 	count = 0;
+	tmp = commands;
 	curr = commands;
-	// connect_fds(&curr, commands);
-	t_expr *tmp = commands;
 	while (tmp)
 	{
 		printf("in: %i | out: %i\n", tmp->fd_in, tmp->fd_out);

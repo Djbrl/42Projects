@@ -70,12 +70,12 @@ static int	display_export_error(char *error, char *arg, t_msh *msh)
 
 static int	has_invalid_char(char *str)
 {
-    int		i;
-    char	*invalid_char;
+	int		i;
+	char	*invalid_char;
 
 	i = 0;
 	invalid_char = ft_strdup("!#$%%&*()+,-./:;<>?@[]^`{|}~\n\t ");
-    while (str[i] && str[i] != '=')
+	while (str[i] && str[i] != '=')
 	{
 		if (ft_strchr(invalid_char, (int)str[i]) != NULL \
 			|| str[0] == '_')
@@ -86,7 +86,7 @@ static int	has_invalid_char(char *str)
 		i++;
 	}
 	free(invalid_char);
-    return 0;
+	return (0);
 }
 
 /*

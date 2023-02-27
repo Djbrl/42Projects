@@ -88,7 +88,7 @@ int	has_odd_quotes(char *str)
 	int	i;
 	int	unclosed_q;
 	int	unclosed_dq;
-	int unclosed;
+	int	unclosed;
 
 	unclosed = 0;
 	unclosed_q = 0;

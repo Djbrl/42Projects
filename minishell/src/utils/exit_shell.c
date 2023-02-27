@@ -64,6 +64,15 @@ void	free_env(t_msh *msh)
 	free_envar(msh);
 }
 
+static int	check_exit_token(char *token)
+{
+	if ((token && ft_atoi(token) == 0 && \
+		ft_strncmp(token, "0", ft_strlen(token)) != 0) \
+		|| !ft_isnum(token) || (ft_isnum(token) && ft_strlen(token) > 9))
+		return (1);
+	return (0);
+}
+
 int	exit_shell(t_msh *msh, char *field)
 {
 	char	**arr;
@@ -75,8 +84,7 @@ int	exit_shell(t_msh *msh, char *field)
 		ftn_exit(msh, g_status, NULL);
 	else
 		arr = ft_split(field, ' ');
-	if ((arr[1] && ft_atoi(arr[1]) == 0 && ft_strncmp(arr[1], "0", ft_strlen(arr[1])) != 0) \
-		|| !ft_isnum(arr[1]) || (ft_isnum(arr[1]) && ft_strlen(arr[1]) > 9))
+	if (check_exit_token(arr[1]))
 	{
 		ft_putstr_fd("minishell: exit: numeric argument required\n", 2);
 		ftn_exit(msh, 2, arr);

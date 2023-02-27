@@ -63,7 +63,7 @@ static void	heredoc_redirection(char **redirs, char **field, t_msh *msh)
 	free_split(field);
 }
 
-static int sneaky_redir(char *expr)
+static int	sneaky_redir(char *expr)
 {
 	int	i;
 
@@ -108,13 +108,11 @@ void	apply_redirections(char *expr, int *fd_in, int *fd_out, t_msh *msh)
 	redirs = ft_split(expr, ' ');
 	while (redirs[i])
 	{
-		//skip fields that are in between quotes
 		if (redirs[i + 1] && has_quote(redirs[i + 1]))
 		{
 			i++;
 			continue ;
 		}
-		//
 		if (ft_strncmp(redirs[i], ">>", ft_strlen(redirs[i])) == 0)
 			output_redirection(ft_split_charset(expr, ">"), 2, fd_out);
 		else if (ft_strncmp(redirs[i], ">", ft_strlen(redirs[i])) == 0)
