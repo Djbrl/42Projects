@@ -97,23 +97,35 @@ static int	has_quote(char *str)
 	return (0);
 }
 
+void	apply_sneaky_redir(char **redir, int *fd_in, int *fd_out, t_msh *msh)
+{
+	int	ret;
+
+	ret = sneaky_redir(*redir);
+	if (ret == 1)
+		output_redirection(ft_split_charset(*redir, ">"), 1, fd_out);
+	else if (ret == 2)
+		output_redirection(ft_split_charset(*redir, ">"), 2, fd_out);
+	else if (ret == 4)
+		input_redirection(ft_split_charset(*redir, "<"), fd_in, *redir, msh);
+}
+
 void	apply_redirections(char *expr, int *fd_in, int *fd_out, t_msh *msh)
 {
 	int		i;
 	int		ret;
 	char	**redirs;
 
-	i = 0;
-	ret = 0;
+	i = -1;
 	redirs = ft_split(expr, ' ');
-	while (redirs[i])
+	while (redirs[++i])
 	{
 		if (redirs[i + 1] && has_quote(redirs[i + 1]))
-		{
-			i++;
 			continue ;
-		}
-		if (ft_strncmp(redirs[i], ">>", ft_strlen(redirs[i])) == 0)
+		ret = sneaky_redir(redirs[i]);
+		if (ret == 3)
+			heredoc_redirection(redirs, ft_split_charset(redirs[i], "<<"), msh);
+		else if (ft_strncmp(redirs[i], ">>", ft_strlen(redirs[i])) == 0)
 			output_redirection(ft_split_charset(expr, ">"), 2, fd_out);
 		else if (ft_strncmp(redirs[i], ">", ft_strlen(redirs[i])) == 0)
 			output_redirection(ft_split_charset(expr, ">"), 1, fd_out);
@@ -121,24 +133,8 @@ void	apply_redirections(char *expr, int *fd_in, int *fd_out, t_msh *msh)
 			heredoc_redirection(redirs, ft_split_charset(expr, "<<"), msh);
 		else if (ft_strncmp(redirs[i], "<", ft_strlen(redirs[i])) == 0)
 			input_redirection(ft_split_charset(expr, "<"), fd_in, expr, msh);
-		else
-		{
-			ret = sneaky_redir(redirs[i]);
-			if (ret == 1)
-				output_redirection(ft_split_charset(redirs[i], ">"), 1, fd_out);
-			else if (ret == 2)
-				output_redirection(ft_split_charset(redirs[i], ">"), 2, fd_out);
-			else if (ret == 3)
-				heredoc_redirection(redirs, ft_split_charset(redirs[i], "<<"), msh);
-			else if (ret == 4)
-				input_redirection(ft_split_charset(redirs[i], "<"), fd_in, redirs[i], msh);
-			else
-			{
-				i++;
-				continue ;
-			}
-		}
-		i++;
+		else if (ret)
+			apply_sneaky_redir(&redirs[i], fd_in, fd_out, msh);
 	}
 	free_split(redirs);
 }

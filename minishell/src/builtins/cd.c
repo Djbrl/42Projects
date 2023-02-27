@@ -52,7 +52,7 @@ char	*get_currentdir(t_msh *msh)
 	int		i;
 	int		last_slash;
 
-	i = 0;
+	i = -1;
 	last_slash = 0;
 	path = ft_strdup(getcwd(cwd, sizeof(cwd)));
 	if (!path)
@@ -65,12 +65,9 @@ char	*get_currentdir(t_msh *msh)
 		free(path);
 		return (ft_strdup(" "));
 	}
-	while (path[i])
-	{
+	while (path[++i])
 		if (path[i] == '/')
 			last_slash = i;
-		i++;
-	}
 	ret = ft_strdup(path + last_slash + 1);
 	free(path);
 	return (ret);
