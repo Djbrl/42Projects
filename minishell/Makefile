@@ -27,7 +27,7 @@ PFLAGS := -Iinclude -Ilibft
 SRC_OTHER := main.c exec.c init.c envp.c expr.c\
 			 \
 			 utils/list.c utils/status_signal_expr.c utils/free_exit.c \
-			 utils/split_charset.c utils/read_expand_builtin.c \
+			 utils/split_charset.c utils/read_expand_builtin.c utils/sort_env.c\
 			 utils/get_next_line.c utils/display.c utils/exit_shell.c \
 			 \
 			 pipes/pipe.c pipes/pipe_utils.c \

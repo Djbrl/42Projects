@@ -167,6 +167,9 @@ int		more_than_one_word(char *echo);
 void	temp_exit(t_msh *msh);
 char	**remove_array_quotes(char **cmd);
 void	reload_path(t_msh *msh);
+void	sort_env(t_env_var *env);
+void	free_env_cpy(t_env_var *env);
+t_env_var	*env_duplicate(t_env_var *lst);
 
 /*
 ** PIPE

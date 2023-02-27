@@ -19,9 +19,11 @@
 static int	list_exports(t_env_var *env, t_msh *msh)
 {
 	t_env_var	*e;
+	t_env_var	*e_head;
 
-	(void)msh;
-	e = env;
+	e = env_duplicate(env);
+	e_head = e;
+	sort_env(e);
 	while (e->next != NULL)
 	{
 		if (e->name && e->data && ft_strncmp(e->name, "init", ft_strlen(e->name)) != 0 && \
@@ -38,6 +40,7 @@ static int	list_exports(t_env_var *env, t_msh *msh)
 		write(1, "export ", 7);
 		ft_putnstr(e->name, "=", e->data, "\n");
 	}
+	free_env_cpy(e_head);
 	exit_cmd(msh);
 	return (update_exit_status(msh, 0));
 }
