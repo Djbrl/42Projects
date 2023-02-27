@@ -15,19 +15,26 @@
 int	connect_fds(t_expr **curr_command, t_expr *commands)
 {
 	t_expr		*cur;
+	t_expr		*prev;
 	int			pipefd[2];
 
 	cur = *curr_command;
+	prev = NULL;
 	while (cur->next != NULL)
 	{
 		pipe(pipefd);
+		close(cur->fd_out);
+		close(cur->next->fd_in);
 		cur->fd_out = pipefd[1];
 		cur->next->fd_in = pipefd[0];
+		prev = cur;
 		cur = cur->next;
+		close(prev->fd_in);
 	}
-	(void)commands;
 	// cur->fd_out = 1;
 	// cur = commands;
+	(void)commands;
+	(void)prev;
 	return (-1);
 }
 
@@ -53,19 +60,16 @@ int	init_fds(t_expr **commands, t_expr *prev)
 	while (cur->next != NULL)
 	{
 		pipe(pipefd);
-		if (prev != NULL)
-			cur->fd_in = prev->fd_out;
-		else
+		if (prev == NULL)
 			cur->fd_in = STDIN_FILENO;
+		else
+			close(prev->fd_in);
 		cur->fd_out = pipefd[1];
 		cur->next->fd_in = pipefd[0];
-		if (cur->fd_in != STDIN_FILENO)
-			close(cur->fd_in);
 		prev = cur;
 		cur = cur->next;
+		// close(prev->fd_in);
 	}
-	if (prev != NULL)
-		cur->fd_in = prev->fd_out;
 	cur->fd_out = STDOUT_FILENO;
 	return (0);
 }

@@ -177,7 +177,13 @@ static int	execute_multi_pipe(t_expr *commands, t_msh *msh)
 
 	count = 0;
 	curr = commands;
-	connect_fds(&curr, commands);
+	// connect_fds(&curr, commands);
+	t_expr *tmp = commands;
+	while (tmp)
+	{
+		printf("in: %i | out: %i\n", tmp->fd_in, tmp->fd_out);
+		tmp = tmp->next;
+	}
 	while (curr != NULL && count < 100)
 	{
 		pid[count] = fork();
