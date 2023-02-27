@@ -88,6 +88,7 @@ static void	dup_command(t_expr **commands)
 	t_expr	*cur;
 
 	cur = *commands;
+	write(1, "ayo?\n", 5);
 	if (cur->fd_out != 1)
 	{
 		dup2(cur->fd_out, 1);
@@ -132,10 +133,7 @@ static void	check_pid_status(t_expr **cmd, t_msh *msh, int pid[100], int count)
 	int		j;
 
 	curr = *cmd;
-	if (curr->fd_out != STDOUT_FILENO)
-		close(curr->fd_out);
-	if (curr->fd_out != STDOUT_FILENO)
-		close(curr->fd_in);
+	close_fds(cmd);
 	if (WIFSIGNALED(g_status) && WTERMSIG(g_status) == SIGINT)
 	{
 		update_exit_status(msh, 130);

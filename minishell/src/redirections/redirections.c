@@ -108,6 +108,10 @@ void	apply_sneaky_redir(char **redir, int *fd_in, int *fd_out, t_msh *msh)
 		output_redirection(ft_split_charset(*redir, ">"), 2, fd_out);
 	else if (ret == 4)
 		input_redirection(ft_split_charset(*redir, "<"), fd_in, *redir, msh);
+	else if (ret == 3)
+		heredoc_redirection(redirs, ft_split_charset(redirs[i], "<<"), msh);
+	else
+		(void)ret;
 }
 
 void	apply_redirections(char *expr, int *fd_in, int *fd_out, t_msh *msh)
@@ -123,8 +127,6 @@ void	apply_redirections(char *expr, int *fd_in, int *fd_out, t_msh *msh)
 		if (redirs[i + 1] && has_quote(redirs[i + 1]))
 			continue ;
 		ret = sneaky_redir(redirs[i]);
-		if (ret == 3)
-			heredoc_redirection(redirs, ft_split_charset(redirs[i], "<<"), msh);
 		else if (ft_strncmp(redirs[i], ">>", ft_strlen(redirs[i])) == 0)
 			output_redirection(ft_split_charset(expr, ">"), 2, fd_out);
 		else if (ft_strncmp(redirs[i], ">", ft_strlen(redirs[i])) == 0)
@@ -135,6 +137,8 @@ void	apply_redirections(char *expr, int *fd_in, int *fd_out, t_msh *msh)
 			input_redirection(ft_split_charset(expr, "<"), fd_in, expr, msh);
 		else if (ret)
 			apply_sneaky_redir(&redirs[i], fd_in, fd_out, msh);
+		else
+			(void)ret;
 	}
 	free_split(redirs);
 }

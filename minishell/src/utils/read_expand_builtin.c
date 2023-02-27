@@ -247,7 +247,7 @@ void	read_buffer(t_msh *msh)
 	char	*user;
 	char	*promptline;
 
-	dup2(msh->std_in, 0);
+	// dup2(msh->std_in, 0);
 	user = ft_strdup(get_data_from_env(msh->env, ft_strdup("USER")));
 	promptline = NULL;
 	build_promptline(user, &promptline, msh);
