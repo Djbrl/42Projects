@@ -30,6 +30,7 @@ SRC_OTHER := main.c exec.c init.c envp.c expr.c\
 			 utils/split_charset.c utils/read_expand_builtin.c utils/sort_env.c\
 			 utils/get_next_line.c utils/display.c utils/exit_shell.c \
 			 utils/promptline.c utils/read_parsing.c utils/set_prompt.c \
+			 utils/single_exec_utils.c \
 			 \
 			 pipes/pipe.c pipes/pipe_utils.c pipes/pipe_child.c pipes/pipe_exec.c \
 			 \

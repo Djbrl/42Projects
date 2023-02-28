@@ -146,6 +146,11 @@ int			exit_shell(t_msh *msh, char *field);
 /*
 ** UTILS
 */
+void		reload_path(t_msh *msh);
+char		**remove_array_quotes(char **cmd);
+void		copy_result(char **new_result, char **result, int len);
+char		*remove_quotes(char *str);
+void		close_main_fork_process(t_msh *msh, int pid);
 int			is_redir(char *str);
 int			expr_len(t_expr *expr);
 int			load_expr(t_msh *msh);
