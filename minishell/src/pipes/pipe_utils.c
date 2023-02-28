@@ -17,9 +17,9 @@ void	close_fds(t_expr **curr_command)
 	t_expr	*cur;
 
 	cur = *curr_command;
-	if (cur->fd_in >2)
+	if (cur->fd_in > 2)
 		close(cur->fd_in);
-	if (cur->fd_out >2)
+	if (cur->fd_out > 2)
 		close(cur->fd_out);
 }
 
@@ -36,14 +36,12 @@ int	init_fds(t_expr **commands, t_expr *prev)
 		pipe(pipefd);
 		if (prev == NULL)
 			cur->fd_in = STDIN_FILENO;
-		// else
-		// 	close(prev->fd_in);
 		cur->fd_out = pipefd[1];
 		cur->next->fd_in = pipefd[0];
 		prev = cur;
 		cur = cur->next;
-		if (prev->fd_in != STDIN_FILENO)
-			close(prev->fd_in);
+		// if (prev->fd_in != STDIN_FILENO)
+		// 	close(prev->fd_in);
 	}
 	cur->fd_out = STDOUT_FILENO;
 	return (0);

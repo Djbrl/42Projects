@@ -106,7 +106,7 @@ static int	check_rkey(char tmp[HEREDOC_BUF_SIZE], char **field, \
 		rkey = remove_spaces(field[1]);
 	else
 		rkey = remove_spaces(field[0]);
-	if (ft_strncmp(tmp, rkey, ft_strlen(tmp)) == 0)
+	if (ft_strncmp(tmp, rkey, ft_strlen(rkey)) == 0)
 	{
 		free(rkey);
 		free(heredoc_buf[i]);

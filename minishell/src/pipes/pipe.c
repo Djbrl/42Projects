@@ -35,32 +35,38 @@ static void	exec_command(char *path, char *tmp, char **re, char **env)
 	free(path);
 }
 
+static void	ftn_exec_paths(t_msh *msh, char **expr, char **re)
+{
+	int		i;
+	char	*tmp;
+	char	*path;
+
+	i = 0;
+	reload_path(msh);
+	while (msh->paths[i])
+	{
+		if (!ft_isalpha(expr[0][0]))
+			break ;
+		if (access(expr[0], X_OK) == 0)
+			execve(expr[0], re, msh->envp);
+		tmp = ft_strjoin(msh->paths[i++], "/");
+		path = ft_strjoin(tmp, expr[0]);
+		exec_command(path, tmp, re, msh->envp);
+	}
+}
+
 static void	exec_paths(t_msh *msh, char **re, char **cmd, char *field)
 {
 	char	**expr;
-	char	*path;
-	char	*tmp;
-	int		i;
 
 	expr = remove_array_quotes(cmd);
 	if (re == NULL)
 		re = expr;
-	i = 0;
 	if (is_builtin(expr[0], msh) >= 0)
 		exec_builtin(msh, field);
 	else
 	{
-		reload_path(msh);
-		while (msh->paths[i])
-		{
-			if (!ft_isalpha(expr[0][0]))
-				break ;
-			if (access(expr[0], X_OK) == 0)
-				execve(expr[0], re, msh->envp);
-			tmp = ft_strjoin(msh->paths[i++], "/");
-			path = ft_strjoin(tmp, expr[0]);
-			exec_command(path, tmp, re, msh->envp);
-		}
+		ftn_exec_paths(msh, expr, re);
 		fail_command(expr);
 	}
 	free_split(expr);
@@ -133,7 +139,10 @@ static void	check_pid_status(t_expr **cmd, t_msh *msh, int pid[100], int count)
 	int		j;
 
 	curr = *cmd;
-	close_fds(cmd);
+	if (curr->fd_in != STDIN_FILENO)
+		close(curr->fd_in);
+	if (curr->fd_out != STDOUT_FILENO)
+		close(curr->fd_out);
 	if (WIFSIGNALED(g_status) && WTERMSIG(g_status) == SIGINT)
 	{
 		update_exit_status(msh, 130);
@@ -172,16 +181,9 @@ static int	execute_multi_pipe(t_expr *commands, t_msh *msh)
 	t_expr	*curr;
 	int		count;
 	int		pid[100];
-	t_expr	*tmp;
 
 	count = 0;
-	tmp = commands;
 	curr = commands;
-	while (tmp)
-	{
-		printf("in: %i | out: %i\n", tmp->fd_in, tmp->fd_out);
-		tmp = tmp->next;
-	}
 	while (curr != NULL && count < 100)
 	{
 		pid[count] = fork();
