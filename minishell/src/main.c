@@ -24,21 +24,6 @@ static int	get_nb_tokens(char **tokens)
 	return (i);
 }
 
-static int	only_whitespaces(char *buf)
-{
-	int	i;
-
-	i = 0;
-	while (buf[i])
-	{
-		if (buf[i] != ' ' && buf[i] != '\t' && \
-			buf[i] != '\v' && buf[i] != '\n')
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
 static void	clean_expr(t_msh *msh, int free_flag)
 {
 	if (free_flag)
@@ -61,18 +46,6 @@ static void	launch_command(t_msh *msh)
 	clean_expr(msh, free_exp);
 	exit_cmd(msh);
 	flush_buffer(msh);
-}
-
-static int	set_prompt(t_msh *msh)
-{
-	signal(SIGINT, signal_handler);
-	signal(SIGQUIT, signal_handler);
-	read_buffer(msh);
-	msh->prompt = ft_strdup(msh->g_buffer);
-	if (msh->prompt != NULL && ft_strlen(msh->prompt) != 0 \
-			&& !only_whitespaces(msh->prompt))
-		return (1);
-	return (0);
 }
 
 static void	shell_loop(t_msh *msh)

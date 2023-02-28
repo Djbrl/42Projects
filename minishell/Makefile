@@ -29,11 +29,13 @@ SRC_OTHER := main.c exec.c init.c envp.c expr.c\
 			 utils/list.c utils/status_signal_expr.c utils/free_exit.c \
 			 utils/split_charset.c utils/read_expand_builtin.c utils/sort_env.c\
 			 utils/get_next_line.c utils/display.c utils/exit_shell.c \
+			 utils/promptline.c utils/read_parsing.c utils/set_prompt.c \
 			 \
-			 pipes/pipe.c pipes/pipe_utils.c \
+			 pipes/pipe.c pipes/pipe_utils.c pipes/pipe_child.c pipes/pipe_exec.c \
 			 \
 			 redirections/redirections.c redirections/redirections_utils.c \
-			 redirections/check_redirections.c\
+			 redirections/check_redirections.c redirections/child_heredoc.c \
+			 redirections/redir_handlers.c \
 			 \
 			 builtins/echo_runner.c builtins/export_runner.c \
 			 builtins/other.c builtins/export.c builtins/unset.c \

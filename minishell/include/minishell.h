@@ -169,6 +169,10 @@ char		**remove_array_quotes(char **cmd);
 void		reload_path(t_msh *msh);
 void		sort_env(t_env_var *env);
 void		free_env_cpy(t_env_var *env);
+void		build_promptline(char *user, char **promptline, t_msh *msh);
+int			has_odd_quotes(char *str);
+int			has_unexpected_token(char *str);
+int			set_prompt(t_msh *msh);
 t_env_var	*env_duplicate(t_env_var *lst);
 
 /*
@@ -179,6 +183,8 @@ int			pipe_exec(t_msh *msh);
 int			init_fds(t_expr **commands, t_expr *prev);
 void		close_fds(t_expr **curr_command);
 int			connect_fds(t_expr **curr_command, t_expr *commands);
+void		exec_pipe_paths(t_msh *msh, char **re, char **cmd, char *field);
+void		child_pipe(t_expr *curr, t_msh *msh);
 
 /*
 ** REDIRECTIONS
@@ -187,6 +193,14 @@ void		exec_builtin(t_msh *msh, char *field);
 void		apply_redirections(char *expr, int *fd_in, int *fd_out, t_msh *msh);
 int			check_redirections(t_msh *msh);
 void		heredoc(char **field, t_msh *msh);
+void		ftn_heredoc(char *cmd, char *buf[HEREDOC_LIMIT], t_msh *msh);
+int			sneaky_redir(char *expr);
+int			which_redir(char *redir, char *which, char dir, int mode);
+int			is_redir_token(char *token);
+int			is_sneaky_token(char *expr, int *i, int *fds[2], t_msh *msh);
+void		heredoc_redirection(char **redirs, char **field, t_msh *msh);
+void		input_redirection(char **f, int *fd_in, char *prompt, t_msh *msh);
+void		output_redirection(char **field, int mode, int *fd_out);
 
 /*
 ** PARSING

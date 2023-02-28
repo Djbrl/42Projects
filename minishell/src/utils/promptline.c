@@ -6,73 +6,64 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/25 11:17:24 by dsy               #+#    #+#             */
-/*   Updated: 2023/01/10 16:29:53 by dsy              ###   ########.fr       */
+/*   Updated: 2023/02/15 17:26:34 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*get_colored_user(t_msh *msh)
+static char	*get_current_user(char *user)
 {
-	char	*user;
-	char	*colored_user;
-	char	*green_user;
+	char	**username;
+	char	*name;
+	int		i;
 
-	user = ft_strdup(get_data_from_env(msh->env, ft_strdup("USER")));
-	colored_user = NULL;
-	if (user != NULL)
-	{
-		green_user = ft_strjoin(KGRN, user);
-		colored_user = ft_strjoin(green_user, "\033[0m");
-		free(green_user);
-		free(user);
-	}	
-	return (colored_user);
+	i = 0;
+	username = ft_split(user, '/');
+	while (username[i])
+		i++;
+	name = ft_strdup(username[i - 1]);
+	free_split(username);
+	return (name);
 }
 
-static char	*get_colored_curdir(t_msh *msh)
+static void	get_prompt_line(t_msh *msh, char *user, char **promptline)
 {
 	char	*curdir;
-	char	*colored_curdir;
-	char	*blue_curdir;
-
-	colored_curdir = NULL;
-	curdir = get_currentdir(msh);
-	if (curdir != NULL)
-	{
-		blue_curdir = ft_strjoin(KBLU, curdir);
-		colored_curdir = ft_strjoin(blue_curdir, "\033[0m");
-		free(blue_curdir);
-		free(curdir);
-	}
-	return (colored_curdir);
-}
-
-static char	*get_prompt_prefix(char *colored_user)
-{
-	if (colored_user != NULL)
-		return (ft_strjoin(colored_user, "@minishell-4.2$ "));
-	else
-		return (ft_strdup("guest@minishell-4.2$ "));
-}
-
-void	build_prompt_line(t_msh *msh, char **promptline)
-{
-	char	*colored_user;
-	char	*colored_curdir;
-	char	*prompt_prefix;
-	char	*full_curdir;
+	char	*tmp[6];
 	char	*dir;
+	char	*name;
 
-	colored_user = get_colored_user(msh);
-	colored_curdir = get_colored_curdir(msh);
-	prompt_prefix = get_prompt_prefix(colored_user);
-	full_curdir = ft_strjoin("./", colored_curdir);
-	dir = ft_strjoin(prompt_prefix, full_curdir);
-	*promptline = ft_strjoin(dir, "> ");
-	free(colored_user);
-	free(colored_curdir);
-	free(full_curdir);
+	name = get_current_user(user);
+	tmp[0] = ft_strjoin(KGRN, name);
+	free(name);
+	tmp[1] = ft_strjoin(tmp[0], "\033[0m");
+	curdir = get_currentdir(msh);
+	tmp[2] = ft_strjoin(KBLU, curdir);
+	free(curdir);
+	tmp[3] = ft_strjoin(tmp[2], "\033[0m");
+	tmp[4] = ft_strjoin("./", tmp[3]);
+	dir = ft_strjoin("@minishell-4.2$ ", tmp[4]);
+	tmp[5] = ft_strjoin(dir, "> ");
+	*promptline = ft_strjoin(tmp[1], tmp[5]);
+	free(tmp[0]);
+	free(tmp[1]);
+	free(tmp[2]);
+	free(tmp[3]);
+	free(tmp[4]);
 	free(dir);
-	free(prompt_prefix);
+	free(tmp[5]);
+	free(user);
+}
+
+void	build_promptline(char *user, char **promptline, t_msh *msh)
+{
+	if (user != NULL && ft_strlen(user) > 0)
+		get_prompt_line(msh, user, promptline);
+	else
+	{
+		get_prompt_line(msh, ft_strdup("user42"), promptline);
+		if (user != NULL)
+			free(user);
+	}
 }

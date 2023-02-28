@@ -40,8 +40,6 @@ int	init_fds(t_expr **commands, t_expr *prev)
 		cur->next->fd_in = pipefd[0];
 		prev = cur;
 		cur = cur->next;
-		// if (prev->fd_in != STDIN_FILENO)
-		// 	close(prev->fd_in);
 	}
 	cur->fd_out = STDOUT_FILENO;
 	return (0);

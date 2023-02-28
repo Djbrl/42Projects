@@ -12,77 +12,6 @@
 
 #include "minishell.h"
 
-static void	output_redirection(char **field, int mode, int *fd_out)
-{
-	int		j;
-	int		fd;
-	char	**expr;
-
-	j = 1;
-	fd = -1;
-	while (field[j])
-	{
-		expr = ft_split(field[j], ' ');
-		if (mode == 1)
-			fd = open(expr[0], O_RDWR | O_CREAT | O_TRUNC, 0644);
-		if (mode == 2)
-			fd = open(expr[0], O_RDWR | O_CREAT | O_APPEND, 0644);
-		free_split(expr);
-		j++;
-	}
-	*fd_out = fd;
-	free_split(field);
-}
-
-static void	input_redirection(char **field, int *fd_in, \
-	char *prompt, t_msh *msh)
-{
-	int		j;
-	int		fd;
-	char	**expr;
-
-	(void)msh;
-	j = 1;
-	fd = -1;
-	(void)prompt;
-	while (field[j])
-	{
-		expr = ft_split(field[j], ' ');
-		fd = open(expr[0], O_RDONLY);
-		free_split(expr);
-		j++;
-	}
-	*fd_in = fd;
-	free_split(field);
-}
-
-static void	heredoc_redirection(char **redirs, char **field, t_msh *msh)
-{
-	free_split(redirs);
-	heredoc(field, msh);
-	free_split(field);
-}
-
-static int	sneaky_redir(char *expr)
-{
-	int	i;
-
-	i = 0;
-	while (expr[i])
-	{
-		if (expr[i] == '>' && (expr[i + 1] != '>' || expr[i + 1] == 0))
-			return (1);
-		if (expr[i] == '<' && expr[i + 1] != '<')
-			return (4);
-		if (expr[i] == '>' && expr[i + 1] == '>' && expr[i + 2] != '>')
-			return (2);
-		if (expr[i] == '<' && expr[i + 1] == '<' && expr[i + 2] != '<')
-			return (3);
-		i++;
-	}
-	return (0);
-}
-
 static int	has_quote(char *str)
 {
 	int	i;
@@ -97,7 +26,7 @@ static int	has_quote(char *str)
 	return (0);
 }
 
-static int	which_redir(char *redir, char *which, char dir, int mode)
+int	which_redir(char *redir, char *which, char dir, int mode)
 {
 	if (mode == 1)
 		if (ft_strncmp(redir, which, ft_strlen(which)) == 0 || \
@@ -120,42 +49,62 @@ static int	which_redir(char *redir, char *which, char dir, int mode)
 	return (0);
 }
 
+static int	check_quotes(char *redir, int *i)
+{
+	int	ret;
+
+	ret = 0;
+	if (redir && has_quote(redir))
+		ret = 1;
+	if (ret == 1)
+	{
+		*i = *i + 1;
+		return (1);
+	}
+	return (0);
+}
+
+static int	handle_redir(char *expr, int *fds[2], int *i, t_msh *msh)
+{
+	char	**redir;
+	int		ret;
+
+	ret = 0;
+	redir = ft_split(expr, ' ');
+	if (which_redir(redir[*i], ">>", '>', 1))
+		output_redirection(ft_split_charset(expr, ">"), 2, fds[1]);
+	else if (which_redir(redir[*i], ">", '>', 2))
+		output_redirection(ft_split_charset(expr, ">"), 1, fds[1]);
+	else if (which_redir(redir[*i], "<<", '<', 3))
+		heredoc_redirection(redir, ft_split_charset(expr, "<<"), msh);
+	else if (which_redir(redir[*i], "<", '<', 4))
+		input_redirection(ft_split_charset(expr, "<"), fds[0], expr, msh);
+	else
+		ret = 1;
+	free_split(redir);
+	if (ret == 0)
+		return (0);
+	return (1);
+}
+
 void	apply_redirections(char *expr, int *fd_in, int *fd_out, t_msh *msh)
 {
 	int		i;
-	int		ret;
 	char	**redirs;
+	int		*fds[2];
 
 	i = 0;
-	ret = 0;
+	fds[0] = fd_in;
+	fds[1] = fd_out;
 	redirs = ft_split(expr, ' ');
 	while (redirs[i])
 	{
-		if (redirs[i + 1] && has_quote(redirs[i + 1]))
-		{
-			i++;
-			continue ;
-		}
-		if (which_redir(redirs[i], ">>", '>', 1))
-			output_redirection(ft_split_charset(expr, ">"), 2, fd_out);
-		else if (which_redir(redirs[i], ">", '>', 2))
-			output_redirection(ft_split_charset(expr, ">"), 1, fd_out);
-		else if (which_redir(redirs[i], "<<", '<', 3))
-			heredoc_redirection(redirs, ft_split_charset(expr, "<<"), msh);
-		else if (which_redir(redirs[i], "<", '<', 4))
-			input_redirection(ft_split_charset(expr, "<"), fd_in, expr, msh);
+		check_quotes(redirs[i + 1], &i);
+		if (is_redir_token(redirs[i]))
+			handle_redir(expr, fds, &i, msh);
 		else
 		{
-			ret = sneaky_redir(redirs[i]);
-			if (ret == 1)
-				output_redirection(ft_split_charset(redirs[i], ">"), 1, fd_out);
-			else if (ret == 2)
-				output_redirection(ft_split_charset(redirs[i], ">"), 2, fd_out);
-			else if (ret == 3)
-				heredoc_redirection(redirs, ft_split_charset(redirs[i], "<<"), msh);
-			else if (ret == 4)
-				input_redirection(ft_split_charset(redirs[i], "<"), fd_in, redirs[i], msh);
-			else
+			if (is_sneaky_token(expr, &i, fds, msh) == 0)
 			{
 				i++;
 				continue ;

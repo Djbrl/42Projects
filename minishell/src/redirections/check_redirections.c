@@ -12,6 +12,43 @@
 
 #include "minishell.h"
 
+int	is_redir_token(char *token)
+{
+	if (which_redir(token, ">>", '>', 1))
+		return (1);
+	else if (which_redir(token, ">", '>', 2))
+		return (1);
+	else if (which_redir(token, "<<", '<', 3))
+		return (1);
+	else if (which_redir(token, "<", '<', 4))
+		return (1);
+	else
+		return (0);
+}
+
+int	is_sneaky_token(char *expr, int *i, int *fds[2], t_msh *msh)
+{
+	int		ret;
+	char	**r;
+
+	r = ft_split(expr, ' ');
+	ret = sneaky_redir(r[*i]);
+	if (ret == 1)
+		output_redirection(ft_split_charset(r[*i], ">"), 1, fds[1]);
+	else if (ret == 2)
+		output_redirection(ft_split_charset(r[*i], ">"), 2, fds[1]);
+	else if (ret == 3)
+		heredoc_redirection(r, ft_split_charset(r[*i], "<<"), msh);
+	else if (ret == 4)
+		input_redirection(ft_split_charset(r[*i], "<"), fds[0], r[*i], msh);
+	else
+		ret = 0;
+	free_split(r);
+	if (ret == 0)
+		return (0);
+	return (1);
+}
+
 static void	dup_fds(int in, int out)
 {
 	if (in != -1)
