@@ -45,7 +45,7 @@ static void	launch_command(t_msh *msh)
 		evaluate_commands(msh);
 	clean_expr(msh, free_exp);
 	exit_cmd(msh);
-	flush_buffer(msh);
+	ft_memset(msh->g_buffer, 0, BUF);
 }
 
 static void	shell_loop(t_msh *msh)

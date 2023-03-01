@@ -31,7 +31,7 @@
 # define KCYN  "\x1B[36m"
 
 # define SHELL_PID_ERROR "[SHELL_PID]"
-# define SYNTAX_ERR_QUOTES "minishell: syntax error: unclosed quotes\n"
+# define SYNTAX_ERR_QUOTES "minishell: syntax error: invalid quotes or symbol\n"
 # define PWD_ERR "pwd: getcwd: cannot access parent directories\n"
 # define CHDIR_ERR "chdir: getcwd: cannot access parent directories\n"
 # define CD_ARG_ERROR ": too many arguments\n"
@@ -157,7 +157,6 @@ int			load_expr(t_msh *msh);
 void		free_expr(t_msh **msh);
 char		*expand_var(t_msh *msh, char *var);
 void		free_split(char **array);
-void		flush_buffer(t_msh *msh);
 int			get_next_line(int fd, char **line);
 int			update_exit_status(t_msh *msh, int status);
 int			is_builtin(char *s, t_msh *msh);

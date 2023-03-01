@@ -44,6 +44,8 @@ static void	ftn_echo_runner(t_msh **msh, t_env_var **var, int i, char **tokens)
 	}
 }
 
+static int	
+
 static int	run_echo(t_msh **msh, t_env_var **env, char **tokens)
 {
 	int			i;
@@ -77,7 +79,8 @@ static void	check_options(t_msh *msh, t_env_var *env, char **tokens)
 	i = 1;
 	if (!tokens[1])
 		write(1, "\n", 1);
-	else if (ft_strncmp(tokens[1], "-n", ft_strlen(tokens[1])) == 0)
+	else if (ft_strncmp(tokens[1], "-n", ft_strlen(tokens[1])) == 0 || \
+	is_long_n(tokens[1]))
 		run_echo(&msh, &env, tokens);
 	else
 	{

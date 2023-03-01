@@ -50,11 +50,11 @@ static void	check_prompt(t_msh *msh, char *s)
 	if (has_odd_quotes(s) || has_unexpected_token(s))
 	{
 		printf(SYNTAX_ERR_QUOTES);
-		flush_buffer(msh);
+		ft_memset(msh->g_buffer, 0, BUF);
 		return ;
 	}
 	if (ft_strlen(s) == 0)
-		flush_buffer(msh);
+		ft_memset(msh->g_buffer, 0, BUF);
 	else
 	{
 		while (s[++i] && s[i] != '\n')
@@ -65,7 +65,7 @@ static void	check_prompt(t_msh *msh, char *s)
 static void	exit_failure(t_msh *msh)
 {
 	(void)msh;
-	flush_buffer(msh);
+	ft_memset(msh->g_buffer, 0, BUF);
 	free_env(msh);
 	free_expr(&msh);
 	exit(EXIT_SUCCESS);
@@ -89,7 +89,7 @@ void	read_buffer(t_msh *msh)
 		exit_failure(msh);
 	if (g_status == CTRL_D_SIGNAL)
 	{
-		flush_buffer(msh);
+		ft_memset(msh->g_buffer, 0, BUF);
 		g_status = 0;
 	}
 	free(s);

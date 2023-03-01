@@ -63,7 +63,7 @@ void	process_input(t_msh *msh, char *s)
 	int		i;
 
 	if (ft_strlen(s) == 0)
-		flush_buffer(msh);
+		ft_memset(msh->g_buffer, 0, BUF);
 	else
 	{
 		i = -1;

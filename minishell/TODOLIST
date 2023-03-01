@@ -18,5 +18,7 @@ X - cat file | grep bla | more
 X- cat | cat | ls ->  devrait faire 2 cat et quitter
 X- env should not show variable that have been createdls
 
-X-dont allow empty redir in read parsign
+X-return signal on multi pipe
+X- echo -nnnnn
 X-do expand in heredox
+X-env -i

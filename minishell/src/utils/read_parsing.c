@@ -25,11 +25,6 @@ char	*expand_var(t_msh *msh, char *var)
 		return (ft_strdup(ret));
 }
 
-void	flush_buffer(t_msh *msh)
-{
-	ft_memset(msh->g_buffer, 0, BUF);
-}
-
 int	has_odd_quotes(char *str)
 {
 	int	i;
@@ -73,6 +68,29 @@ static int	is_pipe_or_redir(char *str)
 	return (0);
 }
 
+static int	is_invalid_redir(char *str)
+{
+	int	i;
+
+	i = 0;
+	if (str[0] == '>')
+	{
+		while (str[i] == '>' && str[i])
+			i++;
+		if (i > 2)
+			return (1);
+	}
+	i = 0;
+	if (str[0] == '<' && str[i])
+	{
+		while (str[i] == '<')
+			i++;
+		if (i > 2)
+			return (1);
+	}
+	return (0);
+}
+
 int	has_unexpected_token(char *str)
 {
 	char	**res;
@@ -84,13 +102,14 @@ int	has_unexpected_token(char *str)
 	{
 		if (is_pipe_or_redir(res[i]))
 		{
-			if (res[i + 1] == NULL)
+			if (res[i + 1] == NULL || is_pipe_or_redir(res[i + 1]))
 			{
 				free_split(res);
 				return (1);
 			}
 		}
-		else if (i == 0 && ft_strlen(res[i]) == 2 && !ft_strcmp(res[i], "<<"))
+		else if ((i == 0 && ft_strlen(res[i]) == 2 && \
+		!ft_strcmp(res[i], "<<")) || is_invalid_redir(res[i]))
 		{
 			free_split(res);
 			return (1);

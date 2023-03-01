@@ -56,7 +56,7 @@ void	init_msh(t_msh *msh, char **envp)
 	msh->std_out = dup(1);
 	msh->single_quote = 0;
 	parse_envp(msh);
-	flush_buffer(msh);
+	ft_memset(msh->g_buffer, 0, BUF);
 }
 
 void	init_expr(t_msh *msh)
