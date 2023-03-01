@@ -35,13 +35,13 @@ static void	ftn_exec_paths(t_msh *msh, char **expr, char **re)
 	char	*path;
 
 	i = 0;
+	if (access(expr[0], X_OK) == 0)
+		execve(expr[0], re, msh->envp);
 	reload_path(msh);
 	while (msh->paths[i])
 	{
 		if (!ft_isalpha(expr[0][0]))
 			break ;
-		if (access(expr[0], X_OK) == 0)
-			execve(expr[0], re, msh->envp);
 		tmp = ft_strjoin(msh->paths[i++], "/");
 		path = ft_strjoin(tmp, expr[0]);
 		exec_command(path, tmp, re, msh->envp);
@@ -51,12 +51,20 @@ static void	ftn_exec_paths(t_msh *msh, char **expr, char **re)
 void	exec_pipe_paths(t_msh *msh, char **re, char **cmd, char *field)
 {
 	char	**expr;
+	int		builtin;
 
+	builtin = 0;
 	expr = remove_array_quotes(cmd);
 	if (re == NULL)
 		re = expr;
-	if (is_builtin(expr[0], msh) >= 0)
-		exec_builtin(msh, field);
+	builtin = is_builtin(expr[0], msh);
+	if (builtin >= 0)
+	{
+		if (builtin != 7)
+			exec_builtin(msh, field);
+		else
+			update_exit_status(msh, 0);
+	}
 	else
 	{
 		ftn_exec_paths(msh, expr, re);

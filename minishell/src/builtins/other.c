@@ -26,13 +26,13 @@ int	msh_env(t_env_var *env, t_msh *msh, char *field)
 	{
 		if (cur->name && cur->data && \
 		ft_strncmp(cur->name, "init", len) != 0 && \
-		ft_strncmp(cur->name, "?", len) != 0)
+		ft_strncmp(cur->name, "?", len) != 0 && ft_strlen(cur->data) > 0)
 			ft_putnstr(cur->name, "=", cur->data, "\n");
 		cur = cur->next;
 	}
 	if (cur->name && cur->data && \
 	ft_strncmp(cur->name, "init", len) != 0 && \
-	ft_strncmp(cur->name, "?", len))
+	ft_strncmp(cur->name, "?", len) && ft_strlen(cur->data) > 0)
 		ft_putnstr(cur->name, "=", cur->data, "\n");
 	exit_cmd(msh);
 	return (update_exit_status(msh, 0));

@@ -24,7 +24,8 @@ static void	ftn_echo_runner(t_msh **msh, t_env_var **var, int i, char **tokens)
 	(void)var;
 	while (tokens[i] != NULL)
 	{
-		if (is_redir(tokens[i]) && !more_than_one_word(tokens[i]))
+		if ((is_redir(tokens[i]) && ft_strlen(tokens[i]) < 3) \
+			&& !more_than_one_word(tokens[i]))
 			break ;
 		if (tokens[i] != NULL)
 		{
@@ -52,7 +53,7 @@ static int	run_echo(t_msh **msh, t_env_var **env, char **tokens)
 	exit = 0;
 	while (tokens[++i])
 	{		
-		if (is_redir(tokens[i]))
+		if (is_redir(tokens[i]) && ft_strlen(tokens[i]) < 3)
 			break ;
 		if (ft_strcmp(tokens[i], "-n") == 0)
 			continue ;

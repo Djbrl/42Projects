@@ -30,7 +30,7 @@ static int	only_whitespaces(char *buf)
 int	set_prompt(t_msh *msh)
 {
 	signal(SIGINT, signal_handler);
-	signal(SIGQUIT, signal_handler);
+	signal(SIGQUIT, SIG_IGN);
 	read_buffer(msh);
 	msh->prompt = ft_strdup(msh->g_buffer);
 	if (msh->prompt != NULL && ft_strlen(msh->prompt) != 0 \

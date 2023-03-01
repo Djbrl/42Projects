@@ -12,6 +12,29 @@
 
 #include "minishell.h"
 
+int	which_redir(char *redir, char *which, char dir, int mode)
+{
+	if (mode == 1)
+		if (ft_strncmp(redir, which, ft_strlen(which)) == 0 || \
+			((ft_strlen(redir) >= 2 && redir[ft_strlen(redir) - 2] == dir) && \
+			(ft_strlen(redir) >= 1 && redir[ft_strlen(redir) - 1] == dir)))
+			return (1);
+	if (mode == 2)
+		if (ft_strncmp(redir, which, ft_strlen(which)) == 0 || \
+			(ft_strlen(redir) >= 1 && redir[ft_strlen(redir) - 1] == dir))
+			return (1);
+	if (mode == 3)
+		if (ft_strncmp(redir, which, ft_strlen(which)) == 0 || \
+			((ft_strlen(redir) >= 2 && redir[ft_strlen(redir) - 2] == dir) && \
+			(ft_strlen(redir) >= 1 && redir[ft_strlen(redir) - 1] == dir)))
+			return (1);
+	if (mode == 4)
+		if (ft_strncmp(redir, which, ft_strlen(which)) == 0 || \
+			(ft_strlen(redir) >= 1 && redir[ft_strlen(redir) - 1] == dir))
+			return (1);
+	return (0);
+}
+
 static int	check_rkey(char tmp[HEREDOC_BUF_SIZE], char **field, \
 	char *heredoc_buf[HEREDOC_BUF_SIZE], int i)
 {

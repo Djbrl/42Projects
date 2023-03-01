@@ -55,7 +55,8 @@ static int	find_var(char **tokens, t_env_var **envar, t_msh *msh)
 		env = env->next;
 	}
 	if ((ft_strncmp(tokens[1], env->name, len)) == 0 && \
-		ft_strncmp(tokens[1], "?", len))
+		ft_strncmp(tokens[1], "?", len) && \
+		(ft_strlen(tokens[1]) == ft_strlen(env->name)))
 		unset_var(&env, &prev);
 	else
 		return (update_exit_status(msh, 1));

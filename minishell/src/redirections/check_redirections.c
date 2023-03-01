@@ -12,18 +12,44 @@
 
 #include "minishell.h"
 
-int	is_redir_token(char *token)
+int	is_redir_token(char *token, char **redirs)
 {
 	if (which_redir(token, ">>", '>', 1))
 		return (1);
 	else if (which_redir(token, ">", '>', 2))
 		return (1);
 	else if (which_redir(token, "<<", '<', 3))
+	{
+		free_split(redirs);
 		return (1);
+	}
 	else if (which_redir(token, "<", '<', 4))
 		return (1);
 	else
 		return (0);
+}
+
+int	handle_redir(char *expr, int *fds[2], int *i, t_msh *msh)
+{
+	char	**redir;
+	int		ret;
+
+	ret = 0;
+	redir = ft_split(expr, ' ');
+	if (which_redir(redir[*i], ">>", '>', 1))
+		output_redirection(ft_split_charset(expr, ">"), 2, fds[1]);
+	else if (which_redir(redir[*i], ">", '>', 2))
+		output_redirection(ft_split_charset(expr, ">"), 1, fds[1]);
+	else if (which_redir(redir[*i], "<<", '<', 3))
+		heredoc_redirection(redir, ft_split_charset(expr, "<<"), msh);
+	else if (which_redir(redir[*i], "<", '<', 4))
+		input_redirection(ft_split_charset(expr, "<"), fds[0], expr, msh);
+	else
+		ret = 1;
+	free_split(redir);
+	if (ret == 0)
+		return (0);
+	return (1);
 }
 
 int	is_sneaky_token(char *expr, int *i, int *fds[2], t_msh *msh)
@@ -33,13 +59,13 @@ int	is_sneaky_token(char *expr, int *i, int *fds[2], t_msh *msh)
 
 	r = ft_split(expr, ' ');
 	ret = sneaky_redir(r[*i]);
-	if (ret == 1)
+	if (ret == 1 && r[*i][0] != '\"')
 		output_redirection(ft_split_charset(r[*i], ">"), 1, fds[1]);
-	else if (ret == 2)
+	else if (ret == 2 && r[*i][0] != '\"')
 		output_redirection(ft_split_charset(r[*i], ">"), 2, fds[1]);
-	else if (ret == 3)
+	else if (ret == 3 && r[*i][0] != '\"')
 		heredoc_redirection(r, ft_split_charset(r[*i], "<<"), msh);
-	else if (ret == 4)
+	else if (ret == 4 && r[*i][0] != '\"')
 		input_redirection(ft_split_charset(r[*i], "<"), fds[0], r[*i], msh);
 	else
 		ret = 0;

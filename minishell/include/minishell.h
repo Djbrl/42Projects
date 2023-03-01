@@ -201,11 +201,12 @@ void		heredoc(char **field, t_msh *msh);
 void		ftn_heredoc(char *cmd, char *buf[HEREDOC_LIMIT], t_msh *msh);
 int			sneaky_redir(char *expr);
 int			which_redir(char *redir, char *which, char dir, int mode);
-int			is_redir_token(char *token);
+int			is_redir_token(char *token, char **redirs);
 int			is_sneaky_token(char *expr, int *i, int *fds[2], t_msh *msh);
 void		heredoc_redirection(char **redirs, char **field, t_msh *msh);
 void		input_redirection(char **f, int *fd_in, char *prompt, t_msh *msh);
 void		output_redirection(char **field, int mode, int *fd_out);
+int			handle_redir(char *expr, int *fds[2], int *i, t_msh *msh);
 
 /*
 ** PARSING

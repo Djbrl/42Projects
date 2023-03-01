@@ -26,29 +26,6 @@ static int	has_quote(char *str)
 	return (0);
 }
 
-int	which_redir(char *redir, char *which, char dir, int mode)
-{
-	if (mode == 1)
-		if (ft_strncmp(redir, which, ft_strlen(which)) == 0 || \
-			((ft_strlen(redir) >= 2 && redir[ft_strlen(redir) - 2] == dir) && \
-			(ft_strlen(redir) >= 1 && redir[ft_strlen(redir) - 1] == dir)))
-			return (1);
-	if (mode == 2)
-		if (ft_strncmp(redir, which, ft_strlen(which)) == 0 || \
-			(ft_strlen(redir) >= 1 && redir[ft_strlen(redir) - 1] == dir))
-			return (1);
-	if (mode == 3)
-		if (ft_strncmp(redir, which, ft_strlen(which)) == 0 || \
-			((ft_strlen(redir) >= 2 && redir[ft_strlen(redir) - 2] == dir) && \
-			(ft_strlen(redir) >= 1 && redir[ft_strlen(redir) - 1] == dir)))
-			return (1);
-	if (mode == 4)
-		if (ft_strncmp(redir, which, ft_strlen(which)) == 0 || \
-			(ft_strlen(redir) >= 1 && redir[ft_strlen(redir) - 1] == dir))
-			return (1);
-	return (0);
-}
-
 static int	check_quotes(char *redir, int *i)
 {
 	int	ret;
@@ -64,27 +41,41 @@ static int	check_quotes(char *redir, int *i)
 	return (0);
 }
 
-static int	handle_redir(char *expr, int *fds[2], int *i, t_msh *msh)
+static int	is_heredoc(char *token, char **redirs)
 {
-	char	**redir;
-	int		ret;
+	int		i;
+	int		j;
+	char	**tmp;
 
-	ret = 0;
-	redir = ft_split(expr, ' ');
-	if (which_redir(redir[*i], ">>", '>', 1))
-		output_redirection(ft_split_charset(expr, ">"), 2, fds[1]);
-	else if (which_redir(redir[*i], ">", '>', 2))
-		output_redirection(ft_split_charset(expr, ">"), 1, fds[1]);
-	else if (which_redir(redir[*i], "<<", '<', 3))
-		heredoc_redirection(redir, ft_split_charset(expr, "<<"), msh);
-	else if (which_redir(redir[*i], "<", '<', 4))
-		input_redirection(ft_split_charset(expr, "<"), fds[0], expr, msh);
-	else
-		ret = 1;
-	free_split(redir);
-	if (ret == 0)
-		return (0);
-	return (1);
+	i = 0;
+	j = 0;
+	tmp = ft_split_charset(token, "<<");
+	while (tmp[i])
+		i++;
+	free_split(tmp);
+	if (i > 1)
+	{
+		while (token[j + 1])
+		{
+			if (token[j] == '<' && (token[j + 1] == '<'))
+			{
+				free_split(redirs);
+				return (1);
+			}
+			j++;
+		}
+	}
+	return (0);
+}
+
+static int	skip_quoted_redir(int quotes, int *i)
+{
+	if (quotes)
+	{
+		*i = *i + 1;
+		return (1);
+	}
+	return (0);
 }
 
 void	apply_redirections(char *expr, int *fd_in, int *fd_out, t_msh *msh)
@@ -92,6 +83,7 @@ void	apply_redirections(char *expr, int *fd_in, int *fd_out, t_msh *msh)
 	int		i;
 	char	**redirs;
 	int		*fds[2];
+	int		quotes;
 
 	i = 0;
 	fds[0] = fd_in;
@@ -99,16 +91,15 @@ void	apply_redirections(char *expr, int *fd_in, int *fd_out, t_msh *msh)
 	redirs = ft_split(expr, ' ');
 	while (redirs[i])
 	{
-		check_quotes(redirs[i + 1], &i);
-		if (is_redir_token(redirs[i]))
+		quotes = check_quotes(redirs[i + 1], &i);
+		if (skip_quoted_redir(quotes, &i))
+			continue ;
+		if (is_redir_token(redirs[i], redirs) && !quotes)
 			handle_redir(expr, fds, &i, msh);
 		else
 		{
-			if (is_sneaky_token(expr, &i, fds, msh) == 0)
-			{
-				i++;
-				continue ;
-			}
+			is_heredoc(redirs[i], redirs);
+			is_sneaky_token(expr, &i, fds, msh);
 		}
 		i++;
 	}

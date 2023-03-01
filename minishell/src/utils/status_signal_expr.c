@@ -23,11 +23,7 @@ void	signal_handler(int sig_n)
 		g_status = 130;
 	}
 	else if (sig_n == SIGQUIT)
-	{
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-	}
+		return ;
 	else
 		return ;
 }
