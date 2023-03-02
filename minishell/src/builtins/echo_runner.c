@@ -44,7 +44,26 @@ static void	ftn_echo_runner(t_msh **msh, t_env_var **var, int i, char **tokens)
 	}
 }
 
-static int	
+static int	is_long_n(char *str)
+{
+	int	i;
+
+	i = 1;
+	if (ft_strlen(str) < 3)
+		return (0);
+	if (str[0] == '-' && str[1] == 'n')
+	{
+		while (str[i])
+		{
+			if (str[i] != 'n')
+				return (0);
+			i++;
+		}
+	}
+	else
+		return (0);
+	return (1);
+}
 
 static int	run_echo(t_msh **msh, t_env_var **env, char **tokens)
 {
