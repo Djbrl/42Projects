@@ -68,7 +68,8 @@ static int	exec_env(t_msh *msh)
 	char	**expr;
 
 	expr = NULL;
-	tmp = ft_strdup("PATH");
+	if (msh->paths)
+		tmp = ft_strdup("PATH");
 	if ((!msh->paths || get_data_from_env(msh->env, tmp) == NULL) \
 			&& access(msh->tokens[0], X_OK) == -1)
 		return (-1);
