@@ -48,7 +48,10 @@ static int	change_dir_default(t_msh *msh)
 		msh->last_valid_path = msh->home;
 	}
 	else
-		ret = chdir(msh->last_valid_path);
+	{
+		printf("cd: HOME not set\n");
+		return (1);
+	}
 	return (ret);
 }
 

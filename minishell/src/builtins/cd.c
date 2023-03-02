@@ -103,5 +103,5 @@ int	msh_cd(t_env_var *env, t_msh *msh, char *field)
 		return (1);
 	}
 	exit_cmd(msh);
-	return (0);
+	return (ret);
 }
