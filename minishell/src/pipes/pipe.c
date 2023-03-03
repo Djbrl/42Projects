@@ -95,3 +95,14 @@ int	pipe_exec(t_msh *msh)
 	status = execute_multi_pipe(commands, msh);
 	return (status);
 }
+
+/*
+evalute token received in heredoc
+split it in spaces
+iterate through the spaces
+	when token is not an expand, add it to tab
+	when token is an expand, add its expansion
+strjoin the resulting tab
+free the tab
+return expanded string
+*/
