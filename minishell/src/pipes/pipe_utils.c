@@ -51,6 +51,7 @@ int	exec_builtin(t_msh *msh, char *field)
 	int		out;
 	int		free;
 	char	**tmp;
+	int		c;
 
 	free = 0;
 	in = -1;
@@ -67,7 +68,7 @@ int	exec_builtin(t_msh *msh, char *field)
 	}
 	else
 		tmp = msh->tokens;
-	int c = msh->cmd.ptr[is_builtin(tmp[0], msh)](msh->env, msh, field);
+	c = msh->cmd.ptr[is_builtin(tmp[0], msh)](msh->env, msh, field);
 	if (free)
 		free_split(tmp);
 	dup2(msh->std_in, 0);

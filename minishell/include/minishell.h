@@ -193,7 +193,7 @@ void		child_pipe(t_expr *curr, t_msh *msh);
 /*
 ** REDIRECTIONS
 */
-int		exec_builtin(t_msh *msh, char *field);
+int			exec_builtin(t_msh *msh, char *field);
 void		apply_redirections(char *expr, int *fd_in, int *fd_out, t_msh *msh);
 int			check_redirections(t_msh *msh);
 void		heredoc(char **field, t_msh *msh);

@@ -52,6 +52,7 @@ void	exec_pipe_paths(t_msh *msh, char **re, char **cmd, char *field)
 {
 	char	**expr;
 	int		builtin;
+	int		c;
 
 	builtin = 0;
 	expr = remove_array_quotes(cmd);
@@ -62,7 +63,7 @@ void	exec_pipe_paths(t_msh *msh, char **re, char **cmd, char *field)
 	{
 		if (builtin == 0 || builtin == 3 || builtin == 5)
 		{
-			int c = exec_builtin(msh, field);
+			c = exec_builtin(msh, field);
 			free_split(expr);
 			free_split(cmd);
 			temp_exit(msh);
