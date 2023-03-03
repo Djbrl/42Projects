@@ -56,7 +56,40 @@ static int	check_rkey(char tmp[HEREDOC_BUF_SIZE], char **field, \
 	return (0);
 }
 
-static void	get_heredoc_lines(char **field, char *heredoc_buf[HEREDOC_LIMIT])
+static char	*check_expand(char *tmp, t_msh *msh)
+{
+	int		i;
+	int		j;
+	char	**tokens;
+	char	*ret;
+
+	i = 0;
+	j = 0;
+	tokens = ft_split(tmp, ' ');
+	ret = NULL;
+	while (tokens[i])
+	{
+		while (tokens[i][j])
+		{
+			if (tokens[i][j] == '$')
+			{
+				char *tmp2 = ft_strdup(get_data_from_env(msh->env, ft_strdup(tokens[i] + j + 1)));
+				tokens[i][j] = '\0';
+				char *pr = ft_strjoin(tokens[i], tmp2);
+				printf("[%s]\n", pr);
+				free(tmp2);
+				free(pr);
+			}
+			j++;
+		}
+		j = 0;
+		i++;
+	}
+	free_split(tokens);
+	return (NULL);
+}
+
+static void	get_heredoc_lines(char **field, char *heredoc_buf[HEREDOC_LIMIT], t_msh *msh)
 {
 	char	tmp[HEREDOC_BUF_SIZE];
 	int		i;
@@ -74,6 +107,7 @@ static void	get_heredoc_lines(char **field, char *heredoc_buf[HEREDOC_LIMIT])
 			heredoc_buf[i] = ft_strdup("");
 		else
 			heredoc_buf[i] = ft_strdup(tmp);
+		check_expand(tmp, msh);
 		if (check_rkey(tmp, field, heredoc_buf, i))
 			break ;
 		ft_memset(tmp, 0, HEREDOC_BUF_SIZE);
@@ -91,7 +125,7 @@ void	heredoc(char **field, t_msh *msh)
 	i = 0;
 	while (i < HEREDOC_LIMIT)
 		heredoc_buf[i++] = NULL;
-	get_heredoc_lines(field, heredoc_buf);
+	get_heredoc_lines(field, heredoc_buf, msh);
 	tmp = ft_strdup(field[0]);
 	free_split(field);
 	ftn_heredoc(tmp, heredoc_buf, msh);

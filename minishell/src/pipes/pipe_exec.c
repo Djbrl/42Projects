@@ -48,8 +48,11 @@ static void	ftn_exec_paths(t_msh *msh, char **expr, char **re)
 	}
 }
 
-static void	handle_builtin(char **expr, char **cmd, char *field, t_msh *msh)
+static void	handle_builtin(int builtin, char *field, t_msh *msh)
 {
+	int	c;
+
+	c = 0;
 	if (builtin == 0 || builtin == 3 || builtin == 5)
 	{
 		c = exec_builtin(msh, field);
@@ -63,14 +66,12 @@ static void	handle_builtin(char **expr, char **cmd, char *field, t_msh *msh)
 		temp_exit(msh);
 		exit(0);
 	}
-
 }
 
 void	exec_pipe_paths(t_msh *msh, char **re, char **cmd, char *field)
 {
 	char	**expr;
 	int		builtin;
-	int		c;
 
 	builtin = 0;
 	expr = remove_array_quotes(cmd);
@@ -79,9 +80,9 @@ void	exec_pipe_paths(t_msh *msh, char **re, char **cmd, char *field)
 	builtin = is_builtin(expr[0], msh);
 	if (builtin >= 0)
 	{
-		free_split(expr);
 		free_split(cmd);
-		handle_builtin();
+		free_split(expr);
+		handle_builtin(builtin, field, msh);
 	}
 	else
 	{
