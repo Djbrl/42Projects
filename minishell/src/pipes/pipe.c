@@ -39,9 +39,13 @@ static void	check_pid_status(t_expr **cmd, t_msh *msh, int pid[100], int count)
 	if (curr->next == NULL)
 	{
 		j = 0;
-		while (j < count)
+		while (j < count + 1)
 		{
 			waitpid(pid[j], &g_status, WUNTRACED);
+			if (g_status == 65280)
+				update_exit_status(msh, 1);
+			else
+				update_exit_status(msh, g_status);
 			j++;
 		}
 	}
@@ -75,7 +79,7 @@ static int	execute_multi_pipe(t_expr *commands, t_msh *msh)
 			curr = curr->next;
 		}
 	}
-	return (0);
+	return (1);
 }
 
 int	pipe_exec(t_msh *msh)

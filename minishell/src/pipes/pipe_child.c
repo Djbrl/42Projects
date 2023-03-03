@@ -85,5 +85,5 @@ void	child_pipe(t_expr *curr, t_msh *msh)
 	signal(SIGQUIT, SIG_DFL);
 	execute_commands(&curr, msh);
 	temp_exit(msh);
-	exit(EXIT_SUCCESS);
+	exit(EXIT_FAILURE);
 }

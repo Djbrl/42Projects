@@ -45,7 +45,7 @@ int	init_fds(t_expr **commands, t_expr *prev)
 	return (0);
 }
 
-void	exec_builtin(t_msh *msh, char *field)
+int	exec_builtin(t_msh *msh, char *field)
 {
 	int		in;
 	int		out;
@@ -67,9 +67,10 @@ void	exec_builtin(t_msh *msh, char *field)
 	}
 	else
 		tmp = msh->tokens;
-	msh->cmd.ptr[is_builtin(tmp[0], msh)](msh->env, msh, field);
+	int c = msh->cmd.ptr[is_builtin(tmp[0], msh)](msh->env, msh, field);
 	if (free)
 		free_split(tmp);
 	dup2(msh->std_in, 0);
 	dup2(msh->std_out, 1);
+	return (c);
 }
