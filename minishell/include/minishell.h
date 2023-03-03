@@ -206,6 +206,7 @@ void		heredoc_redirection(char **redirs, char **field, t_msh *msh);
 void		input_redirection(char **f, int *fd_in, char *prompt, t_msh *msh);
 void		output_redirection(char **field, int mode, int *fd_out);
 int			handle_redir(char *expr, int *fds[2], int *i, t_msh *msh);
+char		*heredoc_expand(char *tmp, t_msh *msh);
 
 /*
 ** PARSING
