@@ -62,7 +62,7 @@
 # define KEY_UP 126
 
 # include "libft.h"
-# include "../lib/mlx/mlx.h"
+# include "../mlx/mlx.h"
 # include <stdio.h>
 # include <math.h>
 # include <fcntl.h>

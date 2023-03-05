@@ -1,11 +1,10 @@
 NAME := Cub3D
 
 LIB_FT := lib/libft/libft.a
-MLX := lib/mlx/libmlx_Linux.a
+MLX := /mlx/libmlx.a
 LIBS := $(LIB_FT) $(MLX)
 LDFLAGS = -Llib/libft
-LFLAGS = -lft -lmlx -framework OpenGL -framework Appkit
-
+LFLAGS = -lft -L./mlx -lmlx -framework OpenGL -framework AppKit
 CC := cc
 CFLAGS := -Wall -Wextra -ggdb
 PFLAGS := -Iinclude -Ilib/libft
@@ -74,13 +73,13 @@ libft_fclean:
 	make -C lib/libft fclean
 
 $(MLX): FORCE
-	make -C lib/minilibx-linux
+	make -C mlx/
 
 mlx_clean:
-	make -C lib/minilibx-linux clean
+	make -C mlx/ clean
 
 mlx_fclean:
-	make -C lib/minilibx-linux fclean
+	make -C mlx/ clean
 
 lib_clean: libft_clean mlx_clean
 
