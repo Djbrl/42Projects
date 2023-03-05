@@ -19,6 +19,14 @@
 **handle heredoc
 */
 
+static void	parent_status_check(t_msh *msh)
+{
+	if (g_status == 65280)
+		update_exit_status(msh, 1);
+	else
+		update_exit_status(msh, g_status);
+}
+
 static void	check_pid_status(t_expr **cmd, t_msh *msh, int pid[100], int count)
 {
 	t_expr	*curr;
@@ -42,10 +50,7 @@ static void	check_pid_status(t_expr **cmd, t_msh *msh, int pid[100], int count)
 		while (j < count + 1)
 		{
 			waitpid(pid[j], &g_status, WUNTRACED);
-			if (g_status == 65280)
-				update_exit_status(msh, 1);
-			else
-				update_exit_status(msh, g_status);
+			parent_status_check(msh);
 			j++;
 		}
 	}
@@ -95,14 +100,3 @@ int	pipe_exec(t_msh *msh)
 	status = execute_multi_pipe(commands, msh);
 	return (status);
 }
-
-/*
-evalute token received in heredoc
-split it in spaces
-iterate through the spaces
-	when token is not an expand, add it to tab
-	when token is an expand, add its expansion
-strjoin the resulting tab
-free the tab
-return expanded string
-*/

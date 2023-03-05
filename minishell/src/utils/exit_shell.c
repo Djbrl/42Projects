@@ -15,6 +15,8 @@
 static void	ftn_exit(t_msh *msh, int status, char **arr)
 {
 	exit_cmd(msh);
+	close(msh->std_in);
+	close(msh->std_out);
 	free_env(msh);
 	if (msh->exp != NULL)
 	{

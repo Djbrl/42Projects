@@ -36,7 +36,7 @@ SRC_OTHER := main.c exec.c init.c envp.c expr.c\
 			 \
 			 redirections/redirections.c redirections/redirections_utils.c \
 			 redirections/check_redirections.c redirections/child_heredoc.c \
-			 redirections/redir_handlers.c \
+			 redirections/redir_handlers.c redirections/heredoc_expand.c \
 			 \
 			 builtins/echo_runner.c builtins/export_runner.c \
 			 builtins/other.c builtins/export.c builtins/unset.c \

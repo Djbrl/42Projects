@@ -56,7 +56,8 @@ static int	check_rkey(char tmp[HEREDOC_BUF_SIZE], char **field, \
 	return (0);
 }
 
-static void	get_heredoc_lines(char **field, char *heredoc_buf[HEREDOC_LIMIT])
+static void	get_heredoc_lines(char **field, \
+	char *heredoc_buf[HEREDOC_LIMIT], t_msh *msh)
 {
 	char	tmp[HEREDOC_BUF_SIZE];
 	int		i;
@@ -70,10 +71,10 @@ static void	get_heredoc_lines(char **field, char *heredoc_buf[HEREDOC_LIMIT])
 		if (ret <= 0)
 			break ;
 		tmp[ret - 1] = '\0';
-		if (ret == 0)
+		if (ret == 1 || ret == 0)
 			heredoc_buf[i] = ft_strdup("");
 		else
-			heredoc_buf[i] = ft_strdup(tmp);
+			heredoc_buf[i] = heredoc_expand(tmp, msh);
 		if (check_rkey(tmp, field, heredoc_buf, i))
 			break ;
 		ft_memset(tmp, 0, HEREDOC_BUF_SIZE);
@@ -91,7 +92,7 @@ void	heredoc(char **field, t_msh *msh)
 	i = 0;
 	while (i < HEREDOC_LIMIT)
 		heredoc_buf[i++] = NULL;
-	get_heredoc_lines(field, heredoc_buf);
+	get_heredoc_lines(field, heredoc_buf, msh);
 	tmp = ft_strdup(field[0]);
 	free_split(field);
 	ftn_heredoc(tmp, heredoc_buf, msh);
