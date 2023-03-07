@@ -65,7 +65,7 @@ static void	execute_commands(t_expr **curr_command, t_msh *msh)
 	cur = *curr_command;
 	while (msh->tokens[i])
 	{
-		if (msh->tokens[i][0] == '>' || msh->tokens[i][0] == '<')
+		if ((msh->tokens[i][0] == '>' || msh->tokens[i][0] == '<')  && ft_strlen(msh->tokens[i]) < 3)
 		{
 			apply_redirections(cur->data, &cur->fd_in, &cur->fd_out, msh);
 			redir = 1;

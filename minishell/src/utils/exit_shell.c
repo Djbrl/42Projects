@@ -22,6 +22,7 @@ static void	ftn_exit(t_msh *msh, int status, char **arr)
 	{
 		free(msh->exp->data);
 		free(msh->exp);
+		status = g_status;
 	}
 	if (arr != NULL)
 		free_split(arr);

@@ -99,5 +99,9 @@ void	close_main_fork_process(t_msh *msh, int pid)
 		write(1, "\n", 1);
 	}
 	else
+	{
+		if (g_status > 130 && g_status != 256 && g_status != 512)
+			g_status /= 256;
 		update_exit_status(msh, g_status);
+	}
 }

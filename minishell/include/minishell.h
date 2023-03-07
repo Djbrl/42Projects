@@ -29,6 +29,8 @@
 # define KGRN  "\x1B[32m"
 # define KBLU  "\x1B[34m"
 # define KCYN  "\x1B[36m"
+# define KBRED "\x1B[1m\x1B[31m"
+# define KRST "\x1B[0m"
 
 # define SHELL_PID_ERROR "[SHELL_PID]"
 # define SYNTAX_ERR_QUOTES "minishell: syntax error: invalid quotes or symbol\n"

@@ -35,16 +35,15 @@ int	which_redir(char *redir, char *which, char dir, int mode)
 	return (0);
 }
 
-static int	check_rkey(char tmp[HEREDOC_BUF_SIZE], char **field, \
+static int	check_rkey(char tmp[HEREDOC_BUF_SIZE], char *field, \
 	char *heredoc_buf[HEREDOC_BUF_SIZE], int i)
 {
+	char	**token;
 	char	*rkey;
 
-	rkey = NULL;
-	if (field[1])
-		rkey = remove_spaces(field[1]);
-	else
-		rkey = remove_spaces(field[0]);
+	token = ft_split(field, ' ');
+	rkey = remove_spaces(token[0]);
+	free_split(token);
 	if (ft_strncmp(tmp, rkey, ft_strlen(rkey)) == 0 \
 		&& ft_strlen(tmp) == ft_strlen(rkey))
 	{
@@ -56,7 +55,7 @@ static int	check_rkey(char tmp[HEREDOC_BUF_SIZE], char **field, \
 	return (0);
 }
 
-static void	get_heredoc_lines(char **field, \
+static void	get_heredoc_lines(char *field, \
 	char *heredoc_buf[HEREDOC_LIMIT], t_msh *msh)
 {
 	char	tmp[HEREDOC_BUF_SIZE];
@@ -92,7 +91,7 @@ void	heredoc(char **field, t_msh *msh)
 	i = 0;
 	while (i < HEREDOC_LIMIT)
 		heredoc_buf[i++] = NULL;
-	get_heredoc_lines(field, heredoc_buf, msh);
+	get_heredoc_lines(field[1], heredoc_buf, msh);
 	tmp = ft_strdup(field[0]);
 	free_split(field);
 	ftn_heredoc(tmp, heredoc_buf, msh);

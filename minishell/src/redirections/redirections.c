@@ -15,23 +15,31 @@
 static int	has_quote(char *str)
 {
 	int	i;
+	int	q;
 
+	q = 0;
 	i = 0;
 	while (str[i])
 	{
 		if (str[i] == '\"' || str[i] == '\'')
-			return (1);
+			q++;
 		i++;
 	}
+	if ((q % 2) != 0)
+		return (1);
 	return (0);
 }
 
-static int	check_quotes(char *redir, int *i)
+static int	check_quotes(char **redir, int *i)
 {
 	int	ret;
+	int	j;
 
+	j = *i;
 	ret = 0;
-	if (redir && has_quote(redir))
+	if (j - 1 < 0)
+		return (0);
+	if (redir[*i - 1] && has_quote(redir[*i]))
 		ret = 1;
 	if (ret == 1)
 	{
@@ -91,7 +99,7 @@ void	apply_redirections(char *expr, int *fd_in, int *fd_out, t_msh *msh)
 	redirs = ft_split(expr, ' ');
 	while (redirs[i])
 	{
-		quotes = check_quotes(redirs[i + 1], &i);
+		quotes = check_quotes(redirs, &i);
 		if (skip_quoted_redir(quotes, &i))
 			continue ;
 		if (is_redir_token(redirs[i], redirs) && !quotes)

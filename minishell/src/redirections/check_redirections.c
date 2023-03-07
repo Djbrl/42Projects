@@ -102,7 +102,7 @@ int	check_redirections(t_msh *msh)
 	redir = 0;
 	while (msh->tokens[i])
 	{
-		if (msh->tokens[i][0] == '>' || msh->tokens[i][0] == '<')
+		if ((msh->tokens[i][0] == '>' || msh->tokens[i][0] == '<') && ft_strlen(msh->tokens[i]) < 3)
 		{
 			apply_redirections(msh->prompt, &in, &out, msh);
 			redir = 1;

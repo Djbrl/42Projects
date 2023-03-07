@@ -27,12 +27,33 @@ static char	*get_current_user(char *user)
 	return (name);
 }
 
+static char	*get_status_bar()
+{
+	char	*status;
+	char	*tmp[5];
+	char	*status_line;
+
+	if (g_status == 0)
+		return (NULL);
+	status = ft_itoa(g_status);
+	tmp[0] = ft_strjoin("[", KBRED);
+	tmp[1] = ft_strjoin(tmp[0], status);
+	tmp[2] = ft_strjoin(tmp[1], KRST);
+	status_line = ft_strjoin(tmp[2], "]");
+	free(status);
+	free(tmp[0]);
+	free(tmp[1]);
+	free(tmp[2]);
+	return (status_line);
+}
+
 static void	get_prompt_line(t_msh *msh, char *user, char **promptline)
 {
 	char	*curdir;
-	char	*tmp[6];
+	char	*tmp[7];
 	char	*dir;
 	char	*name;
+	char	*status;
 
 	name = get_current_user(user);
 	tmp[0] = ft_strjoin(KGRN, name);
@@ -45,7 +66,9 @@ static void	get_prompt_line(t_msh *msh, char *user, char **promptline)
 	tmp[4] = ft_strjoin("./", tmp[3]);
 	dir = ft_strjoin("@minishell-4.2$ ", tmp[4]);
 	tmp[5] = ft_strjoin(dir, "> ");
-	*promptline = ft_strjoin(tmp[1], tmp[5]);
+	status = get_status_bar();
+	tmp[6] = ft_strjoin(tmp[5], status);
+	*promptline = ft_strjoin(tmp[1], tmp[6]);
 	free(tmp[0]);
 	free(tmp[1]);
 	free(tmp[2]);
@@ -53,7 +76,9 @@ static void	get_prompt_line(t_msh *msh, char *user, char **promptline)
 	free(tmp[4]);
 	free(dir);
 	free(tmp[5]);
+	free(tmp[6]);
 	free(user);
+	free(status);
 }
 
 void	build_promptline(char *user, char **promptline, t_msh *msh)
