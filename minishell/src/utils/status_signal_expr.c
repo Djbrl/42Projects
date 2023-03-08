@@ -18,7 +18,7 @@ void	signal_handler(int sig_n)
 	{
 		write(1, "\n", 1);
 		rl_on_new_line();
-		// rl_replace_line("", 0);
+		rl_replace_line("", 0);
 		rl_redisplay();
 		g_status = 130;
 	}
@@ -84,6 +84,7 @@ int	update_exit_status(t_msh *msh, int status)
 		status = 2;
 	tmp = ft_itoa(status);
 	add_var_to_env(msh->env, "?", tmp);
+	g_status = status;
 	free(tmp);
 	return (status);
 }

@@ -29,7 +29,7 @@
 # define KGRN  "\x1B[32m"
 # define KBLU  "\x1B[34m"
 # define KCYN  "\x1B[36m"
-# define KBRED "\x1B[1m\x1B[31m"
+# define KRED "\x1B[31m"
 # define KRST "\x1B[0m"
 
 # define SHELL_PID_ERROR "[SHELL_PID]"
@@ -148,6 +148,8 @@ int			exit_shell(t_msh *msh, char *field);
 /*
 ** UTILS
 */
+int			has_quote(char *str);
+int			check_quotes(char **redir, int *i);
 void		reload_path(t_msh *msh);
 char		**remove_array_quotes(char **cmd);
 void		copy_result(char **new_result, char **result, int len);
@@ -169,7 +171,6 @@ int			arr_len(char **arr);
 void		free_envar(t_msh *msh);
 void		free_env(t_msh *msh);
 int			change_dir(t_msh **msh, char **tokens);
-int			more_than_one_word(char *echo);
 void		temp_exit(t_msh *msh);
 char		**remove_array_quotes(char **cmd);
 void		reload_path(t_msh *msh);
@@ -179,6 +180,7 @@ void		build_promptline(char *user, char **promptline, t_msh *msh);
 int			has_odd_quotes(char *str);
 int			has_unexpected_token(char *str);
 int			set_prompt(t_msh *msh);
+int			has_quoted_spaces(char *str);
 t_env_var	*env_duplicate(t_env_var *lst);
 
 /*

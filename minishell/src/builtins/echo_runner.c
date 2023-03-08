@@ -25,11 +25,11 @@ static void	ftn_echo_runner(t_msh **msh, t_env_var **var, int i, char **tokens)
 	while (tokens[i] != NULL)
 	{
 		if ((is_redir(tokens[i]) && ft_strlen(tokens[i]) < 3) \
-			&& !more_than_one_word(tokens[i]))
+			&& !has_quoted_spaces(tokens[i]))
 			break ;
 		if (tokens[i] != NULL)
 		{
-			if (more_than_one_word(tokens[i]))
+			if (has_quoted_spaces(tokens[i]))
 				msh_echo(*var, ft_strdup(tokens[i]), *msh);
 			else if (!ft_strcmp(tokens[i], "$"))
 				write(1, "$", 1);
@@ -80,7 +80,7 @@ static int	run_echo(t_msh **msh, t_env_var **env, char **tokens)
 			continue ;
 		if (i != 1)
 		{
-			if (more_than_one_word(tokens[i]))
+			if (has_quoted_spaces(tokens[i]))
 				exit = msh_echo(*env, ft_strdup(tokens[i]), *msh);
 			else
 				exit = msh_echo(*env, remove_spaces(tokens[i]), *msh);
@@ -125,6 +125,7 @@ int	msh_echo_runner(t_env_var *env, t_msh *msh, char *field)
 		tokens = msh->tokens;
 	else
 	{
+		printf("field [%s]\n", field);
 		tokens = ft_split(field, ' ');
 		free_tokens = 1;
 	}

@@ -27,7 +27,7 @@ static char	*get_current_user(char *user)
 	return (name);
 }
 
-static char	*get_status_bar()
+static char	*get_status_bar(void)
 {
 	char	*status;
 	char	*tmp[5];
@@ -36,15 +36,26 @@ static char	*get_status_bar()
 	if (g_status == 0)
 		return (NULL);
 	status = ft_itoa(g_status);
-	tmp[0] = ft_strjoin("[", KBRED);
+	tmp[0] = ft_strjoin(KRED, " [");
 	tmp[1] = ft_strjoin(tmp[0], status);
-	tmp[2] = ft_strjoin(tmp[1], KRST);
-	status_line = ft_strjoin(tmp[2], "]");
+	tmp[2] = ft_strjoin(tmp[1], "]");
+	status_line = ft_strjoin(tmp[2], KRST);
 	free(status);
 	free(tmp[0]);
 	free(tmp[1]);
 	free(tmp[2]);
 	return (status_line);
+}
+
+static void	free_tmp(char *tmp[7])
+{
+	free(tmp[0]);
+	free(tmp[1]);
+	free(tmp[2]);
+	free(tmp[3]);
+	free(tmp[4]);
+	free(tmp[5]);
+	free(tmp[6]);
 }
 
 static void	get_prompt_line(t_msh *msh, char *user, char **promptline)
@@ -60,25 +71,19 @@ static void	get_prompt_line(t_msh *msh, char *user, char **promptline)
 	free(name);
 	tmp[1] = ft_strjoin(tmp[0], "\033[0m");
 	curdir = get_currentdir(msh);
-	tmp[2] = ft_strjoin(KBLU, curdir);
+	tmp[2] = ft_strjoin(KGRN, curdir);
 	free(curdir);
 	tmp[3] = ft_strjoin(tmp[2], "\033[0m");
 	tmp[4] = ft_strjoin("./", tmp[3]);
 	dir = ft_strjoin("@minishell-4.2$ ", tmp[4]);
-	tmp[5] = ft_strjoin(dir, "> ");
 	status = get_status_bar();
-	tmp[6] = ft_strjoin(tmp[5], status);
+	tmp[5] = ft_strjoin(dir, status);
+	tmp[6] = ft_strjoin(tmp[5], " > ");
 	*promptline = ft_strjoin(tmp[1], tmp[6]);
-	free(tmp[0]);
-	free(tmp[1]);
-	free(tmp[2]);
-	free(tmp[3]);
-	free(tmp[4]);
 	free(dir);
-	free(tmp[5]);
-	free(tmp[6]);
 	free(user);
 	free(status);
+	free_tmp(tmp);
 }
 
 void	build_promptline(char *user, char **promptline, t_msh *msh)

@@ -68,6 +68,8 @@ int	sneaky_redir(char *expr)
 	int	i;
 
 	i = 0;
+	if (ft_strlen(expr) < 3)
+		return (0);
 	while (expr[i])
 	{
 		if (expr[i] == '>' && (expr[i + 1] != '>' || expr[i + 1] == 0))

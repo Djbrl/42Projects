@@ -21,7 +21,7 @@ static int	handle_token(t_msh **msh, t_env_var **env, char *token)
 	exit = 0;
 	m = *msh;
 	e = *env;
-	if (more_than_one_word(token))
+	if (has_quoted_spaces(tokens))
 		exit = msh_echo(e, ft_strdup(token), m);
 	else
 		exit = msh_echo(e, remove_spaces(token), m);

@@ -12,14 +12,14 @@
 
 #include "minishell.h"
 
-static int	has_quote(char *str)
+int	has_quote(char *str)
 {
 	int	i;
 	int	q;
 
 	q = 0;
 	i = 0;
-	while (str[i])
+	while (str[i] && (str[i] != '>' || str[i] != '<'))
 	{
 		if (str[i] == '\"' || str[i] == '\'')
 			q++;
@@ -30,23 +30,20 @@ static int	has_quote(char *str)
 	return (0);
 }
 
-static int	check_quotes(char **redir, int *i)
+int	check_quotes(char **redir, int *i)
 {
-	int	ret;
 	int	j;
+	int	quotes;
 
+	quotes = 0;
 	j = *i;
-	ret = 0;
-	if (j - 1 < 0)
-		return (0);
-	if (redir[*i - 1] && has_quote(redir[*i]))
-		ret = 1;
-	if (ret == 1)
+	while (j > 0)
 	{
-		*i = *i + 1;
-		return (1);
+		if (has_quote(redir[j]))
+			quotes++;
+		j--;
 	}
-	return (0);
+	return (quotes);
 }
 
 static int	is_heredoc(char *token, char **redirs)
@@ -76,14 +73,22 @@ static int	is_heredoc(char *token, char **redirs)
 	return (0);
 }
 
-static int	skip_quoted_redir(int quotes, int *i)
+static int	has_no_redir(char *expr)
 {
-	if (quotes)
+	int	i;
+	int	red;
+
+	red = 0;
+	i = 0;
+	while (expr[i])
 	{
-		*i = *i + 1;
-		return (1);
+		if (expr[i] == '>' || expr[i] == '<')
+			red = 1;
+		i++;
 	}
-	return (0);
+	if (red == 1)
+		return (0);
+	return (1);
 }
 
 void	apply_redirections(char *expr, int *fd_in, int *fd_out, t_msh *msh)
@@ -94,15 +99,16 @@ void	apply_redirections(char *expr, int *fd_in, int *fd_out, t_msh *msh)
 	int		quotes;
 
 	i = 0;
+	if (has_no_redir(expr))
+		return ;
 	fds[0] = fd_in;
 	fds[1] = fd_out;
+	quotes = 0;
 	redirs = ft_split(expr, ' ');
 	while (redirs[i])
 	{
 		quotes = check_quotes(redirs, &i);
-		if (skip_quoted_redir(quotes, &i))
-			continue ;
-		if (is_redir_token(redirs[i], redirs) && !quotes)
+		if (is_redir_token(redirs[i], redirs) && (quotes % 2 == 0))
 			handle_redir(expr, fds, &i, msh);
 		else
 		{

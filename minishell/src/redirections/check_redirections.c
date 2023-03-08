@@ -14,6 +14,8 @@
 
 int	is_redir_token(char *token, char **redirs)
 {
+	if (has_quote(token))
+		return (0);
 	if (which_redir(token, ">>", '>', 1))
 		return (1);
 	else if (which_redir(token, ">", '>', 2))
@@ -59,14 +61,19 @@ int	is_sneaky_token(char *expr, int *i, int *fds[2], t_msh *msh)
 
 	r = ft_split(expr, ' ');
 	ret = sneaky_redir(r[*i]);
-	if (ret == 1 && r[*i][0] != '\"')
-		output_redirection(ft_split_charset(r[*i], ">"), 1, fds[1]);
-	else if (ret == 2 && r[*i][0] != '\"')
-		output_redirection(ft_split_charset(r[*i], ">"), 2, fds[1]);
-	else if (ret == 3 && r[*i][0] != '\"')
-		heredoc_redirection(r, ft_split_charset(r[*i], "<<"), msh);
-	else if (ret == 4 && r[*i][0] != '\"')
-		input_redirection(ft_split_charset(r[*i], "<"), fds[0], r[*i], msh);
+	if (ret != 0 && check_quotes(r, i) % 2 == 0)
+	{
+		if (ret == 1 && (r[*i][0] != '\"' || r[*i][0] != '\''))
+			output_redirection(ft_split_charset(r[*i], ">"), 1, fds[1]);
+		else if (ret == 2 && (r[*i][0] != '\"' || r[*i][0] != '\''))
+			output_redirection(ft_split_charset(r[*i], ">"), 2, fds[1]);
+		else if (ret == 3 && (r[*i][0] != '\"' || r[*i][0] != '\''))
+			heredoc_redirection(r, ft_split_charset(r[*i], "<<"), msh);
+		else if (ret == 4 && (r[*i][0] != '\"' || r[*i][0] != '\''))
+			input_redirection(ft_split_charset(r[*i], "<"), fds[0], r[*i], msh);
+		else
+			ret = 0;
+	}
 	else
 		ret = 0;
 	free_split(r);
@@ -102,7 +109,8 @@ int	check_redirections(t_msh *msh)
 	redir = 0;
 	while (msh->tokens[i])
 	{
-		if ((msh->tokens[i][0] == '>' || msh->tokens[i][0] == '<') && ft_strlen(msh->tokens[i]) < 3)
+		if ((msh->tokens[i][0] == '>' || \
+		msh->tokens[i][0] == '<') && ft_strlen(msh->tokens[i]) < 3)
 		{
 			apply_redirections(msh->prompt, &in, &out, msh);
 			redir = 1;

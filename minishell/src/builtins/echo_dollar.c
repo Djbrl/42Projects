@@ -12,26 +12,6 @@
 
 #include "minishell.h"
 
-int	more_than_one_word(char *echo)
-{
-	char	**expr;
-	int		i;
-
-	i = 0;
-	if (!echo)
-		return (0);
-	expr = ft_split(echo, ' ');
-	while (expr[i] != NULL)
-		i++;
-	if (i > 1)
-	{
-		free_split(expr);
-		return (1);
-	}
-	free_split(expr);
-	return (0);
-}
-
 /*
 ****************************STATIC FUNCTIONS****************************
 */
