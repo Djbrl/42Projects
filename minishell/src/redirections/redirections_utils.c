@@ -40,18 +40,21 @@ static int	check_rkey(char tmp[HEREDOC_BUF_SIZE], char *field, \
 {
 	char	**token;
 	char	*rkey;
+	char	**remove_q;
 
 	token = ft_split(field, ' ');
 	rkey = remove_spaces(token[0]);
+	remove_q = ft_split_charset(rkey, "\"\'");
+	free(rkey);
 	free_split(token);
-	if (ft_strncmp(tmp, rkey, ft_strlen(rkey)) == 0 \
-		&& ft_strlen(tmp) == ft_strlen(rkey))
+	if (ft_strncmp(tmp, remove_q[0], ft_strlen(remove_q[0])) == 0 \
+		&& ft_strlen(tmp) == ft_strlen(remove_q[0]))
 	{
-		free(rkey);
 		free(heredoc_buf[i]);
+		free_split(remove_q);
 		return (1);
 	}
-	free(rkey);
+	free_split(remove_q);
 	return (0);
 }
 
@@ -91,7 +94,10 @@ void	heredoc(char **field, t_msh *msh)
 	i = 0;
 	while (i < HEREDOC_LIMIT)
 		heredoc_buf[i++] = NULL;
-	get_heredoc_lines(field[1], heredoc_buf, msh);
+	if (field[1])
+		get_heredoc_lines(field[1], heredoc_buf, msh);
+	else
+		get_heredoc_lines(field[0], heredoc_buf, msh);
 	tmp = ft_strdup(field[0]);
 	free_split(field);
 	ftn_heredoc(tmp, heredoc_buf, msh);

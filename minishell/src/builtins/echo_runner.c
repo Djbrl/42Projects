@@ -125,7 +125,6 @@ int	msh_echo_runner(t_env_var *env, t_msh *msh, char *field)
 		tokens = msh->tokens;
 	else
 	{
-		printf("field [%s]\n", field);
 		tokens = ft_split(field, ' ');
 		free_tokens = 1;
 	}

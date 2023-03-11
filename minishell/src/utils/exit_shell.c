@@ -22,7 +22,6 @@ static void	ftn_exit(t_msh *msh, int status, char **arr)
 	{
 		free(msh->exp->data);
 		free(msh->exp);
-		status = g_status;
 	}
 	if (arr != NULL)
 		free_split(arr);
@@ -81,12 +80,10 @@ int	exit_shell(t_msh *msh, char *field)
 	char	**arr;
 	int		exit_status;
 
-	arr = NULL;
-	exit_status = 0;
-	if (field == NULL)
-		ftn_exit(msh, g_status, NULL);
-	else
-		arr = ft_split(field, ' ');
+	exit_status = msh->exit_status;
+	if (ft_strcmp(field, "exit") == 0)
+		ftn_exit(msh, exit_status, NULL);
+	arr = ft_split(field, ' ');
 	if (check_exit_token(arr[1]))
 	{
 		ft_putstr_fd("minishell: exit: numeric argument required\n", 2);
@@ -100,6 +97,7 @@ int	exit_shell(t_msh *msh, char *field)
 		free_split(arr);
 		return (1);
 	}
-	ftn_exit(msh, exit_status, arr);
+	free_split(arr);
+	ftn_exit(msh, exit_status, NULL);
 	return (0);
 }
