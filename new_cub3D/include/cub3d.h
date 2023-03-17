@@ -207,7 +207,7 @@ typedef struct	s_game
 /*
 ** PARSING FUNCTIONS
 */
-void			free_array(char **array);
+void			free_split(char **array);
 void			report_error(t_game *data);
 void			free_map_struct(t_game *game);
 void			init_game_struct(t_game *game);

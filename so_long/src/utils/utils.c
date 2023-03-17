@@ -39,6 +39,13 @@ void	init_game_struct(t_game *data)
 	data->win_ptr = NULL;
 	data->wall.mlx_img = NULL;
 	data->player.mlx_img = NULL;
+	data->player2.mlx_img = NULL;
+	data->player2.img_addr = NULL;
+	data->player2_x = 0;
+	data->player2_y = 0;
+	data->player2_dx = 0;
+	data->player2_dy = 0;
+	data->player2_a = 0;
 	data->path.mlx_img = NULL;
 	data->item.mlx_img = NULL;
 	data->exit.mlx_img = NULL;

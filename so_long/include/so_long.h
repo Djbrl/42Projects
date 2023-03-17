@@ -50,7 +50,9 @@
 # include <fcntl.h>
 # include <sys/types.h>
 # include <unistd.h>
+# include <math.h>
 
+# define PI 3.14159263
 /*
 **	STRUCTURES
 */
@@ -74,7 +76,15 @@ typedef struct s_game
 	void		*win_ptr;
 	t_img		wall;
 	t_img		path;
+
 	t_img		player;
+	t_img		player2;
+	float		player2_x;
+	float		player2_y;
+	float		player2_dx;
+	float		player2_dy;
+	float		player2_a;
+
 	t_img		item;
 	t_img		exit;
 

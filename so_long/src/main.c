@@ -47,6 +47,7 @@ static void	init_game(t_game *data)
 	data->score = 0;
 	create_image(&data->wall, data, resolution, 0x444);
 	create_image(&data->player, data, resolution, 0x880808);
+	create_image(&data->player2, data, resolution, 0x222);
 	create_image(&data->path, data, resolution, 0x0);
 	create_image(&data->item, data, resolution, 0x777);
 	create_image(&data->exit, data, resolution, 0x888666);
@@ -71,7 +72,7 @@ int	main(int ac, char **av)
 	if (!data.win_ptr)
 		return (exit_error(MLX_WIN_ERR, &data));
 	init_game(&data);
-	mlx_key_hook(data.win_ptr, key_stroke, &data);
+	mlx_hook(data.win_ptr, 2, (1L << 0), key_stroke, &data);
 	mlx_hook(data.win_ptr, MLX_ON_DESTROY, 0, cross_window, &data);
 	mlx_loop(data.mlx_ptr);
 	return (0);

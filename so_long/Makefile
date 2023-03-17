@@ -20,7 +20,7 @@ MLX := lib/mlx/libmlx_Linux.a
 
 CC := cc
 CFLAGS := -Wall -Wextra -Werror #-lX11 -lXext
-LFLAGS = -lX11 -lXext
+LFLAGS = -g3 -lX11 -lXext
 PFLAGS := -Iinclude -Ilib/libft -Ilib/mlx
 
 SRC_MLX_FUNC := control_functions.c images.c
