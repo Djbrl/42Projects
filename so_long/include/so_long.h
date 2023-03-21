@@ -67,6 +67,22 @@ typedef struct s_img
 	int			width;
 	int			height;
 }				t_img;
+
+typedef struct s_ray
+{
+	int			r;
+	int			mx;
+	int			my;
+	int			mp;
+	int			dof;
+
+	float		rx;
+	float		ry;
+	float		ra;
+	float		xo;
+	float		yo;
+}				t_ray;
+
 /*
 ** MLX RELATED
 */
@@ -79,11 +95,13 @@ typedef struct s_game
 
 	t_img		player;
 	t_img		player2;
+	t_ray		ray_mysterio;
 	float		player2_x;
 	float		player2_y;
 	float		player2_dx;
 	float		player2_dy;
 	float		player2_a;
+
 
 	t_img		item;
 	t_img		exit;
