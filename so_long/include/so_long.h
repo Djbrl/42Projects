@@ -114,6 +114,24 @@ typedef struct s_game
 	int			items_left;
 	int			player_x;
 	int			player_y;
+
+
+	double		posX, posY, dirX, dirY, planeX, planeY;
+	double		time, oldtime;
+	double		cameraX, cameraY;
+	double		rayDirX;
+	double		rayDirY;
+	double		deltaDistX;
+	double		deltaDistY;
+	double		sideDistX;
+	double		sideDistY;
+	double		perpWallDist;
+	int			mapX;
+	int			mapY;
+	int			stepX;
+	int			stepY;
+	int			hit;
+	int			side;
 }				t_game;
 /*
 MLX FUNCTIONS

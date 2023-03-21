@@ -120,51 +120,109 @@ int draw_line(void *mlx, void *win, int beginX, int beginY, int endX, int endY, 
 	return (0);
 }
 
-void	draw_ray(t_game *data)
+// void	draw_ray(t_game *data)
+// {
+// 	int rwidth = (1080 - 20) / data->width;
+
+// 	data->ray_mysterio.ra = data->player2_a;
+// 	data->ray_mysterio.dof = 0;
+// 	float aTan = -1/tan(data->ray_mysterio.ra);
+// 	if (data->ray_mysterio.ra > PI)
+// 	{
+// 		int calc = data->player2_y / rwidth;
+// 		calc *= rwidth;
+// 		data->ray_mysterio.ry = calc - 0.0001;
+// 		data->ray_mysterio.rx = (data->player2_y - data->ray_mysterio.ry) * aTan + data->player2_x;
+// 		data->ray_mysterio.yo = -rwidth;
+// 		data->ray_mysterio.xo = - data->ray_mysterio.yo * aTan;
+// 	}
+// 	if (data->ray_mysterio.ra < PI)
+// 	{
+// 				int calc = data->player2_y / rwidth;
+// 		calc *= rwidth;
+// 		data->ray_mysterio.ry = calc + rwidth;
+// 		data->ray_mysterio.rx = (data->player2_y - data->ray_mysterio.ry) * aTan + data->player2_x;
+// 		data->ray_mysterio.yo = rwidth;
+// 		data->ray_mysterio.xo = - data->ray_mysterio.yo * aTan;
+// 	}
+// 	if (data->ray_mysterio.ra == 0 || data->ray_mysterio.ra == PI)
+// 	{
+// 		data->ray_mysterio.rx = data->player2_x;
+// 		data->ray_mysterio.ry = data->player2_y;
+// 		data->ray_mysterio.dof = 8;
+// 	}
+// 	while (data->ray_mysterio.dof < 8)
+// 	{
+// 		data->ray_mysterio.mx = (int)(data->ray_mysterio.rx) / rwidth;
+// 		data->ray_mysterio.my = (int)(data->ray_mysterio.ry) / rwidth;
+// 		// data->ray_mysterio.mp = data->ray_mysterio.my * data->width-1 + data->ray_mysterio.mx;
+// 		printf("rx ry mx my %i %i %i %i\n",  data->ray_mysterio.mx,  data->ray_mysterio.mx, data->ray_mysterio.mx, data->ray_mysterio.my);
+// 		if ((data->ray_mysterio.mx < data->width-1 && data->ray_mysterio.mx >= 0) && (data->ray_mysterio.my < data->height-1 && data->ray_mysterio.my >= 0))
+// 		{
+// 			if (data->ray_mysterio.my <= 0)
+// 				data->ray_mysterio.my = 1;
+// 			if (data->ray_mysterio.mx <= 0)
+// 				data->ray_mysterio.mx = 1;
+// 			if (data->map[data->ray_mysterio.mx - 1][data->ray_mysterio.my - 1] && data->map[data->ray_mysterio.mx -1][data->ray_mysterio.my -1] == '1')
+// 				data->ray_mysterio.dof = 8;
+// 			else
+// 				data->ray_mysterio.dof++;
+
+// 		}
+// 		else
+// 		{
+// 			data->ray_mysterio.rx += data->ray_mysterio.xo;
+// 			data->ray_mysterio.ry += data->ray_mysterio.yo;
+// 			data->ray_mysterio.dof++;
+// 		}
+// 	}
+// 	draw_line(data->mlx_ptr, data->win_ptr, 
+// 		data->player2_x, data->player2_y, 
+// 		data->ray_mysterio.rx, 
+// 		data->ray_mysterio.ry, 0xFFFFFF);
+// }
+
+void draw_ray(t_game *d)
 {
-	data->ray_mysterio.ra = data->player2_a;
-	data->ray_mysterio.dof = 0;
-	float aTan = -1/tan(data->ray_mysterio.ra);
-	if (data->ray_mysterio.ra > PI)
+	int i = 0;
+	while (i < 640)
 	{
-		data->ray_mysterio.ry = (((int) data->player2_y >> 6) << 6) - 0.0001;
-		data->ray_mysterio.rx = (data->player2_y - data->ray_mysterio.ry) * aTan + data->player2_x;
-		data->ray_mysterio.yo = -64;
-		data->ray_mysterio.xo = - data->ray_mysterio.yo * aTan;
-	}
-	if (data->ray_mysterio.ra < PI)
-	{
-		data->ray_mysterio.ry = (((int) data->player2_y >> 6) << 6) + 64;
-		data->ray_mysterio.rx = (data->player2_y - data->ray_mysterio.ry) * aTan + data->player2_x;
-		data->ray_mysterio.yo = 64;
-		data->ray_mysterio.xo = - data->ray_mysterio.yo * aTan;
-	}
-	if (data->ray_mysterio.ra == 0 || data->ray_mysterio.ra == PI)
-	{
-		data->ray_mysterio.rx = data->player2_x;
-		data->ray_mysterio.ry = data->player2_y;
-		data->ray_mysterio.dof = 8;
-	}
-	while (data->ray_mysterio.dof < 8)
-	{
-		data->ray_mysterio.mx = (int)(data->ray_mysterio.rx) >> 6;
-		data->ray_mysterio.my = (int)(data->ray_mysterio.ry) >> 6;
-		data->ray_mysterio.mp = data->ray_mysterio.my * data->width + data->ray_mysterio.mx;
-		if (data->ray_mysterio.mp < data->width * data->height && data->map[data->ray_mysterio.mx][data->ray_mysterio.my] == '1')
+		//init
+		d->cameraX = 2 * i / (640) - 1;
+		d->rayDirX = d->dirX + d->planeX * d->cameraX;
+		d->rayDirY = d->dirY + d->planeY * d->cameraY;
+	
+		d->mapX = (int)d->posX;
+		d->mapY = (int)d->posY;
+		
+		d->deltaDistX = (d->rayDirX == 0) ? 1e30 : fabs(1 / d->rayDirX);
+		d->deltaDistY = (d->rayDirY == 0) ? 1e30 : fabs(1 / d->rayDirY);
+
+		d->hit = 0;
+
+		//start dda
+		if (d->rayDirX < 0)
 		{
-			data->ray_mysterio.dof = 8;
+			d->stepX = -1;
+			d->sideDistX = (d->posX - d->mapX) * d->deltaDistX;
 		}
 		else
 		{
-			data->ray_mysterio.rx += data->ray_mysterio.xo;
-			data->ray_mysterio.ry += data->ray_mysterio.yo;
-			data->ray_mysterio.dof++;
+			d->stepX = 1;
+			d->sideDistX = (d->mapX + 1.0 - d->posX) * d->deltaDistX;
 		}
+		if (d->rayDirY < 0)
+		{
+			d->stepY = -1;
+			d->sideDistY = (d->posY - d->mapY) * d->deltaDistY;
+		}
+		else
+		{
+			d->stepY = 1;
+			d->sideDistY = (d->mapY + 1.0 - d->posY) * d->deltaDistY;
+		}
+		i++;
 	}
-	draw_line(data->mlx_ptr, data->win_ptr, \
-		data->player2_x, data->player2_y, \
-		data->ray_mysterio.rx, \
-		data->ray_mysterio.ry, 0xFFFFFF);
 }
 
 int	key_stroke(int key, t_game *data)
@@ -177,14 +235,14 @@ int	key_stroke(int key, t_game *data)
 	if (key == KEY_W || key == KEY_UP || key == 126)
 	{
 		input_interpreter(data, x - 1, y);
-		data->player2_y -= data->player2_dy;
-		data->player2_x -= data->player2_dx;
+		data->player2_y += data->player2_dy;
+		data->player2_x += data->player2_dx;
 	}
 	if (key == KEY_S || key == KEY_DOWN || key == 125)
 	{
 		input_interpreter(data, x + 1, y);
-		data->player2_y += data->player2_dy;
-		data->player2_x += data->player2_dx;
+		data->player2_y -= data->player2_dy;
+		data->player2_x -= data->player2_dx;
 	}
 	if (key == KEY_A || key == KEY_LEFT || key == 123)
 	{
@@ -209,6 +267,7 @@ int	key_stroke(int key, t_game *data)
 	printf("%i\n", key);
 	draw_map(data);
 	draw_player(data, data->player2_x, data->player2_y);
+	// draw_ray(data);
 	draw_line(data->mlx_ptr, data->win_ptr, \
 		data->player2_x, data->player2_y, \
 		data->player2_x + data->player2_dx * 5, \
