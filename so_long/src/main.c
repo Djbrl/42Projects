@@ -40,7 +40,7 @@ static void	init_game(t_game *data)
 	int	padding;
 	int	resolution[2];
 
-	padding = 20;
+	padding = 0;
 	resolution[0] = (640 - padding) / data->height;
 	resolution[1] = (1080 - padding) / data->width;
 	data->items_left = count_items(data);

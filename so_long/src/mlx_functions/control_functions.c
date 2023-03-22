@@ -191,9 +191,8 @@ void draw_ray(t_game *d)
 		d->cameraX = 2 * i / (640) - 1;
 		d->rayDirX = d->dirX + d->planeX * d->cameraX;
 		d->rayDirY = d->dirY + d->planeY * d->cameraY;
-	
-		d->mapX = (int)d->posX;
-		d->mapY = (int)d->posY;
+		d->mapX = (int)d->player2_x / 64;
+		d->mapY = (int)d->player2_y / 64;
 		
 		d->deltaDistX = (d->rayDirX == 0) ? 1e30 : fabs(1 / d->rayDirX);
 		d->deltaDistY = (d->rayDirY == 0) ? 1e30 : fabs(1 / d->rayDirY);
@@ -204,23 +203,65 @@ void draw_ray(t_game *d)
 		if (d->rayDirX < 0)
 		{
 			d->stepX = -1;
-			d->sideDistX = (d->posX - d->mapX) * d->deltaDistX;
+			d->sideDistX = (d->player2_x /64 - d->mapX) * d->deltaDistX;
 		}
 		else
 		{
 			d->stepX = 1;
-			d->sideDistX = (d->mapX + 1.0 - d->posX) * d->deltaDistX;
+			d->sideDistX = (d->mapX + 1.0 - d->player2_x/64) * d->deltaDistX;
 		}
 		if (d->rayDirY < 0)
 		{
 			d->stepY = -1;
-			d->sideDistY = (d->posY - d->mapY) * d->deltaDistY;
+			d->sideDistY = (d->player2_y/64 - d->mapY) * d->deltaDistY;
 		}
 		else
 		{
 			d->stepY = 1;
-			d->sideDistY = (d->mapY + 1.0 - d->posY) * d->deltaDistY;
+			d->sideDistY = (d->mapY + 1.0 - d->player2_y/64) * d->deltaDistY;
 		}
+		//perform dda
+		while (d->hit == 0)
+		{
+			if (d->sideDistX < d->sideDistY)
+			{
+				d->sideDistX += d->deltaDistX;
+				d->mapX += d->stepY;
+				d->side = 0;
+			}
+			else
+			{
+				d->sideDistY += d->deltaDistY;
+				d->mapY += d->stepY;
+				d->side = 1;
+			}
+			//check wall
+			if (d->map[d->mapX/64][d->mapY/64] == '1')
+			{
+				d->hit = 1;
+				draw_line(d->mlx_ptr, d->win_ptr,d->player2_x, d->player2_y,d->mapX * 64,d->mapY * 64, 0xFFFFFF);
+			}
+		}
+		//calc wall
+		if (side == 0)
+			d->perpWallDist = (d->sideDistX - p->deltaDistX);
+		else
+			d->perpWallDist = (d->sideDistY - p->deltaDistY);
+		
+		int lineHeight = (int)(640 / d->perpWallDist);
+
+		int dStart = -lineHeight / 2 + 640/ 2;
+		if (dStart < 0)
+			dStart = 0;
+		int dEnd = lineHeight / 2 + h / 2;
+		if (dEnd >= 640)
+			dEnd = 639;
+		int col = 0;
+		if (d->map[d->mapX/64][d->mapY/64] == '1')
+			col = 0xFF0000;
+		if (d->side == 1)
+			col /=2;
+		printf("wall size : %i\n", dEnd - dStart);
 		i++;
 	}
 }
@@ -267,10 +308,10 @@ int	key_stroke(int key, t_game *data)
 	printf("%i\n", key);
 	draw_map(data);
 	draw_player(data, data->player2_x, data->player2_y);
-	// draw_ray(data);
 	draw_line(data->mlx_ptr, data->win_ptr, \
 		data->player2_x, data->player2_y, \
 		data->player2_x + data->player2_dx * 5, \
 		data->player2_y + data->player2_dy * 5, 0xFFFFFF);
+	draw_ray(data);
 	return (0);
 }

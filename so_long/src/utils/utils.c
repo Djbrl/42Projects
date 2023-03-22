@@ -41,8 +41,8 @@ void	init_game_struct(t_game *data)
 	data->player.mlx_img = NULL;
 	data->player2.mlx_img = NULL;
 	data->player2.img_addr = NULL;
-	data->player2_x = 0;
-	data->player2_y = 0;
+	data->player2_x = 200;
+	data->player2_y = 200;
 	data->player2_dx = 0;
 	data->player2_dy = 0;
 	data->player2_a = 0;

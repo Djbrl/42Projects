@@ -16,13 +16,13 @@ END_COLOR = \033[0m
 NAME := so_long
 
 LIB_FT := lib/libft/libft.a
-# MLX := lib/mlx/libmlx_Linux.a
-MLX := lib/mlx/libmlx.a
+MLX := lib/mlx/libmlx_Linux.a
+# MLX := lib/mlx/libmlx.a
 
 CC := cc
 CFLAGS := -Wall -Wextra -Werror #-lX11 -lXext
-# LFLAGS = -g3 -lX11 -lXext -lm
-LFLAGS = -g3 -fsanitize=address -framework OpenGL -framework AppKit
+LFLAGS = -g3 -lX11 -lXext -lm
+# LFLAGS = -g3 -fsanitize=address -framework OpenGL -framework AppKit
 PFLAGS := -Iinclude -Ilib/libft -Ilib/mlx
 
 SRC_MLX_FUNC := control_functions.c images.c
