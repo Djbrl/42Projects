@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/10 19:11:52 by dsy               #+#    #+#             */
-/*   Updated: 2019/10/12 18:12:38 by dsy              ###   ########.fr       */
+/*   Updated: 2022/04/05 16:11:05 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	*ft_memchr(const void *s, int c, size_t n)
 	while (i < (unsigned char)n)
 	{
 		if (src[i] == c)
-			return ((void*)src + i);
+			return ((void *)src + i);
 		else
 			i++;
 	}

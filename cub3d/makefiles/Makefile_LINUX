@@ -1,0 +1,96 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: jamrabhi <marvin@42.fr>                    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2021/10/06 01:17:01 by jamrabhi          #+#    #+#              #
+#    Updated: 2021/10/06 01:17:05 by jamrabhi         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+NAME = cub3D
+
+CC = cc
+
+CFLAGS = -Wall -Wextra -Werror -g3
+
+SRC_DIR = src
+
+SRC_FILES = main.c \
+			\
+			get_next_line/get_next_line_utils.c get_next_line/get_next_line.c \
+			\
+			parsing/parsing.c parsing/exit.c parsing/exit_utils.c \
+			parsing/parse_path.c parsing/parse_RGB.c \
+			parsing/parse_map.c parsing/parse_map_utils.c \
+			\
+			mlx_functions/init_game.c mlx_functions/control_functions.c \
+			mlx_functions/images.c \
+			\
+			minimap/minimap.c \
+			\
+			raycasting/raycasting_utils.c raycasting/raycasting.c
+
+SRC = $(addprefix $(SRC_DIR)/,$(SRC_FILES))
+
+OBJ = $(SRC:.c=.o)
+
+INCDIR = include
+
+LIBDIR = lib/libft/
+
+LIB = lib/libft/libft.a
+
+MLXDIR = minilibx-linux/
+
+MLXFLAGS = -lmlx -lXext -lX11 -lm
+
+MAKEFLAGS += --no-print-directory
+
+all: $(NAME)
+
+$(NAME) : $(OBJ)
+	@echo "Compiling libft ..."
+	@cd $(LIBDIR) && make -j -s
+	@echo "DONE\n"
+
+	@echo "Configuring MiniLibX ..."
+	@cd $(MLXDIR) && ./configure > /dev/null 2>&1
+	@echo "DONE\n"
+
+	@echo "Compiling cub3D ..."
+	@$(CC) $(CFLAGS) $(OBJ) -L $(LIBDIR) -lft -L$(MLXDIR) -lmlx_Linux $(MLXFLAGS) -o $(NAME)
+	@echo "DONE"
+
+.c.o:
+	@${CC} ${CFLAGS} -I $(INCDIR) -I$(LIBDIR) -I$(MLXDIR) -c $< -o $@
+
+clean:
+	@echo "Deleting Libft objects files ..."
+	@cd $(LIBDIR) && make -j -s $@
+	@echo "DONE\n"
+
+	@echo "Deleting cub3D objects files ..."
+	@rm -f $(OBJ)
+	@echo "DONE"
+
+fclean: clean
+# Check if mlx was configured
+ifneq ("$(shell ls $(MLXDIR)Makefile.gen 2>/dev/null)","")
+	@echo "Cleaning MiniLibX ..."
+	@cd $(MLXDIR) && ./configure clean > /dev/null 2>&1
+	@echo "DONE\n"
+endif
+
+	@echo "Deleting Libft's binary ..."
+	@cd $(LIBDIR) && make -j -s $@
+	@echo "DONE\n"
+	
+	@echo "Deleting cub3D's binary ..."
+	@rm -f $(NAME)
+	@echo "DONE"
+
+re: fclean
+	@make all

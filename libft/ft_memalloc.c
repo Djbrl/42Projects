@@ -6,7 +6,7 @@
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/20 15:03:56 by dsy               #+#    #+#             */
-/*   Updated: 2019/10/20 15:18:22 by dsy              ###   ########.fr       */
+/*   Updated: 2022/04/05 16:09:16 by dsy              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@
 
 char	*ft_memalloc(size_t n)
 {
-	void *mem;
+	void	*mem;
 
-	if (!(mem = malloc(sizeof(n))))
+	mem = malloc(sizeof(n));
+	if (!mem)
 		return (NULL);
 	ft_memset(mem, 0, n);
 	return (mem);

@@ -1,7 +1,0 @@
-Hello,
-how are you?
-Fine!
-What about you my dear friend!!
-Oh I'm totally fine,
-thanks
-									end.
