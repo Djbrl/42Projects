@@ -243,25 +243,16 @@ void draw_ray(t_game *d)
 			}
 		}
 		//calc wall
-		if (side == 0)
-			d->perpWallDist = (d->sideDistX - p->deltaDistX);
+		if (d->side == 0)
+			d->perpWallDist = (d->sideDistX - d->deltaDistX);
 		else
-			d->perpWallDist = (d->sideDistY - p->deltaDistY);
+			d->perpWallDist = (d->sideDistY - d->deltaDistY);
 		
-		int lineHeight = (int)(640 / d->perpWallDist);
-
-		int dStart = -lineHeight / 2 + 640/ 2;
-		if (dStart < 0)
-			dStart = 0;
-		int dEnd = lineHeight / 2 + h / 2;
-		if (dEnd >= 640)
-			dEnd = 639;
-		int col = 0;
-		if (d->map[d->mapX/64][d->mapY/64] == '1')
-			col = 0xFF0000;
-		if (d->side == 1)
-			col /=2;
-		printf("wall size : %i\n", dEnd - dStart);
+		// int col = 0;
+		// if (d->map[d->mapX/64][d->mapY/64] == '1')
+		// 	col = 0xFF0000;
+		// if (d->side == 1)
+		// 	col /=2;
 		i++;
 	}
 }
@@ -305,7 +296,7 @@ int	key_stroke(int key, t_game *data)
 	}
 	if (key == KEY_ESC || key == 53)
 		esc_window(data);
-	printf("%i\n", key);
+	// printf("%i\n", key);
 	draw_map(data);
 	draw_player(data, data->player2_x, data->player2_y);
 	draw_line(data->mlx_ptr, data->win_ptr, \

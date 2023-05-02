@@ -1,27 +1,34 @@
-class contact
+class contactProfile
 {
 private:
-    char    fname[10];
-    char    lname[10];
-    char    nick[10];
-    char    num[10];
-    char    secret[10];
-    /* data */
+	std::string	fname;
+	std::string	lname;
+	std::string	nick;
+	std::string	num;
+	std::string	secret;
+
 public:
-    contact(/* args */);
-    ~contact();
+	contactProfile();
+	~contactProfile();
+	void		set_contact();
+	std::string get_fname();
+	std::string get_lname();
+	std::string get_nick();
+	std::string get_num();
+	std::string get_secret();
 };
 
-class phonebook
+class phoneBook
 {
 private:
-    contact contactlist[7];
-    int     index;
-    /* data */
+	contactProfile entry[8];
+	int     index;
+
 public:
-    phonebook(/* args */);
-    ~phonebook();
-    void    add(contact);
-    void    search(char *name);
-    void    exit();
+	phoneBook();
+	~phoneBook();
+	void    add();
+	void    search(std::string name);
 };
+
+std::string nosignal_getline();
