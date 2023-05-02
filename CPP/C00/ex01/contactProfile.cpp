@@ -1,5 +1,3 @@
-#include <iostream>
-#include <cstring>
 #include "phonebook.hpp"
 
 contactProfile::contactProfile()
@@ -36,33 +34,23 @@ std::string contactProfile::get_secret()
 
 void contactProfile::set_contact()
 {
-    std::cout << "Contact Form:\n" << std::endl;
+    std::cout << "\nContact Form:\n" << std::endl;
     std::cout << "First Name: ";
     fname = nosignal_getline();
     while (fname.empty() || (fname[0] == '\n' && fname.length() == 1))
        fname = nosignal_getline();
-    std::cout << std::endl << "Last Name: ";
+    std::cout << "Last Name: ";
     lname = nosignal_getline();
     while (lname.empty() || (lname[0] == '\n' && lname.length() == 1))
         lname = nosignal_getline();
-    std::cout << std::endl << "Nickname: ";
+    std::cout << "Nickname: ";
     while (nick.empty() || (nick[0] == '\n' && nick.length() == 1))
         nick = nosignal_getline();
-    std::cout << std::endl << "Phone: ";
+    std::cout << "Phone: ";
     while (num.empty() || (num[0] == '\n' && num.length() == 1))
         num = nosignal_getline();
-    std::cout << std::endl << "... deepest secret ? ";
+    std::cout << "... deepest secret ? ";
     while (secret.empty() || (secret[0] == '\n' && secret.length() == 1))
         secret = nosignal_getline();
     std::cout << std::endl;
-}
-
-
-phoneBook::phoneBook()
-{
-    index = 0;
-}
-
-phoneBook::~phoneBook()
-{
 }

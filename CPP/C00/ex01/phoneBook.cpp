@@ -1,18 +1,12 @@
-#include <iostream>
-#include <cstring>
-#include <unistd.h>
 #include "phonebook.hpp"
 
-std::string nosignal_getline()
+phoneBook::phoneBook()
 {
-	std::string str;
-	std::getline(std::cin, str);
-	if (std::cin.eof())
-	{
-		std::cout << "\nExit. (Ctrl + D)" << std::endl;
-		exit(EXIT_SUCCESS);
-	}
-	return str;
+    index = 0;
+}
+
+phoneBook::~phoneBook()
+{
 }
 
 void phoneBook::add()
@@ -62,32 +56,27 @@ void phoneBook::search(std::string )
 		i++;
 	}
 	std::cout << "Number of contacts : " << index << std::endl;
-	std::cout << "Index ? " << std:endl << std::endl;
-	char index = nosignal_getline();
-	
-
-}
-
-int main() {
-	phoneBook phone;
-
-	std::cout << "\n====================================\nPhonebook Manager\n" << std::endl;
-	while (true) {
-		std::cout << "Type ADD to add a new contact" << std::endl;
-		std::cout << "Type SEARCH to search for a contact" << std::endl;
-		std::cout << "Type EXIT to exit the program\n" << std::endl;
-
-		std::string input = nosignal_getline();
-		if (input == "EXIT") {
-			break;
-		} else if (input == "ADD") {
-			phone.add();
-		} else if (input == "SEARCH") {
-			phone.search("bro");
-		} else {
-			std::cout << "Invalid input.\n\n====================================" << std::endl;
-		}
+	std::cout << "Index ? ";
+	std::string contact_index = nosignal_getline();
+	if (contact_index.length() < 1)
+	{
+        std::cout << "\nInvalid input.\n\n";
+		return ;
 	}
-
-	return 0;
+    if (std::stoi(contact_index) <= index && std::stoi(contact_index) > 0)
+    {
+        i = std::stoi(contact_index) - 1;
+        std::cout << "\n|\tCONTACT\t\t|\n" << "|\t" \
+            << entry[i].get_fname() << "\t|\n" \
+            << "|\t" << entry[i].get_lname() << "\t|\n" \
+            << "|\t" << entry[i].get_nick() << "\t|\n" \
+            << "|\t" << entry[i].get_num() << "\t|\n" \
+            << "|\t" << entry[i].get_secret() << "\t|\n" \
+            << std::endl;
+    }
+    else
+    {
+        std::cout << "\nInvalid index.\n\n";
+        return ;
+    }
 }

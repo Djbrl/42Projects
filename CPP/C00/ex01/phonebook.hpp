@@ -1,34 +1,45 @@
-class contactProfile
-{
-private:
-	std::string	fname;
-	std::string	lname;
-	std::string	nick;
-	std::string	num;
-	std::string	secret;
+#ifndef HEADER_FILE_NAME_H
+# define HEADER_FILE_NAME_H
 
-public:
-	contactProfile();
-	~contactProfile();
-	void		set_contact();
-	std::string get_fname();
-	std::string get_lname();
-	std::string get_nick();
-	std::string get_num();
-	std::string get_secret();
-};
+# include <iostream>
+# include <string>
 
-class phoneBook
-{
-private:
-	contactProfile entry[8];
-	int     index;
+	class contactProfile
+	{
+	private:
+		std::string	fname;
+		std::string	lname;
+		std::string	nick;
+		std::string	num;
+		std::string	secret;
 
-public:
-	phoneBook();
-	~phoneBook();
-	void    add();
-	void    search(std::string name);
-};
+	public:
+		contactProfile();
+		~contactProfile();
+		void		set_contact();
+		std::string get_fname();
+		std::string get_lname();
+		std::string get_nick();
+		std::string get_num();
+		std::string get_secret();
+	};
 
-std::string nosignal_getline();
+	class phoneBook
+	{
+	private:
+		contactProfile entry[8];
+		int     index;
+
+	public:
+		phoneBook();
+		~phoneBook();
+		void    add();
+		void	bulk_add();
+		void    search(std::string name);
+	};
+
+	std::string nosignal_getline();
+	std::string search_getline();
+	std::string random_string();
+#endif // HEADER_FILE_NAME_H
+

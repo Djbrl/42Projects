@@ -10,20 +10,35 @@
 #                                                                              #
 # **************************************************************************** #
 
-SRCS = megaphone.cpp
-@OBJS = $(SRCS:.cpp=.o)
-CFLAGS = -Wall -Wextra -Werror -std=c++98 -g -fsanitize=address
+#---------------------------------VARIABLES------------------------------------#
+
+GREEN_COLOR = \033[0;32m
 NAME = megaphone
 
-all: $(NAME)
+CC = clang++
+CFLAGS = -Wall -Wextra -Werror -std=c++98 -g3#-fsanitize=address
 
-$(NAME): $(@OBJS)
-	clang++ ${CFLAGS} -o ${NAME} ${@OBJS}
+SRCS = megaphone.cpp
+OBJS = $(SRCS:.cpp=.o)
+
+BUILD_PATH = build/
+
+#---------------------------------VARIABLES------------------------------------#
+
+
+all: $(NAME)
+	@echo "Ready : ${GREEN_COLOR}`pwd`/${NAME}${END_COLOR}"
+	@mkdir -p $(BUILD_PATH)
+	@mv $(OBJS) $(BUILD_PATH)
+
+$(NAME): $(OBJS)
+	@$(CC) ${CFLAGS} -o ${NAME} ${OBJS}
 
 clean:
-	rm -rf $(@OBJS)
+	@rm -rf $(BUILD_PATH)
 
 fclean: clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
+	@rm -rf $(BUILD_PATH)
 
 re: fclean all
