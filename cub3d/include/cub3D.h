@@ -92,9 +92,12 @@
 typedef struct s_tex
 {
 	void		*img;
-	int			*addr;
+	char		*addr;
 	int			width;
 	int			height;
+	int			bpp;
+	int			line_length;
+	int			endian;
 }				t_tex;
 
 typedef struct s_img
@@ -140,10 +143,6 @@ typedef struct s_data
 	double		player_y;
 	double		player_vel_x;
 	double		player_vel_y;
-	double		plane_x;
-	double		plane_y;
-	int			dir_x;
-	int			dir_y;
 	double		fov;
 	double		ray_angle;
 	int			ceiling_color;
@@ -152,6 +151,7 @@ typedef struct s_data
 	int			turn_left;
 	int			move_up;
 	int			move_down;
+	char		player_orientation;
 
 	double		camera_x;
 	double		ray_dir_x;
@@ -173,10 +173,7 @@ typedef struct s_data
 	int			draw_end;
 	int			wall_color;
 
-	t_tex		tex1;
-	t_tex		tex2;
-	t_tex		tex3;
-	t_tex		tex4;
+	t_tex		tex[4];
 }				t_data;
 
 /*
@@ -197,15 +194,17 @@ int		check_borders(char **map);
 /*
 ** INIT
 */
-int		init_game(t_data *data);
+void	init_game(t_data *data);
 void	init_game_struct(t_data *data);
 void	load_game_settings(t_data *data, int argc, char **argv);
+void	load_textures(t_data *data);
+void	get_data_addr(t_data *data);
 
 /*
 ** MLX
 */
-int		esc_window(int key, void *params);
-int		cross_window(int key, void *params);
+int		esc_window(void *params);
+int		cross_window(void *params);
 int		key_stroke(int key, void *params);
 int		check_resolution(int x, int y);
 
@@ -226,6 +225,8 @@ void	write_pixel_data(t_img *img, int pixel, int color);
 /*
 ** UTILS
 */
+double	get_wall_position(t_data *d, int side);
+int		get_tex_color(t_data *d, int side, int y, int i);
 void	handle_keys(t_data *data);
 int		exit_error(char *error, t_data *data);
 int		exit_error_n_free_line(char *error, char *line, t_data *data);
@@ -234,5 +235,9 @@ void	free_map_file(t_data *data);
 void	free_line(char *line, t_data *data);
 void	free_split(char **str);
 int		free_array_and_return(char **array, int return_id);
+void	free_mlx(t_data *data);
+void	set_player_direction(t_data *d);
+void	player_spawn(t_data *data);
+void	get_data_addr(t_data *data);
 
 #endif

@@ -51,7 +51,7 @@ static void	wall_calculation(t_data *data, int side)
 		data->perpwall_dist = fabs((data->map_y - data->player_y + \
 			(1 - data->step_y) / 2) / data->ray_dir_y);
 	data->dist_to_wall = data->perpwall_dist * cos((data->player_dir - \
-		(data->player_dir + data->camera_x * data->fov)) * M_PI / 180.0);
+		(data->player_dir + data->camera_x * data->fov)) * PI / 180.0);
 	data->wall_height = (int)(SCREENSIZE / (data->dist_to_wall * \
 		cos(data->camera_x * data->fov)));
 	data->draw_start = SCREENSIZE / 2 - data->wall_height / 2;
@@ -62,75 +62,39 @@ static void	wall_calculation(t_data *data, int side)
 		data->draw_end = SCREENSIZE - 1;
 }
 
-// static int get_tex_color(t_data *d, int y, int side)
-// {
-//     t_img tex;
-//     double tex_y;
-//     double tex_x;
-//     int lineheight;
-
-//     lineheight = (int)(SCREENSIZE / d->perpwall_dist);
-//     // if (side == 0)
-//         tex.img = d->tex1.img;
-//     // else if (side == 1)
-//     //     tex.img = d->tex2.so_img;
-//     // else if (side == 2)
-//     //     tex.img = d->tex3.ea_img;
-//     // else
-//     //     tex.img = d->tex4.we_img;
-
-//     char *tex_addr = mlx_get_data_addr(tex.img, &tex.bpp, &tex.sl, &tex.endian);
-//     tex_y = (y * 2 - SCREENSIZE + lineheight) * (d->tex1.height / 2) / lineheight;
-//     if (tex_y < 0)
-//         tex_y = 0;
-//     tex_x = (int)((d->player_y + d->perpwall_dist * d->ray_dir_y) * d->tex1.width) % d->tex1.width;
-//     if ((side == 0 && d->ray_dir_x > 0) || (side == 1 && d->ray_dir_y < 0))
-//         tex_x = d->tex1.width - tex_x - 1;
-//     char *color = tex_addr + (int)tex_y * tex.sl + (int)tex_x * (tex.bpp / 8);
-//     return (*(unsigned int *)color);
-// }
-
-static void	place_wall_texture(t_data *data, int side)
+static int	choose_tex(t_data *data, int tex_num, int side)
 {
-	if (side == 0)
-	{
-		if (data->ray_dir_x < 0)
-			data->wall_color = 0xFF0000; // Red for west-facing walls
-		else
-			data->wall_color = 0x00FF00; // Green for east-facing walls
-	}
+	if (side == 0 && data->ray_dir_x > 0)
+		tex_num = 1;
+	else if (side == 0 && data->ray_dir_x < 0)
+		tex_num = 0;
+	else if (side == 1 && data->ray_dir_y > 0)
+		tex_num = 3;
 	else
-	{
-		if (data->ray_dir_y < 0)
-			data->wall_color = 0x0000FF; // Blue for north-facing walls
-		else
-			data->wall_color = 0xFFFF00; // Yellow for south-facing walls
-	}	
+		tex_num = 2;
+	return (tex_num);
 }
 
 static void	wall_rendering(t_data *data, int x, int side)
 {
 	int	y;
+	int	tex_num;
 
 	y = 0;
-	place_wall_texture(data, side);
+	tex_num = 0;
 	while (y < SCREENSIZE)
 	{
 		if (y < data->draw_start)
-			data->game_frame[data->current_game_frame]->addr[y * \
-				SCREENSIZE + x] = data->ceiling_color;
+			data->game_frame[data->current_game_frame]->addr[\
+				y * SCREENSIZE + x] = data->ceiling_color;
 		else if (y > data->draw_end)
-			data->game_frame[data->current_game_frame]->addr[y * \
-				SCREENSIZE + x] = data->floor_color;
+			data->game_frame[data->current_game_frame]->addr[\
+				y * SCREENSIZE + x] = data->floor_color;
 		else
 		{
-			if (side == 1)
-				data->game_frame[data->current_game_frame]->addr[y * \
-					SCREENSIZE + x] = data->wall_color;
-			else
-				data->game_frame[data->current_game_frame]->addr[y * \
-					SCREENSIZE + x] = data->wall_color;
-				// data->game_frame[data->current_game_frame]->addr[y * SCREENSIZE + x] = get_tex_color(data, data->draw_start + ((data->draw_end - data->draw_start) / 2), side);
+			tex_num = choose_tex(data, tex_num, side);
+			data->game_frame[data->current_game_frame]->addr[\
+				y * SCREENSIZE + x] = get_tex_color(data, side, y, tex_num);
 		}
 		y++;
 	}
@@ -143,7 +107,7 @@ void	draw_walls(t_data *data)
 
 	x = 0;
 	side = 0;
-	memset(data->game_frame[data->current_game_frame]->addr, 0, \
+	ft_memset(data->game_frame[data->current_game_frame]->addr, 0, \
 		data->game_frame[data->current_game_frame]->sl * SCREENSIZE);
 	handle_keys(data);
 	while (x < SCREENSIZE)
