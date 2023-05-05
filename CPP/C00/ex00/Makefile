@@ -19,7 +19,7 @@ NAME = megaphone
 CC = clang++
 CFLAGS = -Wall -Wextra -Werror -std=c++98 -g3#-fsanitize=address
 
-SRCS = megaphone.cpp
+SRCS = src/megaphone.cpp
 OBJS = $(SRCS:.cpp=.o)
 
 BUILD_PATH = build/

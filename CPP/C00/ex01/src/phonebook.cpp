@@ -10,15 +10,20 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "phonebook.hpp"
+#include "../include/phonebook.hpp"
 
-phoneBook::phoneBook()
-{
-    index = 0;
+static std::string spaces(size_t N) {
+    return std::string(N, ' ');
 }
 
-phoneBook::~phoneBook()
+static int is_number(const std::string& str)
 {
+    for (int i = 0; i < str.length(); i++) {
+        if (!std::isdigit(str[i])) {
+            return 0;
+        }
+    }
+    return 1;
 }
 
 void phoneBook::add()
@@ -47,30 +52,32 @@ void phoneBook::search(std::string )
 		std::cout << "\nEmpty.\n\n";
 		return ;
 	}
-	std::cout << "|\tINDEX\t|\tFIRST NAME\t|\tLAST NAME\t|\tNICKNAME\t|\n";
+	std::cout << "|  INDEX   |FIRST NAME|LAST  NAME|NICK NAME|\n";
 	while (i < index)
 	{
 		if (entry[i].get_fname().length() > 10)
-			firstname = entry[i].get_fname().substr(0, 10) + ".";
+			firstname = entry[i].get_fname().substr(0, 9) + ".";
 		else
 			firstname = entry[i].get_fname();
 		if (entry[i].get_lname().length() > 10)
-			lastname = entry[i].get_lname().substr(0, 10) + ".";
+			lastname = entry[i].get_lname().substr(0, 9) + ".";
 		else
 			lastname = entry[i].get_lname();
 		if (entry[i].get_nick().length() > 10)
-			nickname = entry[i].get_nick().substr(0, 10) + ".";
+			nickname = entry[i].get_nick().substr(0, 9) + ".";
 		else
 			nickname = entry[i].get_nick();
-		std::cout << "|\t" << i + 1 << "\t|\t" << firstname << \
-			"\t|\t" <<  lastname << "\t|\t" << nickname << \
-			"\t|\n\n";
+		std::cout << "|" + spaces(9) << i + 1 << "|" \
+			<< firstname + spaces(10 - firstname.length())<< \
+			"|" <<  lastname  + spaces(10 - lastname.length()) << \
+			"|" << nickname + spaces(10 - nickname.length() - 1) << \
+			"|\n\n";
 		i++;
 	}
 	std::cout << "Number of contacts : " << index << std::endl;
 	std::cout << "Index ? ";
 	std::string contact_index = nosignal_getline();
-	if (contact_index.length() < 1)
+	if (contact_index.length() < 1 || !is_number(contact_index))
 	{
         std::cout << "\nInvalid input.\n\n";
 		return ;
@@ -78,12 +85,12 @@ void phoneBook::search(std::string )
     if (std::stoi(contact_index) <= index && std::stoi(contact_index) > 0)
     {
         i = std::stoi(contact_index) - 1;
-        std::cout << "\n|\tCONTACT\t\t|\n" << "|\t" \
-            << entry[i].get_fname() << "\t|\n" \
-            << "|\t" << entry[i].get_lname() << "\t|\n" \
-            << "|\t" << entry[i].get_nick() << "\t|\n" \
-            << "|\t" << entry[i].get_num() << "\t|\n" \
-            << "|\t" << entry[i].get_secret() << "\t|\n" \
+        std::cout << "\n| CONTACT  |\n" << "|" \
+            << entry[i].get_fname() << "|\n" \
+            << "|" << entry[i].get_lname() << "|\n" \
+            << "|" << entry[i].get_nick() << "|\n" \
+            << "|" << entry[i].get_num() << "|\n" \
+            << "|" << entry[i].get_secret() << "|\n" \
             << std::endl;
     }
     else

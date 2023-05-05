@@ -16,42 +16,19 @@
 # include <iostream>
 # include <string>
 
-	class contactProfile
-	{
-	private:
-		std::string	fname;
-		std::string	lname;
-		std::string	nick;
-		std::string	num;
-		std::string	secret;
+class Zombie
+{
+    private:
+        std::string name;
 
-	public:
-		contactProfile();
-		~contactProfile();
-		void		set_contact();
-		std::string get_fname();
-		std::string get_lname();
-		std::string get_nick();
-		std::string get_num();
-		std::string get_secret();
-	};
+    public:
 
-	class phoneBook
-	{
-	private:
-		contactProfile entry[8];
-		int     index;
+        Zombie();
+        ~Zombie();
+        std::string get_name(void);
+        void        set_name(std::string str);
+        void        announce(void);
+};
 
-	public:
-		phoneBook();
-		~phoneBook();
-		void    add();
-		void	bulk_add();
-		void    search(std::string name);
-	};
-
-	std::string nosignal_getline();
-	std::string search_getline();
-	std::string random_string();
-#endif // HEADER_FILE_NAME_H
-
+Zombie      *zombieHorde(int n, std::string name);
+#endif

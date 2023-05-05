@@ -5,24 +5,24 @@
 #                                                     +:+ +:+         +:+      #
 #    By: dsy <marvin@42.fr>                         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/05/02 19:35:10 by dsy               #+#    #+#              #
-#    Updated: 2023/05/02 19:35:11 by dsy              ###   ########.fr        #
+#    Created: 2023/05/02 19:36:03 by dsy               #+#    #+#              #
+#    Updated: 2023/05/02 19:36:04 by dsy              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-
 
 #---------------------------------VARIABLES------------------------------------#
 
 GREEN_COLOR = \033[0;32m
-NAME = megaphone
+NAME := Zombie
 
-CC = clang++
-CFLAGS = -Wall -Wextra -Werror -std=c++98 -g3#-fsanitize=address
+CC := clang++
+CFLAGS := -Wall -Wextra -Werror -std=c++98 -g3#-fsanitize=address
 
-SRCS = megaphone.cpp
-OBJS = $(SRCS:.cpp=.o)
+SRCS :=		src/newZombie.cpp src/randomChump.cpp src/main.cpp \
+			src/Zombie.cpp
+OBJS := $(SRCS:.cpp=.o)
 
-BUILD_PATH = build/
+BUILD_PATH := build/
 
 #---------------------------------VARIABLES------------------------------------#
 

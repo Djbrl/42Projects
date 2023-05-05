@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "phonebook.hpp"
+#include "../include/phonebook.hpp"
 
 std::string nosignal_getline()
 {

@@ -11,23 +11,35 @@
 /* ************************************************************************** */
 
 #include <iostream>
-#include <cstring>
 
-int main(int ac, char **av)
+void    edit_ptr(std::string *str)
 {
-    int i = 1;
-    if (ac == 1)
-        std::cout << "* LOUD AND UNBEARABLE FEEDBACK NOISE *\n";
-    else
-    {
-        while (i < ac)
-        {
-            for (int j = 0; j < strlen(av[i]); j++)
-                std::cout << (char)toupper(av[i][j]);
-            std::cout << " ";
-            i++;
-        }
-        std::cout << "\b\n";
-    }
-    return 0;
+    *str += "!";
+}
+
+void    edit_ref(std::string &str)
+{
+    str += "!";
+}
+
+int main()
+{
+    std::string str = "HI THIS IS BRAIN";
+    std::string *stringPTR = &str;
+    std::string &stringREF = str;
+
+    std::cout << "ADDR : \n";
+    std::cout << &str << std::endl;
+    std::cout << &stringPTR << std::endl;
+    std::cout << &stringREF << std::endl;
+
+    //edit_ptr(stringPTR);
+    //edit_ref(stringREF);
+
+    std::cout << "\nDATA : \n";
+    std::cout << str << std::endl;
+    std::cout << stringPTR << std::endl;
+    std::cout << stringREF << std::endl;
+
+    return (0);
 }
