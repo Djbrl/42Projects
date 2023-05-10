@@ -14,12 +14,12 @@
 #---------------------------------VARIABLES------------------------------------#
 
 GREEN_COLOR = \033[0;32m
-NAME = harl
+NAME = Fixed
 
 CC = clang++
 CFLAGS = -Wall -Wextra -Werror -std=c++98 -g3 -fsanitize=address
 
-SRCS = src/harl.cpp src/main.cpp
+SRCS = src/Fixed.cpp src/main.cpp
 OBJS = $(SRCS:.cpp=.o)
 
 BUILD_PATH = build/
