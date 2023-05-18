@@ -25,6 +25,8 @@ Cat::Cat():Animal()
 }
 
 
+
+
 Cat::Cat(const Cat& a):Animal()
 {
    type = a.type;
