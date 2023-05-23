@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/phonebook.hpp"
+#include "../include/PhoneBook.hpp"
 
 std::string nosignal_getline()
 {
@@ -25,9 +25,9 @@ std::string nosignal_getline()
 }
 
 int main() {
-	phoneBook phone;
+	PhoneBook phone;
 
-	std::cout << "\n====================================\nPhonebook Manager\n" << std::endl;
+	std::cout << "\n====================================\nPhoneBook Manager\n" << std::endl;
 	while (true) {
 		std::cout << "Type ADD to add a new contact" << std::endl;
 		std::cout << "Type SEARCH to search for a contact" << std::endl;

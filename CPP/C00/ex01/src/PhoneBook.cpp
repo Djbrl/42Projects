@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   phoneBook.cpp                                      :+:      :+:    :+:   */
+/*   PhoneBook.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/phonebook.hpp"
+#include "../include/PhoneBook.hpp"
 
 static std::string spaces(size_t N) {
     return std::string(N, ' ');
@@ -26,7 +26,7 @@ static int is_number(const std::string& str)
     return 1;
 }
 
-void phoneBook::add()
+void PhoneBook::add()
 {
 	if (index < 8) // Make sure there is space in the contact list
 	{
@@ -39,7 +39,7 @@ void phoneBook::add()
 		std::cout << "Your contact list is full.\n\n====================================\n" << std::endl;
 }
 
-void phoneBook::search(std::string )
+void PhoneBook::search(std::string )
 {
 	int 		i;
 	std::string	firstname;

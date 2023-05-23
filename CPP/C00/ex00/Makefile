@@ -16,8 +16,8 @@
 GREEN_COLOR = \033[0;32m
 NAME = megaphone
 
-CC = clang++
-CFLAGS = -Wall -Wextra -Werror -std=c++98 -g3#-fsanitize=address
+CC = c++
+CFLAGS = -Wall -Wextra -Werror -std=c++98 #-fsanitize=address -g3
 
 SRCS = src/megaphone.cpp
 OBJS = $(SRCS:.cpp=.o)

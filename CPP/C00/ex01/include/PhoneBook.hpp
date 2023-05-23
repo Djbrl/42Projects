@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   phonebook.hpp                                      :+:      :+:    :+:   */
+/*   PhoneBook.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,15 +10,14 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHONEBOOK_H
-# define PHONEBOOK_H
+#ifndef PhoneBook_H
+# define PhoneBook_H
 
 # include <iostream>
 # include <string>
-# include <cctype>
 
-	class contactProfile
-	{
+class ContactProfile
+{
 	private:
 		std::string	fname;
 		std::string	lname;
@@ -27,32 +26,33 @@
 		std::string	secret;
 
 	public:
-		contactProfile();
-		~contactProfile();
+		ContactProfile();
+		~ContactProfile();
 		void		set_contact();
 		std::string get_fname();
 		std::string get_lname();
 		std::string get_nick();
 		std::string get_num();
 		std::string get_secret();
-	};
+};
 
-	class phoneBook
-	{
+class PhoneBook
+{
 	private:
-		contactProfile entry[8];
-		int     index;
+		ContactProfile	entry[8];
+		int     		index;
 
 	public:
-		phoneBook();
-		~phoneBook();
+		PhoneBook();
+		~PhoneBook();
 		void    add();
 		void	bulk_add();
 		void    search(std::string name);
-	};
+};
 
-	std::string nosignal_getline();
-	std::string search_getline();
-	std::string random_string();
+std::string nosignal_getline();
+std::string search_getline();
+std::string random_string();
+
 #endif
 
