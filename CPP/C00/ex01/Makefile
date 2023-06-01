@@ -13,13 +13,13 @@
 #---------------------------------VARIABLES------------------------------------#
 
 GREEN_COLOR = \033[0;32m
-NAME := phonebook
+NAME := PhoneBook
 
 CC := clang++
-CFLAGS := -Wall -Wextra -Werror -std=c++98 -g3#-fsanitize=address
+CFLAGS := -Wall -Wextra -Werror -std=c++98 -fsanitize=address -g3
 
-SRCS :=		src/contact_profile.cpp src/phonebook.cpp src/main.cpp \
-			src/phonebook_utils.cpp
+SRCS :=		src/ContactProfile.cpp src/PhoneBook.cpp src/main.cpp \
+			src/PhoneBook_utils.cpp
 OBJS := $(SRCS:.cpp=.o)
 
 BUILD_PATH := build/

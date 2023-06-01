@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   contactProfile.cpp                                 :+:      :+:    :+:   */
+/*   ContactProfile.cpp                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,41 +10,41 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/phonebook.hpp"
+#include "../include/PhoneBook.hpp"
 
-contactProfile::contactProfile()
+ContactProfile::ContactProfile()
 {
 }
 
-contactProfile::~contactProfile()
+ContactProfile::~ContactProfile()
 {
 }
 
-std::string contactProfile::get_fname()
+std::string ContactProfile::get_fname()
 {
     return fname;
 }
 
-std::string contactProfile::get_lname()
+std::string ContactProfile::get_lname()
 {
     return lname;
 }
 
-std::string contactProfile::get_nick()
+std::string ContactProfile::get_nick()
 {
     return nick;
 }
 
-std::string contactProfile::get_num()
+std::string ContactProfile::get_num()
 {
     return num;
 }
-std::string contactProfile::get_secret()
+std::string ContactProfile::get_secret()
 {
     return secret;
 }
 
-void contactProfile::set_contact()
+void ContactProfile::set_contact()
 {
     std::cout << "\nContact Form:\n" << std::endl;
     std::cout << "First Name: ";

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   phoneBook.cpp                                      :+:      :+:    :+:   */
+/*   PhoneBook.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dsy <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,13 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/phonebook.hpp"
+#include "../include/PhoneBook.hpp"
 
-phoneBook::phoneBook()
+PhoneBook::PhoneBook()
 {
     index = 0;
 }
 
-phoneBook::~phoneBook()
+PhoneBook::~PhoneBook()
 {
 }
