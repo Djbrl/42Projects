@@ -10,18 +10,42 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../include/ClapTrap.hpp"
+#ifndef __CLAPTRAP_H__
+# define __CLAPTRAP_H__
 
-ClapTrap::ClapTrap(const std::string n) : name(n), hp(10), mana(10), ad(0)
-{
-}
+# define YLW "\033[0;33m"
+# define END "\033[0;0m"
+# include <iostream>
+# include <cmath>
 
-ClapTrap::~ClapTrap()
+class ClapTrap
 {
-}
+    private:
+        std::string name;
+        int hp;
+        int mana;
+        int ad;
+        void    print(std::string str);
 
-ClapTrap    &ClapTrap::operator=(const ClapTrap &src)
-{
-    if (this != &src)
-        *this = src;
-}
+    public:
+        ClapTrap();
+        ClapTrap(const std::string name);
+        ClapTrap(const ClapTrap &src);
+        ~ClapTrap();
+        ClapTrap    &operator=(const ClapTrap &src);
+        void    attack(const std::string &target);
+        void    takeDamage(unsigned int amount);
+        void    beRepaired(unsigned int amount);
+
+        //getters and setters
+        void setHP(int n);
+        void setMana(int n);
+        void setAD(int n);
+
+        int getHP();
+        int getMana();
+        int getAD();
+        std::string getName();
+};
+
+#endif

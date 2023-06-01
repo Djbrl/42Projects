@@ -10,28 +10,23 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef __CLAPTRAP_H__
-# define __CLAPTRAP_H__
+# include "../include/ClapTrap.hpp"
 
-# include <iostream>
-# include <cmath>
-
-class ClapTrap
+int main()
 {
-    private:
-        std::string name;
-        int hp;
-        int mana;
-        int ad;
-
-    public:
-        ClapTrap(const std::string name);
-        ClapTrap(const ClapTrap &src);
-        ~ClapTrap();
-        ClapTrap    &operator=(const ClapTrap &src);
-        void    attack(const std::string &target);
-        void    takeDamage(unsigned int amount);
-        void    beRepaired(unsigned int amount);
-};
-
-#endif
+    ClapTrap dude = ClapTrap();
+    ClapTrap jeff = dude;
+    ClapTrap ken (jeff);
+    dude.attack("greg");
+    jeff.attack("greg");
+    ken.attack("ryu");
+    ken.setAD(12312);
+    ken.attack("ryu");
+    ken.takeDamage(231321);
+    ken.takeDamage(123312);
+    ken.takeDamage(123123);
+    ken.beRepaired(12312311);
+    ken.beRepaired(213123);
+    ken.takeDamage(123123123);
+    return 0;
+}
