@@ -19,7 +19,7 @@ NAME = ScavTrap
 CC = clang++
 CFLAGS = -Wall -Wextra -Werror -std=c++98 -g3 -fsanitize=address
 
-SRCS = src/ClapTrap.cpp src/ScavTrap.cpp src/main.cpp
+SRCS = src/ClapTrap.cpp src/FragTrap.cpp src/ScavTrap.cpp src/main.cpp
 OBJS = $(SRCS:.cpp=.o)
 
 BUILD_PATH = build/

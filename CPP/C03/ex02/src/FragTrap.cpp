@@ -10,24 +10,23 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../include/FragTrap.hpp"
+#include "../include/FragTrap.hpp"
 
-FragTrap::FragTrap() : ClapTrap()
+FragTrap::FragTrap(): ClapTrap()
 {
     hp = 100;
-    mana = 50;
-    ad = 20;
-    name = "Random guard";
+    mana = 100;
+    ad = 30;
+    name = "Bot";
     print("# - (Default FragTrap [" + name + "] constructor called)");
 }
 
-FragTrap::FragTrap(const std::string n) : ClapTrap(n)
+FragTrap::FragTrap(std::string str):ClapTrap(str)
 {
     hp = 100;
-    mana = 50;
-    ad = 20;
-    name = n;
-    print("# - (FragTrap string [" + name + "] constructor called)");
+    mana = 100;
+    ad = 30;
+    print("# - (Default FragTrap [" + name + "] string constructor called)");
 }
 
 FragTrap::~FragTrap()
@@ -35,27 +34,26 @@ FragTrap::~FragTrap()
     print("# - (Default FragTrap [" + name + "] destructor called)");
 }
 
-FragTrap::FragTrap(const FragTrap &src)
+FragTrap::FragTrap(const FragTrap& s)
 {
-    if (this != &src)
-        *this = src;
-    print("# - (Copy operator called)");
+    *this = s;
+    print("# - (Default FragTrap [" + name + "] copy constructor called)");
 }
 
-FragTrap    &FragTrap::operator=(const FragTrap &src)
+FragTrap&  FragTrap::operator=(const FragTrap& s)
 {
-    if (this != &src)
+    if (this != &s)
     {
-        name = src.name;
-        hp = src.hp;
-        ad = src.ad;
-        mana = src.mana;
+        name = s.name;
+        hp = s.hp;
+        mana = s.mana;
+        ad = s.ad;
     }
-    print("# - (Overloaded '=' operator called)");
+    print("# - (Default FragTrap [" + name + "] overloaded = operator called)");
     return (*this);
 }
 
-void    FragTrap::highFiveGuys()
+void FragTrap::highFivesGuys(void)
 {
-    print("high five!");
+    std::cout << "high five! (the dante way)\n" << std::endl;
 }

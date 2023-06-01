@@ -17,7 +17,7 @@
 
 class ScavTrap : public ClapTrap
 {
-    private:
+    protected:
         std::string name;
         int hp;
         int mana;
@@ -33,19 +33,6 @@ class ScavTrap : public ClapTrap
         ScavTrap    &operator=(const ScavTrap &src);
 
         void    guardGate();
-        void    attack(const std::string &target);
-        void    takeDamage(unsigned int amount);
-        void    beRepaired(unsigned int amount);
-
-        //getters and setters
-        void setHP(int n);
-        void setMana(int n);
-        void setAD(int n);
-
-        int getHP();
-        int getMana();
-        int getAD();
-        std::string getName();
 };
 
 #endif

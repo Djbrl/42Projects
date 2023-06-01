@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 # include "../include/ScavTrap.hpp"
+# include "../include/FragTrap.hpp"
 
 int main()
 {
@@ -33,5 +34,10 @@ int main()
     scavy.guardGate();
     scavy.guardGate();
     scavy.guardGate();
+    scavy.attack("greg");
+
+	FragTrap bot;
+	FragTrap Dante("Dante");
+	Dante.highFivesGuys();
     return 0;
 }

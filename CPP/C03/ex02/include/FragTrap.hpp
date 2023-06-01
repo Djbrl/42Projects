@@ -13,26 +13,19 @@
 #ifndef __FRAGTRAP_H__
 # define __FRAGTRAP_H__
 
-# include "ClapTrap.hpp"
+#include "ScavTrap.hpp"
 
-class FragTrap : public ClapTrap
+class FragTrap: public ClapTrap
 {
-    private:
-        std::string name;
-        int hp;
-        int mana;
-        int ad;
-        void    print(std::string str);
-        bool guardState;
+protected:
 
-    public:
-        FragTrap();
-        FragTrap(const std::string name);
-        FragTrap(const FragTrap &src);
-        ~FragTrap();
-        FragTrap    &operator=(const FragTrap &src);
-        std::string getName();
-        void    highFiveGuys();
+public:
+    FragTrap();
+    FragTrap(std::string str);
+    FragTrap(const FragTrap& s);
+    FragTrap& operator=(const FragTrap& s);
+    ~FragTrap();
+    void highFivesGuys(void);
 };
 
 #endif
