@@ -19,7 +19,7 @@ NAME = Animal
 CC = clang++
 CFLAGS = -Wall -Wextra -Werror -std=c++98 -g3 -fsanitize=address
 
-SRCS = src/Animal.cpp src/Cat.cpp src/Dog.cpp src/main.cpp
+SRCS = src/Animal.cpp src/Cat.cpp src/Dog.cpp src/WrongAnimal.cpp src/WrongCat.cpp src/main.cpp
 OBJS = $(SRCS:.cpp=.o)
 
 BUILD_PATH = build/

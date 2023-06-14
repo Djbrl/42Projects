@@ -18,17 +18,16 @@
 
 class Cat: virtual public Animal
 {
-private:
-    Brain *_brain;
-public:
-    Cat();
-    Cat(const Cat& c);
-    Cat& operator=(const Cat& c);
-    virtual ~Cat();
-
-    virtual void makeSound() const;
-    Brain* getBrain() const;
-
+    private:
+        Brain *brain;
+    public:
+        Cat();
+        Cat(const Cat& c);
+        Cat& operator=(const Cat& c);
+        virtual ~Cat();
+        virtual void makeSound() const;
+        std::string getIdea(int i);
+        std::string getType() const;
 };
 
 #endif

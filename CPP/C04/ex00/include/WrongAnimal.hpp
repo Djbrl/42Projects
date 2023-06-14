@@ -10,23 +10,26 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef __FRAGTRAP_H__
-# define __FRAGTRAP_H__
+#ifndef __WrongANIMAL_H__
+# define __WrongANIMAL_H__
 
-#include "ScavTrap.hpp"
+# include <iostream>
 
-class FragTrap: public ClapTrap
+class WrongAnimal
 {
-    private:
-
-    public:
-        FragTrap();
-        FragTrap(std::string str);
-        FragTrap(const FragTrap& s);
-        FragTrap& operator=(const FragTrap& s);
-        ~FragTrap();
-        void    attack(const std::string &target);
-        void highFivesGuys(void);
+	protected:
+		std::string type;
+		
+	public:
+		WrongAnimal();
+		WrongAnimal(const WrongAnimal &a);
+		virtual ~WrongAnimal();
+		WrongAnimal	&operator=(const WrongAnimal &a);
+		std::string	getType() const;
+		void		setType(std::string str);
+		void		makeSound() const;
 };
+
+std::ostream& operator<<(std::ostream& o, const WrongAnimal& a);
 
 #endif

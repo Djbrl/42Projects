@@ -13,16 +13,33 @@
 #include "../include/Animal.hpp"
 #include "../include/Dog.hpp"
 #include "../include/Cat.hpp"
+#include "../include/WrongCat.hpp"
 
 int main ()
 {
-    const Animal* meta = new Animal();
-    const Animal* j = new Dog();
-    const Animal* i = new Cat();
-    std::cout << j->getType() << " type" << std::endl;
-    std::cout << i->getType() << " type" << std::endl;
-    i->makeSound();
-    j->makeSound();
-    meta->makeSound();
+    {
+
+        Animal instantiateTest = Animal();
+        std::cout << instantiateTest.getType() << std::endl;
+        instantiateTest.makeSound();
+
+        Cat smolCat = Cat();
+        std::cout << smolCat.getType() << std::endl;
+        smolCat.makeSound();
+
+        Dog smolDog = Dog();
+        std::cout << smolDog.getType() << std::endl;
+        smolDog.makeSound();
+    }
+    {
+        const Animal constTest = Dog();
+        constTest.makeSound();
+        const Animal constTest2 = Cat();
+        constTest2.makeSound();
+    }
+    {
+        const WrongCat test = WrongCat();
+        test.makeSound();
+    }   
     return 0;
 }

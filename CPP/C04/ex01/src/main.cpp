@@ -17,9 +17,6 @@
 int main()
 {
 	Animal* array[6];
-	Dog*	test_deep_cpy;
-
-	std::cout << "\n	-	-	-	-	-	-	-	-\n" << std::endl;
 	for(int i = 0; i < 6; i++)
 	{
 		if (i <= 2)
@@ -27,15 +24,26 @@ int main()
 		else
 			array[i] = new Cat();
 		std::cout << std::endl;
-	}
-
-	test_deep_cpy = new Dog((*dynamic_cast<Dog *>(array[0])));
-	std::cout << "\n	-	-	-	-	-	-	-	-\n" << std::endl;
-	for(int i = 0; i < 6; i++)
 		delete array[i];
-	std::cout << "\n	-	-	-	-	-	-	-	-\n" << std::endl;
-	std::cout << "## The deep copy is illustrated by the existence of the string copied from array[0].\
- While this instance was deleted : \n" << *test_deep_cpy->getBrain()->getIdeas() << std::endl;
- 	std::cout << "\n	-	-	-	-	-	-	-	-\n" << std::endl;
-	delete test_deep_cpy;
+	}
+	// basic
+	Dog basic;
+	{
+		Dog tmp = basic;
+	}
+	std::cout << "end\n";
+	// return ;
+
+	// DEEP COPY TEST
+	Cat test  = Cat();
+	std::string idea = test.getIdea(99);
+	std::cout << idea << std::endl;
+
+	Cat test2  = Cat();
+	std::string idea2 = test2.getIdea(99);
+	std::cout << idea2 << std::endl;
+
+	test = test2;
+	std::cout << test.getIdea(99) << std::endl;
+
 }

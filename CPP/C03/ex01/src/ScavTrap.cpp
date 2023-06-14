@@ -65,11 +65,11 @@ ScavTrap    &ScavTrap::operator=(const ScavTrap &src)
 
 //MEMBER FUNCTIONS
 
-// void    ScavTrap::attack(const std::string &target)
-// {
-//     if (mana > 0)
-//         std::cout << ">> " + target + " was attacked by " + getName() + " and took " << getAD() << " damage!" << std::endl;
-// }
+void    ScavTrap::attack(const std::string &target)
+{
+    if (mana > 0 && hp > 0)
+        std::cout << ">> " + target + " was attacked by Scavy Mc. " + getName() + " and took " << getAD() << " damage!" << std::endl;
+}
 
 // void    ScavTrap::takeDamage(unsigned int amount)
 // {

@@ -18,16 +18,15 @@
 
 class Dog: virtual public Animal
 {
-private:
-	Brain *_brain;
-public:
-    Dog();
-    Dog(const Dog& d);
-    Dog& operator=(const Dog& d);
-    virtual ~Dog();
-
-    virtual void makeSound() const;
-    Brain* getBrain() const;
+    private:
+        Brain *brain;
+    public:
+        Dog();
+        Dog(const Dog& d);
+        Dog& operator=(const Dog& d);
+        virtual ~Dog();
+        virtual void makeSound() const;
+        std::string getIdea(int i);
 };
 
 

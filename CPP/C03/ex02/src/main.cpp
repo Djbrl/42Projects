@@ -39,5 +39,6 @@ int main()
 	FragTrap bot;
 	FragTrap Dante("Dante");
 	Dante.highFivesGuys();
+    Dante.attack("Vergil");
     return 0;
 }

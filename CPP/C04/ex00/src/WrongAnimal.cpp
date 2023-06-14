@@ -10,23 +10,49 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef __FRAGTRAP_H__
-# define __FRAGTRAP_H__
+// #include "../include/Fixed.hpp"
 
-#include "ScavTrap.hpp"
+#include "../include/WrongAnimal.hpp"
 
-class FragTrap: public ClapTrap
+WrongAnimal::WrongAnimal()
 {
-    private:
+}
 
-    public:
-        FragTrap();
-        FragTrap(std::string str);
-        FragTrap(const FragTrap& s);
-        FragTrap& operator=(const FragTrap& s);
-        ~FragTrap();
-        void    attack(const std::string &target);
-        void highFivesGuys(void);
-};
+WrongAnimal::WrongAnimal(const WrongAnimal &src)
+{
+	if (this != &src)
+		*this = src;
+}
 
-#endif
+WrongAnimal	&WrongAnimal::operator=(const WrongAnimal &src)
+{
+	if (this != &src)
+		type = src.type;
+	return(*this);
+}
+
+WrongAnimal::~WrongAnimal()
+{
+	std::cout << type << " destroyed (Parent class)" << std::endl;
+}
+
+void	WrongAnimal::makeSound() const
+{
+	std::cout <<  "random WrongAnimal sound" << std::endl;
+}
+
+std::string	WrongAnimal::getType() const
+{
+	return (this->type);
+}
+
+void	WrongAnimal::setType(std::string str)
+{
+	this->type = str;
+}
+
+std::ostream	&operator<<(std::ostream &stream, const WrongAnimal &a)
+{
+	std::cout << "<< operator overload\n";
+	return stream;
+}

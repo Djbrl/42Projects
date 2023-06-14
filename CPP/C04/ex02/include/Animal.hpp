@@ -17,20 +17,19 @@
 
 class Animal
 {
-protected:
-	std::string type;
-	
-public:
-    Animal();
-    Animal(const Animal& a);
-    Animal& operator=(const Animal& a);
-    virtual ~Animal();
-
-	virtual std::string getType() const;
-	virtual void setType(std::string str);
-	virtual void makeSound() const = 0;
+    protected:
+        std::string type;
+        
+    public:
+        Animal();
+        Animal(const Animal& a);
+        Animal& operator=(const Animal& a);
+        virtual ~Animal();
+        virtual std::string getType() const = 0;
+        virtual void setType(std::string str);
+        virtual void makeSound() const = 0;
 };
 
-std::string gen_random(const int len);
+std::string getIdea();
 
 #endif

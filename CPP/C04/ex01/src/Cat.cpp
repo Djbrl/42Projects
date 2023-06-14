@@ -17,21 +17,18 @@ static int nbCat = 0;
 Cat::Cat():Animal()
 {
     type = "Cat";
-    _brain = new Brain();
-    *_brain->getIdeas() = gen_random(100);
+    brain = new Brain();
     nbCat +=1;
-    std::cout << "(Default Cat Constructor) Im the " << nbCat << " Cat created and " 
-    "this is my idea " << *_brain->getIdeas() << std::endl;
+    std::cout << "(Default Cat Constructor) Cat #" << nbCat << std::endl;
 }
 
 
 Cat::Cat(const Cat& a):Animal()
 {
    type = a.type;
-   _brain = new Brain(*(a._brain));
+   brain = new Brain(*(a.brain));
    nbCat += 1;
-    std::cout << "(Copy Cat Constructor) Im the " << nbCat << " created and "
-    "this is my idea " << *_brain->getIdeas() << std::endl;
+   std::cout << "(Default Cat Constructor 2) Cat #" << nbCat << std::endl;
 }
 
 Cat& Cat::operator=(const Cat& a)
@@ -39,30 +36,31 @@ Cat& Cat::operator=(const Cat& a)
     if (this != &a)
     {
         type = a.type;
-        *_brain = *a._brain;
+        Brain *tmp = new Brain();
+        tmp = a.brain;
+        *brain = *tmp;        
         nbCat += 1;
-        std::cout << "(Copy Cat Constructor) Im the " << nbCat << " created and "
-        "this is my idea " << *_brain->getIdeas() << std::endl;
+        std::cout << "(Copy Cat Constructor) Cat #" << nbCat << std::endl;
     }
     return (*this);
 }
 
 Cat::~Cat()
 {
-    delete _brain;
-    std::cout << "Cat is destroyed" << std::endl;
-    std::cout << std::endl;
+    delete brain;
+    std::cout << type << " was destroyed" << std::endl;
 }
 
 
 void Cat::makeSound() const
 {
-    std::cout << "meow meow" << std::endl;
+    std::cout << "meow" << std::endl;
 }
 
-Brain* Cat::getBrain() const
+std::string Cat::getIdea(int i)
 {
-    if (_brain)
-        return (_brain);
-    return (NULL);
+    if (i >= 0 && i < 100)
+        return brain->returnIdea(i);
+    else
+        return "";
 }

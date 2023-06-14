@@ -17,11 +17,7 @@
 
 class ScavTrap : public ClapTrap
 {
-    protected:
-        std::string name;
-        int hp;
-        int mana;
-        int ad;
+    private:
         void    print(std::string str);
         bool guardState;
 

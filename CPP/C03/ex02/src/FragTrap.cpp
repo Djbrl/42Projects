@@ -57,3 +57,9 @@ void FragTrap::highFivesGuys(void)
 {
     std::cout << "high five! (the dante way)\n" << std::endl;
 }
+
+void    FragTrap::attack(const std::string &target)
+{
+    if (mana > 0 && hp > 0)
+        std::cout << ">> " + target + " was attacked by " + getName() + "(the dante way) and took " << getAD() << " damage!" << std::endl;
+}

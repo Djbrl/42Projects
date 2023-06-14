@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef __BRAIN_H__
-# define __BRAIN_H__
+#ifndef _brain_H__
+# define _brain_H__
 
 # include <iostream>
 
@@ -25,8 +25,7 @@ class Brain
         virtual ~Brain();
         Brain(const Brain &src);
         Brain  &operator=(const Brain &src);
-
-        std::string *getIdeas();
+        std::string returnIdea(int i);
 };
 
 #endif

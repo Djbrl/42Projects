@@ -14,7 +14,7 @@
 
 #include "../include/Animal.hpp"
 
-Animal::Animal():type("Animal")
+Animal::Animal():type("Default Animal")
 {
     std::cout << "(Default Animal Constructor)" << std::endl;
 }
@@ -35,7 +35,7 @@ Animal& Animal::operator=(const Animal& a)
 
 Animal::~Animal()
 {
-    std::cout << "Animal is Destroyed" << std::endl;
+	std::cout << type << " destroyed (Parent class)" << std::endl;
 }
 
 void Animal::setType(std::string str)
@@ -50,20 +50,5 @@ std::string Animal::getType() const
 
 void Animal::makeSound() const
 {
-    std::cout << "SIUUUU" << std::endl;
-}
-
-std::string gen_random(const int len) {
-    static const char alphanum[] =
-        "0123456789"
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-        "abcdefghijklmnopqrstuvwxyz";
-    std::string tmp_s;
-    tmp_s.reserve(len);
-    std::srand(time(NULL));
-    for (int i = 0; i < len; ++i) {
-        tmp_s += alphanum[std::rand() % (sizeof(alphanum) - 1)];
-    }
-    
-    return tmp_s;
+	std::cout <<  "random animal sound" << std::endl;
 }

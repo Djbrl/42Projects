@@ -14,7 +14,7 @@
 
 #include "../include/Animal.hpp"
 
-Animal::Animal()
+Animal::Animal() : type("Default Animal")
 {
 }
 
@@ -49,4 +49,10 @@ std::string	Animal::getType() const
 void	Animal::setType(std::string str)
 {
 	this->type = str;
+}
+
+std::ostream	&operator<<(std::ostream &stream, const Animal &a)
+{
+	std::cout << "<< operator overload\n";
+	return stream;
 }

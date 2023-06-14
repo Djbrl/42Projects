@@ -17,21 +17,18 @@ static int nbDog = 0;
 Dog::Dog():Animal()
 {
     type = "Dog";
-    _brain = new Brain();
-    *_brain->getIdeas() = gen_random(100);
-    nbDog += 1;
-    std::cout << "(Default Dog Constructor) Im the " << nbDog << " Dog created and "
-        "this is my idea " << *_brain->getIdeas() << std::endl;
-    
+    brain = new Brain();
+    nbDog +=1;
+    std::cout << "(Default Dog Constructor) Dog #" << nbDog << std::endl;
 }
+
 
 Dog::Dog(const Dog& a):Animal()
 {
-        type = a.type;
-        _brain = new Brain(*(a._brain));
-        nbDog += 1;
-        std::cout << "(Copy Dog Constructor) Im the " << nbDog << " Dog created and "
-         "this is my idea " << *_brain->getIdeas() << std::endl;
+   type = a.type;
+   brain = new Brain(*(a.brain));
+   nbDog += 1;
+   std::cout << "(Default Dog Constructor 2) Dog #" << nbDog << std::endl;
 }
 
 Dog& Dog::operator=(const Dog& a)
@@ -39,28 +36,43 @@ Dog& Dog::operator=(const Dog& a)
     if (this != &a)
     {
         type = a.type;
-        *_brain = *a._brain;
-        std::cout << "(Assignation Copy Dog Constructor) Im the " << nbDog << " Dog created and "
-         "this is my idea " << *_brain->getIdeas() << std::endl;
+        Brain *tmp = new Brain();
+        tmp = a.brain;
+        *brain = *tmp;
+        nbDog += 1;
+        std::cout << "(Copy Dog Constructor) Dog #" << nbDog << std::endl;
     }
     return (*this);
 }
 
 Dog::~Dog()
 {
-    delete _brain;
-    std::cout << "Dog is Destroyed" << std::endl;
-    std::cout << std::endl;
+    delete brain;
+    std::cout << type << " was destroyed" << std::endl;
 }
+
 
 void Dog::makeSound() const
 {
-    std::cout << "woaf woaf" << std::endl;
+    std::cout << "meow" << std::endl;
 }
 
-Brain* Dog::getBrain() const
+std::string Dog::getType() const
 {
-    if (_brain)
-        return (_brain);
-    return (NULL);
+    return type;
 }
+
+std::string Dog::getIdea(int i)
+{
+    if (i >= 0 && i < 100)
+        return brain->returnIdea(i);
+    else
+        return "";
+}
+
+// Brain* Dog::getBrain() const
+// {
+//     if (brain)
+//         return (brain);
+//     return (NULL);
+// }

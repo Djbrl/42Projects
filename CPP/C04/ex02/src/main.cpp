@@ -16,11 +16,8 @@
 
 int main()
 {
-	//We cant create an instance from an abstract class
-	//AAnimal test(); 
+	// Animal test = Animal();
 	Animal* array[6];
-
-	std::cout << "\n	-	-	-	-	-	-	-	-\n" << std::endl;
 	for(int i = 0; i < 6; i++)
 	{
 		if (i <= 2)
@@ -28,8 +25,25 @@ int main()
 		else
 			array[i] = new Cat();
 		std::cout << std::endl;
-	}
-
-	for(int i = 0; i < 6; i++)
 		delete array[i];
+	}
+	// basic
+	Dog basic;
+	{
+		Dog tmp = basic;
+	}
+	std::cout << "end\n";
+	// return ;
+
+	// DEEP COPY TEST
+	Cat test  = Cat();
+	std::string idea = test.getIdea(99);
+	std::cout << idea << std::endl;
+
+	Cat test2  = Cat();
+	std::string idea2 = test2.getIdea(99);
+	std::cout << idea2 << std::endl;
+
+	test = test2;
+	std::cout << test.getIdea(99) << std::endl;
 }

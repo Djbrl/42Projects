@@ -18,10 +18,6 @@
 class ScavTrap : public ClapTrap
 {
     private:
-        std::string name;
-        int hp;
-        int mana;
-        int ad;
         void    print(std::string str);
         bool guardState;
 
@@ -31,7 +27,7 @@ class ScavTrap : public ClapTrap
         ScavTrap(const ScavTrap &src);
         ~ScavTrap();
         ScavTrap    &operator=(const ScavTrap &src);
-
+        void    attack(const std::string &target);
         void    guardGate();
 };
 

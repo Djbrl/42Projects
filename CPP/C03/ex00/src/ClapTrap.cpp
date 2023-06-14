@@ -57,9 +57,11 @@ ClapTrap    &ClapTrap::operator=(const ClapTrap &src)
 
 void    ClapTrap::attack(const std::string &target)
 {
-    if (mana > 0)
+    if (mana > 0 && hp > 0)
+    {
         std::cout << ">> " + target + " was attacked by " + getName() + " and took " << getAD() << " damage!" << std::endl;
-    mana--;
+        mana--;
+    }
 }
 
 void    ClapTrap::takeDamage(unsigned int amount)
@@ -93,7 +95,7 @@ void    ClapTrap::beRepaired(unsigned int amount)
         mana--;
     }
     else if (getHP() == 10)
-        std::cout << ">> " + getName() + " repaired himself, but is already full HP!" << std::endl;    
+        std::cout << ">> " + getName() + " tried to repair himself, but is already full HP!" << std::endl;    
     else if (getHP() == 0)
         std::cout << ">> " + getName() + " is dead and can't repair himself!" << std::endl;    
 }

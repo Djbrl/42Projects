@@ -10,23 +10,32 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef __FRAGTRAP_H__
-# define __FRAGTRAP_H__
+#include "../include/WrongCat.hpp"
 
-#include "ScavTrap.hpp"
-
-class FragTrap: public ClapTrap
+WrongCat::WrongCat() : WrongAnimal()
 {
-    private:
+    type = "WrongCat";
+}
 
-    public:
-        FragTrap();
-        FragTrap(std::string str);
-        FragTrap(const FragTrap& s);
-        FragTrap& operator=(const FragTrap& s);
-        ~FragTrap();
-        void    attack(const std::string &target);
-        void highFivesGuys(void);
-};
+WrongCat::WrongCat(const WrongCat &c) : WrongAnimal()
+{
+    if (this != &c)
+        *this = c;
+}
 
-#endif
+WrongCat& WrongCat::operator=(const WrongCat &c)
+{
+    if (this != &c)
+        type = c.type;
+    return (*this);
+}
+
+WrongCat::~WrongCat()
+{
+    std::cout << type << " was destroyed" << std::endl;
+}
+
+void WrongCat::makeSound() const
+{
+    std::cout << "wrongmeow" << std::endl;
+}
