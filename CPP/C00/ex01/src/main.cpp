@@ -14,15 +14,24 @@
 
 std::string nosignal_getline()
 {
-	std::string str;
-	std::getline(std::cin, str);
-	if (std::cin.eof())
-	{
-		std::cout << "\nExit. (Ctrl + D)" << std::endl;
-		exit(EXIT_SUCCESS);
-	}
-	return str;
+    std::string str;
+    std::getline(std::cin, str);
+
+    std::string ret;
+    for (char c : str) {
+        if (std::isprint(c)) {
+            ret += c;
+        }
+    }
+
+    if (std::cin.eof())
+    {
+        std::cout << "\nExit. (Ctrl + D)" << std::endl;
+        exit(EXIT_SUCCESS);
+    }
+    return ret;
 }
+
 
 int main() {
 	PhoneBook phone;

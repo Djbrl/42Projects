@@ -23,7 +23,7 @@ int main(int ac, char **av)
         while (i < ac)
         {
             for (int j = 0; j < strlen(av[i]); j++)
-                std::cout << (char)toupper(av[i][j]);
+                std::cout << static_cast<char>(toupper(av[i][j]));
             std::cout << " ";
             i++;
         }
