@@ -14,12 +14,12 @@
 #---------------------------------VARIABLES------------------------------------#
 
 GREEN_COLOR = \033[0;32m
-NAME = ClapTrap
+NAME = Bureaucrat
 
 CC = clang++
 CFLAGS = -Wall -Wextra -Werror -std=c++98 -g3 -fsanitize=address
 
-SRCS = src/ClapTrap.cpp src/main.cpp
+SRCS = src/Bureaucrat.cpp src/main.cpp
 OBJS = $(SRCS:.cpp=.o)
 
 BUILD_PATH = build/

@@ -10,33 +10,41 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef __BUREAUCRAT_H__
-# define __BUREAUCRAT_H__
+#ifndef __FORM_H__
+# define __FORM_H__
 
 # define YLW "\033[0;33m"
 # define END "\033[0;0m"
 # include <iostream>
+# include "Bureaucrat.hpp"
+// # include <stdbool>
 
 
-class Bureaucrat
+class Form
 {
     private:
         const std::string   name;
-        int                 grade;
+        bool                signature;
+        int                 signGrade;
+        int                 execGrade;
 
     public:
-    Bureaucrat(const std::string name, int grade);
-    Bureaucrat(const Bureaucrat &src);
-    ~Bureaucrat();
-    Bureaucrat& operator=(const Bureaucrat &src);
+    Form(const std::string name, int grade);
+    Form(const Form &src);
+    ~Form();
+    Form& operator=(const Form &src);
 
     //gets and sets
     const std::string     getName() const;
-    int             getGrade() const;
-    void            setGrade(int n);
+    int             getSignGrade() const;
+    int             getExecGrade() const;
+
+    //methods
     void            promoteEmployee();
     void            demoteEmployee();
+//  a  void            beSigned(const Bureaucrat &src);
 
+    //exceptions
     class GradeTooHighException : public std::exception {
     public:
         const char* what() const throw();
@@ -48,6 +56,6 @@ class Bureaucrat
     };
 };
 
-std::ostream &operator<<(std::ostream &stream, const Bureaucrat &right_side);
+std::ostream &operator<<(std::ostream &stream, const Form &right_side);
 
 #endif
