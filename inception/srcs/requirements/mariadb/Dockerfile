@@ -11,8 +11,8 @@ RUN     apt-get update \
         && chmod 777 /var/run/mysqld
 
 EXPOSE  3306
-COPY conf/50-server.cnf	/etc/mysql/mariadb.conf.d/50-server.cnf
-COPY conf/init.sh .
+COPY requirements/mariadb/conf/50-server.cnf	/etc/mysql/mariadb.conf.d/50-server.cnf
+COPY requirements/mariadb/conf/init.sh .
 
 ENTRYPOINT ["bash", "./init.sh"]
 

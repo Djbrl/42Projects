@@ -1,0 +1,71 @@
+version: '3'
+
+networks:
+  Inception:
+    driver: bridge
+
+volumes:
+  website:
+    driver: local
+    driver_opts:
+      o: 'bind'
+      type: 'none'
+      device: '/home/dsy/data/website'
+  db:
+    driver: local
+    driver_opts:
+      o: 'bind'
+      type: 'none'
+      device: '/home/dsy/data/db'
+
+services:
+  mariadb:
+    build:
+      context: .
+      dockerfile: requirements/mariadb/Dockerfile
+    image: mariadb
+    container_name: mariadb
+    env_file:
+      - ".env"
+    ports:
+      - "3306:3306"
+    volumes:
+      - db:/var/lib/mysql
+    networks:
+      - Inception
+    restart: always
+
+  wordpress:
+    depends_on:
+      - mariadb
+    build:
+      context: .
+      dockerfile: requirements/wordpress/Dockerfile
+    container_name: wordpress
+    image: wordpress
+    env_file:
+      - ".env"
+    ports:
+      - "9000:9000"
+    volumes:
+      - website:/var/www/html
+    networks:
+      - Inception
+    restart: always
+
+  nginx:
+    depends_on:
+      - wordpress
+    build:
+      context: .
+      dockerfile: requirements/nginx/Dockerfile
+    container_name: nginx
+    image: nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - website:/var/www/html
+    networks:
+      - Inception
+    restart: always
