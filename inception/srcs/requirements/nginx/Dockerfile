@@ -1,21 +1,22 @@
-# Use the official NGINX base image
-FROM debian:buster
+FROM    debian:buster
 
-RUN apt update -y
-RUN apt install nginx -y
-RUN apt install vim -y
-RUN apt install curl -y
 
-RUN mkdir -p /etc/nginx/ssl
-RUN openssl req -x509 -nodes -out /etc/nginx/ssl/inception.crt -keyout /etc/nginx/ssl/inception.key -subj "/C=FR/ST=IDF/L=Paris/O=42/OU=42/CN=dsy.42.fr/UID=dsy"
+RUN     apt-get -y update \
+        && apt-get -y upgrade \
+        && apt-get install -y  \
+        systemd \
+        nginx \
+        openssl \
+        vim
 
-RUN mkdir -p /var/run/nginx
+EXPOSE  80 443
 
-COPY requirements/nginx/conf/nginx.conf /etc/nginx/nginx.conf
+ADD     ./config/nginx.conf /etc/nginx/sites-available/default
+RUN     rm -rf /etc/nginx/sites-enabled/default
+RUN     ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 
-RUN chmod -R 755 /var/www/html
-RUN chown -R www-data:www-data /var/www/html
+RUN     mkdir -p /etc/nginx/ssl && openssl req -newkey rsa:2048 -x509 -days 365 -nodes -keyout /etc/nginx/ssl/services.key -out /etc/nginx/ssl/services.pem \
+        -subj "/C=FR/ST=Paris/L=Paris/O=42, Inc./OU=IT/CN=Inception"
 
-# Start NGINX server
-CMD ["nginx", "-g", "daemon off;"]
 
+CMD     ["nginx", "-g", "daemon off;"]
