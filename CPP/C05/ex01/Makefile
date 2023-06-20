@@ -16,16 +16,17 @@
 GREEN_COLOR = \033[0;32m
 NAME = Bureaucrat
 
-CC = clang++
+CC = c++
 CFLAGS = -Wall -Wextra -Werror -std=c++98 -g3 -fsanitize=address
 
-SRCS = src/Bureaucrat.cpp src/main.cpp
+SRCS =	src/Bureaucrat.cpp src/Form.cpp src/main.cpp
 OBJS = $(SRCS:.cpp=.o)
 
 BUILD_PATH = build/
 
 #---------------------------------VARIABLES------------------------------------#
 
+.PHONY: all clean fclean re
 
 all: $(NAME)
 	@echo "Ready : ${GREEN_COLOR}`pwd`/${NAME}${END_COLOR}"
@@ -33,7 +34,11 @@ all: $(NAME)
 	@mv $(OBJS) $(BUILD_PATH)
 
 $(NAME): $(OBJS)
-	@$(CC) ${CFLAGS} -o ${NAME} ${OBJS}
+	$(CC) ${CFLAGS} -o ${NAME} ${OBJS}
+
+$(BUILD_PATH)%.o: %.cpp
+	@echo "$(GREY)Compiling...				$(WHITE)$<"
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
 	@rm -rf $(BUILD_PATH)

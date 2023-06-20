@@ -88,6 +88,34 @@ void            Bureaucrat::demoteEmployee()
         throw GradeTooLowException();
 }
 
+void		Bureaucrat::signForm(Form &src)
+{
+	try {
+		if (src.getSignatureStatus() == true)
+			std::cout << this->name << " can't sign " << src.getName() << ", it's already signed." << std::endl;
+		else
+		{
+			src.beSigned(*this);
+			std::cout << this->name << " signed " << src.getName() << std::endl;
+		}
+	} catch ( std::exception &e) {
+        throw GradeTooLowException();
+	}
+}
+
+void        Bureaucrat::executeForm(Form const &src)
+{
+	try
+	{
+		src.execute(*this);
+		std::cout << getName() << " executed " << src.getName() << std::endl;
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << getName() << " can not executed " << src.getName() << " because " << e.what() << std::endl;
+	}
+}
+
 std::ostream &operator<<(std::ostream &stream, const Bureaucrat &src)
 {
     return stream << "Bureaucrat : "<<src.getName() << ", Grade : " << src.getGrade(); 

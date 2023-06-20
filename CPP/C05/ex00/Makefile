@@ -26,6 +26,9 @@ BUILD_PATH = build/
 
 #---------------------------------VARIABLES------------------------------------#
 
+%.o: %.cpp
+	@echo "$(GREY)Compiling...				$(WHITE)$<"
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 all: $(NAME)
 	@echo "Ready : ${GREEN_COLOR}`pwd`/${NAME}${END_COLOR}"

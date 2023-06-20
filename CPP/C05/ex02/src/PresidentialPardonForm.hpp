@@ -10,45 +10,22 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef __BUREAUCRAT_H__
-# define __BUREAUCRAT_H__
+#ifndef __PRESIDENTIALPARDONFORM__HPP__
+# define  __PRESIDENTIALPARDONFORM__HPP__
 
-# define YLW "\033[0;33m"
-# define END "\033[0;0m"
-# include <iostream>
 # include "Form.hpp"
 
-class Bureaucrat
+class PresidentialPardonForm: public Form
 {
     private:
-        const std::string   name;
-        int                 grade;
-
+        PresidentialPardonForm();
     public:
-    Bureaucrat(const std::string name, int grade);
-    Bureaucrat(const Bureaucrat &src);
-    ~Bureaucrat();
-    Bureaucrat& operator=(const Bureaucrat &src);
+        PresidentialPardonForm(const std::string& target);
+        PresidentialPardonForm(const PresidentialPardonForm& p);
+        PresidentialPardonForm &operator=(const PresidentialPardonForm& p);
+        virtual ~PresidentialPardonForm();
 
-    //gets and sets
-    const std::string     getName() const;
-    int             getGrade() const;
-    void            setGrade(int n);
-    void            promoteEmployee();
-    void            demoteEmployee();
-    void            signForm(Form &src);
-
-    class GradeTooHighException : public std::exception {
-    public:
-        const char* what() const throw();
-    };
-
-    class GradeTooLowException : public std::exception {
-    public:
-        const char* what() const throw();
-    };
+        virtual void execute(const Bureaucrat& b) const;
 };
-
-std::ostream &operator<<(std::ostream &stream, const Bureaucrat &right_side);
 
 #endif

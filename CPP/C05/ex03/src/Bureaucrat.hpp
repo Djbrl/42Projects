@@ -18,6 +18,8 @@
 # include <iostream>
 # include "Form.hpp"
 
+class Form;
+
 class Bureaucrat
 {
     private:
@@ -37,6 +39,7 @@ class Bureaucrat
     void            promoteEmployee();
     void            demoteEmployee();
     void            signForm(Form &src);
+	void	        executeForm(Form const &src) ;
 
     class GradeTooHighException : public std::exception {
     public:

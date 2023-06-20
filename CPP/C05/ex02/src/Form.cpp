@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "Form.hpp"
-#include "Bureaucrat.hpp"
 
 Form::Form(const std::string str, int signGrade, int execGrade) 
     : _name(str), _signature(false), _signGrade(signGrade), _execGrade(execGrade)
@@ -43,16 +42,17 @@ Form      &Form::operator=(const Form &src)
 
 Form::~Form()
 {
+    std::cout << "Form -> trashbin" << std::endl;
 }
 
 const char* Form::GradeTooHighException::what(void) const throw()
 {
-    return ("Form: Grade too high");
+    return ("Form Signature: Grade too high");
 }
 
 const char* Form::GradeTooLowException::what(void) const throw()
 {
-    return ("Form: Grade too low");
+    return ("Form Signature: Grade too low");
 }
 
 //gets and sets
@@ -78,4 +78,13 @@ void Form::beSigned(Bureaucrat &src)
     else
         throw GradeTooLowException();
 }
+
+void            Form::setSignGrade(int n)
+{ (void)n; }
+
+void            Form::setExecGrade(int n)
+{ (void)n; }
+
+void            Form::setSignatureStatus(bool status)
+{ _signature = status; }
 

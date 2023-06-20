@@ -11,15 +11,23 @@
 /* ************************************************************************** */
 
 #include "Form.hpp"
-#include "Bureaucrat.hpp"
 
-Form::Form(const std::string str, int signGrade, int execGrade) 
-    : _name(str), _signature(false), _signGrade(signGrade), _execGrade(execGrade)
+Form::Form(const std::string str, int signGrade, int execGrade) : _name(str), _signature(false)
 {
     if (signGrade < 1 || execGrade < 1)
         throw GradeTooLowException();
+    else
+    {
+        _signGrade = signGrade;
+        _execGrade = execGrade;
+    }
     if (signGrade > 150 || execGrade > 150)
         throw GradeTooHighException();
+    else
+    {
+        _signGrade = signGrade;
+        _execGrade = execGrade;
+    }
 }
 
 int Form::getExecGrade() const {return _execGrade;}
@@ -27,9 +35,9 @@ int Form::getExecGrade() const {return _execGrade;}
 int Form::getSignGrade() const {return _signGrade;}
 
 Form::Form(const Form &src)
-    :_name(src.getName()), _signature(src.getSignatureStatus()), _signGrade(src.getSignGrade()),
-	_execGrade(src.getExecGrade())
 {
+    if (this != &src)
+        *this = src;
 }
 
 Form      &Form::operator=(const Form &src)
@@ -37,22 +45,25 @@ Form      &Form::operator=(const Form &src)
     if (this != &src)
     {
         _signature = src._signature;
+        _signGrade = src._signGrade;
+        _execGrade = src._execGrade;
     }
     return *this;
 }
 
 Form::~Form()
 {
+    std::cout << "Form -> trashbin" << std::endl;
 }
 
 const char* Form::GradeTooHighException::what(void) const throw()
 {
-    return ("Form: Grade too high");
+    return ("Form Signature: Grade too high");
 }
 
 const char* Form::GradeTooLowException::what(void) const throw()
 {
-    return ("Form: Grade too low");
+    return ("Form Signature: Grade too low");
 }
 
 //gets and sets
@@ -78,4 +89,13 @@ void Form::beSigned(Bureaucrat &src)
     else
         throw GradeTooLowException();
 }
+
+void            Form::setSignGrade(int n)
+{ _signGrade = n; }
+
+void            Form::setExecGrade(int n)
+{ _execGrade = n; }
+
+void            Form::setSignatureStatus(bool status)
+{ _signature = status; }
 

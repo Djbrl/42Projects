@@ -16,8 +16,7 @@
 # define YLW "\033[0;33m"
 # define END "\033[0;0m"
 # include <iostream>
-// # include "Bureaucrat.hpp"
-// # include <stdbool>
+# include "Bureaucrat.hpp"
 
 class Bureaucrat;
 
@@ -26,13 +25,13 @@ class Form
     private:
         const std::string   _name;
         bool                _signature;
-        const int           _signGrade;
-        const int           _execGrade;
+        int                 _signGrade;
+        int                 _execGrade;
 
     public:
         Form(const std::string name, int signGrade, int execGrade);
         Form(const Form &src);
-        ~Form();
+        virtual ~Form();
         Form& operator=(const Form &src);
 
         //gets and sets
@@ -40,8 +39,13 @@ class Form
         int             getSignGrade() const;
         int             getExecGrade() const;
         int             getSignatureStatus() const;
+        void            setSignGrade(int n);
+        void            setExecGrade(int n);
+        void            setSignatureStatus(bool status);
 
+        //methods
         void            beSigned(Bureaucrat &src);
+        virtual void    execute(const Bureaucrat &src) const = 0;
 
         //exceptions
         class GradeTooHighException : public std::exception {

@@ -11,55 +11,58 @@
 /* ************************************************************************** */
 
 # include "Bureaucrat.hpp"
+# include "PresidentialPardonForm.hpp"
+# include "RobotomyRequestForm.hpp"
+# include "ShrubberyCreationForm.hpp"
+# include "Intern.hpp"
 
 int main()
 {
-    std::cout << "==ABOVE 1 INIT TEST==" << std::endl;
+    Bureaucrat test = Bureaucrat("patrick", 2);
+    std::cout << "==PARDON TEST==" << std::endl;
+    Form *a1 = new PresidentialPardonForm("Thanos");
     try
     {
-        Bureaucrat belowone = Bureaucrat("dude", -1);
+        test.signForm(*a1);
+        a1->execute(test);
     }
     catch(const std::exception& e)
     {
         std::cerr << e.what() << '\n';
     }
-    std::cout << "==BELOW 150 INIT TEST==" << std::endl;
+    std::cout << "==ROBOT TEST==" << std::endl;
+    Form *a2 = new RobotomyRequestForm("Sub-Zero");
     try
     {
-        Bureaucrat belowone = Bureaucrat("dude", 151);
+        test.signForm(*a2);
+        a2->execute(test);
     }
     catch(const std::exception& e)
     {
         std::cerr << e.what() << '\n';
     }
-    std::cout << "==BELOW 150 TEST==" << std::endl;
-    Bureaucrat test = Bureaucrat("patrick", 150);
+    std::cout << "==TREE TEST==" << std::endl;
+    Form *a3 = new ShrubberyCreationForm("Garden-Permit-2-A");
     try
     {
-        test.demoteEmployee();
+        test.signForm(*a3);
+        a3->execute(test);
     }
-    
-    catch(const Bureaucrat::GradeTooLowException& e)
+    catch(const std::exception& e)
     {
-        std::cerr << YLW << "Exception caught: " << END << e.what() << std::endl;
+        std::cerr << e.what() << '\n';
     }
-    std::cout << "==PROMOTE/DEMOTE TEST==" << std::endl;
-    std::cout << test << std::endl;
-    test.promoteEmployee();
-    test.promoteEmployee();
-    test.demoteEmployee();
-    std::cout << test << std::endl;
-    std::cout << "==ABOVE 1 TEST==" << std::endl;
-    test.setGrade(1);
-    try
-    {
-        test.promoteEmployee();
-    }
-    catch(const Bureaucrat::GradeTooHighException& e)
-    {
-        std::cerr << YLW <<"Exception caught: " << END << e.what() << std::endl;
-    }
-    test.demoteEmployee();
-    std::cout << test << std::endl;
+
+    std::cout << "==INTERN TEST==" << std::endl;
+    Intern dude = Intern();
+    Form *a4 = dude.makeForm("ShrubberyCreationForm", "Intern");
+    test.signForm(*a4);
+    test.executeForm(*a4);
+
+    std::cout << "==DESTRUCTION==" << std::endl;
+    delete a1;
+    delete a2;
+    delete a3;
+    delete a4;
     return 0;
 }
