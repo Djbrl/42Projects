@@ -4,8 +4,9 @@
 class ScalarConverter
 {
     private:
-    public:
+        const std::string _value;
         ScalarConverter();
+    public:
         ~ScalarConverter();
         ScalarConverter(const ScalarConverter &src);
         ScalarConverter &operator=(const ScalarConverter &src);

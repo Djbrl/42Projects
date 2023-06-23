@@ -52,7 +52,7 @@ void identify(Base &p)
             }
             catch (const std::exception& e)
             {
-              std::cout << "unknown class cast" << std::endl;
+              std::cout << "(couldn't dynamic cast)" << std::endl;
             }
         }
     }
@@ -74,24 +74,40 @@ void identify(Base *p)
             std::cout << "(nullptr)\n";
             return ;
         }
+        else
+            std::cout << "A" << std::endl;
     }
     catch (const std::exception& e)
     {
         try
         {
-            (void)dynamic_cast<B*>(p);
-            std::cout << "B" << std::endl;
+            Base *tmp;
+            tmp = dynamic_cast<B*>(p);
+            if (tmp == nullptr)
+            {
+                std::cout << "(nullptr)\n";
+                return ;
+            }
+            else
+                std::cout << "B" << std::endl;
         }
         catch (const std::exception& e)
         {
             try
             {
-                (void)dynamic_cast<C*>(p);
-                std::cout << "C" << std::endl;
+                Base *tmp;
+                tmp = dynamic_cast<C*>(p);
+                if (tmp == nullptr)
+                {
+                    std::cout << "(nullptr)\n";
+                    return ;
+                }
+                else
+                    std::cout << "C" << std::endl;
             }
             catch (const std::exception& e)
             {
-              std::cout << "unknown class cast" << std::endl;
+              std::cout << "(couldn't dynamic cast)" << std::endl;
             }
         }
     }

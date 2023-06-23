@@ -8,9 +8,8 @@ ScalarConverter::~ScalarConverter()
 {
 }
 
-ScalarConverter::ScalarConverter(const ScalarConverter &src)
+ScalarConverter::ScalarConverter(const ScalarConverter &src) : _value(src._value)
 {
-    (void)src;
 }
 
 ScalarConverter &ScalarConverter::operator=(const ScalarConverter &src)

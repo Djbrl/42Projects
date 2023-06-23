@@ -6,7 +6,7 @@ int main(int ac, char **av)
 
     if (ac != 2)
         return (0);
-    ScalarConverter test;
-    test.convert(av[1]);
+    // class is static so need for objects
+    ScalarConverter::convert(av[1]);
     return 0;
 }

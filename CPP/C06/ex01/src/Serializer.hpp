@@ -10,12 +10,12 @@ struct Data {
 class Serializer
 {
     private:
-    public:
         Serializer();
+    public:
         ~Serializer();
         Serializer(const Serializer &src);
         Serializer &operator=(const Serializer &src);
-        uintptr_t serialize(Data *ptr_to_uint);
-        Data *deserialize(uintptr_t uint_to_ptr);
+        static uintptr_t serialize(Data *ptr_to_uint);
+        static Data *deserialize(uintptr_t uint_to_ptr);
 };
 
