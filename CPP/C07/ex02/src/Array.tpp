@@ -19,7 +19,7 @@ Array<T>::Array(const unsigned int &size)
 {
     _n = size;
     _arr = new T[size];
-    for (int i = 0; i < size; i++)
+    for (unsigned int i = 0; i < size; i++)
         _arr[i] = 0;
 }
 
