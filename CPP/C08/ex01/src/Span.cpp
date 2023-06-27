@@ -10,67 +10,98 @@ const char *Span::SpanTooShortException::what() const throw()
     return "Exception : Span is too short";
 }
 
-Span::Span()
+Span::Span() : _size(0)
 {}
 
 Span::Span(const unsigned n) : _size(n)
-{}
-
-Span::Span(const Span &oth_instance)
 {
-	*this = oth_instance;
+	if (_size < 2)
+		throw SpanTooShortException();
+}
+
+Span::Span(const Span &src) : _size(src._size)
+{
+	*this = src;
 }
 
 Span::~Span()
 {
 }
 
-Span	&Span::operator=(const Span &to_assign)
+Span	&Span::operator=(const Span &src)
 {
-	this->vec = to_assign.vec;
-	this->_size = to_assign._size;
+	this->_num = src._num;
 	return (*this);
 }
 
 void	Span::addNumber(int n)
 {
-	if (this->vec.size() < this->_size)
-		this->vec.push_back(n);
+	if (this->_num.size() < this->_size)
+		this->_num.push_back(n);
+	else
+		throw SpanFullException();
 }
 
-void	Span::addNumber(std::vector<int>::iterator it, std::vector<int>::iterator ite)
+void	Span::addNumber(int start, int end)
 {
-	while (it < ite)
+	if (this->_num.size() >= this->_size)
 	{
-		this->_size++;
-		if (this->vec.size() > this->_size)
+		throw SpanFullException();
+		return ;
+	}
+	if (start == end)
+	{
+		throw SpanTooShortException();
+		return ;
+	}
+	while (start <= end)
+	{
+		if (this->_num.size() >= this->_size)
 		{
-			this->_size--;
-			throw std::_sizegth_error("span too long, can't add");
+			throw SpanFullException();
+			return ;
 		}
-		this->vec.push_back(*it);
-		it++;
+		this->_num.push_back(start);
+		start++;
 	}	
 }
 
-int	Span::shortestSpan(void)
+int Span::shortestSpan()
 {
-	std::vector<int>	tmp = this->vec;
-	int					res = 0;
-
+	//sort into a tmp
+	std::vector<int> tmp(_num.begin(), _num.end());
 	std::sort(tmp.begin(), tmp.end());
-	res = abs(tmp[1] - tmp[0]);
-	for (unsigned int i = 0; i < tmp.size(); i++)
+
+	//compare it to it in sorted tmp, update with min span
+	int res = std::abs(tmp[1] - tmp[0]);
+	std::vector<int>::iterator it = tmp.begin();
+	std::vector<int>::iterator nextIt = it;
+	++nextIt;
+	while (nextIt != tmp.end())
 	{
-		if (res > abs(tmp[i] - tmp[i + 1]))
-			res = abs(tmp[i] - tmp[i + 1]);
+		int span = std::abs(*nextIt - *it);
+		if (span < res)
+			res = span;
+		++it;
+		++nextIt;
 	}
-	return (res);
+	return res;
 }
+
 
 int	Span::longestSpan(void)
 {
-	int	min = *std::min_element(this->vec.begin(), this->vec.end());
-	int	max = *std::max_element(this->vec.begin(), this->vec.end());
+	int	min = *std::min_element(this->_num.begin(), this->_num.end());
+	int	max = *std::max_element(this->_num.begin(), this->_num.end());
 	return (max - min);
+}
+
+std::vector<int>::iterator Span::returnBeginIt()
+{
+	return _num.begin();
+}
+
+std::vector<int>::iterator Span::returnEndIt()
+{
+	return _num.end();
 }

@@ -2,9 +2,11 @@
 #include <vector>
 #include <list>
 #include <deque>
+#include <stack>
 #include <stdexcept>
 #include <algorithm>
 
+//INTERFACE EXCEPTION CLASS
 class NotFoundException : public std::exception
 {
     public:
@@ -17,11 +19,12 @@ const char* NotFoundException::what() const throw()
     return "Exception : Value not found";
 }
 
-
+//EASYFIND TEMPLATE
 template<typename T>
 void    easyfind(T &container, int n)
 {
     typename T::iterator res;
+
     res = find(container.begin(), container.end(), n);
     try
     {

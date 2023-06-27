@@ -9,12 +9,12 @@ int main()
 
     easyfind(test, 22);
 
-    std::list<int> test2;
-    test2.push_back(4);
-    test2.push_back(4213);
-    test2.push_back(55);
+    std::list<char> test2;
+    test2.push_back('A');
+    test2.push_back('B');
+    test2.push_back('C');
 
-    easyfind(test2, 55);
+    easyfind(test2, static_cast<int>('C'));
 
     std::deque<int> test3;
     test3.push_back(4);
@@ -22,5 +22,13 @@ int main()
     test3.push_back(55);
 
     easyfind(test3, 4);
+    
+    std::vector<int> test4;
+    test4.push_back(4);
+    test4.push_back(5);
+    test4.push_back(6);
+
+    easyfind(test4, 7);
+    
     return 0;
 }
