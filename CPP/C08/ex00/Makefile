@@ -28,6 +28,10 @@ BUILD_PATH = build/
 
 .PHONY: all clean fclean re
 
+%.o: %.cpp
+	@echo "$(GREY)Compiling...				$(WHITE)$<"
+	@$(CC) $(CFLAGS) -c $< -o $@
+
 all: $(NAME)
 	@echo "Ready : ${GREEN_COLOR}`pwd`/${NAME}${END_COLOR}"
 	@mkdir -p $(BUILD_PATH)

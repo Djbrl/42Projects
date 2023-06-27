@@ -1,30 +1,46 @@
 #include <iostream>
-#include "Array.tpp"
+#include "MutantStack.hpp"
+#include <stack>
+#include <deque>
+#include <list>
 
 int main() {
     // Create an array of integers
-    Array<int> intArray(5);
+		MutantStack<int> mstack;
+		MutantStack<int, std::deque<int> > mstack;
 
-    std::cout << intArray[3];
-    try
-    {
-        intArray[-2];
-    }
-    catch(const std::exception& e)
-    {
-        std::cerr << e.what() << '\n';
-    }
-    
-    // // Assign values to the array
-    // for (int i = 0; i < 5; i++) {
-    //     intArray[i] = i * 10;
-    // }
+		mstack.push(1);
+		mstack.push(2);
 
-    // // Print the array
-    // for (int i = 0; i < 5; i++) {
-    //     std::cout << intArray[i] << " ";
-    // }
-    // std::cout << std::endl;
+		std::cout << "top: " << mstack.top() << std::endl;
+
+		mstack.pop();
+		std::cout << "top: " << mstack.top() << std::endl;
+
+		mstack.push(3);
+		mstack.push(4);
+		mstack.push(5);
+		mstack.push(6);
+
+		std::cout << "top: " << mstack.top() << std::endl;
+		std::cout << "size: " << mstack.size() << std::endl;
+
+		MutantStack<int>::iterator it = mstack.begin();
+		MutantStack<int>::iterator ite = mstack.end();
+
+		++it;
+		--it;
+
+		while(it != ite)
+		{
+			std::cout << *it << std::endl;
+			++it;
+		}
+		std::stack<int> s(mstack);
+
+		std::cout << "copy size: " << s.size() << std::endl;
+		std::cout << "original size: "<< mstack.size() << std::endl;
+
 
     return 0;
 }

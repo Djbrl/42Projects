@@ -12,8 +12,8 @@ class Span
     public:
         ~Span();
         Span(unsigned int size);
-        Span(const &Span src);
-        Span &operator=(const &Span src);
+        Span(const Span &src);
+        Span &operator=(const Span &src);
         void    addNumber(int number);
         int     shortestSpan();
         int     longestSpan();
