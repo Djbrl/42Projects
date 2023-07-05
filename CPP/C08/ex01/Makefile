@@ -19,7 +19,7 @@ NAME = Span
 CC = c++
 CFLAGS = -Wall -Wextra -Werror -std=c++98 -g3 -fsanitize=address
 
-SRCS = src/main.cpp
+SRCS = src/main.cpp src/Span.cpp
 OBJS = $(SRCS:.cpp=.o)
 
 BUILD_PATH = build/

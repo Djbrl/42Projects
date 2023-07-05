@@ -6,8 +6,8 @@
 class Span
 {
     private:
-        std::vector<int> _num;
-        unsigned int _size;
+        std::vector<int>    _num;
+        unsigned int  _size;
         Span();
     public:
         ~Span();
@@ -15,8 +15,11 @@ class Span
         Span(const Span &src);
         Span &operator=(const Span &src);
         void    addNumber(int number);
+        void    addNumber(int start, int end);
         int     shortestSpan();
         int     longestSpan();
+        std::vector<int>::iterator returnBeginIt();
+        std::vector<int>::iterator returnEndIt();
 
     class SpanFullException : public std::exception
     {
