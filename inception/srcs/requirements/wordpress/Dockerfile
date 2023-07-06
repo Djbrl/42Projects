@@ -23,5 +23,5 @@ RUN wp --info
 
 COPY config/www.conf /etc/php/7.3/fpm/pool.d/
 COPY config/autoconf.sh /
+COPY ./.env /
 ENTRYPOINT ["bash", "/./autoconf.sh"]
-

@@ -1,8 +1,6 @@
 all: up
 
 up:
-		sudo systemctl restart docker 
-		sudo service mysql stop
 		sudo docker-compose -f srcs/docker-compose.yml build #--no-cache
 		sudo docker-compose -f srcs/docker-compose.yml up --force-recreate #-d --force-recreate
 

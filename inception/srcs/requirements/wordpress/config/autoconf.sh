@@ -1,4 +1,25 @@
-#!/bin/sh
+#!/bin/bash
+
+# Load environment variables from .env file
+if [ -f "/.env" ]; then
+    source "/.env"
+fi
+
+# Test if environment variables are accessible
+if [ -z "$MYSQL_DB_NAME" ]; then
+    echo "Error: MYSQL_DB_NAME is not set or accessible."
+    exit 1
+fi
+
+if [ -z "$MYSQL_USER" ]; then
+    echo "Error: MYSQL_USER is not set or accessible."
+    exit 1
+fi
+
+# ... Add similar checks for other environment variables ...
+
+# Rest of your script
+# ...
 
 wp core download --locale=fr_FR --allow-root
 
