@@ -21,7 +21,7 @@ RUN chmod +x wp-cli.phar
 RUN mv wp-cli.phar /usr/local/bin/wp
 RUN wp --info
 
-COPY config/www.conf /etc/php/7.3/fpm/pool.d/
-COPY config/autoconf.sh /
+COPY requirements/wordpress/config/www.conf /etc/php/7.3/fpm/pool.d/
+COPY requirements/wordpress/config/autoconf.sh /
 COPY ./.env /
 ENTRYPOINT ["bash", "/./autoconf.sh"]

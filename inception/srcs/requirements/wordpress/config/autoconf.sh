@@ -45,7 +45,7 @@ wp core config  --dbname=$MYSQL_DB_NAME \
 echo "===>  Install Wordpress <==== "
 sleep 5
 
-wp core install --url="idouidi.42.fr" \
+wp core install --url="dsy.42.fr" \
                 --title=INCEPTION \
                 --admin_user=$WP_ADMIN\
                 --admin_password=$WP_ADMIN_PASSWORD \
