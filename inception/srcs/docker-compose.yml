@@ -1,23 +1,5 @@
 version: '3'
 
-networks:
-  Inception:
-    driver: bridge
-
-volumes:
-  website:
-    driver: local
-    driver_opts:
-      o: 'bind'
-      type: 'none'
-      device: '/home/dsy/data/website'
-  db:
-    driver: local
-    driver_opts:
-      o: 'bind'
-      type: 'none'
-      device: '/home/dsy/data/db'
-
 services:
   mariadb:
     build:
@@ -31,8 +13,6 @@ services:
       - "3306:3306"
     volumes:
       - db:/var/lib/mysql
-    networks:
-      - Inception
     restart: always
 
   wordpress:
@@ -49,8 +29,6 @@ services:
       - "9000:9000"
     volumes:
       - website:/var/www/html
-    networks:
-      - Inception
     restart: always
 
   nginx:
@@ -62,11 +40,15 @@ services:
     image: nginx
     container_name: nginx
     ports:
-      - "80:80"
       - "443:443"
     volumes:
       - website:/var/www/html
-    networks:
-      - Inception
     restart: always
 
+volumes:
+  website:
+  db:
+
+networks:
+  Inception:
+    driver: bridge
