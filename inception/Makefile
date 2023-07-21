@@ -1,36 +1,29 @@
-all: up
+DOCKER_COMPOSE_FILE := srcs/docker-compose.yml
+DATA_DB_DIR := /home/$(USER)/data/db
+DATA_WEBSITE_DIR := /home/$(USER)/data/website
 
 up:
-		sudo docker-compose -f srcs/docker-compose.yml build #--no-cache
-		sudo docker-compose -f srcs/docker-compose.yml up --force-recreate #-d --force-recreate
-
+		sudo docker-compose -f $(DOCKER_COMPOSE_FILE) up --build --force-recreate
 
 down:
-		sudo docker-compose -f srcs/docker-compose.yml down 
+		sudo docker-compose -f $(DOCKER_COMPOSE_FILE) down
 
-ps:		
-		sudo docker-compose -f srcs/docker-compose.yml ps -a
+# container status
+ps:
+		sudo docker-compose -f $(DOCKER_COMPOSE_FILE) ps -a
 		sudo docker ps -a
 
-clean:	down
-		sudo docker system prune
-		sudo docker volume rm srcs_db srcs_website
+# Clean up
+clean:
+		sudo docker-compose -f $(DOCKER_COMPOSE_FILE) down --volumes
+		sudo docker system prune --volumes
+		sudo rm -rf $(DATA_DB_DIR) $(DATA_WEBSITE_DIR)
+		mkdir -p $(DATA_DB_DIR) $(DATA_WEBSITE_DIR)
 
-		sudo rm -rf /home/${USER}/data/db
-		sudo rm -rf /home/${USER}/data/website
-		
-		mkdir -p /home/${USER}/data/db
-		mkdir -p /home/${USER}/data/website
+re: clean up
 
-re : 	clean up
-
+# Raccourci mariaDB
 mariadb:
-		sudo docker exec -it mariadb bash
-nginx:
-		sudo docker exec -it nginx bash
+		sudo docker-compose -f $(DOCKER_COMPOSE_FILE) exec mariadb bash
 
-wordpress:
-		sudo docker exec -it wordpress bash
-
-
-.PHONY: start stop re ps clean
+.PHONY: up down ps clean re mariadb

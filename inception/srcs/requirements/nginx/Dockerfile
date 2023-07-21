@@ -9,7 +9,7 @@ RUN     apt-get -y update \
         openssl \
         vim
 
-EXPOSE  80 443
+EXPOSE  443
 
 ADD     ./config/nginx.conf /etc/nginx/sites-available/default
 RUN     rm -rf /etc/nginx/sites-enabled/default
