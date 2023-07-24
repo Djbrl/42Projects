@@ -19,7 +19,7 @@ NAME = ircserver
 CC = c++
 CFLAGS = -Wall -Wextra -Werror -std=c++98 -g3 -fsanitize=address
 
-SRCS = src/main.cpp src/IrcServer.cpp
+SRCS = src/main.cpp src/AServer.cpp src/IrcServer.cpp
 OBJS = $(SRCS:.cpp=.o)
 
 BUILD_PATH = build/
