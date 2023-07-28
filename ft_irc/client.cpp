@@ -41,8 +41,8 @@ int main(int argc, char const *argv[])
     std::string hello = "Hello from client !";
     send(sock , hello.c_str() , hello.size() , 0 );
     //Read Data
-	valread = read( sock , buffer, 1024);
-    printf("[IRCServer] : %s\n",buffer );
-	close(sock);
+	// valread = read( sock , buffer, 1024);
+    // printf("[IRCServer] : %s\n",buffer );
+	// close(sock);
     return 0;
 }

@@ -1,7 +1,8 @@
 #ifndef __DEFINES_HPP__
 # define __DEFINES_HPP__
 
-//LIBRAIRES
+//LIBRAIRES CLASS____________________________________________________________________________________________________
+
 # include <iostream>
 # include <sys/socket.h>
 # include <netinet/in.h>
@@ -9,11 +10,13 @@
 # include <csignal>
 # include <ctime>
 # include <vector>
+# include <map>
 # include <sstream>
 
-//ANSI CODES
+//ANSI CODES_________________________________________________________________________________________________________
+
 # define CLEARLINE "\033[2K"
-# define CLEAR "\033[2J"
+# define CLEAR "\033[2J\033[H"
 # define TITLE "\033[44;97m"
 # define BWHITE "\033[1;37m"
 # define BLUE "\033[0;34m"
@@ -22,12 +25,15 @@
 # define RED "\033[0;31m"
 # define RESET "\033[0m"
 
-//SERVER CONSTANTS
+//DEFINES____________________________________________________________________________________________________________
+
+# define QUEUE_BACKLOG 10
 # define IPADDR "127.0.0.1"
 # define PORT 8080
-# define QUEUE_BACKLOG 10
+# define MAX_DATA_SIZE 4096
 
-//EXTERN
+//GLOBAL_____________________________________________________________________________________________________________
+
 typedef struct sockaddr_in	sockaddr_in_t;
 extern std::vector<int>		clientSockets;
 void						signalHandler(int signal);

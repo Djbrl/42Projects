@@ -1,0 +1,35 @@
+#include "Utils.hpp"
+
+std::string Utils::getLocalTime()
+{
+	time_t		rawTime;
+	struct tm	*timeInfo;
+	char		buffer[80];
+	
+	timeInfo = std::localtime(&rawTime);
+	std::time(&rawTime);
+	std::strftime(buffer, sizeof(buffer), "%c", timeInfo);
+	std::string time = buffer;
+	std::string hours = time.substr(11, 2);
+	std::string minutes = time.substr(14, 2);
+	std::string localTime = BWHITE + hours + ":" + minutes + " -:- " + RESET;
+	return localTime;
+
+}
+
+std::string	Utils::getTime(time_t &timeData)
+{
+	(void)timeData;
+	return "";
+}
+
+bool		Utils::isPrintableStr(const std::string& message)
+{
+	for (size_t i = 0; i < message.length(); ++i)
+	{
+		char c = message[i];
+		if (c < 32 || c > 126)
+			return false;
+	}
+	return true;
+}

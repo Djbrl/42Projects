@@ -1,7 +1,11 @@
 #ifndef __ASERVER_HPP__
 # define __ASERVER_HPP__
 
-# include "Defines.hpp"
+# include "_defines.hpp"
+# include "Utils.hpp"
+
+//ASERVER CLASS____________________________________________________________________________________________________
+//AServer is a pure abstract class that carries all the exceptions needed for our IRC Server
 
 class AServer
 {
@@ -10,7 +14,8 @@ class AServer
                                     virtual ~AServer();
         virtual void				run() = 0;
 
-        //EXCEPTIONS
+        //EXCEPTIONS_______________________________________________________________________________________________
+        
         class InvalidPortException : public std::exception {
         public:
             virtual const char* what() const throw() {
