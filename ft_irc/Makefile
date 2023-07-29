@@ -12,23 +12,25 @@
 
 #---------------------------------VARIABLES------------------------------------#
 
+GREY = \033[90m
+BWHITE := \033[1;97m
+RESET = \033[0m
 GREEN_COLOR = \033[0;32m
 NAME = ircserver
 
 CC = c++
 CFLAGS = -Wall -Wextra -Werror -std=c++98 -g3 -fsanitize=address
 
-SRCS = src/main.cpp src/server/AServer.cpp src/server/IrcServer.cpp \
-       src/utils/Utils.cpp src/server/User/User.cpp src/server/Channel/Channel.cpp
+SRCS = src/main.cpp src/Server/AServer.cpp src/Server/IrcServer.cpp		\
+       src/Utils/Utils.cpp src/User/User.cpp src/Channel/Channel.cpp	\
+	   src/Server/IrcServer_EstablishConnection.cpp
 
-# Change the location for the object files to be stored in the build/ directory
 BUILD_PATH = build/
 
-# Generate the object file names by replacing the .cpp extension with .o in SRCS
 OBJS = $(addprefix $(BUILD_PATH), $(notdir $(SRCS:.cpp=.o)))
 
 # Set VPATH to the directories where the source files are located
-VPATH = src src/server src/utils src/server/User src/server/Channel
+VPATH = src src/Server src/Utils src/User src/Channel
 
 #---------------------------------VARIABLES------------------------------------#
 
@@ -37,18 +39,20 @@ VPATH = src src/server src/utils src/server/User src/server/Channel
 # Create a pattern rule for generating object files in the build/ directory
 $(BUILD_PATH)%.o: %.cpp
 	@mkdir -p $(BUILD_PATH)
-	@echo "$(GREY)Compiling...                $(WHITE)$<"
+	@echo "$(GREY)Compiling...$(RESET)                $(WHITE)$(RESET)$<"
 	@$(CC) $(CFLAGS) -Iinclude -c $< -o $@
 
-all: $(NAME) client
-	@echo "Ready : ${GREEN_COLOR}`pwd`/${NAME}${END_COLOR}"
-
-# Depend directly on the object files for the executable $(NAME)
+# Relink guard
 $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) -o $(NAME) $(OBJS)
 
+all: $(NAME) client
+	@stty -echoctl # Silence echo for signals 
+	@echo "Ready : ${GREEN_COLOR}`pwd`/${NAME}${RESET}"
+
+
 client:
-	c++ client.cpp -Iinclude -o ircClient
+	@c++ client.cpp -Iinclude -o ircClient
 
 clean:
 	@rm -f $(OBJS)

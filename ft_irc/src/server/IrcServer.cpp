@@ -1,24 +1,26 @@
 #include "IrcServer.hpp"
 
-//EXTERN SIGNAL HANDLER
-std::vector<int> clientSockets;
+//EXTERN SIGNAL HANDLER__________________________________________________________________________________________________________________________
+//Header-level client socket lists
+std::vector<int> g_clientSockets;
 
+//Signal handler for SIGINT and SIGQUIT to avoid port-clogging on abrupt exit
 void signalHandler(int signal)
 {
-	std::cout << RED << "\n[IRC Server shutdown by SIGNAL]" << RESET << std::endl;
-	std::cout << BLUE << "[Attempting graceful exit...]" << RESET << std::endl;
-	for (size_t i = 0; i < clientSockets.size(); i++)
-		close(clientSockets[i]);
-	std::cout << BLUE << "[All connections closed]" << RESET << std::endl;
+	std::cout << YELLOW << "\n[IRC Server shutdown by SIGNAL, attempting graceful exit...]" << RESET << std::endl;
+	for (size_t i = 0; i < g_clientSockets.size(); i++)
+		close(g_clientSockets[i]);
 	std::cout << TITLE << CLEARLINE << "[Server shutdown successful]" << RESET << std::endl;
 	exit(EXIT_SUCCESS);
 	(void)signal;
 }
 
-//CLASS Utils
+//IRCSERVER CLASS______________________________________________________________________________________________________________________________________
+//IrcServer can't be instantiated using the default constructor
 IrcServer::IrcServer()
 {}
 
+//Mandatory constructor, protected with try-catches
 IrcServer::IrcServer(const std::string &portNumber, const std::string& password) : _serverPort(0),  _serverPassword(password), _serverFd(-1)
 {
 	//DEFINE SIGHANDLERS
@@ -42,9 +44,10 @@ IrcServer::IrcServer(const std::string &portNumber, const std::string& password)
 			close(_serverFd);
 			throw BindException();
 		}
-		//LISTEN
+		//LISTEN PORT WITH BACKLOG ENABLED
 		if (listen(_serverFd, QUEUE_BACKLOG) == -1)
 			throw ListenException();
+		g_clientSockets.push_back(_serverFd);
 	} catch (const InvalidPortException& err) {
 		std::cerr << err.what() << std::endl;
 		exit(EXIT_FAILURE);
@@ -58,6 +61,14 @@ IrcServer::IrcServer(const std::string &portNumber, const std::string& password)
 		std::cerr << err.what() << std::endl;
 		exit(EXIT_FAILURE);
 	}
+}
+
+//IrcServer destructor close all the client sockets and the server socket
+IrcServer::~IrcServer()
+{
+	for (size_t i = 0; i < g_clientSockets.size(); i++)
+		close(g_clientSockets[i]);
+	std::cout << TITLE << CLEARLINE << "[Server shutdown successful]" << RESET << std::endl;
 }
 
 IrcServer::IrcServer(const IrcServer &cpy)
@@ -80,74 +91,18 @@ IrcServer &IrcServer::operator=(const IrcServer &cpy)
 	return *this;
 }
 
-IrcServer::~IrcServer()
-{
-	std::cout << BLUE << "[Closing connections...]" << RESET << std::endl;
-	for (size_t i = 0; i < clientSockets.size(); i++)
-		close(clientSockets[i]);
-	close(_serverFd);
-	std::cout << BLUE << "[All connections closed]" << RESET << std::endl;
-	std::cout << TITLE << CLEARLINE << "[Server shutdown successful]" << RESET << std::endl;
-}
-
-
-
-//METHODS
 void IrcServer::run()
 {
-	std::cout << CLEAR << std::endl;
-	std::cout << TITLE << CLEARLINE << " Ft_irc v4.2 - " << IPADDR << " - " << PORT << RESET << std::endl;
-	std::cout << BLUE << "Waiting for connections..." << RESET << std::endl << std::endl;
-	
-	while (true)
-	{
-		int		dataSocketFd;
-		int		dataAddrLen = sizeof(_serverSockAddr);
-		char	socketData[MAX_DATA_SIZE] = {0};
+    // Title bar
+    std::cout << CLEAR << std::endl;
+    std::cout << TITLE << CLEARLINE << " Ft_irc v4.2 - " << IPADDR << " - " << PORT << RESET << std::endl;
+    std::cout << BLUE << "Waiting for connections..." << RESET << std::endl << std::endl;
 
-		if ((dataSocketFd = accept(_serverFd, (struct sockaddr *)&_serverSockAddr, (socklen_t *)&dataAddrLen)) == -1)
-		{
-			throw AcceptException();
-			exit(EXIT_FAILURE);
-		}
-		// std::string passwordsocketData(getpass("Password: "));
-		// if (_serverPassword != passwordsocketData)
-		// {
-		// 	std::cout << "Invalid password. Closing connection." << std::endl;
-		// 	close(dataSocketFd);
-		// 	continue;
-		// }
-		clientSockets.push_back(dataSocketFd);
-		if (read(dataSocketFd, socketData, sizeof(socketData) - 1) == 0)
-		{
-			std::cout << Utils::getLocalTime() << "Client disconnected." << std::endl;
-			clientSockets.erase(std::remove(clientSockets.begin(), clientSockets.end(), dataSocketFd), clientSockets.end());
-			close(dataSocketFd);
-			continue ;
-		}
-		std::cout << Utils::getLocalTime() << "[" << socketData << "] received from client[" << dataSocketFd << "]." << std::endl;
-		User test = User("gojo");
-		test.addMessageToQueue("hi");
-		test.addMessageToQueue("im");
-		test.addMessageToQueue("gojo");
-		test.setConnectedStatus(true);
-		test.setNickname("kid gojo");
-		test.setOperatorStatus(true);
-		test.setUsername("op");
-
-		_Channels.insert(std::make_pair("general", Channel("general", test)));
-		_Channels["general"].addMode("khalass");
-		_Channels["general"].setChannelTopic("haha");
-		User test1 = test;
-		User test2(test);
-		_Channels["general"].addOperator(test2);
-		_Channels["general"].setChannelPassword("guew");
-	
-		std::cout << test;
-		test.removeMessageFromQueue("gojo");
-		std::cout << test;
-		// Utils::printMap(_Channels);
-		// std::string hello = "Hello from IRCSERVER !";
-		// write(dataSocketFd, hello.c_str(), hello.size() + 1);
-	}
+    while (true)
+    {
+        int dataSocketFd = acceptClient();
+        readData(dataSocketFd);
+        displayClientInfo(dataSocketFd);
+    }
 }
+

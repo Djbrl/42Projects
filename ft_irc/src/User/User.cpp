@@ -139,10 +139,6 @@ void    User::setUsername(const std::string &uname)
 
 //EXTERN OPERATORS_____________________________________________________________________________________________
 
-bool			User::operator==(const User& other) const
-{
-		return _nickname == other._nickname;
-}
 
 std::ostream	&operator<<(std::ostream &flux, const User& rhs)
 {
@@ -165,4 +161,9 @@ std::ostream	&operator<<(std::ostream &flux, const User& rhs)
 	std::cout << "]";
 	flux << std::endl;
 	return flux;
+}
+
+bool			User::operator==(const User& other) const
+{
+		return _nickname == other._nickname;
 }

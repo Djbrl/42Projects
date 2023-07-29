@@ -2,7 +2,7 @@
 
 std::string Utils::getLocalTime()
 {
-	time_t		rawTime;
+	time_t		rawTime = std::time(nullptr);
 	struct tm	*timeInfo;
 	char		buffer[80];
 	
@@ -12,15 +12,8 @@ std::string Utils::getLocalTime()
 	std::string time = buffer;
 	std::string hours = time.substr(11, 2);
 	std::string minutes = time.substr(14, 2);
-	std::string localTime = BWHITE + hours + ":" + minutes + " -:- " + RESET;
+	std::string localTime = BBLUE + hours + ":" + minutes + RESET + " -!- ";
 	return localTime;
-
-}
-
-std::string	Utils::getTime(time_t &timeData)
-{
-	(void)timeData;
-	return "";
 }
 
 bool		Utils::isPrintableStr(const std::string& message)

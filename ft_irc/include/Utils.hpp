@@ -12,7 +12,6 @@ class Utils
 {
     public:
 		static std::string	getLocalTime();
-		static std::string	getTime(time_t &timeData);
 		static bool			isPrintableStr(const std::string& message);
 
 		//TEMPLATES__________________________________________________________________________________________________

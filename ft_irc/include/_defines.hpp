@@ -5,13 +5,15 @@
 
 # include <iostream>
 # include <sys/socket.h>
-# include <netinet/in.h>
 # include <unistd.h>
 # include <csignal>
 # include <ctime>
+# include <string>
 # include <vector>
 # include <map>
 # include <sstream>
+# include <netinet/in.h>
+# include <arpa/inet.h>
 
 //ANSI CODES_________________________________________________________________________________________________________
 
@@ -19,6 +21,8 @@
 # define CLEAR "\033[2J\033[H"
 # define TITLE "\033[44;97m"
 # define BWHITE "\033[1;37m"
+# define BBLUE "\033[1;94m"
+# define BYELLOW "\033[1;33m"
 # define BLUE "\033[0;34m"
 # define YELLOW "\033[0;33m"
 # define GREEN "\033[0;32m"
@@ -35,7 +39,7 @@
 //GLOBAL_____________________________________________________________________________________________________________
 
 typedef struct sockaddr_in	sockaddr_in_t;
-extern std::vector<int>		clientSockets;
+extern std::vector<int>		g_clientSockets;
 void						signalHandler(int signal);
 
 #endif

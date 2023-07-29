@@ -24,7 +24,13 @@ class IrcServer : public AServer
 										IrcServer(const IrcServer &cpy);
 	IrcServer							&operator=(const IrcServer &cpy);
 	//METHODS__________________________________________________________________________________________________
+
 	void								run();
+	int									acceptClient();
+	void								readData(int clientSocket);
+	void								displayClientInfo(int clientSocket);
+	void								processCommand(const std::string& command, int clientSocket);
+
 	//GETTERS__________________________________________________________________________________________________
 	//SETTERS__________________________________________________________________________________________________
 };
