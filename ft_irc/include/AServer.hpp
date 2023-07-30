@@ -2,7 +2,6 @@
 # define __ASERVER_HPP__
 
 # include "_defines.hpp"
-# include "Utils.hpp"
 
 //ASERVER CLASS____________________________________________________________________________________________________
 //AServer is a pure abstract class that carries all the exceptions needed for our IRC Server
@@ -19,37 +18,45 @@ class AServer
         class InvalidPortException : public std::exception {
         public:
             virtual const char* what() const throw() {
-                return "Exception: Invalid or occupied port number provided.";
+                return "IrcServer: Exception: Invalid or occupied port number provided.";
             }
         };
 
         class SocketCreationException : public std::exception {
         public:
             virtual const char* what() const throw() {
-                return "Exception: Socket creation failed.";
+                return "IrcServer: Exception: Socket creation failed.";
             }
         };
 
         class BindException : public std::exception {
         public:
             virtual const char* what() const throw() {
-                return "Exception: Bind() failed.";
+                return "IrcServer: Exception: Bind() failed.";
             }
         };
 
         class ListenException : public std::exception {
         public:
             virtual const char* what() const throw() {
-                return "Exception: Listen() failed.";
+                return "IrcServer: Exception: Listen() failed.";
             }
         };
 
         class AcceptException : public std::exception {
         public:
             virtual const char* what() const throw() {
-                return "Exception: Accept() failed.";
+                return "IrcServer: Exception: Accept() failed.";
             }
         };
+
+        class ReadSocketException : public std::exception {
+        public:
+            virtual const char* what() const throw() {
+                return "IrcServer: Exception: Failed to read client socket.";
+            }
+        };
+
 };
 
 #endif

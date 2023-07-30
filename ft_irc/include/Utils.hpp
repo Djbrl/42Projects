@@ -1,9 +1,7 @@
-#ifndef Utils_HPP
-# define Utils_HPP
+#ifndef UTILS_HPP
+# define UTILS_HPP
 
-# include <string>
 # include "_defines.hpp"
-// # include "Channel.hpp"
 
 //UTILS CLASS______________________________________________________________________________________________________
 //Utils is a static class that provides general-purpose functions
@@ -13,6 +11,7 @@ class Utils
     public:
 		static std::string	getLocalTime();
 		static bool			isPrintableStr(const std::string& message);
+		static std::string	trimBackline(const std::string &request);
 
 		//TEMPLATES__________________________________________________________________________________________________
         template <typename T, typename P>

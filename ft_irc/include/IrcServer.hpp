@@ -1,9 +1,10 @@
 #ifndef __IRC_SERVER_HPP__
 # define __IRC_SERVER_HPP__
 
+# include "_defines.hpp"
 # include "AServer.hpp"
-# include "User.hpp"
 # include "Channel.hpp"
+# include "User.hpp"
 
 //IRCSERVER CLASS____________________________________________________________________________________________________
 //IrcServer inherits from AServer, and carries all the methods and attributes needed for our IRC Server 
@@ -27,10 +28,14 @@ class IrcServer : public AServer
 
 	void								run();
 	int									acceptClient();
-	void								readData(int clientSocket);
-	void								displayClientInfo(int clientSocket);
-	void								processCommand(const std::string& command, int clientSocket);
-
+	std::istringstream					readData(int clientSocket);
+	void								displayClientData(int clientSocket);
+	void								processCommand(std::istringstream &requestField, int clientSocket);
+										//authenticateClient
+										//createChannel
+											//Channel related methods...
+										//loginUser
+											//User related methods...
 	//GETTERS__________________________________________________________________________________________________
 	//SETTERS__________________________________________________________________________________________________
 };

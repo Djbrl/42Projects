@@ -4,7 +4,6 @@
 # include "_defines.hpp"
 # include "User.hpp"
 
-class User;
 //CHANNEL CLASS____________________________________________________________________________________________________
 //Channel is a concrete class that carries all the methods and attributes needed to create channels
 

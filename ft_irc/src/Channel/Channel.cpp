@@ -37,7 +37,6 @@ void Channel::addMember(User& target) {
 }
 
 void Channel::removeMember(User& target) {
-	// Use erase-remove idiom to remove the target user from the members list
 	_membersList.erase(std::remove(_membersList.begin(), _membersList.end(), target), _membersList.end());
 }
 
@@ -46,7 +45,6 @@ void Channel::banMember(User& target) {
 }
 
 void Channel::unbanMember(User& target) {
-	// Use erase-remove idiom to remove the target user from the ban list
 	_banList.erase(std::remove(_banList.begin(), _banList.end(), target.getNickname()), _banList.end());
 }
 
@@ -55,7 +53,6 @@ void Channel::addMode(const std::string& mode) {
 }
 
 void Channel::removeMode(const std::string& mode) {
-	// Use erase-remove idiom to remove the target mode from the modes list
 	_modesList.erase(std::remove(_modesList.begin(), _modesList.end(), mode), _modesList.end());
 }
 
@@ -64,7 +61,6 @@ void Channel::addOperator(User& target) {
 }
 
 void Channel::removeOperator(User& target) {
-	// Use erase-remove idiom to remove the target user from the operators list
 	_operatorsList.erase(std::remove(_operatorsList.begin(), _operatorsList.end(), target), _operatorsList.end());
 }
 

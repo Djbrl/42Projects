@@ -2,7 +2,6 @@
 # define __USER_HPP__
 
 # include "_defines.hpp"
-# include "Utils.hpp"
 
 //USER CLASS____________________________________________________________________________________________________
 //User is a concrete class that carries methods and attributes for all clients (operators and regular users).

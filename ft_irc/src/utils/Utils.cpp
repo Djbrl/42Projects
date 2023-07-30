@@ -26,3 +26,8 @@ bool		Utils::isPrintableStr(const std::string& message)
 	}
 	return true;
 }
+
+std::string	Utils::trimBackline(const std::string &request)
+{
+	return request.substr(0, request.length() - 1);
+}
