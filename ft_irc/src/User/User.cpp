@@ -1,30 +1,33 @@
 #include "User.hpp"
 
 User::User()
-{}
-
-User::~User()
-{}
+{
+	_nickname = "";
+	_username = "";
+	_hostname = "";
+	_servername = "";
+	_realname = "";
+	_lastActiveTime = time(NULL);
+	_hasPassword = false;
+	_socket = -1;
+	memset(buffer, '\0', sizeof(buffer));
+}
 
 User::User(const std::string &name)
 {
 	_nickname = name;
 	_username = "";
-	_registrationDate = time(nullptr);
-	_lastActiveTime = time(nullptr);
-	_isConnected = false;
-	_isOperator = false;
+	_hostname = "";
+	_servername = "";
+	_realname = "";
+	_lastActiveTime = time(NULL);
+	_hasPassword = false;
+	_socket = -1;
+	memset(buffer, '\0', sizeof(buffer));
 }
 
-User::User(const std::string &name, const std::string &uname)
-{
-	_nickname = name;
-	_username = uname;
-	_registrationDate = time(nullptr);
-	_lastActiveTime = time(nullptr);
-	_isConnected = false;
-	_isOperator = false;
-}
+User::~User()
+{}
 
 User::User(const User &cpy)
 {
@@ -38,45 +41,34 @@ User&	User::operator=(const User &cpy)
 	{
 		this->_nickname = cpy._nickname;
 		this->_username = cpy._username;
-		this->_registrationDate = cpy._registrationDate;
+		this->_username = cpy._realname;
+		this->_username = cpy._hostname;
+		this->_username = cpy._servername;
+		this->_socket = cpy._socket;
+		this->_channelsInvitedTo = cpy._channelsInvitedTo;
 		this->_lastActiveTime = cpy._lastActiveTime;
-		this->_isConnected = cpy._isConnected;
-		this->_isOperator = cpy._isOperator;
-		this->_messageQueue = cpy._messageQueue;
+		this->_hasPassword = cpy._hasPassword;
+		memcpy(this->buffer, cpy.buffer, sizeof(cpy.buffer));
 	}
 	return *this;
 }
 
 //METHODS______________________________________________________________________________________________________
 
-void User::addMessageToQueue(const std::string& message)
+bool User::hasPassword() const
 {
-	try
-	{
-		if (_messageQueue.size() >= 30 || !Utils::isPrintableStr(message))
-		{
-			throw MessageQueueFullException();
-			return ;
-		}
-		/* code */
-	}
-	catch(const std::exception& e)
-	{
-		std::cerr << e.what() << '\n';
-	}
-	_messageQueue.push_back(message);
+	return this->_hasPassword;
 }
 
-void User::removeMessageFromQueue(const std::string& message)
+//return true when a client has received PASS, NICK, USER
+bool User::isAuthentificated() const
 {
-	if (_messageQueue.empty())
-		return ;
-	std::vector<std::string>::iterator it = std::find(_messageQueue.begin(), _messageQueue.end(), message);
-	if (it == _messageQueue.end())
-		return;
-	_messageQueue.erase(std::remove(_messageQueue.begin(), _messageQueue.end(), message), _messageQueue.end());
+	return
+	(
+		this->_hasPassword &&
+		this->_nickname != ""
+	);
 }
-
 
 //GETTERS______________________________________________________________________________________________________
 
@@ -90,9 +82,9 @@ std::string					User::getUsername() const
 	return _username;
 }
 
-time_t						User::getRegistrationDate() const
+std::string					User::getRealname() const
 {
-	return _registrationDate;
+	return _realname;
 }
 
 time_t						User::getLastActiveTime() const
@@ -100,34 +92,22 @@ time_t						User::getLastActiveTime() const
 	return _lastActiveTime;
 }
 
-bool						User::getIsConnected() const
+int							User::getSocket() const
 {
-	return _isConnected;
-}
-
-bool						User::getIsOperator() const
-{
-	return _isOperator;
-}
-
-std::vector<std::string>	User::getMessageQueue() const
-{
-	return _messageQueue;
+	return _socket;
 }
 
 //SETTERS______________________________________________________________________________________________________
 
-void	User::setConnectedStatus(bool status)
+void User::setUserInfo(const std::string &uname, const std::string &hname, const std::string &servername, const std::string &realname)
 {
-	_isConnected = status;
+	_username = uname;
+	_hostname = hname;
+	_servername = servername;
+	_realname = realname;
 }
 
-void    User::setOperatorStatus(bool status)
-{
-	_isOperator = status;
-}
-
-void    User::setNickname(const std::string &name)
+void User::setNickname(const std::string &name)
 {
 	_nickname = name;
 }
@@ -137,33 +117,53 @@ void    User::setUsername(const std::string &uname)
 	_username = uname;
 }
 
+void	User::setSocket(const int socket_fd)
+{
+	_socket = socket_fd;
+}
+
+void	User::setHasPassword(const bool status)
+{
+	this->_hasPassword = status;
+}
+
+void	User::setChannelsList(const std::string &channelName)
+{
+	for (std::size_t i = 0; i < this->_channelsInvitedTo.size(); i++)
+	{
+		if (this->_channelsInvitedTo[i] == channelName)
+			return ; //channel is already in the vector
+	}
+	this->_channelsInvitedTo.push_back(channelName);
+}
+
+//BOOLEAN__________________________________________________________________________________________________
+
+bool	User::channelIsInList(const std::string &name)
+{
+	for (size_t i = 0; i < this->_channelsInvitedTo.size(); i++)
+	{
+		if (this->_channelsInvitedTo[i] == name)
+			return (true);
+	}
+	return (false);
+}
+
 //EXTERN OPERATORS_____________________________________________________________________________________________
 
 
 std::ostream	&operator<<(std::ostream &flux, const User& rhs)
 {
-	time_t time = rhs.getRegistrationDate();
 	flux << "User nickname: " << rhs.getNickname() << std::endl;
 	flux << "User username: " << rhs.getUsername() << std::endl;
-	flux << "User registration date: " << std::ctime(&time);
-	time = rhs.getLastActiveTime();
+	flux << "User socket: " << rhs.getSocket() << std::endl;
+	time_t time = rhs.getLastActiveTime();
 	flux << "User last active time: " << std::ctime(&time);
-	flux << "User connection status: " << (rhs.getIsConnected() ? "Online" : "Offline") << std::endl;
-	flux << "User operator status: " << (rhs.getIsConnected() ? "Yes" : "No") << std::endl;
-	flux << "User messages in queue: \n";
-	std::cout << "[";
-	for (size_t i = 0; i < rhs.getMessageQueue().size(); ++i)
-	{
-		flux << "[" << rhs.getMessageQueue()[i] << "]";
-		if (i < rhs.getMessageQueue().size() - 1)
-			flux << ", ";
-	}
-	std::cout << "]";
 	flux << std::endl;
 	return flux;
 }
 
 bool			User::operator==(const User& other) const
 {
-		return _nickname == other._nickname;
+	return _nickname == other._nickname;
 }

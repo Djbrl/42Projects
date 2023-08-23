@@ -2,77 +2,80 @@
 
 //EXTERN SIGNAL HANDLER__________________________________________________________________________________________________________________________
 //Header-level client socket lists
-std::vector<int> g_clientSockets;
+std::vector<int>	g_clientSockets;
+bool				requestShutdown;
 
 //Signal handler for SIGINT, SIGTERM (kill signal) and SIGQUIT to avoid port-clogging on abrupt exit
 void signalHandler(int signal)
 {
-	//UNCOMMENT THIS WHEN /EXIT IS IMPLEMENTED
-	// if (signal == SIGINT)
-	// {
-	// 	std::cout << YELLOW << "SIGINT ignored, please type " << BWHITE << "/exit" << RESET << YELLOW << " to safely shutdown the server next time." << RESET << std::endl;
-	// 	return ;
-	// }
-	// if (signal == SIGQUIT)
-	// {
-	// 	std::cout << YELLOW << "SIGQUIT ignored, please type " << BWHITE << "/exit" << RESET << YELLOW << " to safely shutdown the server next time." << RESET << std::endl;
-	// 	return ;
-	// }
-	if (signal == SIGTERM || signal == SIGINT)
+	if (signal == SIGTERM)
 	{
-		std::cout << YELLOW << "\n[IRC Server shutdown by SIGTERM Request, attempting graceful exit...]" << RESET << std::endl;
+		std::cout << RED << "\n[IRC Server shutdown by SIGTERM Request, closing connections...]" << RESET << std::endl;
 		for (size_t i = 0; i < g_clientSockets.size(); i++)
+		{
 			close(g_clientSockets[i]);
-		std::cout << TITLE << CLEARLINE << "[Server shutdown successful]" << RESET << std::endl;
-		exit(EXIT_SUCCESS);
+			std::cout << Utils::getLocalTime() << "Connection to client [" << g_clientSockets[i] << "] closed." << std::endl;
+		}
+		requestShutdown = true;
 	}
+	else if (signal == SIGINT)
+	{
+		std::cout << YELLOW << "\n[IRC Server shutdown by SIGINT Request, closing connections...]" << RESET << std::endl;
+		for (size_t i = 0; i < g_clientSockets.size(); i++)
+		{
+			close(g_clientSockets[i]);
+			std::cout << Utils::getLocalTime() << "Connection to client [" << g_clientSockets[i] << "] closed." << std::endl;
+		}
+		requestShutdown = true;
+	}
+	else if (signal == SIGPIPE)
+		std::cout << "Warning: SIGPIPE request from system ignored." << std::endl;
+	return ;
 }
 
 //IRCSERVER CLASS______________________________________________________________________________________________________________________________________
 //IrcServer can't be instantiated using the default constructor
 IrcServer::IrcServer()
-{}
+{
+}
 
-//Mandatory constructor, protected with try-catches
-IrcServer::IrcServer(const std::string &portNumber, const std::string& password) : _serverPort(0),  _serverPassword(password), _serverFd(-1)
+IrcServer::IrcServer(const unsigned int &portNumber, const std::string& password) : _serverFd(-1), _serverPort(portNumber),  _serverPassword(password), _serverCreationDate(time(NULL))
 {
 	//DEFINE SIGHANDLERS
 	std::signal(SIGINT, signalHandler);
 	std::signal(SIGQUIT, signalHandler);
 	std::signal(SIGTERM, signalHandler);
+	std::signal(SIGPIPE, signalHandler);
+	requestShutdown = false;
 	try
 	{
-		//PARSING PORT
-		_serverPort = atoi(portNumber.c_str());
-		if ((_serverPort == 0 && portNumber != "0") || _serverPort < 0)
-			throw InvalidPortException();
 		if ((_serverFd = socket(AF_INET, SOCK_STREAM, 0)) == -1)
+		{
 			throw SocketCreationException();
+		}
 		//NAMING SOCKET
 		_serverSockAddr.sin_family = AF_INET;
 		_serverSockAddr.sin_addr.s_addr = INADDR_ANY;
 		_serverSockAddr.sin_port = htons(_serverPort);
-		std::memset(_serverSockAddr.sin_zero, 0, sizeof(_serverSockAddr.sin_zero));
+		memset(_serverSockAddr.sin_zero, 0, sizeof(_serverSockAddr.sin_zero));
+		
+		//Prevent BindException when restarting the server
+		int opt = 1;
+		setsockopt(_serverFd, SOL_SOCKET, SO_REUSEPORT, &opt, sizeof(opt));
+
 		if (bind(_serverFd, (struct sockaddr *)&_serverSockAddr, sizeof(_serverSockAddr)) == -1)
 		{
 			close(_serverFd);
 			throw BindException();
 		}
 		//LISTEN PORT WITH BACKLOG ENABLED
-		if (listen(_serverFd, QUEUE_BACKLOG) == -1)
+		if (listen(_serverFd, SOMAXCONN) == -1)
 			throw ListenException();
 		//ADDED SERVERFD TO FD LIST FOR CLEANUP
 		g_clientSockets.push_back(_serverFd);
-	} catch (const InvalidPortException& err) {
-		std::cerr << err.what() << std::endl;
-		exit(EXIT_FAILURE);
-	} catch (const SocketCreationException& err) {
-		std::cerr << err.what() << std::endl;
-		exit(EXIT_FAILURE);
-	} catch (const BindException& err) {
-		std::cerr << err.what() << std::endl;
-		exit(EXIT_FAILURE);
-	} catch (const ListenException& err) {
+	}
+	catch (const IrcServerException& err)
+	{
 		std::cerr << err.what() << std::endl;
 		exit(EXIT_FAILURE);
 	}
@@ -80,9 +83,7 @@ IrcServer::IrcServer(const std::string &portNumber, const std::string& password)
 
 IrcServer::~IrcServer()
 {
-	for (size_t i = 0; i < g_clientSockets.size(); i++)
-		close(g_clientSockets[i]);
-	std::cout << TITLE << CLEARLINE << "[Server shutdown successful]" << RESET << std::endl;
+	std::cout << TITLE << CLEARLINE << "[Server shutdown successful]" << RESET << "\n" << std::endl;
 }
 
 IrcServer::IrcServer(const IrcServer &cpy)
@@ -95,92 +96,159 @@ IrcServer &IrcServer::operator=(const IrcServer &cpy)
 {
 	if (this != &cpy)
 	{
-		_serverSockAddr = cpy._serverSockAddr;
+		_serverFd = cpy._serverFd;
 		_serverPort = cpy._serverPort;
 		_serverPassword = cpy._serverPassword;
-		_serverFd = cpy._serverFd;
+		_serverSockAddr = cpy._serverSockAddr;
+		_clientsFdSet = cpy._clientsFdSet;
 		_ConnectedUsers = cpy._ConnectedUsers;
 		_Channels = cpy._Channels;
 	}
 	return *this;
 }
 
-// void IrcServer::run()
-// {
-//     fd_set readfds;
-//     int maxFd; // Store the highest file descriptor
+//METHODS________________________________________________________________________________________________________________________________________________
 
-//     while (true)
-//     {
-//         FD_ZERO(&readfds);
-//         FD_SET(STDIN_FILENO, &readfds); // Add stdin (fd 0) to the set of file descriptors
-//         FD_SET(_serverFd, &readfds);    // Add the server socket to the set of file descriptors
-
-//         maxFd = std::max(STDIN_FILENO, _serverFd);
-
-//         // Add all connected client sockets to the set of file descriptors
-//         for (int clientSocket : g_clientSockets)
-//         {
-//             FD_SET(clientSocket, &readfds);
-//             maxFd = std::max(maxFd, clientSocket);
-//         }
-
-//         // Wait for activity on any of the file descriptors
-//         int activity = select(maxFd + 1, &readfds, nullptr, nullptr, nullptr);
-
-//         if (activity < 0)
-//         {
-//             // Handle error
-//             // You can add appropriate error handling here
-//         }
-//         else if (activity > 0)
-//         {
-//             // Check for activity on the server socket
-//             if (FD_ISSET(_serverFd, &readfds))
-//             {
-//                 int dataSocketFd = acceptClient();
-//                 g_clientSockets.push_back(dataSocketFd);
-//             }
-
-//             // Check for activity on client sockets
-//             for (auto it = g_clientSockets.begin(); it != g_clientSockets.end(); ++it)
-//             {
-//                 int clientSocket = *it;
-//                 if (FD_ISSET(clientSocket, &readfds))
-//                 {
-//                     std::istringstream requestField = readData(clientSocket);
-//                     displayClientInfo(clientSocket);
-//                     processCommand(requestField, clientSocket);
-//                 }
-//             }
-
-//             // Check for activity on stdin (terminal input)
-//             if (FD_ISSET(STDIN_FILENO, &readfds))
-//             {
-//                 std::string localCommand;
-//                 std::getline(std::cin, localCommand);
-// 				if (localCommand == "/exit")
-// 					exit(EXIT_SUCCESS);
-//             }
-//         }
-//     }
-// }
-
-//Server loop function :
-//-Accept connections
-//-Display information
-//-Process the data
 void IrcServer::run()
 {
-	std::istringstream	requestField;
-	std::string			requestStatus;
-	int					dataSocketFd;
+	FD_ZERO(&_clientsFdSet);
+	FD_SET(_serverFd, &_clientsFdSet);
 
-	while (true)
+	while (requestShutdown != true)
 	{
-		dataSocketFd = acceptClient();
-		requestField = readData(dataSocketFd);
-		displayClientData(dataSocketFd);
-		processCommand(requestField, dataSocketFd);
+		fd_set tmpSet = _clientsFdSet;
+		if (select(FD_SETSIZE, &tmpSet, NULL, NULL, NULL) == -1)
+		{
+			if (requestShutdown == true)
+				break ;
+			else
+				std::cerr << "Error: select() failed." << std::endl;
+		}
+		if (FD_ISSET(_serverFd, &tmpSet))
+			acceptClient();
+		else 
+		{
+			for (unsigned int i = 0; i < g_clientSockets.size(); i++)
+			{
+				if (FD_ISSET(g_clientSockets[i], &tmpSet))
+					handleRequest(g_clientSockets[i]);
+			}
+		}
 	}
+	return ;
+}
+
+void	IrcServer::acceptClient()
+{
+	std::string	clientIP;
+	sockaddr	clientSockAddr;
+	int			clientAddrLen;
+	int			dataSocketFd;
+
+	try
+	{
+		clientAddrLen = sizeof(clientSockAddr);
+		if ((dataSocketFd = accept(_serverFd, (struct sockaddr*)&clientSockAddr, (socklen_t*)&clientAddrLen)) == -1)
+			throw AcceptException();
+		FD_SET(dataSocketFd, &_clientsFdSet);
+		g_clientSockets.push_back(dataSocketFd);
+		clientIP = inet_ntoa(((struct sockaddr_in*)&clientSockAddr)->sin_addr);
+		std::cout << Utils::getLocalTime() << "New client connection: [" << dataSocketFd << "] - " << BWHITE << clientIP << RESET << "." << std::endl;
+		_ConnectedUsers.addUser(dataSocketFd);
+		sendWelcomeMessage(dataSocketFd);
+	}
+	catch (const AcceptException& e)
+	{
+		std::cerr << e.what() << '\n';
+	}
+	return ;
+}
+void IrcServer::handleSuddenDisconnection(int clientFd)
+{
+		std::cout << Utils::getLocalTime() << "Client [" << clientFd << "] has left the server." << std::endl;
+		//NOTIFY USERS
+		std::map<std::string, Channel>::iterator	it = _Channels.begin();
+		User										*userToRemove = _ConnectedUsers.getUser(clientFd);		
+		if (userToRemove != NULL)
+		{
+			while (it != _Channels.end())
+			{
+				if (it->second.hasMember(*userToRemove))
+				{
+					std::string quitMessage = "has left the server (reason :sudden disconnection)";
+					it->second.sendMessageToUsers(quitMessage, userToRemove->getNickname());
+				}
+				it++;
+			}
+		}
+		//DELETE USER
+		disconnectUserFromServer(clientFd);
+		//DELETE CHANNELS THAT WILL BECOME EMPTY
+		std::vector<std::string> channelsToDelete;
+		for (std::map<std::string, Channel>::iterator it = _Channels.begin(); it != _Channels.end(); it++)
+		{
+			if (it->second.getMembersList().size() == 0)
+			{
+				//delayed delete to avoid segfault
+				channelsToDelete.push_back(it->first);
+				std::string noticeMessage = "NOTICE broadcast :" + it->first + " has been removed for inactivity" + "\r\n";
+				_ConnectedUsers.broadcastMessage(const_cast<char *>(noticeMessage.c_str()));
+			}
+		}
+		for (size_t i = 0; i < channelsToDelete.size(); i++)
+			_Channels.erase(channelsToDelete[i]);
+		return ;
+}
+void IrcServer::handleRequest(int clientFd)
+{
+	char	buffer[MESSAGE_BUFFER_SIZE] = {0};
+	ssize_t		bytes_received;
+
+	memset(buffer, 0, sizeof(buffer));
+
+	//UNEXPECTED DISCONNECTION
+	bytes_received = recv(clientFd, buffer, MESSAGE_BUFFER_SIZE, 0);
+	if (bytes_received <= 0)
+	{
+		handleSuddenDisconnection(clientFd);
+		return ;
+	}
+
+	User *current_user = _ConnectedUsers.getUser(clientFd);
+	if (!current_user)
+		return ;
+
+	char *ubuffer = current_user->buffer;
+	char *position = std::find(ubuffer, ubuffer + MESSAGE_BUFFER_SIZE, '\0');
+
+	size_t buffer_size_left = MESSAGE_BUFFER_SIZE - std::distance(ubuffer, position);
+
+	size_t n_to_copy = std::min(size_t(bytes_received), buffer_size_left);
+	memcpy(position, buffer, n_to_copy);
+    // parseQuery(clientFd, buffer);
+    //AUTHENTICATION PROTOTYPE___________________________________________________________________________________
+	
+	// std::cout << "buffer :" << buffer << std::endl;
+	// std::cout << "user buffer :" << current_user->buffer << std::endl;
+	
+	if (buffer_size_left == 0 && std::string(buffer).find("\r\n", 0) == std::string::npos)
+		return ;
+	if (buffer_size_left != 0 && std::string(ubuffer).find("\r\n", 0) == std::string::npos)
+		return ;
+	std::vector<std::string> requests = splitStringByCRLF(std::string(ubuffer), ubuffer);
+	for (int i = 0; i < (int)requests.size(); i++)
+	{
+		std::cout << Utils::getLocalTime() << "Received request [" << requests[i] << "] from " << "[" << clientFd << "]" << std::endl;
+		try
+		{
+			std::vector<std::string> args = parse_message(requests[i]);
+			dsy_cbarbit_AuthAndChannelMethodsPrototype(clientFd, args);
+		}
+		catch(const std::exception& e)
+		{
+			std::cerr << "Error parsing command: " << e.what() << '\n';
+		}
+	}
+	//AUTHENTICATION PROTOTYPE___________________________________________________________________________________
+	return ;
 }
