@@ -7,8 +7,8 @@ services:
       dockerfile: Dockerfile
     image: mariadb
     container_name: mariadb
-    # env_file:
-    #   - .env
+    env_file:
+      - .env
     ports:
       - "3306:3306"
     volumes:
@@ -23,8 +23,8 @@ services:
       dockerfile: ./requirements/wordpress/Dockerfile
     image: wordpress
     container_name: wordpress
-    # env_file:
-    #   - .env
+    env_file:
+      - .env
     ports:
       - "9000:9000"
     volumes:
