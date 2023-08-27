@@ -47,7 +47,17 @@ services:
 
 volumes:
   website:
+    driver: local
+    driver_opts:
+      o: 'bind'
+      type: 'none'
+      device: '/home/dsy/data/website'
   db:
+    driver: local
+    driver_opts:
+      o: 'bind'
+      type: 'none'
+      device: '/home/dsy/data/db'
 
 networks:
   Inception:
